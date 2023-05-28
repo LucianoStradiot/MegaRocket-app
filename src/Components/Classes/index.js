@@ -8,7 +8,19 @@ function Classes() {
       const { data: classes } = await response.json();
       setClasses(classes);
     } catch (error) {
-      console.log(error);
+      console.error(error);
+    }
+  };
+
+  const deleteClass = async (id) => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}/classes/${id}`, { method: 'DELETE' });
+      setClasses((currentClasses) => {
+        return currentClasses.filter((oneClass) => oneClass._id !== id);
+      });
+      getClasses();
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -39,7 +51,9 @@ function Classes() {
                 <td>{oneClass.activity.name}</td>
                 <td>{oneClass.slots}</td>
                 <td>
-                  <button onClick={() => console.log('delete class')}>X</button>
+                  <button key={oneClass._id} onClick={() => deleteClass(oneClass._id)}>
+                    X
+                  </button>
                 </td>
               </tr>
             );
