@@ -4,3 +4,14 @@
   justify-content: center;
   align-items: center;
 }
+
+.block {
+  display: flex;
+  width: 400px;
+  justify-content: space-around;
+}
+
+.firstPart {
+  display: flex;
+  flex-direction: column;
+}
