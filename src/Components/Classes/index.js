@@ -1,11 +1,53 @@
-import styles from './classes.module.css';
+import { useEffect, useState } from 'react';
 
-function Projects() {
+function Classes() {
+  const [classes, setClasses] = useState([]);
+  const getClasses = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/classes`);
+      const { data: classes } = await response.json();
+      setClasses(classes);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getClasses();
+  }, []);
+
   return (
-    <section className={styles.container}>
+    <section>
       <h2>Classes</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Hour</th>
+            <th>Trainer</th>
+            <th>Activity</th>
+            <th>Slots</th>
+          </tr>
+        </thead>
+        <tbody>
+          {classes.map((oneClass) => {
+            return (
+              <tr key={oneClass._id}>
+                <td>{oneClass.day}</td>
+                <td>{oneClass.hour}</td>
+                <td>{oneClass.trainer.firstName}</td>
+                <td>{oneClass.activity.name}</td>
+                <td>{oneClass.slots}</td>
+                <td>
+                  <button onClick={() => console.log('delete class')}>X</button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </section>
   );
 }
 
-export default Projects;
+export default Classes;
