@@ -3,20 +3,15 @@ import styles from './super-admins.module.css';
 
 function SuperAdmins() {
   const [superAdmins, setSuperAdmin] = useState([]);
+  const [dataFormValue, setDataFormValue] = useState({
+    email: '',
+    password: ''
+  });
   const getSuperAdmins = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admin`);
-      if (superAdmins.length >= 4) {
-        const { data: superAdmins } = await response.json();
-        const firstFourSuperAdmins = [];
-        for (let i = 0; i < superAdmins.length && i < 4; i++) {
-          firstFourSuperAdmins.push(superAdmins[i]);
-        }
-        setSuperAdmin(firstFourSuperAdmins);
-      } else {
-        const { data: superAdmins } = await response.json();
-        setSuperAdmin(superAdmins);
-      }
+      const { data: superAdmins } = await response.json();
+      setSuperAdmin(superAdmins);
     } catch (error) {
       console.log(error);
       // show error in UI
@@ -24,16 +19,12 @@ function SuperAdmins() {
   };
   const deleteSuperAdmin = async (id) => {
     try {
-      // Delete a la BD
       await fetch(`${process.env.REACT_APP_API_URL}/super-admin/${id}`, {
         method: 'DELETE'
       });
-
-      // Delete in Front End
       setSuperAdmin((currentAdmins) => {
         return currentAdmins.filter((superAdmins) => superAdmins._id !== id);
       });
-
       getSuperAdmins();
     } catch (error) {
       console.error(error);
@@ -41,18 +32,30 @@ function SuperAdmins() {
     }
   };
 
+  const onChange = (e) => {
+    setDataFormValue({
+      ...dataFormValue,
+      [e.target.name]: e.target.value
+    });
+  };
   const createSuperAdmin = async () => {
     try {
       const createdSuperAdmin = await fetch(`${process.env.REACT_APP_API_URL}/super-admin/`, {
         method: 'POST',
-        body: JSON.stringify({
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataFormValue)
+      });
+      if (createdSuperAdmin.ok) {
+        const createdSuperAdminData = await createdSuperAdmin.json();
+        setSuperAdmin((currentAdmins) => [...currentAdmins, createdSuperAdminData.data]);
+        console.log(createdSuperAdminData);
+        setDataFormValue({
           email: '',
           password: ''
-        })
-      });
-      setSuperAdmin((currentAdmins) => {
-        return [...currentAdmins, createdSuperAdmin];
-      });
+        });
+      }
     } catch (error) {
       console.error(error);
       // show error in UI
@@ -76,22 +79,24 @@ function SuperAdmins() {
             <th>Email</th>
           </tr>
         </thead>
-        <body>
+        <tbody>
           {superAdmins.map((superAdmin) => {
             return (
               <tr key={superAdmin._id}>
                 <td>{superAdmin.email}</td>
-                <button onClick={() => deleteSuperAdmin(superAdmin._id)}>X</button>
+                <td>
+                  <button onClick={() => deleteSuperAdmin(superAdmin._id)}>X</button>
+                </td>
               </tr>
             );
           })}
-        </body>
+        </tbody>
       </table>
       <form id="formSA" onSubmit={onSubmit}>
         <label>Email</label>
-        <input type="text" name="email" value="email" />
+        <input type="text" name="email" onChange={onChange} />
         <label>Password</label>
-        <input type="password" name="password" value="email" />
+        <input type="password" name="password" onChange={onChange} />
         <button type="submit">Create</button>
       </form>
     </section>
