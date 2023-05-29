@@ -61,7 +61,7 @@ function Trainers() {
           salary: '',
           isActive: true
         });
-        alert('Trainer created succesfully!');
+        alert(createdTrainer.message);
       } else {
         const resp = await createdTrainerResponse.json();
         alert(resp.message);
@@ -85,23 +85,30 @@ function Trainers() {
         }
       );
 
-      const updatedTrainer = await updatedTrainerResponse.json();
-
-      setTrainers((currentTrainers) => {
-        return [...currentTrainers, updatedTrainer.data];
-      });
-      setFormValue({
-        firstName: '',
-        lastName: '',
-        dni: '',
-        phone: '',
-        email: '',
-        city: '',
-        password: '',
-        salary: '',
-        isActive: true
-      });
-      setIdStatus('');
+      if (updatedTrainerResponse.ok) {
+        const updatedTrainer = await updatedTrainerResponse.json();
+        const data = trainers.findIndex((trainer) => trainer._id === idStatus);
+        console.log(data);
+        // setTrainers((currentTrainers) => {
+        //   return [...currentTrainers, updatedTrainer.data];
+        // });
+        setFormValue({
+          firstName: '',
+          lastName: '',
+          dni: '',
+          phone: '',
+          email: '',
+          city: '',
+          password: '',
+          salary: '',
+          isActive: true
+        });
+        setIdStatus('');
+        alert(updatedTrainer.message);
+      } else {
+        const resp = await updatedTrainerResponse.json();
+        alert(resp.message);
+      }
     } catch (error) {
       console.error(error);
       // show error in UI
@@ -152,6 +159,19 @@ function Trainers() {
     formVisible();
     saveVisible();
     setIdStatus(id);
+
+    const data = trainers.find((trainer) => trainer._id === id);
+    setFormValue({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      dni: data.dni,
+      phone: data.phone,
+      email: data.email,
+      city: data.city,
+      password: data.password,
+      salary: data.salary,
+      isActive: true
+    });
   };
 
   const formVisible = () => {
@@ -217,7 +237,9 @@ function Trainers() {
                 <input
                   className={styles.input}
                   name="firstName"
+                  id="firstName"
                   type="text"
+                  value={formValue.firstName}
                   onChange={onChangeInput}
                 />
               </div>
@@ -227,24 +249,49 @@ function Trainers() {
                   className={styles.input}
                   name="lastName"
                   type="text"
+                  value={formValue.lastName}
                   onChange={onChangeInput}
                 />
               </div>
               <div className={styles.inputContainer}>
                 <label className={styles.label}>DNI</label>
-                <input className={styles.input} name="dni" type="text" onChange={onChangeInput} />
+                <input
+                  className={styles.input}
+                  name="dni"
+                  type="text"
+                  value={formValue.dni}
+                  onChange={onChangeInput}
+                />
               </div>
               <div className={styles.inputContainer}>
                 <label className={styles.label}>Phone</label>
-                <input className={styles.input} name="phone" type="text" onChange={onChangeInput} />
+                <input
+                  className={styles.input}
+                  name="phone"
+                  type="text"
+                  value={formValue.phone}
+                  onChange={onChangeInput}
+                />
               </div>
               <div className={styles.inputContainer}>
                 <label className={styles.label}>Email</label>
-                <input className={styles.input} name="email" type="text" onChange={onChangeInput} />
+                <input
+                  className={styles.input}
+                  name="email"
+                  type="text"
+                  value={formValue.email}
+                  onChange={onChangeInput}
+                />
               </div>
               <div className={styles.inputContainer}>
                 <label className={styles.label}>City</label>
-                <input className={styles.input} name="city" type="text" onChange={onChangeInput} />
+                <input
+                  className={styles.input}
+                  name="city"
+                  type="text"
+                  value={formValue.city}
+                  onChange={onChangeInput}
+                />
               </div>
               <div className={styles.inputContainer}>
                 <label className={styles.label}>Password</label>
@@ -252,6 +299,7 @@ function Trainers() {
                   className={styles.input}
                   name="password"
                   type="password"
+                  value={formValue.password}
                   onChange={onChangeInput}
                 />
               </div>
@@ -261,6 +309,7 @@ function Trainers() {
                   className={styles.input}
                   name="salary"
                   type="text"
+                  value={formValue.salary}
                   onChange={onChangeInput}
                 />
               </div>
