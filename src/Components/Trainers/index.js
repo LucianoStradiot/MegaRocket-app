@@ -56,9 +56,8 @@ function Trainers() {
         },
         body: JSON.stringify(formValue)
       });
+      const createdTrainer = await createdTrainerResponse.json();
       if (createdTrainerResponse.ok) {
-        const createdTrainer = await createdTrainerResponse.json();
-
         setTrainers((currentTrainers) => {
           return [...currentTrainers, createdTrainer.data];
         });
@@ -76,8 +75,7 @@ function Trainers() {
         });
         alert(createdTrainer.message);
       } else {
-        const resp = await createdTrainerResponse.json();
-        throw new Error(resp.message);
+        throw new Error(createdTrainer.message);
       }
     } catch (error) {
       alert(error);
@@ -96,9 +94,8 @@ function Trainers() {
           body: JSON.stringify(formValue)
         }
       );
-
+      const updatedTrainer = await updatedTrainerResponse.json();
       if (updatedTrainerResponse.ok) {
-        const updatedTrainer = await updatedTrainerResponse.json();
         const dataIndex = trainers.findIndex((trainer) => trainer._id === idStatus);
 
         setTrainers((currentTrainers) => {
@@ -122,8 +119,7 @@ function Trainers() {
         setIdStatus('');
         alert(updatedTrainer.message);
       } else {
-        const resp = await updatedTrainerResponse.json();
-        throw new Error(resp.message);
+        throw new Error(updatedTrainer.message);
       }
     } catch (error) {
       alert(error);
@@ -210,6 +206,7 @@ function Trainers() {
   useEffect(() => {
     getTrainers();
   }, []);
+
   return (
     <section className={styles.container}>
       <section>
@@ -219,14 +216,13 @@ function Trainers() {
         </button>
         <table>
           <thead>
-            <th className={`${styles.head}`}>Name</th>
+            <th className={styles.head}>Name</th>
             <th>Dni</th>
             <th>Email</th>
             <th>Phone</th>
             <th>City</th>
             <th>Salary</th>
-            {/* <th className={`${styles.row} ${styles.head}`}>Status</th> */}
-            <th className={`${styles.headEnd}`}></th>
+            <th className={styles.headEnd}></th>
           </thead>
           <tbody>
             {trainers.map((trainer) => {
@@ -240,7 +236,6 @@ function Trainers() {
                   <td className={styles.row}>{trainer.phone}</td>
                   <td className={styles.row}>{trainer.city}</td>
                   <td className={styles.row}>{trainer.salary}</td>
-                  {/* <td className={styles.row}>{trainer.isActive}</td> */}
                   <td className={styles.row}>
                     <div className={styles.containerButtons}>
                       <button className={styles.updateButton} onClick={() => modify(trainer._id)}>
