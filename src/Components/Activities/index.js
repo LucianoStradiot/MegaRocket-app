@@ -5,7 +5,8 @@ function Activities() {
   const [activities, setActivities] = useState([]);
   const [activityFormValue, setActivityFormValue] = useState({
     name: '',
-    description: ''
+    description: '',
+    isActive: true
   });
   const getActivities = async () => {
     try {
@@ -47,7 +48,7 @@ function Activities() {
       });
       if (createdActivity.ok) {
         const createdActdata = await createdActivity.json();
-        setActivities((currentActivities) => [...currentActivities, createdActdata]);
+        setActivities((currentActivities) => [...currentActivities, createdActdata.data]);
         setActivityFormValue({
           name: '',
           description: ''
@@ -77,6 +78,7 @@ function Activities() {
           return (
             <div key={activity._id} className={styles.list}>
               <li>{activity.name}</li>
+              <button>Modify</button>
               <button onClick={() => deleteActiviy(activity._id)}>Delete</button>
             </div>
           );
