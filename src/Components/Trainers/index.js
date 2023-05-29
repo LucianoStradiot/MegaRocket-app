@@ -26,7 +26,7 @@ function Trainers() {
 
       setTrainers(trainers);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -43,7 +43,7 @@ function Trainers() {
       alert('Trainer deleted succesfully!');
       getTrainers();
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -74,14 +74,13 @@ function Trainers() {
           salary: '',
           isActive: true
         });
-
         alert(createdTrainer.message);
       } else {
         const resp = await createdTrainerResponse.json();
-        alert(resp.message);
+        throw new Error(resp.message);
       }
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -121,15 +120,13 @@ function Trainers() {
         });
 
         setIdStatus('');
-
         alert(updatedTrainer.message);
       } else {
         const resp = await updatedTrainerResponse.json();
-        alert(resp.message);
+        throw new Error(resp.message);
       }
     } catch (error) {
-      console.error(error);
-      // show error in UI
+      alert(error);
     }
   };
 
@@ -140,7 +137,7 @@ function Trainers() {
     });
   };
 
-  const onSubmit = (e) => {
+  const submit = (e) => {
     e.preventDefault();
     createTrainer();
     formInvisible();
@@ -151,9 +148,25 @@ function Trainers() {
     formInvisible();
   };
 
+  const cancel = () => {
+    formInvisible();
+  };
+
   const create = () => {
     formVisible();
     addVisible();
+
+    setFormValue({
+      firstName: '',
+      lastName: '',
+      dni: '',
+      phone: '',
+      email: '',
+      city: '',
+      password: '',
+      salary: '',
+      isActive: true
+    });
   };
 
   const modify = (id) => {
@@ -201,28 +214,45 @@ function Trainers() {
     <section className={styles.container}>
       <section>
         <h2>Trainers</h2>
-        <button onClick={create}>Create</button>
+        <button onClick={create} className={styles.createButton}>
+          Create
+        </button>
         <table>
+          <thead>
+            <th className={`${styles.head}`}>Name</th>
+            <th>Dni</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>City</th>
+            <th>Salary</th>
+            {/* <th className={`${styles.row} ${styles.head}`}>Status</th> */}
+            <th className={`${styles.headEnd}`}></th>
+          </thead>
           <tbody>
             {trainers.map((trainer) => {
               return (
                 <tr key={trainer._id}>
-                  <td className={styles.row}>{trainer.firstName}</td>
+                  <td className={styles.row}>
+                    {trainer.firstName} {trainer.lastName}
+                  </td>
+                  <td className={styles.row}>{trainer.dni}</td>
                   <td className={styles.row}>{trainer.email}</td>
                   <td className={styles.row}>{trainer.phone}</td>
                   <td className={styles.row}>{trainer.city}</td>
+                  <td className={styles.row}>{trainer.salary}</td>
+                  {/* <td className={styles.row}>{trainer.isActive}</td> */}
                   <td className={styles.row}>
-                    <button className={styles.updateButton} onClick={() => modify(trainer._id)}>
-                      Modify
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className={styles.deleteButton}
-                      onClick={() => deleteTrainer(trainer._id)}
-                    >
-                      X
-                    </button>
+                    <div className={styles.containerButtons}>
+                      <button className={styles.updateButton} onClick={() => modify(trainer._id)}>
+                        Edit
+                      </button>
+                      <button
+                        className={styles.deleteButton}
+                        onClick={() => deleteTrainer(trainer._id)}
+                      >
+                        X
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );
@@ -232,7 +262,7 @@ function Trainers() {
       </section>
       {isVisible && (
         <section className={styles.sectionForm}>
-          <form className={styles.form} onSubmit={onSubmit} id="form">
+          <form className={styles.form} onSubmit={submit} id="form">
             <div className={styles.subContainer}>
               <div className={styles.inputContainer}>
                 <label className={styles.label}>Name</label>
@@ -316,16 +346,21 @@ function Trainers() {
                 />
               </div>
             </div>
-            {buttonAddIsVisible && (
-              <button className={styles.button} type="submit">
-                Add
+            <div className={styles.btnContainer}>
+              <button className={`${styles.button} ${styles.btnCancel}`} onClick={cancel}>
+                Cancel
               </button>
-            )}
-            {buttonSaveIsVisible && (
-              <button className={styles.button} onClick={save}>
-                Save
-              </button>
-            )}
+              {buttonAddIsVisible && (
+                <button className={styles.button} onClick={submit}>
+                  Add
+                </button>
+              )}
+              {buttonSaveIsVisible && (
+                <button className={styles.button} onClick={save}>
+                  Save
+                </button>
+              )}
+            </div>
           </form>
         </section>
       )}

@@ -1,14 +1,138 @@
-
 .container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-.row {
-  padding: 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
+h2 {
+  text-align: center;
+}
+
+table {
+  margin-top: 10px;
+  border-collapse: collapse;
+  color: #373867;
+}
+
+thead {
+  background-color: #eee;
+}
+
+th {
+  padding: 10px 16px;
+}
+
+.head {
+  border-radius: 8px 0px 0px 0px;
+}
+
+.headEnd {
+  border-radius: 0px 8px 0px 0px;
+}
+
+.row {
+  padding: 10px 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.containerButtons {
+  display: flex;
+}
+
+.containerButtons .deleteButton {
+  margin-left: 20px;
+}
+
+.createButton, .button{
+  color: #fff;
+  background-color: #3a3b7b;
+  border: none;
+  border-radius: 5px;
+  padding: 7px 12px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.button:hover, .createButton:hover{
+  background-color: #1b1b5d;
+}
+
+.updateButton {
+  background-color: #fff;
+  color: #4caf50;
+  border: 1px solid #4caf50;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.updateButton:hover {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.deleteButton {
+  background-color: #f55348;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  background-color: #ee190a;
+}
+
+.sectionForm {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.form {
+  color: #373867;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #eee;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.subContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.input {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+
+.btnContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btnCancel {
+  background-color: #fff;
+  color: #373867;
+  border: 1px solid #373867;
+}
+
+.btnCancel:hover {
+  color: #fff;
+}
 
