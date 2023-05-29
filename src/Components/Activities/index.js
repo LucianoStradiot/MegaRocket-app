@@ -3,7 +3,10 @@ import styles from './activities.module.css';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
-
+  const [activityFormValue, setActivityFormValue] = useState({
+    name: '',
+    description: ''
+  });
   const getActivities = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/activities`);
@@ -26,19 +29,30 @@ function Activities() {
     }
   };
 
+  const onChange = (e) => {
+    setActivityFormValue({
+      ...activityFormValue,
+      [e.target.name]: e.target.value
+    });
+  };
+
   const createActivity = async () => {
     try {
       const createdActivity = await fetch(`${process.env.REACT_APP_API_URL}/activities/`, {
         method: 'POST',
-        body: {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(activityFormValue)
+      });
+      if (createdActivity.ok) {
+        const createdActdata = await createdActivity.json();
+        setActivities((currentActivities) => [...currentActivities, createdActdata]);
+        setActivityFormValue({
           name: '',
-          description: '',
-          isActive: ''
-        }
-      });
-      setActivities((currentActivities) => {
-        return [...currentActivities, createdActivity];
-      });
+          description: ''
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -47,16 +61,13 @@ function Activities() {
     getActivities();
   }, []);
 
-  const [actNameValue, setActNameValue] = useState('');
-  const onChangeNameInput = (event) => {
-    setActNameValue(event.target.value);
-    console.log(event.target.value);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    createActivity();
   };
-  const [actDescription, setActDescription] = useState('');
-  const onChangeDescription = (event) => {
-    setActDescription(event.target.value);
-    console.log(event.target.value);
-  };
+  useEffect(() => {
+    getActivities();
+  }, []);
 
   return (
     <div>
@@ -73,24 +84,12 @@ function Activities() {
       </section>
 
       <section>
-        <form onSubmit={createActivity}>
+        <form onSubmit={onSubmit}>
           <label>name</label>
-          <input name="name" type="text" value={actNameValue} onChange={onChangeNameInput} />
+          <input name="name" type="text" onChange={onChange} />
           <label>description</label>
-          <input
-            name="description"
-            type="text"
-            value={actDescription}
-            onChange={onChangeDescription}
-          ></input>
-          <label>status</label>
-          <select>
-            <option>Active</option>
-            <option>Inactive</option>
-          </select>
-          <button type="submit" onSubmit={(e) => e.preventDefault()}>
-            Create
-          </button>
+          <input name="description" type="text" onChange={onChange}></input>
+          <button type="submit">Create</button>
         </form>
       </section>
     </div>
