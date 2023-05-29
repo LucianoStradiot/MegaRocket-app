@@ -3,6 +3,21 @@ import styles from './trainers.module.css';
 
 function Trainers() {
   const [trainers, setTrainers] = useState([]);
+  const [isVisible, setIsVisible] = useState(false);
+  const [buttonAddIsVisible, setAddVisible] = useState(false);
+  const [buttonSaveIsVisible, setSaveVisible] = useState(false);
+  const [idStatus, setIdStatus] = useState('');
+  const [formValue, setFormValue] = useState({
+    firstName: '',
+    lastName: '',
+    dni: '',
+    phone: '',
+    email: '',
+    city: '',
+    password: '',
+    salary: '',
+    isActive: true
+  });
 
   const getTrainers = async () => {
     try {
@@ -12,26 +27,23 @@ function Trainers() {
       setTrainers(trainers);
     } catch (error) {
       console.log(error);
-      // show error in UI
     }
   };
 
   const deleteTrainer = async (id) => {
     try {
-      // Delete a la BD
       await fetch(`${process.env.REACT_APP_API_URL}/trainers/${id}`, {
         method: 'DELETE'
       });
 
-      // Delete in Front End
       setTrainers((currentTrainers) => {
         return currentTrainers.filter((trainer) => trainer._id !== id);
       });
+
       alert('Trainer deleted succesfully!');
       getTrainers();
     } catch (error) {
       console.error(error);
-      // show error in UI
     }
   };
 
@@ -46,10 +58,11 @@ function Trainers() {
       });
       if (createdTrainerResponse.ok) {
         const createdTrainer = await createdTrainerResponse.json();
-        console.log(createdTrainer);
+
         setTrainers((currentTrainers) => {
           return [...currentTrainers, createdTrainer.data];
         });
+
         setFormValue({
           firstName: '',
           lastName: '',
@@ -61,6 +74,7 @@ function Trainers() {
           salary: '',
           isActive: true
         });
+
         alert(createdTrainer.message);
       } else {
         const resp = await createdTrainerResponse.json();
@@ -68,7 +82,6 @@ function Trainers() {
       }
     } catch (error) {
       console.error(error);
-      // show error in UI
     }
   };
 
@@ -87,11 +100,14 @@ function Trainers() {
 
       if (updatedTrainerResponse.ok) {
         const updatedTrainer = await updatedTrainerResponse.json();
-        const data = trainers.findIndex((trainer) => trainer._id === idStatus);
-        console.log(data);
-        // setTrainers((currentTrainers) => {
-        //   return [...currentTrainers, updatedTrainer.data];
-        // });
+        const dataIndex = trainers.findIndex((trainer) => trainer._id === idStatus);
+
+        setTrainers((currentTrainers) => {
+          const updatedTrainers = [...currentTrainers];
+          updatedTrainers[dataIndex] = updatedTrainer.data;
+          return updatedTrainers;
+        });
+
         setFormValue({
           firstName: '',
           lastName: '',
@@ -103,7 +119,9 @@ function Trainers() {
           salary: '',
           isActive: true
         });
+
         setIdStatus('');
+
         alert(updatedTrainer.message);
       } else {
         const resp = await updatedTrainerResponse.json();
@@ -114,23 +132,6 @@ function Trainers() {
       // show error in UI
     }
   };
-
-  const [formValue, setFormValue] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    password: '',
-    salary: '',
-    isActive: true
-  });
-
-  const [isVisible, setIsVisible] = useState(false);
-  const [buttonAddIsVisible, setAddVisible] = useState(false);
-  const [buttonSaveIsVisible, setSaveVisible] = useState(false);
-  const [idStatus, setIdStatus] = useState('');
 
   const onChangeInput = (e) => {
     setFormValue({
@@ -161,6 +162,7 @@ function Trainers() {
     setIdStatus(id);
 
     const data = trainers.find((trainer) => trainer._id === id);
+
     setFormValue({
       firstName: data.firstName,
       lastName: data.lastName,
