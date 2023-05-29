@@ -27,7 +27,7 @@ function Trainers() {
       setTrainers((currentTrainers) => {
         return currentTrainers.filter((trainer) => trainer._id !== id);
       });
-
+      alert('Trainer deleted succesfully!');
       getTrainers();
     } catch (error) {
       console.error(error);
@@ -36,7 +36,6 @@ function Trainers() {
   };
 
   const createTrainer = async () => {
-    console.log(formValue);
     try {
       const createdTrainerResponse = await fetch(`${process.env.REACT_APP_API_URL}/trainers/`, {
         method: 'POST',
@@ -45,10 +44,51 @@ function Trainers() {
         },
         body: JSON.stringify(formValue)
       });
-      const createdTrainer = await createdTrainerResponse.json();
-      console.log(createdTrainer);
+      if (createdTrainerResponse.ok) {
+        const createdTrainer = await createdTrainerResponse.json();
+        console.log(createdTrainer);
+        setTrainers((currentTrainers) => {
+          return [...currentTrainers, createdTrainer.data];
+        });
+        setFormValue({
+          firstName: '',
+          lastName: '',
+          dni: '',
+          phone: '',
+          email: '',
+          city: '',
+          password: '',
+          salary: '',
+          isActive: true
+        });
+        alert('Trainer created succesfully!');
+      } else {
+        const resp = await createdTrainerResponse.json();
+        alert(resp.message);
+      }
+    } catch (error) {
+      console.error(error);
+      // show error in UI
+    }
+  };
+
+  const updateTrainer = async () => {
+    try {
+      const updatedTrainerResponse = await fetch(
+        `${process.env.REACT_APP_API_URL}/trainers/${idStatus}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formValue)
+        }
+      );
+
+      const updatedTrainer = await updatedTrainerResponse.json();
+
       setTrainers((currentTrainers) => {
-        return [...currentTrainers, createdTrainer.data];
+        return [...currentTrainers, updatedTrainer.data];
       });
       setFormValue({
         firstName: '',
@@ -58,46 +98,15 @@ function Trainers() {
         email: '',
         city: '',
         password: '',
-        salary: ''
+        salary: '',
+        isActive: true
       });
+      setIdStatus('');
     } catch (error) {
       console.error(error);
       // show error in UI
     }
   };
-
-  // const updateTrainer = async () => {
-  //   console.log(formValue);
-  //   try {
-  //     const updatedTrainerResponse = await fetch(`${process.env.REACT_APP_API_URL}/trainers/`, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(formValue)
-  //     });
-
-  //     const updatedTrainer = await updatedTrainerResponse.json();
-  //     console.log(updatedTrainer);
-  //     setTrainers((currentTrainers) => {
-  //       return [...currentTrainers, updatedTrainer.data];
-  //     });
-  //     setFormValue({
-  //       firstName: '',
-  //       lastName: '',
-  //       dni: '',
-  //       phone: '',
-  //       email: '',
-  //       city: '',
-  //       password: '',
-  //       salary: '',
-  //       isActive: ''
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //     // show error in UI
-  //   }
-  // };
 
   const [formValue, setFormValue] = useState({
     firstName: '',
@@ -107,12 +116,14 @@ function Trainers() {
     email: '',
     city: '',
     password: '',
-    salary: ''
+    salary: '',
+    isActive: true
   });
 
   const [isVisible, setIsVisible] = useState(false);
   const [buttonAddIsVisible, setAddVisible] = useState(false);
   const [buttonSaveIsVisible, setSaveVisible] = useState(false);
+  const [idStatus, setIdStatus] = useState('');
 
   const onChangeInput = (e) => {
     setFormValue({
@@ -128,7 +139,7 @@ function Trainers() {
   };
 
   const save = () => {
-    //updateTrainer();
+    updateTrainer();
     formInvisible();
   };
 
@@ -137,10 +148,11 @@ function Trainers() {
     addVisible();
   };
 
-  function modify() {
+  const modify = (id) => {
     formVisible();
     saveVisible();
-  }
+    setIdStatus(id);
+  };
 
   const formVisible = () => {
     setIsVisible(true);
@@ -169,23 +181,20 @@ function Trainers() {
         <h2>Trainers</h2>
         <button onClick={create}>Create</button>
         <table>
-          <thead>
-            <tr>
-              <th></th>
-            </tr>
-          </thead>
           <tbody>
             {trainers.map((trainer) => {
               return (
                 <tr key={trainer._id}>
-                  <td>{trainer.firstName}</td>
-                  <td>{trainer.email}</td>
-                  <td>{trainer.phone}</td>
-                  <td>{trainer.city}</td>
-                  <td>
-                    <button className={styles.updateButton} onClick={modify}>
+                  <td className={styles.row}>{trainer.firstName}</td>
+                  <td className={styles.row}>{trainer.email}</td>
+                  <td className={styles.row}>{trainer.phone}</td>
+                  <td className={styles.row}>{trainer.city}</td>
+                  <td className={styles.row}>
+                    <button className={styles.updateButton} onClick={() => modify(trainer._id)}>
                       Modify
                     </button>
+                  </td>
+                  <td>
                     <button
                       className={styles.deleteButton}
                       onClick={() => deleteTrainer(trainer._id)}
