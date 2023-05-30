@@ -74,7 +74,7 @@ function SuperAdmins() {
         }
       );
       const updSuperAdminData = await updatedSuperAdmin.json();
-      if (updSuperAdmin.ok) {
+      if (updatedSuperAdmin.ok) {
         const dataIndex = superAdmins.findIndex((superAdmin) => superAdmin._id === idStatus);
         setSuperAdmin((currentSuperAdmin) => {
           const updatedSuperAdmins = [...currentSuperAdmin];
