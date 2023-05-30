@@ -365,8 +365,12 @@ function Trainers() {
                 <div className={styles.inputContainer}>
                   <label className={styles.label}>Status</label>
                   <select className={styles.input} name="isActive" onChange={onChangeInput}>
-                    <option value={true}>Active</option>
-                    <option value={false}>Inactive</option>
+                    <option value={true} selected={!formValue.isActive}>
+                      Active
+                    </option>
+                    <option value={false} selected={!formValue.isActive}>
+                      Inactive
+                    </option>
                   </select>
                 </div>
               )}
