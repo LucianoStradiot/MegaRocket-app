@@ -3,7 +3,11 @@ import styles from './super-admins.module.css';
 
 function SuperAdmins() {
   const [superAdmins, setSuperAdmin] = useState([]);
-  const [dataFormValue, setDataFormValue] = useState({
+  const [idStatus, setIdStatus] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
+  const [buttonAddIsVisible, setAddVisible] = useState(false);
+  const [buttonSaveIsVisible, setSaveVisible] = useState(false);
+  const [dataForm, setDataForm] = useState({
     email: '',
     password: ''
   });
@@ -13,8 +17,7 @@ function SuperAdmins() {
       const { data: superAdmins } = await response.json();
       setSuperAdmin(superAdmins);
     } catch (error) {
-      console.log(error);
-      // show error in UI
+      alert(error);
     }
   };
   const deleteSuperAdmin = async (id) => {
@@ -25,19 +28,13 @@ function SuperAdmins() {
       setSuperAdmin((currentAdmins) => {
         return currentAdmins.filter((superAdmins) => superAdmins._id !== id);
       });
+      alert('SuperAdmin deleted succesfully!');
       getSuperAdmins();
     } catch (error) {
-      console.error(error);
-      // show error in UI
+      alert(error);
     }
   };
 
-  const onChange = (e) => {
-    setDataFormValue({
-      ...dataFormValue,
-      [e.target.name]: e.target.value
-    });
-  };
   const createSuperAdmin = async () => {
     try {
       const createdSuperAdmin = await fetch(`${process.env.REACT_APP_API_URL}/super-admin/`, {
@@ -45,26 +42,119 @@ function SuperAdmins() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(dataFormValue)
+        body: JSON.stringify(dataForm)
       });
+      const createdSuperAdminData = await createdSuperAdmin.json();
       if (createdSuperAdmin.ok) {
-        const createdSuperAdminData = await createdSuperAdmin.json();
-        setSuperAdmin((currentAdmins) => [...currentAdmins, createdSuperAdminData.data]);
-        console.log(createdSuperAdminData);
-        setDataFormValue({
+        setSuperAdmin((currentSuperAdmins) => {
+          return [...currentSuperAdmins, createdSuperAdminData.data];
+        });
+        setDataForm({
           email: '',
           password: ''
         });
+        alert(createdSuperAdminData.message);
+      } else {
+        alert(createdSuperAdminData.message);
       }
     } catch (error) {
-      console.error(error);
-      // show error in UI
+      alert(error);
     }
   };
-  const onSubmit = (e) => {
+  const updSuperAdmin = async () => {
+    try {
+      const updatedSuperAdmin = await fetch(
+        `${process.env.REACT_APP_API_URL}/super-admin/${idStatus}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(dataForm)
+        }
+      );
+      const updSuperAdminData = await updatedSuperAdmin.json();
+      if (updSuperAdmin.ok) {
+        const dataIndex = superAdmins.findIndex((superAdmin) => superAdmin._id === idStatus);
+        setSuperAdmin((currentSuperAdmin) => {
+          const updatedSuperAdmins = [...currentSuperAdmin];
+          updatedSuperAdmins[dataIndex] = updSuperAdminData.data;
+          return updatedSuperAdmins;
+        });
+        setDataForm({
+          email: '',
+          password: ''
+        });
+        setIdStatus('');
+        alert(updSuperAdminData.message);
+      } else {
+        alert(updSuperAdminData.message);
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+  const onChange = (e) => {
+    setDataForm({
+      ...dataForm,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const submit = (e) => {
     e.preventDefault();
     createSuperAdmin();
+    formInvisible();
   };
+  const save = () => {
+    updSuperAdmin();
+    formInvisible();
+  };
+  const cancel = () => {
+    formInvisible();
+  };
+
+  const create = () => {
+    formVisible();
+    addVisible();
+
+    setDataForm({
+      email: '',
+      password: ''
+    });
+  };
+
+  const edit = (id) => {
+    formVisible();
+    saveVisible();
+    setIdStatus(id);
+
+    const data = superAdmins.find((superAdmin) => superAdmin._id === id);
+
+    setDataForm({
+      email: data.email,
+      password: data.password
+    });
+  };
+
+  const formVisible = () => {
+    setIsVisible(true);
+  };
+
+  const formInvisible = () => {
+    setIsVisible(false);
+  };
+
+  const addVisible = () => {
+    setAddVisible(true);
+    setSaveVisible(false);
+  };
+
+  const saveVisible = () => {
+    setAddVisible(false);
+    setSaveVisible(true);
+  };
+
   useEffect(() => {
     getSuperAdmins();
   }, []);
@@ -72,33 +162,86 @@ function SuperAdmins() {
   return (
     <section className={styles.container}>
       <h2>SuperAdmin</h2>
-      <button>Create</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {superAdmins.map((superAdmin) => {
-            return (
-              <tr key={superAdmin._id}>
-                <td>{superAdmin.email}</td>
-                <td>
-                  <button onClick={() => deleteSuperAdmin(superAdmin._id)}>X</button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <form id="formSA" onSubmit={onSubmit}>
-        <label>Email</label>
-        <input type="text" name="email" onChange={onChange} />
-        <label>Password</label>
-        <input type="password" name="password" onChange={onChange} />
-        <button type="submit">Create</button>
-      </form>
+      <section>
+        <button onClick={create} className={styles.createButton}>
+          Create
+        </button>
+        <table>
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {superAdmins.map((superAdmin) => {
+              return (
+                <tr key={superAdmin._id}>
+                  <td className={styles.row}>{superAdmin.email}</td>
+                  <td className={styles.row}>
+                    <div className={styles.containerButtons}>
+                      <button className={styles.updateButton} onClick={() => edit(superAdmin._id)}>
+                        Edit
+                      </button>
+                      <button
+                        className={styles.deleteButton}
+                        onClick={() => deleteSuperAdmin(superAdmin._id)}
+                      >
+                        X
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        {isVisible && (
+          <section className={styles.sectionForm}>
+            <form className={styles.form} onSubmit={submit} id="form">
+              <div className={styles.subContainer}>
+                <div className={styles.inputContainer}>
+                  <label className={styles.label}>Email</label>
+                  <input
+                    className={styles.input}
+                    type="text"
+                    name="email"
+                    id="email"
+                    value={dataForm.email}
+                    onChange={onChange}
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <label className={styles.label}>Password</label>
+                  <input
+                    className={styles.input}
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={dataForm.password}
+                    onChange={onChange}
+                  />
+                </div>
+              </div>
+              <div className={styles.btnContainer}>
+                <button className={`${styles.button} ${styles.btnCancel}`} onClick={cancel}>
+                  Cancel
+                </button>
+                {buttonAddIsVisible && (
+                  <button className={styles.button} onClick={submit}>
+                    Add
+                  </button>
+                )}
+                {buttonSaveIsVisible && (
+                  <button className={styles.button} onClick={save}>
+                    Save
+                  </button>
+                )}
+              </div>
+            </form>
+          </section>
+        )}
+      </section>
     </section>
   );
 }
