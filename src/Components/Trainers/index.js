@@ -6,6 +6,7 @@ function Trainers() {
   const [isVisible, setIsVisible] = useState(false);
   const [buttonAddIsVisible, setAddVisible] = useState(false);
   const [buttonSaveIsVisible, setSaveVisible] = useState(false);
+  const [activeIsVisible, setActiveVisible] = useState(false);
   const [idStatus, setIdStatus] = useState('');
   const [formValue, setFormValue] = useState({
     firstName: '',
@@ -16,7 +17,7 @@ function Trainers() {
     city: '',
     password: '',
     salary: '',
-    isActive: true
+    isActive: ''
   });
 
   const getTrainers = async () => {
@@ -113,7 +114,7 @@ function Trainers() {
           city: '',
           password: '',
           salary: '',
-          isActive: true
+          isActive: ''
         });
 
         setIdStatus('');
@@ -151,6 +152,7 @@ function Trainers() {
   const create = () => {
     formVisible();
     addVisible();
+    activeInvisible();
 
     setFormValue({
       firstName: '',
@@ -168,6 +170,7 @@ function Trainers() {
   const modify = (id) => {
     formVisible();
     saveVisible();
+    activeVisible();
     setIdStatus(id);
 
     const data = trainers.find((trainer) => trainer._id === id);
@@ -181,7 +184,7 @@ function Trainers() {
       city: data.city,
       password: data.password,
       salary: data.salary,
-      isActive: true
+      isActive: data.isActive
     });
   };
 
@@ -203,6 +206,22 @@ function Trainers() {
     setSaveVisible(true);
   };
 
+  const activeVisible = () => {
+    setActiveVisible(true);
+  };
+
+  const activeInvisible = () => {
+    setActiveVisible(false);
+  };
+
+  const showActive = (active) => {
+    if (active) {
+      return 'active';
+    } else {
+      return 'inactive';
+    }
+  };
+
   useEffect(() => {
     getTrainers();
   }, []);
@@ -222,6 +241,7 @@ function Trainers() {
             <th>Phone</th>
             <th>City</th>
             <th>Salary</th>
+            <th>Status</th>
             <th className={styles.headEnd}></th>
           </thead>
           <tbody>
@@ -236,6 +256,7 @@ function Trainers() {
                   <td className={styles.row}>{trainer.phone}</td>
                   <td className={styles.row}>{trainer.city}</td>
                   <td className={styles.row}>{trainer.salary}</td>
+                  <td className={styles.row}>{showActive(trainer.isActive)}</td>
                   <td className={styles.row}>
                     <div className={styles.containerButtons}>
                       <button className={styles.updateButton} onClick={() => modify(trainer._id)}>
@@ -340,6 +361,15 @@ function Trainers() {
                   onChange={onChangeInput}
                 />
               </div>
+              {activeIsVisible && (
+                <div className={styles.inputContainer}>
+                  <label className={styles.label}>Status</label>
+                  <select className={styles.input} name="isActive" onChange={onChangeInput}>
+                    <option value={true}>Active</option>
+                    <option value={false}>Inactive</option>
+                  </select>
+                </div>
+              )}
             </div>
             <div className={styles.btnContainer}>
               <button className={`${styles.button} ${styles.btnCancel}`} onClick={cancel}>
