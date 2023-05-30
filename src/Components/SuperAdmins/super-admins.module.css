@@ -1,11 +1,3 @@
-.container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 h2 {
   text-align: center;
 }
@@ -24,8 +16,17 @@ th {
   padding: 10px 16px;
 }
 
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
 .row {
-  padding: 10px 16px;
+  padding: 10px 20px;
   border-bottom: 1px solid #ddd;
 }
 
@@ -62,6 +63,13 @@ th {
   cursor: pointer;
 }
 
+.form {
+  color: #373867;
+  background-color: #eee;
+  padding: 25px;
+  border-radius: 8px;
+}
+
 .updateButton:hover {
   background-color: #4caf50;
   color: #fff;
@@ -81,25 +89,10 @@ th {
 }
 
 .sectionForm {
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-.form {
-  color: #373867;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #eee;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.subContainer {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
 
 .inputContainer {
   display: flex;
@@ -115,7 +108,6 @@ th {
 
 
 .btnContainer {
-  width: 100%;
   display: flex;
   justify-content: space-between;
 }

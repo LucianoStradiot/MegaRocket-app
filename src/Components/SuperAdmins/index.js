@@ -5,8 +5,8 @@ function SuperAdmins() {
   const [superAdmins, setSuperAdmin] = useState([]);
   const [idStatus, setIdStatus] = useState('');
   const [isVisible, setIsVisible] = useState(false);
-  const [buttonAddIsVisible, setAddVisible] = useState(false);
-  const [buttonSaveIsVisible, setSaveVisible] = useState(false);
+  const [btnAddIsVisible, setAddVisible] = useState(false);
+  const [btnSaveIsVisible, setSaveVisible] = useState(false);
   const [dataForm, setDataForm] = useState({
     email: '',
     password: ''
@@ -199,7 +199,7 @@ function SuperAdmins() {
         {isVisible && (
           <section className={styles.sectionForm}>
             <form className={styles.form} onSubmit={submit} id="form">
-              <div className={styles.subContainer}>
+              <div>
                 <div className={styles.inputContainer}>
                   <label className={styles.label}>Email</label>
                   <input
@@ -227,12 +227,12 @@ function SuperAdmins() {
                 <button className={`${styles.button} ${styles.btnCancel}`} onClick={cancel}>
                   Cancel
                 </button>
-                {buttonAddIsVisible && (
+                {btnAddIsVisible && (
                   <button className={styles.button} onClick={submit}>
                     Add
                   </button>
                 )}
-                {buttonSaveIsVisible && (
+                {btnSaveIsVisible && (
                   <button className={styles.button} onClick={save}>
                     Save
                   </button>
