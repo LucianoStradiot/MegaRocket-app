@@ -3,6 +3,10 @@ import styles from './admins.module.css';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);
+  const [idStatus, setIdStatus] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
+  const [buttonAddIsVisible, setAddVisible] = useState(false);
+  const [buttonSaveIsVisible, setSaveVisible] = useState(false);
   const [formChange, setFormChange] = useState({
     firstName: '',
     lastName: '',
@@ -133,11 +137,6 @@ function Admins() {
     });
   };
 
-  const [idStatus, setIdStatus] = useState('');
-  const [isVisible, setIsVisible] = useState(false);
-  const [buttonAddIsVisible, setAddVisible] = useState(false);
-  const [buttonSaveIsVisible, setSaveVisible] = useState(false);
-
   const save = () => {
     updateAdmins();
     formInvisible();
@@ -146,6 +145,10 @@ function Admins() {
   const create = () => {
     formVisible();
     addVisible();
+  };
+
+  const cancel = () => {
+    formInvisible();
   };
 
   function edit(id) {
@@ -226,7 +229,7 @@ function Admins() {
           </tbody>
         </table>
         {isVisible && (
-          <form onSubmit={onSubmit}>
+          <form className={styles.container} onSubmit={onSubmit}>
             <div className={styles.block}>
               <div className={styles.firstPart}>
                 <label>First Name</label>
@@ -261,6 +264,9 @@ function Admins() {
                   type="text"
                   onChange={onChangeInput}
                 />
+                <button className={styles.cancelBtn} onClick={cancel}>
+                  Cancel
+                </button>
               </div>
               <div className={styles.firstPart}>
                 <label>Email</label>
@@ -288,12 +294,12 @@ function Admins() {
                   onChange={onChangeInput}
                 />
                 {buttonAddIsVisible && (
-                  <button className={styles.button} type="submit">
+                  <button className={`${styles.createBtn} && ${styles.createBtn2}`} type="submit">
                     Create
                   </button>
                 )}
                 {buttonSaveIsVisible && (
-                  <button className={styles.button} onClick={save}>
+                  <button className={`${styles.createBtn} && ${styles.createBtn2}`} onClick={save}>
                     Save
                   </button>
                 )}

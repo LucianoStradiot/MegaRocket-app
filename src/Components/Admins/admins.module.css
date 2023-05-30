@@ -5,17 +5,6 @@
   align-items: center;
 }
 
-.block {
-  display: flex;
-  width: 400px;
-  justify-content: space-around;
-}
-
-.firstPart {
-  display: flex;
-  flex-direction: column;
-}
-
 .rows {
   height: 45px;
   background-color: #fff;
@@ -65,9 +54,15 @@
   cursor: pointer;
 }
 
+.createBtn2 {
+  margin: 105px auto 0;
+}
+
 .createBtn:hover {
   background-color: #fff;
   color: #3a3b7b;
+  font-weight: 700;
+  font-size: 15px;
 }
 
 .editBtn {
@@ -99,4 +94,52 @@
 .deleteBtn:hover {
   background-color: #ee190a;
   cursor: pointer;
+}
+
+.cancelBtn {
+  width: 72px;
+  height: 32px;
+  margin: 30px auto 0;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #3a3b7b;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.cancelBtn:hover {
+  background-color: #DDD;
+  color: #000;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.block {
+  display: flex;
+  justify-content: space-around;
+  padding: 40px;
+  margin: 30px;
+  width: 500px;
+  border-radius: 7px;
+  background-color: #DDD;
+}
+
+.firstPart {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  padding: 9px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+
+label {
+  padding: 10px;
+  text-align: center;
+  color: #3a3b7b;
+  font-weight: 700;
+  font-size: 16px;
 }
