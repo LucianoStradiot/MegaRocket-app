@@ -7,10 +7,11 @@ function Activities() {
   const [buttonAddIsVisible, setAddVisible] = useState(false);
   const [buttonSaveIsVisible, setSaveVisible] = useState(false);
   const [idStatus, setIdStatus] = useState('');
+  const [activeIsVisible, setActiveVisible] = useState(false);
   const [activityFormValue, setActivityFormValue] = useState({
     name: '',
     description: '',
-    isActive: true
+    isActive: ''
   });
   const getActivities = async () => {
     try {
@@ -18,7 +19,7 @@ function Activities() {
       const { data: activities } = await response.json();
       setActivities(activities);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -30,7 +31,7 @@ function Activities() {
       });
       getActivities();
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -87,7 +88,7 @@ function Activities() {
         setActivityFormValue({
           name: '',
           description: '',
-          isActive: true
+          isActive: ''
         });
         setIdStatus('');
       }
@@ -121,6 +122,7 @@ function Activities() {
   const create = () => {
     formVisible();
     addVisible();
+    activeInvisible();
     setActivityFormValue({
       name: '',
       description: ''
@@ -130,6 +132,7 @@ function Activities() {
   const modify = (id) => {
     formVisible();
     saveVisible();
+    activeVisible();
     setIdStatus(id);
     const data = activities.find((activity) => activity._id === id);
 
@@ -158,6 +161,22 @@ function Activities() {
     setSaveVisible(true);
   };
 
+  const activeVisible = () => {
+    setActiveVisible(true);
+  };
+
+  const activeInvisible = () => {
+    setActiveVisible(false);
+  };
+
+  const showActive = (active) => {
+    if (active) {
+      return 'active';
+    } else {
+      return 'inactive';
+    }
+  };
+
   useEffect(() => {
     getActivities();
   }, []);
@@ -173,6 +192,7 @@ function Activities() {
           <thead>
             <th className={styles.head}>Activity Name</th>
             <th>Description</th>
+            <th>Status</th>
             <th className={styles.headEnd}></th>
           </thead>
           <tbody>
@@ -181,6 +201,7 @@ function Activities() {
                 <tr key={activity._id} className={styles.row}>
                   <td className={styles.row}>{activity.name}</td>
                   <td className={styles.row}>{activity.description}</td>
+                  <td className={styles.row}>{showActive(activity.isActive)}</td>
                   <td className={styles.row}>
                     <div className={styles.containerButtons}>
                       <button className={styles.updateButton} onClick={() => modify(activity._id)}>
@@ -223,6 +244,18 @@ function Activities() {
                   value={activityFormValue.description}
                 />
               </div>
+              {activeIsVisible && (
+                <div>
+                  <select name="isActive" onChange={onChangeInput}>
+                    <option value={true} selected={!activityFormValue.isActive}>
+                      Active
+                    </option>
+                    <option value={false} selected={!activityFormValue.isActive}>
+                      Inactive
+                    </option>
+                  </select>
+                </div>
+              )}
               <div className={styles.btnContainer}>
                 <button className={`${styles.button} ${styles.btnCancel}`} onClick={cancel}>
                   Cancel
