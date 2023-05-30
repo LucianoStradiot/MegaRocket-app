@@ -5,3 +5,76 @@
   align-items: center;
   flex-direction: column;
 }
+
+button,
+input[type="submit"] {
+  color: #373867;
+  border-radius: 6px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  background-color: #eee;
+}
+
+td {
+  text-align: center;
+  padding: 10px 16px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  margin: 20px;
+  background-color: #eee;
+  border-radius: 8px;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+form button,
+form input[type="submit"] {
+  width: 80px;
+}
+
+label {
+  margin: 8px 0;
+}
+
+.createClassButton {
+  margin-bottom: 8px;
+}
+
+.firstTH {
+  border-radius: 8px 0 0 0;
+}
+
+.lastTH {
+  border-radius: 0 8px 0 0;
+}
+
+.delete {
+  border-color: #ee190a;
+}
+
+.sendContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.editButton {
+  color: #4caf50;
+  border-color: #4caf50;
+}

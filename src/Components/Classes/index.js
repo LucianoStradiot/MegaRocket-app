@@ -10,6 +10,7 @@ function Classes() {
     slots: ''
   });
 
+  const [idStatus, setIDStatus] = useState('');
   const [classes, setClasses] = useState([]);
   const getClasses = async () => {
     try {
@@ -17,7 +18,7 @@ function Classes() {
       const { data: classes } = await response.json();
       setClasses(classes);
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -28,7 +29,7 @@ function Classes() {
       const { data: activities } = await response.json();
       setActivities(activities);
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -39,7 +40,7 @@ function Classes() {
       const { data: trainers } = await response.json();
       setTrainers(trainers);
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -51,7 +52,7 @@ function Classes() {
       });
       getClasses();
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -71,13 +72,12 @@ function Classes() {
         },
         body: JSON.stringify(formData)
       });
+
+      const createdClassData = await createdClass.json();
       if (!createdClass.ok) {
-        const errorData = await createdClass.json();
-        throw new Error(JSON.stringify(errorData));
+        throw new Error(createdClassData.message);
       } else {
-        const createdClassData = await createdClass.json();
-        setClasses((currentClasses) => [...currentClasses, createdClass.data]);
-        console.log(createdClassData);
+        setClasses((currentClasses) => [...currentClasses, createdClassData.data]);
         setFormData({
           day: '',
           hour: '',
@@ -85,65 +85,166 @@ function Classes() {
           activity: '',
           slots: ''
         });
+        alert(createdClassData.message);
+        getClasses();
       }
     } catch (error) {
-      alert(error.message);
+      alert(error);
     }
   };
 
-  /* const editClass = async (id) => {
+  const editClass = async () => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/classes/${id}`, {
+      const updatedClass = await fetch(`${process.env.REACT_APP_API_URL}/classes/${idStatus}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData)
       });
+
+      if (!updatedClass.ok) {
+        const errorData = await updatedClass.json();
+        throw new Error(errorData.message);
+      } else {
+        const updatedClassData = await updatedClass.json();
+        const updatedClassIndex = classes.findIndex((oneClass) => oneClass._id === idStatus);
+        setClasses((currentClasses) => {
+          const updatedClasses = [...currentClasses];
+          updatedClasses[updatedClassIndex] = updatedClassData.data;
+          return updatedClasses;
+        });
+
+        setFormData({
+          day: '',
+          hour: '',
+          trainer: '',
+          activity: '',
+          slots: ''
+        });
+
+        getClasses();
+      }
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
-  }; */
+  };
 
   useEffect(() => {
-    getClasses();
     getActivities();
     getTrainers();
+    getClasses();
   }, []);
 
-  const [isVisible, setVisible] = useState(false);
+  const [formVisible, setFormVisible] = useState(false);
 
-  const visible = () => setVisible(true);
+  const visible = () => setFormVisible(true);
 
-  const notVisible = () => setVisible(false);
+  const notVisible = () => setFormVisible(false);
+
+  const [sendVisible, setSendVisible] = useState(false);
+
+  const sendButtonVisible = () => setSendVisible(true);
+
+  const sendButtonNotVisible = () => setSendVisible(false);
+
+  const [updateVisible, setUpdateVisible] = useState(false);
+
+  const updateButtonVisible = () => setUpdateVisible(true);
+
+  const updateButtonNotVisible = () => setUpdateVisible(false);
+
+  const formEdit = (id) => {
+    visible();
+    updateButtonVisible();
+    sendButtonNotVisible();
+    setIDStatus(id);
+
+    const data = classes.find((oneClass) => oneClass._id === id);
+
+    setFormData({
+      day: data.day,
+      hour: data.hour,
+      trainer: data.trainer._id,
+      activity: data.activity._id,
+      slots: data.slots
+    });
+  };
+
+  const create = () => {
+    createClass();
+    notVisible();
+    sendButtonNotVisible();
+  };
+
+  const save = () => {
+    editClass();
+    notVisible();
+    updateButtonNotVisible();
+  };
 
   return (
     <section className={styles.container}>
       <h2>Classes</h2>
-      <button onClick={visible}>Create Class</button>
+      <button
+        onClick={() => {
+          visible();
+          sendButtonVisible();
+          updateButtonNotVisible();
+          setFormData({
+            day: '',
+            hour: '',
+            trainer: '',
+            activity: '',
+            slots: ''
+          });
+        }}
+        className={styles.createClassButton}
+      >
+        Create Class
+      </button>
       <table>
         <thead>
           <tr>
-            <th>Day</th>
+            <th className={styles.firstTH}>Day</th>
             <th>Hour</th>
             <th>Trainer</th>
             <th>Activity</th>
             <th>Slots</th>
+            <th></th>
+            <th className={styles.lastTH}></th>
           </tr>
         </thead>
         <tbody>
           {classes.map((oneClass) => {
+            const trainerName = oneClass.trainer
+              ? `${oneClass.trainer.firstName} ${oneClass.trainer.lastName}`
+              : 'empty';
+            const activityName = oneClass.activity ? `${oneClass.activity.name}` : 'empty';
             return (
               <tr key={oneClass._id}>
                 <td>{oneClass.day}</td>
                 <td>{oneClass.hour}</td>
-                <td>
-                  {oneClass.trainer.firstName} {oneClass.trainer.lastName}
-                </td>
-                <td>{oneClass.activity.name}</td>
+                <td>{trainerName}</td>
+                <td>{activityName}</td>
                 <td>{oneClass.slots}</td>
                 <td>
-                  <button key={oneClass._id} onClick={() => deleteClass(oneClass._id)}>
+                  <button
+                    key={oneClass._id}
+                    onClick={() => {
+                      formEdit(oneClass._id);
+                    }}
+                    className={styles.editButton}
+                  >
+                    edit
+                  </button>
+                </td>
+                <td>
+                  <button
+                    key={oneClass._id}
+                    onClick={() => deleteClass(oneClass._id)}
+                    className={styles.delete}
+                  >
                     X
                   </button>
                 </td>
@@ -152,46 +253,85 @@ function Classes() {
           })}
         </tbody>
       </table>
-      {isVisible && (
+      {formVisible && (
         <form onSubmit={(e) => e.preventDefault()}>
-          <label htmlFor="day"></label>
-          <select name="day" id="day" onChange={onChange}>
-            <option value="undefined">Choose a Day</option>
-            <option value="Monday">Monday</option>
-            <option value="Tuesday">Tuesday</option>
-            <option value="Wednesday">Wednesday</option>
-            <option value="Thursday">Thursday</option>
-            <option value="Friday">Friday</option>
-            <option value="Saturday">Saturday</option>
-          </select>
-          <label htmlFor="hour">Hour</label>
-          <input id="hour" type="text" name="hour" onChange={onChange} />
-          <label htmlFor="trainer">Trainer</label>
-          <select name="trainer" id="trainer" onChange={onChange}>
-            <option value="undefined">Choose a Trainer</option>
-            {trainers.map((trainer) => {
-              return (
-                <option value={trainer._id} key={trainer._id}>
-                  {trainer.firstName} {trainer.lastName}
-                </option>
-              );
-            })}
-          </select>
-          <label htmlFor="activity">Activity</label>
-          <select name="activity" id="activity" onChange={onChange}>
-            <option value="undefined">Choose an Activity</option>
-            {activities.map((activity) => {
-              return (
-                <option value={activity._id} key={activity._id}>
-                  {activity.name}
-                </option>
-              );
-            })}
-          </select>
-          <label htmlFor="slots">Slots</label>
-          <input id="slots" type="text" name="slots" onChange={onChange} />
-          <button onClick={notVisible}>Cancel</button>
-          <input type="submit" value="Send" onClick={() => createClass()} />
+          <div className={styles.formContainer}>
+            <label htmlFor="day">day</label>
+            <select name="day" id="day" onChange={onChange}>
+              <option value="undefined" defaultValue>
+                Choose a Day
+              </option>
+              <option value="Monday" selected={formData.day === 'Monday'}>
+                Monday
+              </option>
+              <option value="Tuesday" selected={formData.day === 'Tuesday'}>
+                Tuesday
+              </option>
+              <option value="Wednesday" selected={formData.day === 'Wednesday'}>
+                Wednesday
+              </option>
+              <option value="Thursday" selected={formData.day === 'Thursday'}>
+                Thursday
+              </option>
+              <option value="Friday" selected={formData.day === 'Friday'}>
+                Friday
+              </option>
+              <option value="Saturday" selected={formData.day === 'Saturday'}>
+                Saturday
+              </option>
+            </select>
+            <label htmlFor="hour">Hour</label>
+            <input id="hour" type="text" name="hour" value={formData.hour} onChange={onChange} />
+            <label htmlFor="trainer">Trainer</label>
+            <select name="trainer" id="trainer" onChange={onChange}>
+              <option value="undefined" defaultValue>
+                Choose a Trainer
+              </option>
+              {trainers.map((trainer) => {
+                return (
+                  <option
+                    value={trainer._id}
+                    key={trainer._id}
+                    selected={formData.trainer === trainer._id}
+                  >
+                    {trainer.firstName} {trainer.lastName}
+                  </option>
+                );
+              })}
+            </select>
+            <label htmlFor="activity">Activity</label>
+            <select name="activity" id="activity" onChange={onChange}>
+              <option value="undefined" defaultValue>
+                Choose an Activity
+              </option>
+              {activities.map((activity) => {
+                return (
+                  <option
+                    value={activity._id}
+                    key={activity._id}
+                    selected={formData.activity === activity._id}
+                  >
+                    {activity.name}
+                  </option>
+                );
+              })}
+            </select>
+            <label htmlFor="slots">Slots</label>
+            <input id="slots" type="text" name="slots" value={formData.slots} onChange={onChange} />
+          </div>
+          <div className={styles.sendContainer}>
+            <button
+              onClick={() => {
+                notVisible();
+                sendButtonNotVisible();
+                updateButtonNotVisible();
+              }}
+            >
+              Cancel
+            </button>
+            {sendVisible && <input type="submit" value="Send" onClick={create} />}
+            {updateVisible && <input type="submit" value="Update" onClick={save} />}
+          </div>
         </form>
       )}
     </section>
