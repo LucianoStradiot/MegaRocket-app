@@ -25,7 +25,7 @@ function Admins() {
 
       setAdmins(admins);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -41,7 +41,7 @@ function Admins() {
       alert('Admin deleted succesfully!');
       getAdmins();
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -55,10 +55,9 @@ function Admins() {
         body: JSON.stringify(formChange)
       });
 
+      const createdAdminsData = await createdAdmin.json();
       if (createdAdmin.ok) {
-        const createdAdminsData = await createdAdmin.json();
         setAdmins((currentAdmins) => [...currentAdmins, createdAdminsData.data]);
-        console.log(createdAdminsData);
         setFormChange({
           firstName: '',
           lastName: '',
@@ -70,11 +69,10 @@ function Admins() {
         });
         alert(createdAdminsData.message);
       } else {
-        const resp = await createdAdmin.json();
-        alert(resp.message);
+        throw new Error(createdAdminsData.message);
       }
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -88,8 +86,8 @@ function Admins() {
         body: JSON.stringify(formChange)
       });
 
+      const updatedAdmin = await updatedAdminRes.json();
       if (updatedAdminRes.ok) {
-        const updatedAdmin = await updatedAdminRes.json();
         if (updatedAdmin.error) {
           alert(updatedAdmin.message);
         } else {
@@ -112,11 +110,10 @@ function Admins() {
           alert(updatedAdmin.message);
         }
       } else {
-        const resp = await updatedAdminRes.json();
-        alert(resp.message);
+        throw new Error(updatedAdmin.message);
       }
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -127,7 +124,7 @@ function Admins() {
   const onSubmit = (e) => {
     e.preventDefault();
     createAdmin();
-    formVisible();
+    formInvisible();
   };
 
   const onChangeInput = (e) => {
@@ -145,6 +142,15 @@ function Admins() {
   const create = () => {
     formVisible();
     addVisible();
+    setFormChange({
+      firstName: '',
+      lastName: '',
+      dni: '',
+      phone: '',
+      email: '',
+      city: '',
+      password: ''
+    });
   };
 
   const cancel = () => {
