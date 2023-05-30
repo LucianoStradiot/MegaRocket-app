@@ -114,9 +114,17 @@ function Activities() {
     formInvisible();
   };
 
+  const cancel = () => {
+    formInvisible();
+  };
+
   const create = () => {
     formVisible();
     addVisible();
+    setActivityFormValue({
+      name: '',
+      description: ''
+    });
   };
 
   const modify = (id) => {
@@ -155,22 +163,36 @@ function Activities() {
   }, []);
 
   return (
-    <div>
-      <section className={styles.container}>
+    <div className={styles.container}>
+      <section>
         <h2>Activities</h2>
-        <button onClick={create}>Create</button>
+        <button onClick={create} className={styles.createButton}>
+          Create
+        </button>
         <table>
+          <thead>
+            <th className={styles.head}>Activity Name</th>
+            <th>Description</th>
+            <th className={styles.headEnd}></th>
+          </thead>
           <tbody>
             {activities.map((activity) => {
               return (
                 <tr key={activity._id} className={styles.row}>
-                  <td>{activity.name}</td>
-                  <td>{activity.description}</td>
-                  <td>
-                    <button className={styles.updateButton} onClick={() => modify(activity._id)}>
-                      Modify
-                    </button>
-                    <button onClick={() => deleteActiviy(activity._id)}>X</button>
+                  <td className={styles.row}>{activity.name}</td>
+                  <td className={styles.row}>{activity.description}</td>
+                  <td className={styles.row}>
+                    <div className={styles.containerButtons}>
+                      <button className={styles.updateButton} onClick={() => modify(activity._id)}>
+                        Modify
+                      </button>
+                      <button
+                        className={styles.deleteButton}
+                        onClick={() => deleteActiviy(activity._id)}
+                      >
+                        X
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );
@@ -181,29 +203,44 @@ function Activities() {
       {isVisible && (
         <section className={styles.sectionForm}>
           <form className={styles.form} onSubmit={onSubmit} id="form">
-            <label>name</label>
-            <input
-              name="name"
-              type="text"
-              onChange={onChangeInput}
-              value={activityFormValue.name}
-            />
-            <label>description</label>
-            <input
-              name="description"
-              type="text"
-              onChange={onChangeInput}
-              value={activityFormValue.description}
-            ></input>
-
-            {buttonAddIsVisible && <button type="submit">add</button>}
-            {buttonSaveIsVisible && (
-              <div>
-                <button className={styles.button} onClick={save}>
-                  Save
-                </button>
+            <div className={styles.subContainer}>
+              <div className={styles.inputContainer}>
+                <label>name</label>
+                <input
+                  name="name"
+                  type="text"
+                  onChange={onChangeInput}
+                  value={activityFormValue.name}
+                />
               </div>
-            )}
+              <div className={styles.inputContainer}>
+                <label>description</label>
+                <textarea
+                  className={styles.inputDescription}
+                  name="description"
+                  type="text"
+                  onChange={onChangeInput}
+                  value={activityFormValue.description}
+                />
+              </div>
+              <div className={styles.btnContainer}>
+                <button className={`${styles.button} ${styles.btnCancel}`} onClick={cancel}>
+                  Cancel
+                </button>
+                {buttonAddIsVisible && (
+                  <button className={styles.button} type="submit">
+                    add
+                  </button>
+                )}
+                {buttonSaveIsVisible && (
+                  <div>
+                    <button className={styles.button} onClick={save}>
+                      Save
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
           </form>
         </section>
       )}
