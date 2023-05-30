@@ -15,3 +15,88 @@
   display: flex;
   flex-direction: column;
 }
+
+.rows {
+  height: 45px;
+  background-color: #fff;
+  text-align: center;
+  border-bottom: 1px solid #DDD;
+}
+
+.rowsHead {
+  height: 45px;
+  background-color: #eee;
+  color: #3a3b7b;
+  text-align: center;
+}
+
+.mainTable {
+  border-collapse: collapse;
+}
+
+.columns {
+  width: 130px;
+  color: #3a3b7b;
+}
+
+.columns1 {
+  width: 100px;
+  border-radius: 8px 0 0 0;
+}
+
+.columns2 {
+  width: 100px;
+  border-radius: 0 8px 0 0;
+}
+
+.title {
+  text-align: center;
+}
+
+.createBtn {
+  width: 72px;
+  height: 32px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #3a3b7b;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.createBtn:hover {
+  background-color: #fff;
+  color: #3a3b7b;
+}
+
+.editBtn {
+  margin-right: 12px;
+  width: 50px;
+  height: 26px;
+  border: 1px solid #4caf50;
+  border-radius: 4px;
+  color: #4caf50;
+  background-color: #FFF;
+}
+
+.editBtn:hover {
+  background-color: #4caf50;
+  color: #FFF;
+  cursor: pointer;
+}
+
+.deleteBtn {
+  margin-right: 12px;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f55348;
+  color: #fff;
+}
+
+.deleteBtn:hover {
+  background-color: #ee190a;
+  cursor: pointer;
+}

@@ -148,7 +148,7 @@ function Admins() {
     addVisible();
   };
 
-  function modify(id) {
+  function edit(id) {
     formVisible();
     saveVisible();
     setIdStatus(id);
@@ -186,30 +186,37 @@ function Admins() {
   return (
     <div className={styles.container}>
       <section>
-        <h2>Admins</h2>
-        <button onClick={create}>Create</button>
-        <table>
+        <h2 className={styles.title}>Admins</h2>
+        <button className={styles.createBtn} onClick={create}>
+          Create
+        </button>
+        <table className={styles.mainTable}>
           <thead>
-            <tr>
-              <th>Name</th>
+            <tr className={styles.rowsHead}>
+              <th className={styles.columns1}>Name</th>
               <th>Last Name</th>
+              <th>DNI</th>
+              <th>Phone</th>
               <th>E-mail</th>
               <th>City</th>
+              <th className={styles.columns2}></th>
             </tr>
           </thead>
           <tbody>
             {admins.map((admin) => {
               return (
-                <tr key={admin._id}>
-                  <td>{admin.firstName}</td>
-                  <td>{admin.lastName}</td>
-                  <td>{admin.email}</td>
-                  <td>{admin.city}</td>
+                <tr className={styles.rows} key={admin._id}>
+                  <td className={styles.columns}>{admin.firstName}</td>
+                  <td className={styles.columns}>{admin.lastName}</td>
+                  <td className={styles.columns}>{admin.dni}</td>
+                  <td className={styles.columns}>{admin.phone}</td>
+                  <td className={styles.columns}>{admin.email}</td>
+                  <td className={styles.columns}>{admin.city}</td>
                   <td>
-                    <button className={styles.updateButton} onClick={() => modify(admin._id)}>
-                      Modify
+                    <button className={styles.editBtn} onClick={() => edit(admin._id)}>
+                      Edit
                     </button>
-                    <button className={styles.deleteButton} onClick={() => deleteAdmin(admin._id)}>
+                    <button className={styles.deleteBtn} onClick={() => deleteAdmin(admin._id)}>
                       X
                     </button>
                   </td>
