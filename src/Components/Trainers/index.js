@@ -22,7 +22,7 @@ function Trainers() {
 
   const getTrainers = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/trainers`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
       const { data: trainers } = await response.json();
 
       setTrainers(trainers);
@@ -33,7 +33,7 @@ function Trainers() {
 
   const deleteTrainer = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/trainers/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
         method: 'DELETE'
       });
 
@@ -50,7 +50,7 @@ function Trainers() {
 
   const createTrainer = async () => {
     try {
-      const createdTrainerResponse = await fetch(`${process.env.REACT_APP_API_URL}/trainers/`, {
+      const createdTrainerResponse = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -86,7 +86,7 @@ function Trainers() {
   const updateTrainer = async () => {
     try {
       const updatedTrainerResponse = await fetch(
-        `${process.env.REACT_APP_API_URL}/trainers/${idStatus}`,
+        `${process.env.REACT_APP_API_URL}/api/trainers/${idStatus}`,
         {
           method: 'PUT',
           headers: {
