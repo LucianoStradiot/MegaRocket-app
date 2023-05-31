@@ -13,7 +13,7 @@ function Subscriptions() {
 
   const getSubscriptions = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
         method: 'GET'
       });
       const { data: subscriptions } = await response.json();
@@ -38,7 +38,7 @@ function Subscriptions() {
 
   const deleteSubscriptions = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
         method: 'DELETE'
       });
       setSubscriptions((currentSubscriptions) => {
@@ -59,7 +59,7 @@ function Subscriptions() {
 
   const createSubscription = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -83,7 +83,7 @@ function Subscriptions() {
 
   const updateSubscription = async (id) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -116,7 +116,7 @@ function Subscriptions() {
 
   useEffect(() => {
     getSubscriptions();
-  }, [subscriptions]);
+  }, []);
 
   return (
     <section className="container">
@@ -124,7 +124,7 @@ function Subscriptions() {
         <thead>
           <tr>
             <th>Id Subscription</th>
-            <th>Id Classes</th>
+            <th>Time slot</th>
             <th>Name</th>
             <th>Last Name</th>
             <th>Date</th>
@@ -137,7 +137,7 @@ function Subscriptions() {
             return (
               <tr key={subs._id}>
                 <td>{subs._id}</td>
-                <td>{subs.classes && subs.classes._id}</td>
+                <td>{subs.classes && subs.classes.hour}</td>
                 <td>{subs.member && subs.member.firstName}</td>
                 <td>{subs.member && subs.member.lastName}</td>
                 <td>{subs.date}</td>
