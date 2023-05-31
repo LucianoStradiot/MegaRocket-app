@@ -18,7 +18,7 @@ const Members = () => {
   });
   const [idMember, setIdMember] = useState('');
   const getMembers = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/members`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
     const data = await response.json();
     setMembers(data.data);
     console.log(data);
@@ -72,7 +72,7 @@ const Members = () => {
   const updateMember = async (idMember) => {
     const dateFormat = changeDateFormat(memberValues.birthday);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/members/${idMember}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${idMember}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -98,7 +98,7 @@ const Members = () => {
   const addMember = async (member) => {
     const dateFormat = changeDateFormat(member.birthday);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/members`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -115,7 +115,7 @@ const Members = () => {
 
   const deleteMember = async (memberId) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/members/${memberId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${memberId}`, {
         method: 'DELETE'
       });
       console.log(response);
