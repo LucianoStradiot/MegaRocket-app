@@ -7,7 +7,8 @@ const Form = ({
   setMemberValues,
   updateMember,
   idMember,
-  setIdMember
+  setIdMember,
+  setShowForm
 }) => {
   const onChange = (e) => {
     setMemberValues({
@@ -23,6 +24,7 @@ const Form = ({
     } else {
       updateMember(idMember);
     }
+    setShowForm(false);
     setIdMember('');
     setMemberValues({
       firstName: '',
@@ -44,7 +46,7 @@ const Form = ({
         <div className={styles.inputContainer}>
           <label className={styles.label}>First Name</label>
           <input
-            className="name"
+            className={styles.input}
             name="firstName"
             type="text"
             value={memberValues.firstName}
@@ -161,6 +163,27 @@ const Form = ({
         </div>
         <button className={styles.button} type="submit">
           Add
+        </button>
+        <button
+          className={styles.button}
+          onClick={() => {
+            setShowForm(false);
+            setIdMember('');
+            setMemberValues({
+              firstName: '',
+              lastName: '',
+              email: '',
+              dni: '',
+              phone: '',
+              city: '',
+              birthday: '2023-05-29T07:32:26+0000',
+              postalCode: '',
+              membership: '',
+              isActive: true
+            });
+          }}
+        >
+          Cancel
         </button>
       </div>
     </form>

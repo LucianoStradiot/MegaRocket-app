@@ -5,6 +5,7 @@ import Form from './Form';
 
 const Members = () => {
   const [members, setMembers] = useState([]);
+  const [showForm, setShowForm] = useState(false);
   const [memberValues, setMemberValues] = useState({
     firstName: '',
     lastName: '',
@@ -99,20 +100,30 @@ const Members = () => {
   return (
     <section className={styles.container}>
       <h2>Members</h2>
-      <Form
-        addMember={addMember}
-        memberValues={memberValues}
-        setMemberValues={setMemberValues}
-        updateMember={updateMember}
-        idMember={idMember}
-        setIdMember={setIdMember}
-      />
-      <Table
-        members={members}
-        deleteMember={deleteMember}
-        setIdMember={setIdMember}
-        setMemberValues={setMemberValues}
-      />
+      {showForm ? (
+        <Form
+          addMember={addMember}
+          memberValues={memberValues}
+          setMemberValues={setMemberValues}
+          updateMember={updateMember}
+          idMember={idMember}
+          setIdMember={setIdMember}
+          setShowForm={setShowForm}
+        />
+      ) : (
+        <>
+          <Table
+            members={members}
+            deleteMember={deleteMember}
+            setIdMember={setIdMember}
+            setMemberValues={setMemberValues}
+            setShowForm={setShowForm}
+          />
+          <button className={styles.button} onClick={() => setShowForm(true)}>
+            Add
+          </button>
+        </>
+      )}
     </section>
   );
 };

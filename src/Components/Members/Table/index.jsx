@@ -2,14 +2,14 @@ import React from 'react';
 
 import styles from './table.module.css';
 
-const Table = ({ members, deleteMember, setIdMember, setMemberValues }) => {
+const Table = ({ members, deleteMember, setIdMember, setMemberValues, setShowForm }) => {
   console.log(members);
   return (
-    <table>
+    <table className={styles.tableMember}>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Last Name</th>
+          <th className={styles.thMember}>Name</th>
+          <th className={styles.thMember}>Last Name</th>
         </tr>
       </thead>
       <tbody>
@@ -17,13 +17,14 @@ const Table = ({ members, deleteMember, setIdMember, setMemberValues }) => {
           members?.map((member) => {
             return (
               <tr key={member._id}>
-                <td>{member.firstName}</td>
-                <td>{member.lastName}</td>
-                <td>
+                <td className={styles.tdMember}>{member.firstName}</td>
+                <td className={styles.tdMember}>{member.lastName}</td>
+                <td className={styles.tdMember}>
                   <button
                     className={styles.editButton}
                     onClick={() => {
                       setIdMember(member._id);
+                      setShowForm(true);
                       setMemberValues({
                         firstName: member.firstName,
                         lastName: member.lastName,
@@ -41,7 +42,7 @@ const Table = ({ members, deleteMember, setIdMember, setMemberValues }) => {
                     Edit
                   </button>
                 </td>
-                <td>
+                <td className={styles.tdMember}>
                   <button className={styles.deleteButton} onClick={() => deleteMember(member._id)}>
                     X
                   </button>
