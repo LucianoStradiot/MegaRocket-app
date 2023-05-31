@@ -19,7 +19,7 @@ function Admins() {
 
   const getAdmins = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
 
       const { data: admins } = await response.json();
 
@@ -31,7 +31,7 @@ function Admins() {
 
   const deleteAdmin = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
         method: 'DELETE'
       });
 
@@ -47,7 +47,7 @@ function Admins() {
 
   const createAdmin = async () => {
     try {
-      const createdAdmin = await fetch(`${process.env.REACT_APP_API_URL}/admins`, {
+      const createdAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -78,37 +78,36 @@ function Admins() {
 
   const updateAdmins = async () => {
     try {
-      const updatedAdminRes = await fetch(`${process.env.REACT_APP_API_URL}/admins/${idStatus}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formChange)
-      });
+      const updatedAdminRes = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/admins/${idStatus}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formChange)
+        }
+      );
 
       const updatedAdmin = await updatedAdminRes.json();
       if (updatedAdminRes.ok) {
-        if (updatedAdmin.error) {
-          alert(updatedAdmin.message);
-        } else {
-          const dataIndex = admins.findIndex((admin) => admin._id === idStatus);
-          setAdmins((currentAdmins) => {
-            const updatedAdmins = [...currentAdmins];
-            updatedAdmins[dataIndex] = updatedAdmin.data;
-            return updatedAdmins;
-          });
-          setFormChange({
-            firstName: '',
-            lastName: '',
-            dni: '',
-            phone: '',
-            email: '',
-            city: '',
-            password: ''
-          });
-          setIdStatus('');
-          alert(updatedAdmin.message);
-        }
+        const dataIndex = admins.findIndex((admin) => admin._id === idStatus);
+        setAdmins((currentAdmins) => {
+          const updatedAdmins = [...currentAdmins];
+          updatedAdmins[dataIndex] = updatedAdmin.data;
+          return updatedAdmins;
+        });
+        setFormChange({
+          firstName: '',
+          lastName: '',
+          dni: '',
+          phone: '',
+          email: '',
+          city: '',
+          password: ''
+        });
+        setIdStatus('');
+        alert(updatedAdmin.message);
       } else {
         throw new Error(updatedAdmin.message);
       }
