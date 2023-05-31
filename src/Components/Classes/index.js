@@ -46,11 +46,19 @@ function Classes() {
 
   const deleteClass = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, { method: 'DELETE' });
+      const deleteActivity = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
+        method: 'DELETE'
+      });
+
+      const deletedActivity = await deleteActivity.json();
+      if (!deleteActivity.ok) {
+        throw new Error(deletedActivity.message);
+      }
       setClasses((currentClasses) => {
         return currentClasses.filter((oneClass) => oneClass._id !== id);
       });
       getClasses();
+      alert(deletedActivity.message);
     } catch (error) {
       alert(error);
     }
@@ -163,8 +171,8 @@ function Classes() {
     setFormData({
       day: data.day,
       hour: data.hour,
-      trainer: data.trainer._id,
-      activity: data.activity._id,
+      trainer: data.trainer ? data.trainer._id : '',
+      activity: data.activity ? data.activity._id : '',
       slots: data.slots
     });
   };
@@ -197,7 +205,7 @@ function Classes() {
             slots: ''
           });
         }}
-        className={styles.createClassButton}
+        className={styles.blueButton}
       >
         Create Class
       </button>
@@ -327,7 +335,9 @@ function Classes() {
             >
               Cancel
             </button>
-            {sendVisible && <input type="submit" value="Send" onClick={create} />}
+            {sendVisible && (
+              <input type="submit" value="Send" onClick={create} className={styles.blueButton} />
+            )}
             {updateVisible && <input type="submit" value="Update" onClick={save} />}
           </div>
         </form>

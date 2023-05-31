@@ -50,8 +50,24 @@ label {
   margin: 8px 0;
 }
 
-.createClassButton {
+.blueButton {
+  color: #fff;
+  background-color: #3a3b7b;
   margin-bottom: 8px;
+}
+
+.blueButton:hover {
+  background-color: #1b1b5d;
+  margin-bottom: 8px;
+}
+
+.whiteButton {
+  background-color: #eee;
+}
+
+.whiteButton:hover {
+  color: #eee;
+  background-color: #1b1b5d;
 }
 
 .firstTH {
@@ -63,6 +79,7 @@ label {
 }
 
 .delete {
+  color: #ee190a;
   border-color: #ee190a;
 }
 
