@@ -9,11 +9,11 @@ const Members = () => {
     firstName: '',
     lastName: '',
     email: '',
-    dni: undefined,
-    phone: undefined,
+    dni: '',
+    phone: '',
     city: '',
     birthday: '2023-05-29T07:32:26+0000',
-    postalCode: undefined,
+    postalCode: '',
     membership: '',
     isActive: true
   });
@@ -61,11 +61,6 @@ const Members = () => {
           return updatedMembers;
         });
       }
-      console.log(response);
-      // const newMember = {
-      //   ...member,
-      //   _id: response
-      // };
     } catch (error) {
       console.log(error);
     }
@@ -81,13 +76,9 @@ const Members = () => {
         },
         body: JSON.stringify({ ...member, birthday: dateFormat })
       });
-
-      console.log(response);
-      // const newMember = {
-      //   ...member,
-      //   _id: response
-      // };
-      setMembers([...members, member]);
+      if (response.ok) {
+        setMembers([...members, member]);
+      }
     } catch (error) {
       console.log(error);
     }

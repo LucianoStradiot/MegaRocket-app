@@ -28,11 +28,11 @@ const Form = ({
       firstName: '',
       lastName: '',
       email: '',
-      dni: undefined,
-      phone: undefined,
+      dni: '',
+      phone: '',
       city: '',
       birthday: '2023-05-29T07:32:26+0000',
-      postalCode: undefined,
+      postalCode: '',
       membership: '',
       isActive: true
     });
