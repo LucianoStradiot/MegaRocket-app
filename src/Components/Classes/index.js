@@ -14,7 +14,7 @@ function Classes() {
   const [classes, setClasses] = useState([]);
   const getClasses = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/classes`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`);
       const { data: classes } = await response.json();
       setClasses(classes);
     } catch (error) {
@@ -25,7 +25,7 @@ function Classes() {
   const [activities, setActivities] = useState([]);
   const getActivities = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/activities`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
       const { data: activities } = await response.json();
       setActivities(activities);
     } catch (error) {
@@ -36,7 +36,7 @@ function Classes() {
   const [trainers, setTrainers] = useState([]);
   const getTrainers = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/trainers`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
       const { data: trainers } = await response.json();
       setTrainers(trainers);
     } catch (error) {
@@ -46,7 +46,7 @@ function Classes() {
 
   const deleteClass = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/classes/${id}`, { method: 'DELETE' });
+      await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, { method: 'DELETE' });
       setClasses((currentClasses) => {
         return currentClasses.filter((oneClass) => oneClass._id !== id);
       });
@@ -65,7 +65,7 @@ function Classes() {
 
   const createClass = async () => {
     try {
-      const createdClass = await fetch(`${process.env.REACT_APP_API_URL}/classes/`, {
+      const createdClass = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -86,7 +86,6 @@ function Classes() {
           slots: ''
         });
         alert(createdClassData.message);
-        getClasses();
       }
     } catch (error) {
       alert(error);
@@ -95,7 +94,7 @@ function Classes() {
 
   const editClass = async () => {
     try {
-      const updatedClass = await fetch(`${process.env.REACT_APP_API_URL}/classes/${idStatus}`, {
+      const updatedClass = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${idStatus}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -103,11 +102,10 @@ function Classes() {
         body: JSON.stringify(formData)
       });
 
+      const updatedClassData = await updatedClass.json();
       if (!updatedClass.ok) {
-        const errorData = await updatedClass.json();
-        throw new Error(errorData.message);
+        throw new Error(updatedClassData.message);
       } else {
-        const updatedClassData = await updatedClass.json();
         const updatedClassIndex = classes.findIndex((oneClass) => oneClass._id === idStatus);
         setClasses((currentClasses) => {
           const updatedClasses = [...currentClasses];
@@ -123,7 +121,7 @@ function Classes() {
           slots: ''
         });
 
-        getClasses();
+        alert(updatedClassData.message);
       }
     } catch (error) {
       alert(error);
