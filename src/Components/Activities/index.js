@@ -25,11 +25,19 @@ function Activities() {
 
   const deleteActiviy = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, { method: 'DELETE' });
+      const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
+        method: 'DELETE'
+      });
       setActivities((currentActivities) => {
         return currentActivities.filter((activities) => activities._id !== id);
       });
       getActivities();
+      const response = await resp.json();
+      if (!resp.ok) {
+        throw new Error(response.message);
+      } else {
+        alert(response.message);
+      }
     } catch (error) {
       alert(error);
     }
@@ -44,16 +52,16 @@ function Activities() {
         },
         body: JSON.stringify(activityFormValue)
       });
+      const response = await createdActivity.json();
       if (!createdActivity.ok) {
-        const errorResponse = await createdActivity.json();
-        throw new Error(errorResponse.message);
+        throw new Error(response.message);
       } else {
-        const createdActdata = await createdActivity.json();
-        setActivities((currentActivities) => [...currentActivities, createdActdata.data]);
+        setActivities((currentActivities) => [...currentActivities, response.data]);
         setActivityFormValue({
           name: '',
           description: ''
         });
+        alert(response.message);
       }
     } catch (error) {
       alert(error);
@@ -72,17 +80,15 @@ function Activities() {
           body: JSON.stringify(activityFormValue)
         }
       );
-
+      const response = await updatedActivityResponse.json();
       if (!updatedActivityResponse.ok) {
-        const errorResponse = await updatedActivityResponse.json();
-        throw new Error(errorResponse.message);
+        throw new Error(response.message);
       } else {
-        const updatedActivity = await updatedActivityResponse.json();
         const activityDataIndex = activities.findIndex((activity) => activity._id === idStatus);
 
         setActivities((currentActivities) => {
           const updatedActivities = [...currentActivities];
-          updatedActivities[activityDataIndex] = updatedActivity.data;
+          updatedActivities[activityDataIndex] = response.data;
           return updatedActivities;
         });
         setActivityFormValue({
@@ -91,6 +97,7 @@ function Activities() {
           isActive: ''
         });
         setIdStatus('');
+        alert(response.message);
       }
     } catch (error) {
       alert(error);
