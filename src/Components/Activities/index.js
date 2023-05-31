@@ -25,7 +25,7 @@ function Activities() {
 
   const deleteActiviy = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/activities/${id}`, { method: 'DELETE' });
+      await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, { method: 'DELETE' });
       setActivities((currentActivities) => {
         return currentActivities.filter((activities) => activities._id !== id);
       });
