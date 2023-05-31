@@ -15,7 +15,7 @@ function Activities() {
   });
   const getActivities = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/activities`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
       const { data: activities } = await response.json();
       setActivities(activities);
     } catch (error) {
@@ -37,7 +37,7 @@ function Activities() {
 
   const createActivity = async () => {
     try {
-      const createdActivity = await fetch(`${process.env.REACT_APP_API_URL}/activities/`, {
+      const createdActivity = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ function Activities() {
   const updateActivity = async () => {
     try {
       const updatedActivityResponse = await fetch(
-        `${process.env.REACT_APP_API_URL}/activities/${idStatus}`,
+        `${process.env.REACT_APP_API_URL}/api/activities/${idStatus}`,
         {
           method: 'PUT',
           headers: {
