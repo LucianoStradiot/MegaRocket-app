@@ -13,7 +13,7 @@ function SuperAdmins() {
   });
   const getSuperAdmins = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admin`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`);
       const { data: superAdmins } = await response.json();
       setSuperAdmin(superAdmins);
     } catch (error) {
@@ -22,7 +22,7 @@ function SuperAdmins() {
   };
   const deleteSuperAdmin = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/super-admin/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
         method: 'DELETE'
       });
       setSuperAdmin((currentAdmins) => {
@@ -37,7 +37,7 @@ function SuperAdmins() {
 
   const createSuperAdmin = async () => {
     try {
-      const createdSuperAdmin = await fetch(`${process.env.REACT_APP_API_URL}/super-admin/`, {
+      const createdSuperAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ function SuperAdmins() {
   const updSuperAdmin = async () => {
     try {
       const updatedSuperAdmin = await fetch(
-        `${process.env.REACT_APP_API_URL}/super-admin/${idStatus}`,
+        `${process.env.REACT_APP_API_URL}/api/super-admin/${idStatus}`,
         {
           method: 'PUT',
           headers: {
