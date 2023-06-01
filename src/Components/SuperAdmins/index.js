@@ -161,16 +161,16 @@ function SuperAdmins() {
 
   return (
     <section className={styles.container}>
-      <h2>SuperAdmin</h2>
+      <h2 className={styles.h2}>SuperAdmin</h2>
       <section>
         <button onClick={create} className={styles.createButton}>
           Create
         </button>
-        <table>
-          <thead>
+        <table className={styles.table}>
+          <thead className={styles.thead}>
             <tr>
-              <th>Email</th>
-              <th></th>
+              <th className={styles.th}>Email</th>
+              <th className={styles.th}></th>
             </tr>
           </thead>
           <tbody>
