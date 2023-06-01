@@ -11,17 +11,17 @@ const Members = () => {
     dni: '',
     phone: '',
     city: '',
-    birthday: '2023-05-29T07:32:26+0000',
+    birthday: '',
     postalCode: '',
     membership: '',
     isActive: true
   });
   const [idMember, setIdMember] = useState('');
+
   const getMembers = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
     const data = await response.json();
     setMembers(data.data);
-    console.log(data);
   };
 
   useEffect(() => {
@@ -33,6 +33,26 @@ const Members = () => {
       ...memberValues,
       [e.target.name]: e.target.value
     });
+  };
+
+  console.log(memberValues);
+
+  const getDateValue = () => {
+    const date = new Date(memberValues.birthday);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const dateValue = `${year}-${month}-${day}`;
+    return dateValue;
+  };
+
+  const changeDateFormat = (date) => {
+    const newDate = new Date(date);
+    const day = newDate.getDate().toString().padStart(2, '0');
+    const month = (newDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = newDate.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+    return formattedDate;
   };
 
   const onSubmit = (e) => {
@@ -51,33 +71,21 @@ const Members = () => {
       dni: '',
       phone: '',
       city: '',
-      birthday: '2023-05-29T07:32:26+0000',
+      birthday: new Date(),
       postalCode: '',
       membership: '',
       isActive: true
     });
   };
 
-  const changeDateFormat = (date) => {
-    let dateArray = date.split('-');
-
-    let year = dateArray[0];
-    let month = dateArray[1];
-    let day = dateArray[2];
-
-    dateArray = month + '/' + day + '/' + year;
-    return dateArray;
-  };
-
   const updateMember = async (idMember) => {
-    const dateFormat = changeDateFormat(memberValues.birthday);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${idMember}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ ...memberValues, birthday: dateFormat })
+        body: JSON.stringify(memberValues)
       });
 
       const updatedMember = await response.json();
@@ -89,9 +97,14 @@ const Members = () => {
           updatedMembers[dataIndex] = updatedMember.data;
           return updatedMembers;
         });
+
+        alert('Miembro actualizado exitosamente');
+      } else {
+        throw new Error('Error al actualizar el miembro');
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      alert('Ha ocurrido un error al actualizar el miembro');
     }
   };
 
@@ -109,19 +122,20 @@ const Members = () => {
         setMembers([...members, member]);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
   const deleteMember = async (memberId) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${memberId}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/members/${memberId}`, {
         method: 'DELETE'
       });
-      console.log(response);
       setMembers([...members.filter((member) => member._id !== memberId)]);
+      alert('Miembro eliminado exitosamente');
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      alert('Ha ocurrido un error al eliminar el miembro');
     }
   };
 
@@ -208,8 +222,14 @@ const Members = () => {
                   className={styles.input}
                   name="birthday"
                   type="date"
-                  value={memberValues.birthday}
-                  onChange={(e) => onChange(e)}
+                  value={getDateValue()}
+                  onChange={(e) => {
+                    console.log(changeDateFormat(e.target.value));
+                    setMemberValues({
+                      ...memberValues,
+                      birthday: changeDateFormat(e.target.value)
+                    });
+                  }}
                 />
               </div>
             </div>
@@ -228,27 +248,35 @@ const Members = () => {
             <div>
               <div className={styles.inputContainer}>
                 <label className={styles.label}>Membership</label>
-                <input
+                <select
                   className={styles.input}
                   name="membership"
-                  type="text"
                   value={memberValues.membership}
                   onChange={(e) => onChange(e)}
-                />
+                >
+                  <option value="">Seleccionar</option>
+                  <option value="opcion1">Black Membership</option>
+                  <option value="opcion2">Classic Membership</option>
+                  <option value="opcion3">Only Classes Membership</option>
+                </select>
               </div>
             </div>
+
             <div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>IsActive</label>
-                <input
+                <label className={styles.label}>Status</label>
+                <select
                   className={styles.input}
                   name="isActive"
-                  type="checkbox"
                   value={memberValues.isActive}
-                  onChange={(e) => onChange(e)}
-                />
+                  onChange={onChange}
+                >
+                  <option value={true}>Active</option>
+                  <option value={false}>Inactive</option>
+                </select>
               </div>
             </div>
+
             <button className={styles.button} type="submit">
               Add
             </button>
@@ -264,7 +292,7 @@ const Members = () => {
                   dni: '',
                   phone: '',
                   city: '',
-                  birthday: '2023-05-29T07:32:26+0000',
+                  birthday: new Date().toISOString(),
                   postalCode: '',
                   membership: '',
                   isActive: true
