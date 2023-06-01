@@ -1,34 +1,28 @@
-section {
+.container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-table {
+.contTable {
   width: 80%;
   margin-top: 10px;
   border-collapse: collapse;
   color: #373867;
   margin-bottom: 40px;
 }
-thead {
+.theadTable {
   background-color: #eee;
 }
-th {
+.thTable {
   padding: 10px 16px;
 }
-.head {
-  border-radius: 8px 0px 0px 0px;
-}
 
-.headEnd {
-  border-radius: 0px 8px 0px 0px;
-}
-
-td,
-tr {
+.theadTable,
+.thTable {
   padding: 10px 16px;
   border-bottom: 1px solid #ddd;
+  text-align: center;
 }
 .deleteButton {
   margin-left: 20px;
@@ -38,10 +32,12 @@ tr {
   color: #fff;
   background-color: #3a3b7b;
   border: none;
+  width: 10rem;
   border-radius: 5px;
   padding: 7px 12px;
   cursor: pointer;
   font-size: 15px;
+  margin-right: 65.5rem;
 }
 
 .button:hover,
@@ -75,18 +71,18 @@ tr {
 .deleteButton:hover {
   background-color: #ee190a;
 }
-form {
+.formSubscription {
   margin-bottom: 40px;
   color: #373867;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #eee;
-  width: 20rem;
+  width: 30rem;
   padding: 20px;
   border-radius: 8px;
 }
-input {
+.inputForm {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
@@ -96,8 +92,9 @@ input {
   width: 90%;
   text-align: center;
 }
-form button{
+.formSubscription button{
   width: 90%;
+  height: 30px;
   margin: 5px;
   border-radius: 4px;
 }

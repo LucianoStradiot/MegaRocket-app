@@ -196,7 +196,7 @@ function Subscriptions() {
       </table>
       {showForm && (
         <form className={style.formSubscription}>
-          <label htmlFor="">Classes</label>
+          <label htmlFor=""> Id Classes</label>
           <input
             className={style.inputForm}
             defaultValue={create.classes._id}
