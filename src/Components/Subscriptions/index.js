@@ -3,6 +3,7 @@ import style from './subscriptions.module.css';
 
 function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
+  const [members, setMembers] = useState([]);
   const [create, setCreate] = useState({
     classes: '',
     member: '',
@@ -10,6 +11,17 @@ function Subscriptions() {
   });
   const [showForm, setShowForm] = useState(false);
   const [button, setButton] = useState('');
+  const getMembers = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
+        method: 'GET'
+      });
+      const { data: members } = await response.json();
+      setMembers(members);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const getSubscriptions = async () => {
     try {
@@ -24,7 +36,7 @@ function Subscriptions() {
   };
   useEffect(() => {
     getSubscriptions();
-  }, []);
+  }, [showForm]);
 
   const getSubscriptionsById = (id) => {
     const subscription = subscriptions.find((subs) => subs._id === id);
@@ -70,9 +82,10 @@ function Subscriptions() {
         body: JSON.stringify(create)
       });
       const createdSubscription = await response.json();
+      console.log(createdSubscription);
       if (response.ok) {
         setSubscriptions((currentSubscriptions) => {
-          return [...currentSubscriptions, createdSubscription.data];
+          return [...currentSubscriptions, createdSubscription];
         });
         setCreate({
           classes: '',
@@ -123,37 +136,43 @@ function Subscriptions() {
   };
 
   return (
-    <section className="container">
-      <table className="contTable">
-        <thead>
+    <section className={style.container}>
+      <button
+        className={style.createButton}
+        onClick={() => {
+          setShowForm(true);
+          setButton('Create');
+          getMembers();
+          setCreate({
+            classes: '',
+            member: '',
+            date: ''
+          });
+        }}
+      >
+        Add
+      </button>
+      <table className={style.contTable}>
+        <thead className={style.theadTable}>
           <tr>
-            <th>Id Subscription</th>
-            <th>Time slot</th>
-            <th>Name</th>
-            <th>Last Name</th>
-            <th>Date</th>
-            <th>Actions</th>
+            <th className={style.thTable}>Time slot</th>
+            <th className={style.thTable}>Name</th>
+            <th className={style.thTable}>Last Name</th>
+            <th className={style.thTable}>Email</th>
+            <th className={style.thTable}>Date</th>
+            <th className={style.thTable}>Actions</th>
           </tr>
         </thead>
         <tbody>
           {subscriptions.map((subs) => {
             return (
               <tr key={subs._id}>
-                <td>{subs._id}</td>
-                <td>{subs.classes && subs.classes.hour}</td>
-                <td>{subs.member && subs.member.firstName}</td>
-                <td>{subs.member && subs.member.lastName}</td>
-                <td>{subs.date.substring(0, 10)}</td>
-                <td>
-                  <button
-                    className={style.createButton}
-                    onClick={() => {
-                      setShowForm(true);
-                      setButton('Create');
-                    }}
-                  >
-                    Add
-                  </button>
+                <td className={style.thTable}>{subs.classes && subs.classes.hour}</td>
+                <td className={style.thTable}>{subs.member && subs.member.firstName}</td>
+                <td className={style.thTable}>{subs.member && subs.member.lastName}</td>
+                <td className={style.thTable}>{subs.member && subs.member.email}</td>
+                <td className={style.thTable}>{subs.date.substring(0, 10)}</td>
+                <td className={style.thTable}>
                   <button
                     className={style.updateButton}
                     onClick={() => {
@@ -176,25 +195,38 @@ function Subscriptions() {
         </tbody>
       </table>
       {showForm && (
-        <form>
+        <form className={style.formSubscription}>
           <label htmlFor="">Classes</label>
           <input
+            className={style.inputForm}
             defaultValue={create.classes._id}
             type="text"
             name="classes"
             value={create.classes}
             onChange={onchangeInput}
           />
-          <label htmlFor="">Member</label>
-          <input
-            defaultValue={create.member._id}
-            type="text"
+          <label htmlFor="">Member Email</label>
+          <select
+            className={style.inputForm}
             name="member"
-            value={create.member}
+            id="member"
             onChange={onchangeInput}
-          />
+            value={create.member}
+          >
+            <option value="" disabled>
+              Choose a Member
+            </option>
+            {members.map((subs) => {
+              return (
+                <option value={subs._id} key={subs._id} selected={subs._id === create.member}>
+                  {subs.email}
+                </option>
+              );
+            })}
+          </select>
           <label htmlFor="">Date</label>
           <input
+            className={style.inputForm}
             defaultValue={create.date.substring(0, 10)}
             type="date"
             name="date"
