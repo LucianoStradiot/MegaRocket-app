@@ -22,6 +22,9 @@ function Subscriptions() {
       alert(error.message);
     }
   };
+  useEffect(() => {
+    getSubscriptions();
+  }, []);
 
   const getSubscriptionsById = (id) => {
     const subscription = subscriptions.find((subs) => subs._id === id);
@@ -66,18 +69,23 @@ function Subscriptions() {
         },
         body: JSON.stringify(create)
       });
+      const createdSubscription = await response.json();
       if (response.ok) {
-        const createdSubscription = await response.json();
         setSubscriptions((currentSubscriptions) => {
-          return [...currentSubscriptions, createdSubscription];
+          return [...currentSubscriptions, createdSubscription.data];
         });
-        alert('Subscription successfully created.');
+        setCreate({
+          classes: '',
+          member: '',
+          date: ''
+        });
         setShowForm(false);
+        alert(createdSubscription.message);
       } else {
-        alert('Error creating the subscription.');
+        throw new Error(createdSubscription.message);
       }
     } catch (error) {
-      alert(error.message);
+      alert(error);
     }
   };
 
@@ -94,8 +102,8 @@ function Subscriptions() {
           date: create.date
         })
       });
+      const updatedSubscription = await response.json();
       if (response.ok) {
-        const updatedSubscription = await response.json();
         setSubscriptions((currentSubscriptions) => {
           return currentSubscriptions.map((subs) => {
             if (subs._id === updatedSubscription._id) {
@@ -105,18 +113,14 @@ function Subscriptions() {
           });
         });
         setShowForm(false);
-        alert('Subscription updated correctly.');
+        alert(updatedSubscription.message);
       } else {
-        alert('Error updating the subscription.');
+        throw new Error(updatedSubscription.message);
       }
     } catch (error) {
-      alert('Error updating the subscription.');
+      alert(error);
     }
   };
-
-  useEffect(() => {
-    getSubscriptions();
-  }, []);
 
   return (
     <section className="container">
@@ -133,14 +137,13 @@ function Subscriptions() {
         </thead>
         <tbody>
           {subscriptions.map((subs) => {
-            console.log(subs);
             return (
               <tr key={subs._id}>
                 <td>{subs._id}</td>
                 <td>{subs.classes && subs.classes.hour}</td>
                 <td>{subs.member && subs.member.firstName}</td>
                 <td>{subs.member && subs.member.lastName}</td>
-                <td>{subs.date}</td>
+                <td>{subs.date.substring(0, 10)}</td>
                 <td>
                   <button
                     className={style.createButton}
@@ -173,7 +176,7 @@ function Subscriptions() {
         </tbody>
       </table>
       {showForm && (
-        <form className="contForm">
+        <form>
           <label htmlFor="">Classes</label>
           <input
             defaultValue={create.classes._id}
@@ -192,13 +195,14 @@ function Subscriptions() {
           />
           <label htmlFor="">Date</label>
           <input
-            defaultValue={create.date}
+            defaultValue={create.date.substring(0, 10)}
             type="date"
             name="date"
-            value={create.date}
+            value={create.date.substring(0, 10)}
             onChange={onchangeInput}
           />
           <button
+            className={button === 'Create' ? style.buttonAdd : style.buttonModify}
             type="button"
             onClick={
               button === 'Create' ? createSubscription : () => updateSubscription(create._id)
@@ -206,7 +210,7 @@ function Subscriptions() {
           >
             {button}
           </button>
-          <button type="button" onClick={() => setShowForm(false)}>
+          <button className={style.cancelButton} type="button" onClick={() => setShowForm(false)}>
             Cancel
           </button>
         </form>
