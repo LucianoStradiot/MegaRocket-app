@@ -1,18 +1,18 @@
-h2 {
+.h2 {
   text-align: center;
 }
 
-table {
+.table {
   margin-top: 10px;
   border-collapse: collapse;
   color: #373867;
 }
 
-thead {
+.thead {
   background-color: #eee;
 }
 
-th {
+.th {
   padding: 10px 16px;
 }
 

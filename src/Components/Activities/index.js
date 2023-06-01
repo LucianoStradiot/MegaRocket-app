@@ -191,16 +191,16 @@ function Activities() {
   return (
     <div className={styles.container}>
       <section>
-        <h2>Activities</h2>
+        <h2 className={styles.h2}>Activities</h2>
         <button onClick={create} className={styles.createButton}>
           Create
         </button>
-        <table>
-          <thead>
-            <th className={styles.head}>Activity Name</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th className={styles.headEnd}></th>
+        <table className={styles.table}>
+          <thead className={styles.thead}>
+            <th className={`${styles.head} ${styles.th}`}>Activity Name</th>
+            <th className={styles.th}>Description</th>
+            <th className={styles.th}>Status</th>
+            <th className={`${styles.headEnd} ${styles.th}`}></th>
           </thead>
           <tbody>
             {activities.map((activity) => {

@@ -229,20 +229,20 @@ function Trainers() {
   return (
     <section className={styles.container}>
       <section>
-        <h2>Trainers</h2>
+        <h2 className={styles.h2}>Trainers</h2>
         <button onClick={create} className={styles.createButton}>
           Create
         </button>
-        <table>
-          <thead>
-            <th className={styles.head}>Name</th>
-            <th>Dni</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>City</th>
-            <th>Salary</th>
-            <th>Status</th>
-            <th className={styles.headEnd}></th>
+        <table className={styles.table}>
+          <thead className={styles.thead}>
+            <th className={`${styles.head} ${styles.th}`}>Name</th>
+            <th className={styles.th}>Dni</th>
+            <th className={styles.th}>Email</th>
+            <th className={styles.th}>Phone</th>
+            <th className={styles.th}>City</th>
+            <th className={styles.th}>Salary</th>
+            <th className={styles.th}>Status</th>
+            <th className={`${styles.headEnd} ${styles.th}`}></th>
           </thead>
           <tbody>
             {trainers.map((trainer) => {
@@ -364,7 +364,11 @@ function Trainers() {
               {activeIsVisible && (
                 <div className={styles.inputContainer}>
                   <label className={styles.label}>Status</label>
-                  <select className={styles.input} name="isActive" onChange={onChangeInput}>
+                  <select
+                    className={`${styles.input} ${styles.select}`}
+                    name="isActive"
+                    onChange={onChangeInput}
+                  >
                     <option value={true} selected={!formValue.isActive}>
                       Active
                     </option>

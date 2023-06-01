@@ -209,16 +209,16 @@ function Classes() {
       >
         Create Class
       </button>
-      <table>
+      <table className={styles.table}>
         <thead>
           <tr>
-            <th className={styles.firstTH}>Day</th>
-            <th>Hour</th>
-            <th>Trainer</th>
-            <th>Activity</th>
-            <th>Slots</th>
-            <th></th>
-            <th className={styles.lastTH}></th>
+            <th className={`${styles.firstTH} ${styles.th}`}>Day</th>
+            <th className={styles.th}>Hour</th>
+            <th className={styles.th}>Trainer</th>
+            <th className={styles.th}>Activity</th>
+            <th className={styles.th}>Slots</th>
+            <th className={styles.th}></th>
+            <th className={`${styles.lastTH} ${styles.th}`}></th>
           </tr>
         </thead>
         <tbody>
@@ -229,12 +229,12 @@ function Classes() {
             const activityName = oneClass.activity ? `${oneClass.activity.name}` : 'empty';
             return (
               <tr key={oneClass._id}>
-                <td>{oneClass.day}</td>
-                <td>{oneClass.hour}</td>
-                <td>{trainerName}</td>
-                <td>{activityName}</td>
-                <td>{oneClass.slots}</td>
-                <td>
+                <td className={styles.td}>{oneClass.day}</td>
+                <td className={styles.td}>{oneClass.hour}</td>
+                <td className={styles.td}>{trainerName}</td>
+                <td className={styles.td}>{activityName}</td>
+                <td className={styles.td}>{oneClass.slots}</td>
+                <td className={styles.td}>
                   <button
                     key={oneClass._id}
                     onClick={() => {
@@ -245,7 +245,7 @@ function Classes() {
                     edit
                   </button>
                 </td>
-                <td>
+                <td className={styles.td}>
                   <button
                     key={oneClass._id}
                     onClick={() => deleteClass(oneClass._id)}
@@ -260,9 +260,11 @@ function Classes() {
         </tbody>
       </table>
       {formVisible && (
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
           <div className={styles.formContainer}>
-            <label htmlFor="day">day</label>
+            <label className={styles.label} htmlFor="day">
+              day
+            </label>
             <select name="day" id="day" onChange={onChange}>
               <option value="undefined" defaultValue>
                 Choose a Day
@@ -286,9 +288,13 @@ function Classes() {
                 Saturday
               </option>
             </select>
-            <label htmlFor="hour">Hour</label>
+            <label className={styles.label} htmlFor="hour">
+              Hour
+            </label>
             <input id="hour" type="text" name="hour" value={formData.hour} onChange={onChange} />
-            <label htmlFor="trainer">Trainer</label>
+            <label className={styles.label} htmlFor="trainer">
+              Trainer
+            </label>
             <select name="trainer" id="trainer" onChange={onChange}>
               <option value="undefined" defaultValue>
                 Choose a Trainer
@@ -305,7 +311,9 @@ function Classes() {
                 );
               })}
             </select>
-            <label htmlFor="activity">Activity</label>
+            <label className={styles.label} htmlFor="activity">
+              Activity
+            </label>
             <select name="activity" id="activity" onChange={onChange}>
               <option value="undefined" defaultValue>
                 Choose an Activity
@@ -322,11 +330,14 @@ function Classes() {
                 );
               })}
             </select>
-            <label htmlFor="slots">Slots</label>
+            <label className={styles.label} htmlFor="slots">
+              Slots
+            </label>
             <input id="slots" type="text" name="slots" value={formData.slots} onChange={onChange} />
           </div>
           <div className={styles.sendContainer}>
             <button
+              className={styles.blueButton}
               onClick={() => {
                 notVisible();
                 sendButtonNotVisible();

@@ -6,21 +6,21 @@
   align-items: center;
 }
 
-h2 {
+.h2 {
   text-align: center;
 }
 
-table {
+.table {
   margin-top: 10px;
   border-collapse: collapse;
   color: #373867;
 }
 
-thead {
+.thead {
   background-color: #eee;
 }
 
-th {
+.th {
   padding: 10px 16px;
 }
 
@@ -45,7 +45,8 @@ th {
   margin-left: 20px;
 }
 
-.createButton, .button{
+.createButton,
+.button {
   color: #fff;
   background-color: #3a3b7b;
   border: none;
@@ -55,7 +56,8 @@ th {
   font-size: 15px;
 }
 
-.button:hover, .createButton:hover{
+.button:hover,
+.createButton:hover {
   background-color: #1b1b5d;
 }
 
@@ -136,7 +138,6 @@ th {
   color: #fff;
 }
 
-select {
+.select {
   margin-bottom: 10px;
 }
-
