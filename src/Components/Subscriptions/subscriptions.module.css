@@ -82,17 +82,10 @@ form {
   flex-direction: column;
   align-items: center;
   background-color: #eee;
+  width: 20rem;
   padding: 20px;
   border-radius: 8px;
 }
-
-.subContainer {
-  display: flex;
-  flex-direction: column;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
 input {
   display: flex;
   flex-direction: column;
@@ -100,5 +93,28 @@ input {
   padding: 5px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  width: 90%;
+  text-align: center;
+}
+form button{
+  width: 90%;
+  margin: 5px;
+  border-radius: 4px;
+}
+.buttonModify{
+  background-color: #fff;
+  color: #4caf50;
+  border: 1px solid #4caf50;
+
+}
+.buttonAdd{
+  color: #fff;
+  background-color: #3a3b7b;
+  border: none;
+}
+.cancelButton{
+  background-color: #f55348;
+  color: white;
+  border: none;
 }
 
