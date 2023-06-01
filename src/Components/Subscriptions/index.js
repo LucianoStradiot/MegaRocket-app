@@ -4,6 +4,7 @@ import style from './subscriptions.module.css';
 function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
   const [members, setMembers] = useState([]);
+  const [classes, setClasses] = useState([]);
   const [create, setCreate] = useState({
     classes: '',
     member: '',
@@ -23,6 +24,18 @@ function Subscriptions() {
     }
   };
 
+  const getClasses = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
+        method: 'GET'
+      });
+      const { data: classes } = await response.json();
+      setClasses(classes);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   const getSubscriptions = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
@@ -36,6 +49,8 @@ function Subscriptions() {
   };
   useEffect(() => {
     getSubscriptions();
+    getClasses();
+    getMembers();
   }, [showForm]);
 
   const getSubscriptionsById = (id) => {
@@ -197,14 +212,28 @@ function Subscriptions() {
       {showForm && (
         <form className={style.formSubscription}>
           <label htmlFor=""> Id Classes</label>
-          <input
+          <select
             className={style.inputForm}
-            defaultValue={create.classes._id}
-            type="text"
             name="classes"
-            value={create.classes}
+            id="classes"
             onChange={onchangeInput}
-          />
+            value={create.classes}
+          >
+            <option value="" disabled>
+              Choose a classes
+            </option>
+            {classes.map((oneClass) => {
+              return (
+                <option
+                  value={oneClass._id}
+                  key={oneClass._id}
+                  selected={oneClass._id === create.classes}
+                >
+                  Activity: {oneClass.activity.name}, Trainer: {oneClass.trainer.firstName}
+                </option>
+              );
+            })}
+          </select>
           <label htmlFor="">Member Email</label>
           <select
             className={style.inputForm}
