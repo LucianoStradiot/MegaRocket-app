@@ -5,46 +5,30 @@ import Members from '../Members';
 import Subscriptions from '../Subscriptions';
 import SuperAdmins from '../SuperAdmins';
 import Trainers from '../Trainers';
-
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from '../Home/index';
 import Header from '../Header/index';
 import Footer from '../Footer/index';
 import styles from './layout.module.css';
 
 function Layout() {
-  let currentScreen = <Home />;
-  switch (window.location.pathname) {
-    case '/activities':
-      currentScreen = <Activities />;
-      break;
-    case '/admins':
-      currentScreen = <Admins />;
-      break;
-    case '/classes':
-      currentScreen = <Classes />;
-      break;
-    case '/members':
-      currentScreen = <Members />;
-      break;
-    case '/subscriptions':
-      currentScreen = <Subscriptions />;
-      break;
-    case '/super-admins':
-      currentScreen = <SuperAdmins />;
-      break;
-    case '/trainers':
-      currentScreen = <Trainers />;
-      break;
-    default:
-      break;
-  }
-
   return (
-    <div className={styles.container}>
+    <Router>
       <Header />
-      {currentScreen}
+      <div className={styles.container}>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/activities" component={Activities} />
+          <Route path="/admins" component={Admins} />
+          <Route path="/classes" component={Classes} />
+          <Route path="/members" component={Members} />
+          <Route path="/subscriptions" component={Subscriptions} />
+          <Route path="/superAdmins" component={SuperAdmins} />
+          <Route path="/trainers" component={Trainers} />
+        </Switch>
+      </div>
       <Footer />
-    </div>
+    </Router>
   );
 }
 
