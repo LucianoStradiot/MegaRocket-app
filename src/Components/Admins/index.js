@@ -237,32 +237,36 @@ function Admins() {
           <form className={styles.container} onSubmit={onSubmit}>
             <div className={styles.block}>
               <div className={styles.firstPart}>
-                <label>First Name</label>
+                <label className={styles.label}>First Name</label>
                 <input
+                  className={styles.input}
                   name="firstName"
                   id="firstName"
                   value={formChange.firstName}
                   type="text"
                   onChange={onChangeInput}
                 />
-                <label>Last Name</label>
+                <label className={styles.label}>Last Name</label>
                 <input
+                  className={styles.input}
                   name="lastName"
                   id="lastName"
                   value={formChange.lastName}
                   type="text"
                   onChange={onChangeInput}
                 />
-                <label>DNI</label>
+                <label className={styles.label}>DNI</label>
                 <input
+                  className={styles.input}
                   name="dni"
                   id="dni"
                   value={formChange.dni}
                   type="text"
                   onChange={onChangeInput}
                 />
-                <label>Phone</label>
+                <label className={styles.label}>Phone</label>
                 <input
+                  className={styles.input}
                   name="phone"
                   id="phone"
                   value={formChange.phone}
@@ -274,24 +278,27 @@ function Admins() {
                 </button>
               </div>
               <div className={styles.firstPart}>
-                <label>Email</label>
+                <label className={styles.label}>Email</label>
                 <input
+                  className={styles.input}
                   name="email"
                   id="email"
                   value={formChange.email}
                   type="text"
                   onChange={onChangeInput}
                 />
-                <label>City</label>
+                <label className={styles.label}>City</label>
                 <input
+                  className={styles.input}
                   name="city"
                   id="city"
                   value={formChange.city}
                   type="text"
                   onChange={onChangeInput}
                 />
-                <label>Password</label>
+                <label className={styles.label}>Password</label>
                 <input
+                  className={styles.input}
                   name="password"
                   id="password"
                   value={formChange.password}

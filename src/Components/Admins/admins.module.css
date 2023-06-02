@@ -130,13 +130,13 @@
   flex-direction: column;
 }
 
-input {
+.input {
   padding: 9px;
   border: 1px solid #fff;
   border-radius: 5px;
 }
 
-label {
+.label {
   padding: 10px;
   text-align: center;
   color: #3a3b7b;
