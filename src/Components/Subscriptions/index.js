@@ -83,7 +83,7 @@ function Subscriptions() {
   const onchangeInput = (e) => {
     setCreate({
       ...create,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value || ''
     });
   };
 
@@ -157,6 +157,15 @@ function Subscriptions() {
     });
     return dat;
   };
+
+  const showDate = (date) => {
+    if (date == undefined) {
+      return 'empty';
+    } else {
+      console.log(date);
+      return date.substring(0, 10);
+    }
+  };
   return (
     <section className={style.container}>
       <button
@@ -188,12 +197,16 @@ function Subscriptions() {
           {subscriptions.map((subs) => {
             return (
               <tr key={subs._id}>
-                <td className={style.thTable}>{subs.date.substring(0, 10)}</td>
+                <td className={style.thTable}>{showDate(subs.date)}</td>
                 <td className={style.thTable}>
                   {subs.member && subs.member.firstName} {subs.member && subs.member.lastName}
                 </td>
-                <td className={style.thTable}>{subs.member && subs.classes.hour}</td>
-                <td className={style.thTable}>{searchActivity(subs.classes.activity)}</td>
+                <td className={style.thTable}>
+                  {subs.member && subs.classes && subs.classes.hour}
+                </td>
+                <td className={style.thTable}>
+                  {searchActivity(subs.classes && subs.classes.activity)}
+                </td>
                 <td className={style.thTable}>
                   <button
                     className={style.updateButton}
@@ -266,7 +279,7 @@ function Subscriptions() {
             defaultValue={create.date.substring(0, 10)}
             type="date"
             name="date"
-            value={create.date.substring(0, 10)}
+            value={create.date}
             onChange={onchangeInput}
           />
           <button
