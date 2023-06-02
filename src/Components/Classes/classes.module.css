@@ -3,4 +3,90 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.table {
+  border-collapse: collapse;
+}
+
+.th {
+  background-color: #eee;
+}
+
+.td {
+  text-align: center;
+  padding: 10px 16px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  margin: 20px;
+  background-color: #eee;
+  border-radius: 8px;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.form button,
+.form input[type="submit"] {
+  width: 80px;
+}
+
+.label {
+  margin: 8px 0;
+}
+
+.blueButton {
+  color: #fff;
+  background-color: #3a3b7b;
+  margin-bottom: 8px;
+  border-radius: 6px;
+}
+
+.blueButton:hover {
+  background-color: #1b1b5d;
+  margin-bottom: 8px;
+}
+
+.whiteButton {
+  background-color: #eee;
+}
+
+.whiteButton:hover {
+  color: #eee;
+  background-color: #1b1b5d;
+}
+
+.firstTH {
+  border-radius: 8px 0 0 0;
+}
+
+.lastTH {
+  border-radius: 0 8px 0 0;
+}
+
+.delete {
+  color: #ee190a;
+  border-color: #ee190a;
+}
+
+.sendContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.editButton {
+  color: #4caf50;
+  border-color: #4caf50;
 }
