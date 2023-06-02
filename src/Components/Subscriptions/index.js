@@ -5,6 +5,7 @@ function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
   const [members, setMembers] = useState([]);
   const [classes, setClasses] = useState([]);
+  // const [trainer, setTrainer] = useState;
   const [create, setCreate] = useState({
     classes: '',
     member: '',
@@ -97,7 +98,6 @@ function Subscriptions() {
         body: JSON.stringify(create)
       });
       const createdSubscription = await response.json();
-      console.log(createdSubscription);
       if (response.ok) {
         setSubscriptions((currentSubscriptions) => {
           return [...currentSubscriptions, createdSubscription];
@@ -149,7 +149,15 @@ function Subscriptions() {
       alert(error);
     }
   };
-
+  const searchActivity = (id) => {
+    let data;
+    classes.map((oneClass) => {
+      if (id === oneClass.activity._id) {
+        data = oneClass.activity.name;
+      }
+    });
+    return data;
+  };
   return (
     <section className={style.container}>
       <button
@@ -170,11 +178,10 @@ function Subscriptions() {
       <table className={style.contTable}>
         <thead className={style.theadTable}>
           <tr>
-            <th className={style.thTable}>Time slot</th>
-            <th className={style.thTable}>Name</th>
-            <th className={style.thTable}>Last Name</th>
-            <th className={style.thTable}>Email</th>
             <th className={style.thTable}>Date</th>
+            <th className={style.thTable}>Name</th>
+            <th className={style.thTable}>Activity Hour</th>
+            <th className={style.thTable}>Activity </th>
             <th className={style.thTable}>Actions</th>
           </tr>
         </thead>
@@ -182,11 +189,12 @@ function Subscriptions() {
           {subscriptions.map((subs) => {
             return (
               <tr key={subs._id}>
-                <td className={style.thTable}>{subs.classes && subs.classes.hour}</td>
-                <td className={style.thTable}>{subs.member && subs.member.firstName}</td>
-                <td className={style.thTable}>{subs.member && subs.member.lastName}</td>
-                <td className={style.thTable}>{subs.member && subs.member.email}</td>
                 <td className={style.thTable}>{subs.date.substring(0, 10)}</td>
+                <td className={style.thTable}>
+                  {subs.member && subs.member.firstName} {subs.member && subs.member.lastName}
+                </td>
+                <td className={style.thTable}>{subs.member && subs.classes.hour}</td>
+                <td className={style.thTable}>{searchActivity(subs.classes.activity)}</td>
                 <td className={style.thTable}>
                   <button
                     className={style.updateButton}
@@ -211,7 +219,7 @@ function Subscriptions() {
       </table>
       {showForm && (
         <form className={style.formSubscription}>
-          <label htmlFor=""> Id Classes</label>
+          <label htmlFor="">Classes</label>
           <select
             className={style.inputForm}
             name="classes"
@@ -229,7 +237,7 @@ function Subscriptions() {
                   key={oneClass._id}
                   selected={oneClass._id === create.classes}
                 >
-                  Activity: {oneClass.activity.name}, Trainer: {oneClass.trainer.firstName}
+                  {oneClass.hour} {oneClass.activity.name}, Trainer: {oneClass.trainer.firstName}
                 </option>
               );
             })}
