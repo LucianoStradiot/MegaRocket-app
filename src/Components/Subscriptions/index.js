@@ -20,7 +20,7 @@ function Subscriptions() {
       const { data: members } = await response.json();
       setMembers(members);
     } catch (error) {
-      alert(error.message);
+      alert(error);
     }
   };
 
@@ -32,7 +32,7 @@ function Subscriptions() {
       const { data: classes } = await response.json();
       setClasses(classes);
     } catch (error) {
-      alert(error.message);
+      alert(error);
     }
   };
 
@@ -76,7 +76,7 @@ function Subscriptions() {
       });
       alert('Subscription successfully deleted.');
     } catch (error) {
-      alert(error.message);
+      alert(error);
     }
   };
 
@@ -99,7 +99,8 @@ function Subscriptions() {
       const createdSubscription = await response.json();
       if (response.ok) {
         setSubscriptions((currentSubscriptions) => {
-          return [...currentSubscriptions, createdSubscription];
+          console.log(createdSubscription.data);
+          return [...currentSubscriptions, createdSubscription.data];
         });
         setCreate({
           classes: '',
@@ -162,7 +163,6 @@ function Subscriptions() {
     if (date == undefined) {
       return 'empty';
     } else {
-      console.log(date);
       return date.substring(0, 10);
     }
   };
@@ -186,9 +186,9 @@ function Subscriptions() {
       <table className={style.contTable}>
         <thead className={style.theadTable}>
           <tr>
-            <th className={style.thTable}>Date</th>
+            <th className={style.thTable}>Subscription Date</th>
             <th className={style.thTable}>Name</th>
-            <th className={style.thTable}>Activity Hour</th>
+            <th className={style.thTable}>Class Hour</th>
             <th className={style.thTable}>Activity </th>
             <th className={style.thTable}>Actions</th>
           </tr>
