@@ -11,7 +11,7 @@ const Members = () => {
     dni: '',
     phone: '',
     city: '',
-    birthday: '',
+    birthday: new Date(),
     postalCode: '',
     membership: '',
     isActive: true
@@ -120,9 +120,14 @@ const Members = () => {
       });
       if (response.ok) {
         setMembers([...members, member]);
+        alert('Miembro creado exitosamente');
+        getMembers();
+      } else {
+        throw new Error('Error al crear el miembro');
       }
     } catch (error) {
       console.error(error);
+      alert('Ha ocurrido un error al crear el miembro');
     }
   };
 
@@ -223,13 +228,7 @@ const Members = () => {
                   name="birthday"
                   type="date"
                   value={getDateValue()}
-                  onChange={(e) => {
-                    console.log(changeDateFormat(e.target.value));
-                    setMemberValues({
-                      ...memberValues,
-                      birthday: changeDateFormat(e.target.value)
-                    });
-                  }}
+                  onChange={(e) => onChange(e)}
                 />
               </div>
             </div>
@@ -255,9 +254,9 @@ const Members = () => {
                   onChange={(e) => onChange(e)}
                 >
                   <option value="">Seleccionar</option>
-                  <option value="opcion1">Black Membership</option>
-                  <option value="opcion2">Classic Membership</option>
-                  <option value="opcion3">Only Classes Membership</option>
+                  <option value="Black Membership">Black Membership</option>
+                  <option value="Classic Membership">Classic Membership</option>
+                  <option value="Only Classes Membership">Only Classes Membership</option>
                 </select>
               </div>
             </div>
@@ -278,7 +277,7 @@ const Members = () => {
             </div>
 
             <button className={styles.button} type="submit">
-              Add
+              {idMember ? 'Edit' : 'Add'}
             </button>
             <button
               className={styles.button}
@@ -310,6 +309,8 @@ const Members = () => {
               <tr>
                 <th className={styles.thMember}>Name</th>
                 <th className={styles.thMember}>Last Name</th>
+                <th className={styles.thMember}></th>
+                <th className={styles.thMember}></th>
               </tr>
             </thead>
             <tbody>
@@ -345,7 +346,10 @@ const Members = () => {
                       <td className={styles.tdMember}>
                         <button
                           className={styles.deleteButton}
-                          onClick={() => deleteMember(member._id)}
+                          onClick={() => {
+                            setIdMember(member._id);
+                            deleteMember(member._id);
+                          }}
                         >
                           X
                         </button>
@@ -355,7 +359,13 @@ const Members = () => {
                 })}
             </tbody>
           </table>
-          <button className={styles.button} onClick={() => setShowForm(true)}>
+          <button
+            className={styles.button}
+            onClick={() => {
+              setShowForm(true);
+              setIdMember('');
+            }}
+          >
             Add
           </button>
         </>
