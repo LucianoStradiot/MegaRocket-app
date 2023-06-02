@@ -5,7 +5,6 @@ function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
   const [members, setMembers] = useState([]);
   const [classes, setClasses] = useState([]);
-  // const [trainer, setTrainer] = useState;
   const [create, setCreate] = useState({
     classes: '',
     member: '',
@@ -132,13 +131,13 @@ function Subscriptions() {
       });
       const updatedSubscription = await response.json();
       if (response.ok) {
-        setSubscriptions((currentSubscriptions) => {
-          return currentSubscriptions.map((subs) => {
-            if (subs._id === updatedSubscription._id) {
-              return updatedSubscription;
-            }
-            return subs;
-          });
+        const dataIndex = subscriptions.findIndex((sub) => {
+          sub._id === id;
+        });
+        setSubscriptions((currentSub) => {
+          const updateSub = [...currentSub];
+          updateSub[dataIndex] = updateSub.data;
+          return updateSub;
         });
         setShowForm(false);
         alert(updatedSubscription.message);
