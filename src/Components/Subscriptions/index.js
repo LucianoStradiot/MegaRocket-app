@@ -149,13 +149,13 @@ function Subscriptions() {
     }
   };
   const searchActivity = (id) => {
-    let data;
+    let dat;
     classes.map((oneClass) => {
       if (id === oneClass.activity._id) {
-        data = oneClass.activity.name;
+        dat = oneClass.activity.name;
       }
     });
-    return data;
+    return dat;
   };
   return (
     <section className={style.container}>
