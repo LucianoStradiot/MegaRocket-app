@@ -13,22 +13,24 @@ import styles from './layout.module.css';
 
 function Layout() {
   return (
-    <Router>
-      <Header />
-      <div className={styles.container}>
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/activities" component={Activities} />
-          <Route path="/admins" component={Admins} />
-          <Route path="/classes" component={Classes} />
-          <Route path="/members" component={Members} />
-          <Route path="/subscriptions" component={Subscriptions} />
-          <Route path="/superAdmins" component={SuperAdmins} />
-          <Route path="/trainers" component={Trainers} />
-        </Switch>
-      </div>
-      <Footer />
-    </Router>
+    <>
+      <Router>
+        <Header />
+        <div className={styles.container}>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/activities" component={Activities} />
+            <Route path="/admins" component={Admins} />
+            <Route path="/classes" component={Classes} />
+            <Route path="/members" component={Members} />
+            <Route path="/subscriptions" component={Subscriptions} />
+            <Route path="/superAdmins" component={SuperAdmins} />
+            <Route path="/trainers" component={Trainers} />
+          </Switch>
+        </div>
+        <Footer />
+      </Router>
+    </>
   );
 }
 
