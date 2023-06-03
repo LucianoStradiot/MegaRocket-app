@@ -249,7 +249,8 @@ function Subscriptions() {
                   key={oneClass._id}
                   selected={oneClass._id === create.classes}
                 >
-                  {oneClass.hour} {oneClass.activity.name}, Trainer: {oneClass.trainer.firstName}
+                  {oneClass.hour} {oneClass.activity.name}, Trainer:{' '}
+                  {oneClass.trainer && oneClass.trainer.firstName}
                 </option>
               );
             })}
