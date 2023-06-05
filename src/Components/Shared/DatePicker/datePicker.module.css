@@ -1,8 +1,18 @@
 .container {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   padding: 0 5%;
-  height: 50px;
-  background-color: #EA3354;
+  background-color: none;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.datePicker {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 88%;
+  text-align: center;
 }
