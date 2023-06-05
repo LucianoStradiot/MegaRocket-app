@@ -1,10 +1,19 @@
 import styles from './button.module.css';
 
-function Button() {
+function Button({ text, type, clickAction }) {
   return (
-    <section className={styles.container}>
-      <h2>Button</h2>
-    </section>
+    <button
+      className={
+        type === 'deleteCancel'
+          ? `${styles.buttonDeleteCancel} ${styles.button}`
+          : type === 'edit'
+          ? `${styles.buttonEdit} ${styles.button}`
+          : `${styles.buttonCreateAdd} ${styles.button}`
+      }
+      onClick={clickAction}
+    >
+      {text}
+    </button>
   );
 }
 
