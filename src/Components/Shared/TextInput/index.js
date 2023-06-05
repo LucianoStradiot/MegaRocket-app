@@ -1,40 +1,20 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import styles from './textInput.module.css';
+import React from 'react';
 
-function textInput({ inputType, data, labelName, editMode, useStateItem }) {
-  const [text, setText] = useState('');
+const TextInput = ({ inputType, labelName, changeAction, text, inputName }) => {
+  return (
+    <div>
+      <label className={styles['form-label']}>{labelName}</label>
+      <input
+        className={styles['form-input']}
+        name={inputName}
+        type={inputType}
+        value={text}
+        onChange={changeAction}
+      />
+    </div>
+  );
+};
 
-  useEffect(() => {
-    if (editMode) {
-      switch (inputType) {
-        case 'text':
-          setText(data);
-          break;
-        default:
-          break;
-      }
-    } else {
-      setText('');
-    }
-  }, [data]);
-
-  const renderInputType = (inputType) => {
-    if (inputType === 'text') {
-      return (
-        <label className={styles['form-label']}>
-          <h2>{labelName}</h2>
-          <input
-            className={styles['form-input']}
-            type="text"
-            value={text}
-            onChange={(event) => useStateItem(event.target.value)}
-          />
-        </label>
-      );
-    }
-  };
-
-  return renderInputType(inputType);
-}
-
-export default textInput;
+export default TextInput;
