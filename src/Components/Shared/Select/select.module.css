@@ -1,8 +1,8 @@
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 5%;
-  height: 50px;
-  background-color: #EA3354;
+.select {
+  height: 20px;
+  background-color: white;
+}
+
+.select:hover {
+  box-shadow: 5px 3px 3px #00000015;
 }
