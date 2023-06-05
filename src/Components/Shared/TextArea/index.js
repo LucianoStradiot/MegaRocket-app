@@ -1,11 +1,19 @@
+import React from 'react';
 import styles from './textArea.module.css';
 
-function TextArea() {
+const TextArea = ({ placeholder, val, changeAction, name }) => {
   return (
-    <section className={styles.container}>
-      <h2>TextArea</h2>
-    </section>
+    <div className={styles.textareaContainer}>
+      <textarea
+        type="text"
+        className={styles.textarea}
+        placeholder={placeholder}
+        value={val}
+        onChange={changeAction}
+        name={name}
+      ></textarea>
+    </div>
   );
-}
+};
 
 export default TextArea;
