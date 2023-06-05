@@ -246,6 +246,7 @@ function Admins() {
                   type="text"
                   onChange={onChangeInput}
                 />
+
                 <label className={styles.label}>Last Name</label>
                 <input
                   className={styles.input}
