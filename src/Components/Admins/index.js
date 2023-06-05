@@ -234,77 +234,91 @@ function Admins() {
           </tbody>
         </table>
         {isVisible && (
-          <form className={styles.container} onSubmit={onSubmit}>
-            <div className={styles.block}>
-              <div className={styles.firstPart}>
-                <label className={styles.label}>First Name</label>
-                <input
-                  className={styles.input}
-                  name="firstName"
-                  id="firstName"
-                  value={formChange.firstName}
-                  type="text"
-                  onChange={onChangeInput}
-                />
-                <label className={styles.label}>Last Name</label>
-                <input
-                  className={styles.input}
-                  name="lastName"
-                  id="lastName"
-                  value={formChange.lastName}
-                  type="text"
-                  onChange={onChangeInput}
-                />
-                <label className={styles.label}>DNI</label>
-                <input
-                  className={styles.input}
-                  name="dni"
-                  id="dni"
-                  value={formChange.dni}
-                  type="text"
-                  onChange={onChangeInput}
-                />
-                <label className={styles.label}>Phone</label>
-                <input
-                  className={styles.input}
-                  name="phone"
-                  id="phone"
-                  value={formChange.phone}
-                  type="text"
-                  onChange={onChangeInput}
-                />
-                <button className={styles.cancelBtn} onClick={cancel}>
+          <section className={styles.sectionForm}>
+            <form className={styles.form} onSubmit={onSubmit}>
+              <div className={styles.block}>
+                <div className={styles.firstPart}>
+                  <label className={styles.label}>First Name</label>
+                  <input
+                    className={styles.input}
+                    name="firstName"
+                    id="firstName"
+                    value={formChange.firstName}
+                    type="text"
+                    onChange={onChangeInput}
+                  />
+                </div>
+                <div className={styles.firstPart}>
+                  <label className={styles.label}>Last Name</label>
+                  <input
+                    className={styles.input}
+                    name="lastName"
+                    id="lastName"
+                    value={formChange.lastName}
+                    type="text"
+                    onChange={onChangeInput}
+                  />
+                </div>
+                <div className={styles.firstPart}>
+                  <label className={styles.label}>DNI</label>
+                  <input
+                    className={styles.input}
+                    name="dni"
+                    id="dni"
+                    value={formChange.dni}
+                    type="text"
+                    onChange={onChangeInput}
+                  />
+                </div>
+                <div className={styles.firstPart}>
+                  <label className={styles.label}>Phone</label>
+                  <input
+                    className={styles.input}
+                    name="phone"
+                    id="phone"
+                    value={formChange.phone}
+                    type="text"
+                    onChange={onChangeInput}
+                  />
+                </div>
+                <div className={styles.firstPart}>
+                  <label className={styles.label}>Email</label>
+                  <input
+                    className={styles.input}
+                    name="email"
+                    id="email"
+                    value={formChange.email}
+                    type="text"
+                    onChange={onChangeInput}
+                  />
+                </div>
+                <div className={styles.firstPart}>
+                  <label className={styles.label}>City</label>
+                  <input
+                    className={styles.input}
+                    name="city"
+                    id="city"
+                    value={formChange.city}
+                    type="text"
+                    onChange={onChangeInput}
+                  />
+                </div>
+                <div className={styles.firstPart}>
+                  <label className={styles.label}>Password</label>
+                  <input
+                    className={styles.input}
+                    name="password"
+                    id="password"
+                    value={formChange.password}
+                    type="password"
+                    onChange={onChangeInput}
+                  />
+                </div>
+              </div>
+              <div className={styles.btnContainer}>
+                <button className={`${styles.cancelBtn} && ${styles.createBtn2}`} onClick={cancel}>
                   Cancel
                 </button>
-              </div>
-              <div className={styles.firstPart}>
-                <label className={styles.label}>Email</label>
-                <input
-                  className={styles.input}
-                  name="email"
-                  id="email"
-                  value={formChange.email}
-                  type="text"
-                  onChange={onChangeInput}
-                />
-                <label className={styles.label}>City</label>
-                <input
-                  className={styles.input}
-                  name="city"
-                  id="city"
-                  value={formChange.city}
-                  type="text"
-                  onChange={onChangeInput}
-                />
-                <label className={styles.label}>Password</label>
-                <input
-                  className={styles.input}
-                  name="password"
-                  id="password"
-                  value={formChange.password}
-                  type="password"
-                  onChange={onChangeInput}
-                />
                 {buttonAddIsVisible && (
                   <button className={`${styles.createBtn} && ${styles.createBtn2}`} type="submit">
                     Create
@@ -316,8 +330,8 @@ function Admins() {
                   </button>
                 )}
               </div>
-            </div>
-          </form>
+            </form>
+          </section>
         )}
       </section>
     </div>
