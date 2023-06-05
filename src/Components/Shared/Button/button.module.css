@@ -1,8 +1,29 @@
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 5%;
-  height: 50px;
-  background-color: #EA3354;
+.button {
+   border: none;
+  border-radius: 5px;
+  padding: 7px 12px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #fff;
+}
+.buttonDeleteCancel {
+ background-color: #f55348;
+}
+.buttonDeleteCancel:hover {
+ background-color: #ee190a;
+}
+.buttonEdit {
+ background-color: #fff;
+  color: #4caf50;
+  border: 1px solid #4caf50;
+}
+.buttonEdit:hover {
+  background-color: #4caf50;
+  color: #fff;
+}
+.buttonCreateAdd {
+background-color: #3a3b7b;
+}
+.buttonCreateAdd:hover {
+background-color: #1b1b5d;
 }
