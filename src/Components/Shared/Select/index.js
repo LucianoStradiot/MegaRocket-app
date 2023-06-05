@@ -1,11 +1,18 @@
 import styles from './select.module.css';
+import React from 'react';
 
-function Select() {
+const Select = ({ name, selectValue, selectID, changeAction, children }) => {
   return (
-    <section className={styles.container}>
-      <h2>Select</h2>
-    </section>
+    <select
+      className={styles.select}
+      id={selectID}
+      name={name}
+      onChange={changeAction}
+      value={selectValue}
+    >
+      {children}
+    </select>
   );
-}
+};
 
 export default Select;

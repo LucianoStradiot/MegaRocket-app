@@ -1,11 +1,20 @@
+// import { useState, useEffect } from 'react';
 import styles from './textInput.module.css';
+import React from 'react';
 
-function TextInput() {
+const TextInput = ({ inputType, labelName, changeAction, text, inputName }) => {
   return (
-    <section className={styles.container}>
-      <h2>TextInput</h2>
-    </section>
+    <div>
+      <label className={styles['form-label']}>{labelName}</label>
+      <input
+        className={styles['form-input']}
+        name={inputName}
+        type={inputType}
+        value={text}
+        onChange={changeAction}
+      />
+    </div>
   );
-}
+};
 
 export default TextInput;
