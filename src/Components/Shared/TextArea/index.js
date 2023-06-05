@@ -1,11 +1,12 @@
+import React from 'react';
 import styles from './textArea.module.css';
 
-function TextArea() {
+const TextArea = ({ placeholder }) => {
   return (
-    <section className={styles.container}>
-      <h2>TextArea</h2>
-    </section>
+    <div className={styles.textareaContainer}>
+      <textarea className={styles.textarea} placeholder={placeholder}></textarea>
+    </div>
   );
-}
+};
 
 export default TextArea;
