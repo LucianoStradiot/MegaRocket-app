@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import style from './subscriptions.module.css';
+import Modal from '../Shared/Modal';
 
 function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -12,6 +13,13 @@ function Subscriptions() {
   });
   const [showForm, setShowForm] = useState(false);
   const [button, setButton] = useState('');
+  const [idDelete, setIdDelete] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [responseModal, setResponseModal] = useState({
+    title: '',
+    description: '',
+    isConfirm: false
+  });
   const getMembers = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
@@ -68,15 +76,29 @@ function Subscriptions() {
 
   const deleteSubscriptions = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
-        method: 'DELETE'
-      });
+      const responseSubscription = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/subscriptions/${idDelete}`,
+        {
+          method: 'DELETE'
+        }
+      );
       setSubscriptions((currentSubscriptions) => {
         return currentSubscriptions.filter((subs) => subs._id !== id);
       });
-      alert('Subscription successfully deleted.');
+      const response = await responseSubscription.json();
+      setResponseModal({
+        title: 'Succes!',
+        description: response.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -108,12 +130,22 @@ function Subscriptions() {
           date: ''
         });
         setShowForm(false);
-        alert(createdSubscription.message);
+        setResponseModal({
+          title: 'Succes!',
+          description: createdSubscription.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       } else {
         throw new Error(createdSubscription.message);
       }
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -141,12 +173,22 @@ function Subscriptions() {
           return updateSub;
         });
         setShowForm(false);
-        alert(updatedSubscription.message);
+        setResponseModal({
+          title: 'Succes!',
+          description: updatedSubscription.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       } else {
         throw new Error(updatedSubscription.message);
       }
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
   const searchActivity = (id) => {
@@ -166,8 +208,27 @@ function Subscriptions() {
       return date.substring(0, 10);
     }
   };
+
+  const openModalConfirm = (id) => {
+    setIdDelete(id);
+    setResponseModal({
+      title: '',
+      description: 'Are you sure you want to delete it?',
+      isConfirm: true
+    });
+    setIsOpen(true);
+  };
+
   return (
     <section className={style.container}>
+      <Modal
+        title={responseModal.title}
+        desc={responseModal.description}
+        isOpen={isOpen}
+        confirmModal={responseModal.isConfirm}
+        handleClose={() => setIsOpen(!isOpen)}
+        deleteFunction={() => deleteSubscriptions(idDelete)}
+      />
       <button
         className={style.createButton}
         onClick={() => {
@@ -217,10 +278,7 @@ function Subscriptions() {
                   >
                     Modify
                   </button>
-                  <button
-                    className={style.deleteButton}
-                    onClick={() => deleteSubscriptions(subs._id)}
-                  >
+                  <button className={style.deleteButton} onClick={() => openModalConfirm(subs._id)}>
                     X
                   </button>
                 </td>
