@@ -88,7 +88,7 @@ function Classes() {
       });
       getClasses();
       setResponseModal({
-        title: 'Succes!',
+        title: 'Success!',
         description: deletedActivity.message,
         isConfirm: false
       });
@@ -133,7 +133,7 @@ function Classes() {
           slots: ''
         });
         setResponseModal({
-          title: 'Succes!',
+          title: 'Success!',
           description: createdClassData.message,
           isConfirm: false
         });
@@ -179,7 +179,7 @@ function Classes() {
         });
 
         setResponseModal({
-          title: 'Succes!',
+          title: 'Success!',
           description: updatedClassData.message,
           isConfirm: false
         });
@@ -411,7 +411,7 @@ function Classes() {
           <div className={styles.sendContainer}>
             <Button
               text="Cancel"
-              type="deleteCancel"
+              type="cancel"
               clickAction={() => {
                 notVisible();
                 sendButtonNotVisible();
