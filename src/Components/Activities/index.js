@@ -3,6 +3,8 @@ import styles from './activities.module.css';
 import Modal from '../Shared/Modal';
 import TextArea from '../Shared/TextArea';
 import Select from '../Shared/Select';
+import TextInput from '../Shared/TextInput';
+import Button from '../Shared/Button';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -83,12 +85,14 @@ function Activities() {
           title: 'success',
           desc: response.message
         });
+        modalConfirmFalse();
       }
     } catch (error) {
       setModalInfo({
         title: 'Error',
         desc: error.message
       });
+      modalConfirmFalse();
     }
   };
 
@@ -125,12 +129,14 @@ function Activities() {
           title: 'Success',
           desc: response.message
         });
+        modalConfirmFalse();
       }
     } catch (error) {
       setModalInfo({
         title: 'Error',
         desc: error.message
       });
+      modalConfirmFalse();
     }
   };
 
@@ -150,7 +156,6 @@ function Activities() {
   const save = () => {
     updateActivity();
     formInvisible();
-    modalConfirmFalse();
   };
 
   const cancel = () => {
@@ -263,15 +268,12 @@ function Activities() {
                   <td className={styles.row}>{showActive(activity.isActive)}</td>
                   <td className={styles.row}>
                     <div className={styles.containerButtons}>
-                      <button className={styles.updateButton} onClick={() => modify(activity._id)}>
-                        Modify
-                      </button>
-                      <button
-                        className={styles.deleteButton}
-                        onClick={/* () => deleteActiviy(activity._id) */ modalConfirmTrue}
-                      >
-                        X
-                      </button>
+                      <Button clickAction={() => modify(activity._id)} text="Modify" type="edit" />
+                      <Button
+                        clickAction={/* () => deleteActiviy(activity._id) */ modalConfirmTrue}
+                        type="deleteCancel"
+                        text="X"
+                      />
                     </div>
                   </td>
                 </tr>
@@ -286,11 +288,11 @@ function Activities() {
             <div className={styles.subContainer}>
               <div className={styles.inputContainer}>
                 <label>name</label>
-                <input
-                  name="name"
-                  type="text"
-                  onChange={onChangeInput}
-                  value={activityFormValue.name}
+                <TextInput
+                  inputName="name"
+                  inputType="text"
+                  changeAction={onChangeInput}
+                  text={activityFormValue.name}
                 />
               </div>
               <div className={styles.inputContainer}>
@@ -314,19 +316,11 @@ function Activities() {
                 </div>
               )}
               <div className={styles.btnContainer}>
-                <button className={`${styles.button} ${styles.btnCancel}`} onClick={cancel}>
-                  Cancel
-                </button>
-                {buttonAddIsVisible && (
-                  <button className={styles.button} onClick={modalConfirmFalse}>
-                    add
-                  </button>
-                )}
+                <Button text="Cancel" clickAction={cancel} />
+                {buttonAddIsVisible && <Button text="Add" clickAction={modalConfirmFalse} />}
                 {buttonSaveIsVisible && (
                   <div>
-                    <button className={styles.button} onClick={save}>
-                      Save
-                    </button>
+                    <Button clickAction={save} text="Save" />
                   </div>
                 )}
               </div>
