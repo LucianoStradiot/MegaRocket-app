@@ -8,6 +8,7 @@
 }
 .buttonDeleteCancel {
  background-color: #f55348;
+ margin-left: 15px;
 }
 .buttonDeleteCancel:hover {
  background-color: #ee190a;
