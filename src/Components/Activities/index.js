@@ -55,14 +55,14 @@ function Activities() {
           title: 'Success',
           desc: response.message
         });
-        switchIsOpen();
+        setConfirmModal(false);
       }
     } catch (error) {
       setModalInfo({
         title: 'Error',
         desc: error.message
       });
-      switchIsOpen();
+      setConfirmModal(false);
     }
   };
 
@@ -328,7 +328,7 @@ function Activities() {
               )}
               <div className={styles.btnContainer}>
                 <Button text="Cancel" clickAction={cancel} />
-                {buttonAddIsVisible && <Button text="Add" clickAction={modalConfirmFalse} />}
+                {buttonAddIsVisible && <Button text="Add" />}
                 {buttonSaveIsVisible && (
                   <div>
                     <Button clickAction={save} text="Save" />
