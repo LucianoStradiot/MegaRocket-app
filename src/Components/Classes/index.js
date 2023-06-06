@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './classes.module.css';
 import Button from '../Shared/Button';
-// import TextInput from '../Shared/TextInput';
-// import Select from '../Shared/Select';
+import TextInput from '../Shared/TextInput';
+import Select from '../Shared/Select';
 import Modal from '../Shared/Modal';
 
 function Classes() {
@@ -330,9 +330,9 @@ function Classes() {
         <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
           <div className={styles.formContainer}>
             <label className={styles.label} htmlFor="day">
-              day
+              Day
             </label>
-            <select name="day" id="day" onChange={onChange}>
+            <Select name="day" selectID="day" changeAction={onChange}>
               <option value="undefined" defaultValue>
                 Choose a Day
               </option>
@@ -354,15 +354,18 @@ function Classes() {
               <option value="Saturday" selected={formData.day === 'Saturday'}>
                 Saturday
               </option>
-            </select>
-            <label className={styles.label} htmlFor="hour">
-              Hour
-            </label>
-            <input id="hour" type="text" name="hour" value={formData.hour} onChange={onChange} />
+            </Select>
+            <TextInput
+              inputName="hour"
+              inputType="text"
+              text={formData.hour}
+              labelName="Hour"
+              changeAction={onChange}
+            />
             <label className={styles.label} htmlFor="trainer">
               Trainer
             </label>
-            <select name="trainer" id="trainer" onChange={onChange}>
+            <Select name="trainer" selectID="trainer" changeAction={onChange}>
               <option value="undefined" defaultValue>
                 Choose a Trainer
               </option>
@@ -377,11 +380,11 @@ function Classes() {
                   </option>
                 );
               })}
-            </select>
+            </Select>
             <label className={styles.label} htmlFor="activity">
               Activity
             </label>
-            <select name="activity" id="activity" onChange={onChange}>
+            <Select name="activity" selectID="activity" changeAction={onChange}>
               <option value="undefined" defaultValue>
                 Choose an Activity
               </option>
@@ -396,11 +399,14 @@ function Classes() {
                   </option>
                 );
               })}
-            </select>
-            <label className={styles.label} htmlFor="slots">
-              Slots
-            </label>
-            <input id="slots" type="text" name="slots" value={formData.slots} onChange={onChange} />
+            </Select>
+            <TextInput
+              inputName="slots"
+              inputType="text"
+              labelName="Slots"
+              text={formData.slots}
+              changeAction={onChange}
+            />
           </div>
           <div className={styles.sendContainer}>
             <Button
