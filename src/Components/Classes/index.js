@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 import styles from './classes.module.css';
+import Button from '../Shared/Button';
+import TextInput from '../Shared/TextInput';
+import Select from '../Shared/Select';
+import Modal from '../Shared/Modal';
 
 function Classes() {
   const [formData, setFormData] = useState({
@@ -8,6 +12,13 @@ function Classes() {
     trainer: '',
     activity: '',
     slots: ''
+  });
+  const [idDelete, setIdDelete] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [responseModal, setResponseModal] = useState({
+    title: '',
+    description: '',
+    isConfirm: false
   });
 
   const [idStatus, setIDStatus] = useState('');
@@ -18,7 +29,12 @@ function Classes() {
       const { data: classes } = await response.json();
       setClasses(classes);
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -29,7 +45,12 @@ function Classes() {
       const { data: activities } = await response.json();
       setActivities(activities);
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -40,27 +61,45 @@ function Classes() {
       const { data: trainers } = await response.json();
       setTrainers(trainers);
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
-  const deleteClass = async (id) => {
+  const deleteClass = async () => {
     try {
-      const deleteActivity = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
-        method: 'DELETE'
-      });
+      const deleteActivity = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/classes/${idDelete}`,
+        {
+          method: 'DELETE'
+        }
+      );
 
       const deletedActivity = await deleteActivity.json();
       if (!deleteActivity.ok) {
         throw new Error(deletedActivity.message);
       }
       setClasses((currentClasses) => {
-        return currentClasses.filter((oneClass) => oneClass._id !== id);
+        return currentClasses.filter((oneClass) => oneClass._id !== idDelete);
       });
       getClasses();
-      alert(deletedActivity.message);
+      setResponseModal({
+        title: 'Success!',
+        description: deletedActivity.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -93,10 +132,20 @@ function Classes() {
           activity: '',
           slots: ''
         });
-        alert(createdClassData.message);
+        setResponseModal({
+          title: 'Success!',
+          description: createdClassData.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       }
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -129,10 +178,20 @@ function Classes() {
           slots: ''
         });
 
-        alert(updatedClassData.message);
+        setResponseModal({
+          title: 'Success!',
+          description: updatedClassData.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       }
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -189,11 +248,30 @@ function Classes() {
     updateButtonNotVisible();
   };
 
+  const openModalConfirm = (id) => {
+    setIdDelete(id);
+    setResponseModal({
+      title: '',
+      description: 'Are you sure you want to delete it?',
+      isConfirm: true
+    });
+    setIsOpen(true);
+  };
   return (
     <section className={styles.container}>
+      <Modal
+        title={responseModal.title}
+        desc={responseModal.description}
+        isOpen={isOpen}
+        confirmModal={responseModal.isConfirm}
+        handleClose={() => setIsOpen(!isOpen)}
+        deleteFunction={() => deleteClass(idDelete)}
+      />
       <h2>Classes</h2>
-      <button
-        onClick={() => {
+      <Button
+        text="Create"
+        type="create"
+        clickAction={() => {
           visible();
           sendButtonVisible();
           updateButtonNotVisible();
@@ -205,10 +283,7 @@ function Classes() {
             slots: ''
           });
         }}
-        className={styles.blueButton}
-      >
-        Create Class
-      </button>
+      />
       <table className={styles.table}>
         <thead>
           <tr>
@@ -235,24 +310,16 @@ function Classes() {
                 <td className={styles.td}>{activityName}</td>
                 <td className={styles.td}>{oneClass.slots}</td>
                 <td className={styles.td}>
-                  <button
-                    key={oneClass._id}
-                    onClick={() => {
-                      formEdit(oneClass._id);
-                    }}
-                    className={styles.editButton}
-                  >
-                    edit
-                  </button>
+                  <Button text="Edit" type="edit" clickAction={() => formEdit(oneClass._id)} />
                 </td>
                 <td className={styles.td}>
-                  <button
-                    key={oneClass._id}
-                    onClick={() => deleteClass(oneClass._id)}
-                    className={styles.delete}
-                  >
-                    X
-                  </button>
+                  <Button
+                    text="X"
+                    type="deleteCancel"
+                    clickAction={() => {
+                      openModalConfirm(oneClass._id);
+                    }}
+                  />
                 </td>
               </tr>
             );
@@ -263,9 +330,9 @@ function Classes() {
         <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
           <div className={styles.formContainer}>
             <label className={styles.label} htmlFor="day">
-              day
+              Day
             </label>
-            <select name="day" id="day" onChange={onChange}>
+            <Select name="day" selectID="day" changeAction={onChange}>
               <option value="undefined" defaultValue>
                 Choose a Day
               </option>
@@ -287,15 +354,18 @@ function Classes() {
               <option value="Saturday" selected={formData.day === 'Saturday'}>
                 Saturday
               </option>
-            </select>
-            <label className={styles.label} htmlFor="hour">
-              Hour
-            </label>
-            <input id="hour" type="text" name="hour" value={formData.hour} onChange={onChange} />
+            </Select>
+            <TextInput
+              inputName="hour"
+              inputType="text"
+              text={formData.hour}
+              labelName="Hour"
+              changeAction={onChange}
+            />
             <label className={styles.label} htmlFor="trainer">
               Trainer
             </label>
-            <select name="trainer" id="trainer" onChange={onChange}>
+            <Select name="trainer" selectID="trainer" changeAction={onChange}>
               <option value="undefined" defaultValue>
                 Choose a Trainer
               </option>
@@ -310,11 +380,11 @@ function Classes() {
                   </option>
                 );
               })}
-            </select>
+            </Select>
             <label className={styles.label} htmlFor="activity">
               Activity
             </label>
-            <select name="activity" id="activity" onChange={onChange}>
+            <Select name="activity" selectID="activity" changeAction={onChange}>
               <option value="undefined" defaultValue>
                 Choose an Activity
               </option>
@@ -329,27 +399,43 @@ function Classes() {
                   </option>
                 );
               })}
-            </select>
-            <label className={styles.label} htmlFor="slots">
-              Slots
-            </label>
-            <input id="slots" type="text" name="slots" value={formData.slots} onChange={onChange} />
+            </Select>
+            <TextInput
+              inputName="slots"
+              inputType="text"
+              labelName="Slots"
+              text={formData.slots}
+              changeAction={onChange}
+            />
           </div>
           <div className={styles.sendContainer}>
-            <button
-              className={styles.blueButton}
-              onClick={() => {
+            <Button
+              text="Cancel"
+              type="cancel"
+              clickAction={() => {
                 notVisible();
                 sendButtonNotVisible();
                 updateButtonNotVisible();
               }}
-            >
-              Cancel
-            </button>
+            />
             {sendVisible && (
-              <input type="submit" value="Send" onClick={create} className={styles.blueButton} />
+              <Button
+                text="Submit"
+                type="create"
+                clickAction={() => {
+                  create();
+                }}
+              />
             )}
-            {updateVisible && <input type="submit" value="Update" onClick={save} />}
+            {updateVisible && (
+              <Button
+                text="Update"
+                type="create"
+                clickAction={() => {
+                  save();
+                }}
+              />
+            )}
           </div>
         </form>
       )}
