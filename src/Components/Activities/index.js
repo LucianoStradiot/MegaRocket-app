@@ -24,6 +24,7 @@ function Activities() {
     desc: ''
   });
   const [confirmModal, setConfirmModal] = useState(false);
+  const [deleteID, setDeleteID] = useState('');
   const getActivities = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
@@ -37,7 +38,7 @@ function Activities() {
     }
   };
 
-  /* const deleteActiviy = async (id) => {
+  const deleteActiviy = async (id) => {
     try {
       const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
         method: 'DELETE'
@@ -54,14 +55,16 @@ function Activities() {
           title: 'Success',
           desc: response.message
         });
+        switchIsOpen();
       }
     } catch (error) {
       setModalInfo({
         title: 'Error',
         desc: error.message
       });
+      switchIsOpen();
     }
-  }; */
+  };
 
   const createActivity = async () => {
     try {
@@ -238,6 +241,15 @@ function Activities() {
     switchIsOpen();
   };
 
+  const confirmDelete = (id) => {
+    setDeleteID(id);
+    modalConfirmTrue();
+    setModalInfo({
+      title: 'Confirm',
+      desc: 'Are you sure?'
+    });
+  };
+
   return (
     <div className={styles.container}>
       <Modal
@@ -246,12 +258,11 @@ function Activities() {
         isOpen={isOpen}
         handleClose={switchIsOpen}
         confirmModal={confirmModal}
+        deleteFunction={() => deleteActiviy(deleteID)}
       />
       <section>
         <h2 className={styles.h2}>Activities</h2>
-        <button onClick={create} className={styles.createButton}>
-          Create
-        </button>
+        <Button clickAction={create} text="Create" />
         <table className={styles.table}>
           <thead className={styles.thead}>
             <th className={`${styles.head} ${styles.th}`}>Activity Name</th>
@@ -270,7 +281,7 @@ function Activities() {
                     <div className={styles.containerButtons}>
                       <Button clickAction={() => modify(activity._id)} text="Modify" type="edit" />
                       <Button
-                        clickAction={/* () => deleteActiviy(activity._id) */ modalConfirmTrue}
+                        clickAction={() => confirmDelete(activity._id)}
                         type="deleteCancel"
                         text="X"
                       />
