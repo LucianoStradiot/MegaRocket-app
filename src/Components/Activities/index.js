@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
 import styles from './activities.module.css';
+import Modal from '../Shared/Modal';
+import TextArea from '../Shared/TextArea';
+import Select from '../Shared/Select';
+import TextInput from '../Shared/TextInput';
+import Button from '../Shared/Button';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -13,13 +18,23 @@ function Activities() {
     description: '',
     isActive: ''
   });
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalInfo, setModalInfo] = useState({
+    title: '',
+    desc: ''
+  });
+  const [confirmModal, setConfirmModal] = useState(false);
+  const [deleteID, setDeleteID] = useState('');
   const getActivities = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
       const { data: activities } = await response.json();
       setActivities(activities);
     } catch (error) {
-      alert(error);
+      setModalInfo({
+        title: 'error',
+        desc: error.message
+      });
     }
   };
 
@@ -36,10 +51,18 @@ function Activities() {
       if (!resp.ok) {
         throw new Error(response.message);
       } else {
-        alert(response.message);
+        setModalInfo({
+          title: 'Success',
+          desc: response.message
+        });
+        setConfirmModal(false);
       }
     } catch (error) {
-      alert(error);
+      setModalInfo({
+        title: 'Error',
+        desc: error.message
+      });
+      setConfirmModal(false);
     }
   };
 
@@ -59,12 +82,20 @@ function Activities() {
         setActivities((currentActivities) => [...currentActivities, response.data]);
         setActivityFormValue({
           name: '',
-          description: ''
+          descriptionription: ''
         });
-        alert(response.message);
+        setModalInfo({
+          title: 'success',
+          desc: response.message
+        });
+        modalConfirmFalse();
       }
     } catch (error) {
-      alert(error);
+      setModalInfo({
+        title: 'Error',
+        desc: error.message
+      });
+      modalConfirmFalse();
     }
   };
 
@@ -97,10 +128,18 @@ function Activities() {
           isActive: ''
         });
         setIdStatus('');
-        alert(response.message);
+        setModalInfo({
+          title: 'Success',
+          desc: response.message
+        });
+        modalConfirmFalse();
       }
     } catch (error) {
-      alert(error);
+      setModalInfo({
+        title: 'Error',
+        desc: error.message
+      });
+      modalConfirmFalse();
     }
   };
 
@@ -188,17 +227,46 @@ function Activities() {
     getActivities();
   }, []);
 
+  const switchIsOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const modalConfirmTrue = () => {
+    setConfirmModal(true);
+    switchIsOpen();
+  };
+
+  const modalConfirmFalse = () => {
+    setConfirmModal(false);
+    switchIsOpen();
+  };
+
+  const confirmDelete = (id) => {
+    setDeleteID(id);
+    modalConfirmTrue();
+    setModalInfo({
+      title: 'Confirm',
+      desc: 'Are you sure?'
+    });
+  };
+
   return (
     <div className={styles.container}>
+      <Modal
+        title={modalInfo.title}
+        desc={modalInfo.desc}
+        isOpen={isOpen}
+        handleClose={switchIsOpen}
+        confirmModal={confirmModal}
+        deleteFunction={() => deleteActiviy(deleteID)}
+      />
       <section>
         <h2 className={styles.h2}>Activities</h2>
-        <button onClick={create} className={styles.createButton}>
-          Create
-        </button>
+        <Button clickAction={create} text="Create" />
         <table className={styles.table}>
           <thead className={styles.thead}>
             <th className={`${styles.head} ${styles.th}`}>Activity Name</th>
-            <th className={styles.th}>Description</th>
+            <th className={styles.th}>description</th>
             <th className={styles.th}>Status</th>
             <th className={`${styles.headEnd} ${styles.th}`}></th>
           </thead>
@@ -211,15 +279,12 @@ function Activities() {
                   <td className={styles.row}>{showActive(activity.isActive)}</td>
                   <td className={styles.row}>
                     <div className={styles.containerButtons}>
-                      <button className={styles.updateButton} onClick={() => modify(activity._id)}>
-                        Modify
-                      </button>
-                      <button
-                        className={styles.deleteButton}
-                        onClick={() => deleteActiviy(activity._id)}
-                      >
-                        X
-                      </button>
+                      <Button clickAction={() => modify(activity._id)} text="Modify" type="edit" />
+                      <Button
+                        clickAction={() => confirmDelete(activity._id)}
+                        type="deleteCancel"
+                        text="X"
+                      />
                     </div>
                   </td>
                 </tr>
@@ -234,49 +299,39 @@ function Activities() {
             <div className={styles.subContainer}>
               <div className={styles.inputContainer}>
                 <label>name</label>
-                <input
-                  name="name"
-                  type="text"
-                  onChange={onChangeInput}
-                  value={activityFormValue.name}
+                <TextInput
+                  inputName="name"
+                  inputType="text"
+                  changeAction={onChangeInput}
+                  text={activityFormValue.name}
                 />
               </div>
               <div className={styles.inputContainer}>
                 <label>description</label>
-                <textarea
-                  className={styles.inputDescription}
+                <TextArea
                   name="description"
-                  type="text"
-                  onChange={onChangeInput}
-                  value={activityFormValue.description}
+                  changeAction={onChangeInput}
+                  val={activityFormValue.description}
                 />
               </div>
               {activeIsVisible && (
                 <div>
-                  <select name="isActive" onChange={onChangeInput}>
+                  <Select name="isActive" changeAction={onChangeInput}>
                     <option value={true} selected={!activityFormValue.isActive}>
                       Active
                     </option>
                     <option value={false} selected={!activityFormValue.isActive}>
                       Inactive
                     </option>
-                  </select>
+                  </Select>
                 </div>
               )}
               <div className={styles.btnContainer}>
-                <button className={`${styles.button} ${styles.btnCancel}`} onClick={cancel}>
-                  Cancel
-                </button>
-                {buttonAddIsVisible && (
-                  <button className={styles.button} type="submit">
-                    add
-                  </button>
-                )}
+                <Button text="Cancel" clickAction={cancel} />
+                {buttonAddIsVisible && <Button text="Add" />}
                 {buttonSaveIsVisible && (
                   <div>
-                    <button className={styles.button} onClick={save}>
-                      Save
-                    </button>
+                    <Button clickAction={save} text="Save" />
                   </div>
                 )}
               </div>

@@ -1,4 +1,4 @@
-.modal{
+.modal {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,58 +9,20 @@
   bottom: 0;
   background-color: #111111bd;
 }
-.modalContainer{
+
+.modalContainer {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 40px;
   width: 70%;
   max-width: 550px;
-  padding: 10px 0 10px 20px;
+  padding: 10px;
   border-radius: 4px;
   color: #000;
   background-color: #fff;
 }
-.modal-container p{
-  font-size: 14px;
-}
-.modal-close{
-  padding: 3px 8px;
-  font-size: 20px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  border: none;
-  border-radius: 50%;
-  color: #fff;
-}
-.modal-close:hover{
-  background-color: #fff;
-}
-.modal-container-red{
-  background-color: #F13312;
-}
-.modal-close-red{
-  background-color: #F13312;
-}
-.modal-close-red:hover{
-  color: #F13312;
-}
-.modal-container-green{
-  background-color: #80C526;
-}
-.modal-close-green{
-  background-color: #80C526;
-}
-.modal-close-green:hover{
-  color: #80C526;
-}
-.modal-msg{
-  white-space: pre-line;
-}
-.msg-container{
-  width: 90%;
-}
-.close-container{
-  width: 10%;
-  min-width: 34px;
+
+.modalContainer h3,
+.modalContainer p {
+  margin-left: 5px;
 }
