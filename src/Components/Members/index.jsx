@@ -87,13 +87,14 @@ const Members = () => {
   };
 
   const updateMember = async (idMember) => {
+    const dateFormat = changeDateFormat(memberValues.birthday);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${idMember}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(memberValues)
+        body: JSON.stringify({ ...memberValues, birthday: dateFormat })
       });
 
       const updatedMember = await response.json();
@@ -278,14 +279,12 @@ const Members = () => {
                 />
               </div>
             </div>
-
             <DatePicker
               changeAction={(e) => onChange(e)}
               name={'birthday'}
               title={'Birthday'}
               val={getDateValue()}
             />
-
             <div>
               <div className={styles.inputContainer}>
                 <TextInput
@@ -358,6 +357,7 @@ const Members = () => {
               <tr>
                 <th className={styles.thMember}>Name</th>
                 <th className={styles.thMember}>Last Name</th>
+                <th className={styles.thMember}>Birthday</th>
                 <th className={styles.thMember}></th>
                 <th className={styles.thMember}></th>
               </tr>
@@ -369,6 +369,7 @@ const Members = () => {
                     <tr key={member._id}>
                       <td className={styles.tdMember}>{member.firstName}</td>
                       <td className={styles.tdMember}>{member.lastName}</td>
+                      <td className={styles.tdMember}>{member.birthday}</td>
                       <td className={styles.tdMember}>
                         <Button
                           clickAction={() => {
@@ -381,7 +382,7 @@ const Members = () => {
                               dni: member.dni,
                               phone: member.phone,
                               city: member.city,
-                              birthday: member.birthday,
+                              birthday: changeDateFormat(member.birthday),
                               postalCode: member.postalCode,
                               membership: member.membership,
                               isActive: member.isActive
