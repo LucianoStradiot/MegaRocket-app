@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
+import TextInput from '../Shared/TextInput';
+import Select from '../Shared/Select';
+import Button from '../Shared/Button';
+import DatePicker from '../Shared/DatePicker';
+import Modal from '../Shared/Modal';
 
 const Members = () => {
   const [members, setMembers] = useState([]);
@@ -17,7 +22,12 @@ const Members = () => {
     isActive: true
   });
   const [idMember, setIdMember] = useState('');
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalInfo, setModalInfo] = useState({
+    title: '',
+    desc: ''
+  });
+  const [confirmModal, setConfirmModal] = useState(false);
   const getMembers = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
     const data = await response.json();
@@ -34,8 +44,6 @@ const Members = () => {
       [e.target.name]: e.target.value
     });
   };
-
-  console.log(memberValues);
 
   const getDateValue = () => {
     const date = new Date(memberValues.birthday);
@@ -79,13 +87,14 @@ const Members = () => {
   };
 
   const updateMember = async (idMember) => {
+    const dateFormat = changeDateFormat(memberValues.birthday);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${idMember}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(memberValues)
+        body: JSON.stringify({ ...memberValues, birthday: dateFormat })
       });
 
       const updatedMember = await response.json();
@@ -97,14 +106,20 @@ const Members = () => {
           updatedMembers[dataIndex] = updatedMember.data;
           return updatedMembers;
         });
-
-        alert('Miembro actualizado exitosamente');
+        setModalInfo({
+          title: 'Success',
+          desc: updatedMember.message
+        });
+        modalConfirmFalse();
       } else {
-        throw new Error('Error al actualizar el miembro');
+        throw new Error(updatedMember.message);
       }
     } catch (error) {
-      console.error(error);
-      alert('Ha ocurrido un error al actualizar el miembro');
+      setModalInfo({
+        title: 'Error',
+        desc: error.message
+      });
+      modalConfirmFalse();
     }
   };
 
@@ -118,170 +133,203 @@ const Members = () => {
         },
         body: JSON.stringify({ ...member, birthday: dateFormat })
       });
+      const dataResponse = await response.json();
       if (response.ok) {
         setMembers([...members, member]);
-        alert('Miembro creado exitosamente');
+        setModalInfo({
+          title: 'Success',
+          desc: 'Member created successfully'
+        });
+        modalConfirmFalse();
         getMembers();
       } else {
-        throw new Error('Error al crear el miembro');
+        throw new Error(dataResponse.message);
       }
     } catch (error) {
-      console.error(error);
-      alert('Ha ocurrido un error al crear el miembro');
+      setModalInfo({
+        title: 'Error',
+        desc: error.message
+      });
+      modalConfirmFalse();
     }
   };
 
   const deleteMember = async (memberId) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/members/${memberId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${memberId}`, {
         method: 'DELETE'
       });
       setMembers([...members.filter((member) => member._id !== memberId)]);
-      alert('Miembro eliminado exitosamente');
+      const dataResponse = await response.json();
+      if (!response.ok) {
+        throw new Error(dataResponse.message);
+      } else {
+        setModalInfo({
+          title: 'Success',
+          desc: dataResponse.message
+        });
+        setConfirmModal(false);
+      }
     } catch (error) {
-      console.error(error);
-      alert('Ha ocurrido un error al eliminar el miembro');
+      setModalInfo({
+        title: 'Error',
+        desc: error.message
+      });
+      setConfirmModal(false);
     }
+  };
+  const switchIsOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const modalConfirmTrue = () => {
+    setConfirmModal(true);
+    switchIsOpen();
+  };
+
+  const modalConfirmFalse = () => {
+    setConfirmModal(false);
+    switchIsOpen();
+  };
+
+  const confirmDelete = (id) => {
+    setIdMember(id);
+    modalConfirmTrue();
+    setModalInfo({
+      title: 'Confirm',
+      desc: 'Are you sure?'
+    });
   };
 
   return (
     <section className={styles.container}>
+      <Modal
+        title={modalInfo.title}
+        desc={modalInfo.desc}
+        isOpen={isOpen}
+        handleClose={switchIsOpen}
+        confirmModal={confirmModal}
+        deleteFunction={() => deleteMember(idMember)}
+      />
       <h2>Members</h2>
       {showForm ? (
         <form className={styles.form} onSubmit={onSubmit}>
           <div className={styles.subContainer}>
             <div className={styles.inputContainer}>
-              <label className={styles.label}>First Name</label>
-              <input
-                className={styles.input}
-                name="firstName"
-                type="text"
-                value={memberValues.firstName}
-                onChange={(e) => onChange(e)}
+              <TextInput
+                labelName={'First Name'}
+                inputName={'firstName'}
+                changeAction={(e) => onChange(e)}
+                inputType={'text'}
+                text={memberValues.firstName}
               />
             </div>
             <div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>Last Name</label>
-                <input
-                  className={styles.input}
-                  name="lastName"
-                  type="text"
-                  value={memberValues.lastName}
-                  onChange={(e) => onChange(e)}
+                <TextInput
+                  labelName={'Last Name'}
+                  inputName={'lastName'}
+                  changeAction={(e) => onChange(e)}
+                  inputType={'text'}
+                  text={memberValues.lastName}
                 />
               </div>
             </div>
             <div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>Email</label>
-                <input
-                  className={styles.input}
-                  name="email"
-                  type="text"
-                  value={memberValues.email}
-                  onChange={(e) => onChange(e)}
+                <TextInput
+                  labelName={'Email'}
+                  inputName={'email'}
+                  changeAction={(e) => onChange(e)}
+                  inputType={'text'}
+                  text={memberValues.email}
                 />
               </div>
             </div>
             <div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>DNI</label>
-                <input
-                  className={styles.input}
-                  name="dni"
-                  type="number"
-                  value={memberValues.dni}
-                  onChange={(e) => onChange(e)}
+                <TextInput
+                  labelName={'DNI'}
+                  inputName={'dni'}
+                  changeAction={(e) => onChange(e)}
+                  inputType={'number'}
+                  text={memberValues.dni}
                 />
               </div>
             </div>
             <div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>Phone</label>
-                <input
-                  className={styles.input}
-                  name="phone"
-                  type="number"
-                  value={memberValues.phone}
-                  onChange={(e) => onChange(e)}
+                <TextInput
+                  labelName={'Phone'}
+                  inputName={'phone'}
+                  changeAction={(e) => onChange(e)}
+                  inputType={'number'}
+                  text={memberValues.phone}
                 />
               </div>
             </div>
             <div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>City</label>
-                <input
-                  className={styles.input}
-                  name="city"
-                  type="text"
-                  value={memberValues.city}
-                  onChange={(e) => onChange(e)}
+                <TextInput
+                  labelName={'City'}
+                  inputName={'city'}
+                  changeAction={(e) => onChange(e)}
+                  inputType={'text'}
+                  text={memberValues.city}
                 />
               </div>
             </div>
+            <DatePicker
+              changeAction={(e) => onChange(e)}
+              name={'birthday'}
+              title={'Birthday'}
+              val={getDateValue()}
+            />
             <div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>Birthday</label>
-                <input
-                  className={styles.input}
-                  name="birthday"
-                  type="date"
-                  value={getDateValue()}
-                  onChange={(e) => onChange(e)}
-                />
-              </div>
-            </div>
-            <div>
-              <div className={styles.inputContainer}>
-                <label className={styles.label}>PostalCode</label>
-                <input
-                  className={styles.input}
-                  name="postalCode"
-                  type="number"
-                  value={memberValues.postalCode}
-                  onChange={(e) => onChange(e)}
+                <TextInput
+                  labelName={'PostalCode'}
+                  inputName={'postalCode'}
+                  changeAction={(e) => onChange(e)}
+                  inputType={'number'}
+                  text={memberValues.postalCode}
                 />
               </div>
             </div>
             <div>
               <div className={styles.inputContainer}>
                 <label className={styles.label}>Membership</label>
-                <select
-                  className={styles.input}
-                  name="membership"
-                  value={memberValues.membership}
-                  onChange={(e) => onChange(e)}
+                <Select
+                  changeAction={(e) => onChange(e)}
+                  name={'membership'}
+                  selectID={''}
+                  selectValue={memberValues.membership}
                 >
                   <option value="">Seleccionar</option>
                   <option value="Black Membership">Black Membership</option>
                   <option value="Classic Membership">Classic Membership</option>
                   <option value="Only Classes Membership">Only Classes Membership</option>
-                </select>
+                </Select>
               </div>
             </div>
 
             <div>
               <div className={styles.inputContainer}>
                 <label className={styles.label}>Status</label>
-                <select
-                  className={styles.input}
-                  name="isActive"
-                  value={memberValues.isActive}
-                  onChange={onChange}
+                <Select
+                  changeAction={onChange}
+                  name={'isActive'}
+                  selectID={''}
+                  selectValue={memberValues.isActive}
                 >
                   <option value={true}>Active</option>
                   <option value={false}>Inactive</option>
-                </select>
+                </Select>
               </div>
             </div>
-
-            <button className={styles.button} type="submit">
-              {idMember ? 'Edit' : 'Add'}
-            </button>
-            <button
-              className={styles.button}
-              onClick={() => {
+            <Button text={idMember ? 'Edit' : 'Add'} type={idMember ? 'edit' : 'Add'} />
+            <Button
+              clickAction={() => {
                 setShowForm(false);
                 setIdMember('');
                 setMemberValues({
@@ -297,9 +345,9 @@ const Members = () => {
                   isActive: true
                 });
               }}
-            >
-              Cancel
-            </button>
+              text={'Cancel'}
+              type={'deleteCancel'}
+            />
           </div>
         </form>
       ) : (
@@ -309,6 +357,7 @@ const Members = () => {
               <tr>
                 <th className={styles.thMember}>Name</th>
                 <th className={styles.thMember}>Last Name</th>
+                <th className={styles.thMember}>Birthday</th>
                 <th className={styles.thMember}></th>
                 <th className={styles.thMember}></th>
               </tr>
@@ -320,10 +369,10 @@ const Members = () => {
                     <tr key={member._id}>
                       <td className={styles.tdMember}>{member.firstName}</td>
                       <td className={styles.tdMember}>{member.lastName}</td>
+                      <td className={styles.tdMember}>{member.birthday}</td>
                       <td className={styles.tdMember}>
-                        <button
-                          className={styles.editButton}
-                          onClick={() => {
+                        <Button
+                          clickAction={() => {
                             setIdMember(member._id);
                             setShowForm(true);
                             setMemberValues({
@@ -333,41 +382,38 @@ const Members = () => {
                               dni: member.dni,
                               phone: member.phone,
                               city: member.city,
-                              birthday: member.birthday,
+                              birthday: changeDateFormat(member.birthday),
                               postalCode: member.postalCode,
                               membership: member.membership,
                               isActive: member.isActive
                             });
                           }}
-                        >
-                          Edit
-                        </button>
+                          text={'Edit'}
+                          type={'edit'}
+                        />
                       </td>
                       <td className={styles.tdMember}>
-                        <button
-                          className={styles.deleteButton}
-                          onClick={() => {
-                            setIdMember(member._id);
-                            deleteMember(member._id);
+                        <Button
+                          clickAction={() => {
+                            confirmDelete(member._id);
                           }}
-                        >
-                          X
-                        </button>
+                          text={'X'}
+                          type={'deleteCancel'}
+                        />
                       </td>
                     </tr>
                   );
                 })}
             </tbody>
           </table>
-          <button
-            className={styles.button}
-            onClick={() => {
+          <Button
+            clickAction={() => {
               setShowForm(true);
               setIdMember('');
             }}
-          >
-            Add
-          </button>
+            text={'Add'}
+            type={'add'}
+          />
         </>
       )}
     </section>
