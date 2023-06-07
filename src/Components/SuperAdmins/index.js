@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
+import Button from '../Shared/Button';
+import TextInput from '../Shared/TextInput';
+import Modal from '../Shared/Modal';
 
 function SuperAdmins() {
   const [superAdmins, setSuperAdmin] = useState([]);
@@ -11,27 +14,53 @@ function SuperAdmins() {
     email: '',
     password: ''
   });
+  const [idDelete, setIdDelete] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [responseModal, setResponseModal] = useState({
+    title: '',
+    description: '',
+    isConfirm: false
+  });
+
   const getSuperAdmins = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`);
       const { data: superAdmins } = await response.json();
       setSuperAdmin(superAdmins);
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
-  const deleteSuperAdmin = async (id) => {
+  const deleteSuperAdmin = async () => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
-        method: 'DELETE'
-      });
+      const responseSuperAdmin = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/super-admin/${idDelete}`,
+        {
+          method: 'DELETE'
+        }
+      );
       setSuperAdmin((currentAdmins) => {
-        return currentAdmins.filter((superAdmins) => superAdmins._id !== id);
+        return currentAdmins.filter((superAdmins) => superAdmins._id !== idDelete);
       });
-      alert('SuperAdmin deleted succesfully!');
-      getSuperAdmins();
+      const response = await responseSuperAdmin.json();
+      setResponseModal({
+        title: 'Succes!',
+        description: response.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -53,12 +82,27 @@ function SuperAdmins() {
           email: '',
           password: ''
         });
-        alert(createdSuperAdminData.message);
+        setResponseModal({
+          title: 'Succes!',
+          description: createdSuperAdminData.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       } else {
-        alert(createdSuperAdminData.message);
+        setResponseModal({
+          title: 'ERROR!',
+          description: createdSuperAdminData.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       }
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
   const updSuperAdmin = async () => {
@@ -86,12 +130,27 @@ function SuperAdmins() {
           password: ''
         });
         setIdStatus('');
-        alert(updSuperAdminData.message);
+        setResponseModal({
+          title: 'Succes!',
+          description: updSuperAdminData.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       } else {
-        alert(updSuperAdminData.message);
+        setResponseModal({
+          title: 'ERROR!',
+          description: updSuperAdminData.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       }
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
   const onChange = (e) => {
@@ -155,17 +214,33 @@ function SuperAdmins() {
     setSaveVisible(true);
   };
 
+  const openModalConfirm = (id) => {
+    setIdDelete(id);
+    setResponseModal({
+      title: '',
+      description: 'Are you sure you want to delete it?',
+      isConfirm: true
+    });
+    setIsOpen(true);
+  };
+
   useEffect(() => {
     getSuperAdmins();
   }, []);
 
   return (
     <section className={styles.container}>
+      <Modal
+        title={responseModal.title}
+        desc={responseModal.description}
+        isOpen={isOpen}
+        confirmModal={responseModal.isConfirm}
+        handleClose={() => setIsOpen(!isOpen)}
+        deleteFunction={() => deleteSuperAdmin(idDelete)}
+      />
       <h2 className={styles.h2}>SuperAdmin</h2>
       <section>
-        <button onClick={create} className={styles.createButton}>
-          Create
-        </button>
+        <Button text="Create" clickAction={create} type="create" />
         <table className={styles.table}>
           <thead className={styles.thead}>
             <tr>
@@ -180,15 +255,12 @@ function SuperAdmins() {
                   <td className={styles.row}>{superAdmin.email}</td>
                   <td className={styles.row}>
                     <div className={styles.containerButtons}>
-                      <button className={styles.updateButton} onClick={() => edit(superAdmin._id)}>
-                        Edit
-                      </button>
-                      <button
-                        className={styles.deleteButton}
-                        onClick={() => deleteSuperAdmin(superAdmin._id)}
-                      >
-                        X
-                      </button>
+                      <Button text="Edit" type="edit" clickAction={() => edit(superAdmin._id)} />
+                      <Button
+                        text="X"
+                        type="deleteCancel"
+                        clickAction={() => openModalConfirm(superAdmin._id)}
+                      />
                     </div>
                   </td>
                 </tr>
@@ -201,42 +273,30 @@ function SuperAdmins() {
             <form className={styles.form} onSubmit={submit} id="form">
               <div>
                 <div className={styles.inputContainer}>
-                  <label className={styles.label}>Email</label>
-                  <input
-                    className={styles.input}
-                    type="text"
-                    name="email"
+                  <TextInput
+                    labelName="First name"
+                    inputType="text"
+                    inputName="email"
                     id="email"
-                    value={dataForm.email}
-                    onChange={onChange}
+                    text={dataForm.email}
+                    changeAction={onChange}
                   />
                 </div>
                 <div className={styles.inputContainer}>
-                  <label className={styles.label}>Password</label>
-                  <input
-                    className={styles.input}
-                    type="password"
-                    name="password"
+                  <TextInput
+                    labelName="Password"
+                    inputType="password"
+                    inputName="password"
                     id="password"
-                    value={dataForm.password}
-                    onChange={onChange}
+                    text={dataForm.password}
+                    changeAction={onChange}
                   />
                 </div>
               </div>
               <div className={styles.btnContainer}>
-                <button className={`${styles.button} ${styles.btnCancel}`} onClick={cancel}>
-                  Cancel
-                </button>
-                {btnAddIsVisible && (
-                  <button className={styles.button} onClick={submit}>
-                    Add
-                  </button>
-                )}
-                {btnSaveIsVisible && (
-                  <button className={styles.button} onClick={save}>
-                    Save
-                  </button>
-                )}
+                <Button text="Cancel" clickAction={cancel} type="cancel" />
+                {btnAddIsVisible && <Button text="Add" clickAction={submit} type="add" />}
+                {btnSaveIsVisible && <Button text="Save" clickAction={save} type="save" />}
               </div>
             </form>
           </section>
