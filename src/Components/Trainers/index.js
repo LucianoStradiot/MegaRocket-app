@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styles from './trainers.module.css';
+import Button from '../Shared/Button';
+import TextInput from '../Shared/TextInput';
+import Modal from '../Shared/Modal';
+import Select from '../Shared/Select';
 
 function Trainers() {
   const [trainers, setTrainers] = useState([]);
@@ -19,6 +23,13 @@ function Trainers() {
     salary: '',
     isActive: ''
   });
+  const [idDelete, setIdDelete] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [responseModal, setResponseModal] = useState({
+    title: '',
+    description: '',
+    isConfirm: false
+  });
 
   const getTrainers = async () => {
     try {
@@ -27,24 +38,41 @@ function Trainers() {
 
       setTrainers(trainers);
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
-  const deleteTrainer = async (id) => {
+  const deleteTrainer = async () => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
-        method: 'DELETE'
-      });
+      const responseTrainer = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/trainers/${idDelete}`,
+        {
+          method: 'DELETE'
+        }
+      );
 
       setTrainers((currentTrainers) => {
-        return currentTrainers.filter((trainer) => trainer._id !== id);
+        return currentTrainers.filter((trainer) => trainer._id !== idDelete);
       });
-
-      alert('Trainer deleted succesfully!');
-      getTrainers();
+      const response = await responseTrainer.json();
+      setResponseModal({
+        title: 'Succes!',
+        description: response.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -74,12 +102,22 @@ function Trainers() {
           salary: '',
           isActive: true
         });
-        alert(createdTrainer.message);
+        setResponseModal({
+          title: 'Succes!',
+          description: createdTrainer.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       } else {
         throw new Error(createdTrainer.message);
       }
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -118,12 +156,22 @@ function Trainers() {
         });
 
         setIdStatus('');
-        alert(updatedTrainer.message);
+        setResponseModal({
+          title: 'Succes!',
+          description: updatedTrainer.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       } else {
         throw new Error(updatedTrainer.message);
       }
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -167,7 +215,7 @@ function Trainers() {
     });
   };
 
-  const modify = (id) => {
+  const edit = (id) => {
     formVisible();
     saveVisible();
     activeVisible();
@@ -222,27 +270,45 @@ function Trainers() {
     }
   };
 
+  const openModalConfirm = (id) => {
+    setIdDelete(id);
+    setResponseModal({
+      title: '',
+      description: 'Are you sure you want to delete it?',
+      isConfirm: true
+    });
+    setIsOpen(true);
+  };
+
   useEffect(() => {
     getTrainers();
   }, []);
 
   return (
     <section className={styles.container}>
+      <Modal
+        title={responseModal.title}
+        desc={responseModal.description}
+        isOpen={isOpen}
+        confirmModal={responseModal.isConfirm}
+        handleClose={() => setIsOpen(!isOpen)}
+        deleteFunction={() => deleteTrainer(idDelete)}
+      />
       <section>
         <h2 className={styles.h2}>Trainers</h2>
-        <button onClick={create} className={styles.createButton}>
-          Create
-        </button>
+        <Button text="Create" clickAction={create} type="create" />
         <table className={styles.table}>
           <thead className={styles.thead}>
-            <th className={`${styles.head} ${styles.th}`}>Name</th>
-            <th className={styles.th}>Dni</th>
-            <th className={styles.th}>Email</th>
-            <th className={styles.th}>Phone</th>
-            <th className={styles.th}>City</th>
-            <th className={styles.th}>Salary</th>
-            <th className={styles.th}>Status</th>
-            <th className={`${styles.headEnd} ${styles.th}`}></th>
+            <tr>
+              <th className={`${styles.head} ${styles.th}`}>Name</th>
+              <th className={styles.th}>Dni</th>
+              <th className={styles.th}>Email</th>
+              <th className={styles.th}>Phone</th>
+              <th className={styles.th}>City</th>
+              <th className={styles.th}>Salary</th>
+              <th className={styles.th}>Status</th>
+              <th className={`${styles.headEnd} ${styles.th}`}></th>
+            </tr>
           </thead>
           <tbody>
             {trainers.map((trainer) => {
@@ -259,15 +325,12 @@ function Trainers() {
                   <td className={styles.row}>{showActive(trainer.isActive)}</td>
                   <td className={styles.row}>
                     <div className={styles.containerButtons}>
-                      <button className={styles.updateButton} onClick={() => modify(trainer._id)}>
-                        Edit
-                      </button>
-                      <button
-                        className={styles.deleteButton}
-                        onClick={() => deleteTrainer(trainer._id)}
-                      >
-                        X
-                      </button>
+                      <Button text="Edit" type="edit" clickAction={() => edit(trainer._id)} />
+                      <Button
+                        text="X"
+                        type="deleteCancel"
+                        clickAction={() => openModalConfirm(trainer._id)}
+                      />
                     </div>
                   </td>
                 </tr>
@@ -281,118 +344,103 @@ function Trainers() {
           <form className={styles.form} onSubmit={submit} id="form">
             <div className={styles.subContainer}>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>Name</label>
-                <input
-                  className={styles.input}
-                  name="firstName"
+                <TextInput
+                  labelName="First name"
+                  inputType="text"
+                  inputName="firstName"
                   id="firstName"
-                  type="text"
-                  value={formValue.firstName}
-                  onChange={onChangeInput}
+                  text={formValue.firstName}
+                  changeAction={onChangeInput}
                 />
               </div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>Last Name</label>
-                <input
-                  className={styles.input}
-                  name="lastName"
-                  type="text"
-                  value={formValue.lastName}
-                  onChange={onChangeInput}
+                <TextInput
+                  labelName="Last name"
+                  inputType="text"
+                  inputName="lastName"
+                  id="lastName"
+                  text={formValue.lastName}
+                  changeAction={onChangeInput}
                 />
               </div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>DNI</label>
-                <input
-                  className={styles.input}
-                  name="dni"
-                  type="text"
-                  value={formValue.dni}
-                  onChange={onChangeInput}
+                <TextInput
+                  labelName="DNI"
+                  inputType="text"
+                  inputName="dni"
+                  id="dni"
+                  text={formValue.dni}
+                  changeAction={onChangeInput}
                 />
               </div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>Phone</label>
-                <input
-                  className={styles.input}
-                  name="phone"
-                  type="text"
-                  value={formValue.phone}
-                  onChange={onChangeInput}
+                <TextInput
+                  labelName="Phone"
+                  inputType="text"
+                  inputName="phone"
+                  id="phone"
+                  text={formValue.phone}
+                  changeAction={onChangeInput}
                 />
               </div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>Email</label>
-                <input
-                  className={styles.input}
-                  name="email"
-                  type="text"
-                  value={formValue.email}
-                  onChange={onChangeInput}
+                <TextInput
+                  labelName="Email"
+                  inputType="text"
+                  inputName="email"
+                  id="email"
+                  text={formValue.email}
+                  changeAction={onChangeInput}
                 />
               </div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>City</label>
-                <input
-                  className={styles.input}
-                  name="city"
-                  type="text"
-                  value={formValue.city}
-                  onChange={onChangeInput}
+                <TextInput
+                  labelName="City"
+                  inputType="text"
+                  inputName="city"
+                  id="city"
+                  text={formValue.city}
+                  changeAction={onChangeInput}
                 />
               </div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>Password</label>
-                <input
-                  className={styles.input}
-                  name="password"
-                  type="password"
-                  value={formValue.password}
-                  onChange={onChangeInput}
+                <TextInput
+                  labelName="Password"
+                  inputType="password"
+                  inputName="password"
+                  id="password"
+                  text={formValue.password}
+                  changeAction={onChangeInput}
                 />
               </div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>Salary</label>
-                <input
-                  className={styles.input}
-                  name="salary"
-                  type="text"
-                  value={formValue.salary}
-                  onChange={onChangeInput}
+                <TextInput
+                  labelName="Salary"
+                  inputType="text"
+                  inputName="salary"
+                  id="salary"
+                  text={formValue.salary}
+                  changeAction={onChangeInput}
                 />
               </div>
               {activeIsVisible && (
                 <div className={styles.inputContainer}>
                   <label className={styles.label}>Status</label>
-                  <select
-                    className={`${styles.input} ${styles.select}`}
-                    name="isActive"
-                    onChange={onChangeInput}
-                  >
+                  <Select name="isActive" changeAction={onChangeInput}>
                     <option value={true} selected={!formValue.isActive}>
                       Active
                     </option>
                     <option value={false} selected={!formValue.isActive}>
                       Inactive
                     </option>
-                  </select>
+                  </Select>
                 </div>
               )}
             </div>
             <div className={styles.btnContainer}>
-              <button className={`${styles.button} ${styles.btnCancel}`} onClick={cancel}>
-                Cancel
-              </button>
-              {buttonAddIsVisible && (
-                <button className={styles.button} onClick={submit}>
-                  Add
-                </button>
-              )}
-              {buttonSaveIsVisible && (
-                <button className={styles.button} onClick={save}>
-                  Save
-                </button>
-              )}
+              <Button text="Cancel" clickAction={cancel} type="cancel" />
+              {buttonAddIsVisible && <Button text="Add" clickAction={submit} type="add" />}
+              {buttonSaveIsVisible && <Button text="Save" clickAction={save} type="save" />}
             </div>
           </form>
         </section>

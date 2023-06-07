@@ -45,49 +45,6 @@
   margin-left: 20px;
 }
 
-.createButton,
-.button {
-  color: #fff;
-  background-color: #3a3b7b;
-  border: none;
-  border-radius: 5px;
-  padding: 7px 12px;
-  cursor: pointer;
-  font-size: 15px;
-}
-
-.button:hover,
-.createButton:hover {
-  background-color: #1b1b5d;
-}
-
-.updateButton {
-  background-color: #fff;
-  color: #4caf50;
-  border: 1px solid #4caf50;
-  border-radius: 3px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.updateButton:hover {
-  background-color: #4caf50;
-  color: #fff;
-}
-
-.deleteButton {
-  background-color: #f55348;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.deleteButton:hover {
-  background-color: #ee190a;
-}
-
 .sectionForm {
   margin-top: 40px;
   margin-bottom: 40px;
@@ -115,29 +72,8 @@
   margin-bottom: 10px;
 }
 
-.input {
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-
 .btnContainer {
   width: 100%;
   display: flex;
   justify-content: space-between;
-}
-
-.btnCancel {
-  background-color: #fff;
-  color: #373867;
-  border: 1px solid #373867;
-}
-
-.btnCancel:hover {
-  color: #fff;
-}
-
-.select {
-  margin-bottom: 10px;
 }

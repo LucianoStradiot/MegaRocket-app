@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
+import Button from '../Shared/Button';
+import TextInput from '../Shared/TextInput';
+import Modal from '../Shared/Modal';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);
@@ -16,7 +19,15 @@ function Admins() {
     city: '',
     password: ''
   });
+  const [idDelete, setIdDelete] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [responseModal, setResponseModal] = useState({
+    title: '',
+    description: '',
+    isConfirm: false
+  });
 
+  console.log(formChange);
   const getAdmins = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
@@ -25,28 +36,44 @@ function Admins() {
 
       setAdmins(admins);
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
-  const deleteAdmin = async (id) => {
+  const deleteAdmin = async () => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
+      const responseAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${idDelete}`, {
         method: 'DELETE'
       });
 
       setAdmins((currentAdmins) => {
-        return currentAdmins.filter((admin) => admin._id !== id);
+        return currentAdmins.filter((admin) => admin._id !== idDelete);
       });
-      alert('Admin deleted succesfully!');
-      getAdmins();
+      const response = await responseAdmin.json();
+      setResponseModal({
+        title: 'Succes!',
+        description: response.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
   const createAdmin = async () => {
     try {
+      console.log('formChange', formChange);
       const createdAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
         method: 'POST',
         headers: {
@@ -67,12 +94,27 @@ function Admins() {
           city: '',
           password: ''
         });
-        alert(createdAdminsData.message);
+        setResponseModal({
+          title: 'Succes!',
+          description: createdAdminsData.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       } else {
-        throw new Error(createdAdminsData.message);
+        setResponseModal({
+          title: 'ERROR!',
+          description: createdAdminsData.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       }
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -92,9 +134,11 @@ function Admins() {
       const updatedAdmin = await updatedAdminRes.json();
       if (updatedAdminRes.ok) {
         const dataIndex = admins.findIndex((admin) => admin._id === idStatus);
+        const adminNotEdited = admins.find((admin) => admin._id === idStatus);
+
         setAdmins((currentAdmins) => {
           const updatedAdmins = [...currentAdmins];
-          updatedAdmins[dataIndex] = updatedAdmin.data;
+          updatedAdmins[dataIndex] = updatedAdmin.data ? updatedAdmin.data : adminNotEdited;
           return updatedAdmins;
         });
         setFormChange({
@@ -107,12 +151,27 @@ function Admins() {
           password: ''
         });
         setIdStatus('');
-        alert(updatedAdmin.message);
+        setResponseModal({
+          title: 'Success!',
+          description: updatedAdmin.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       } else {
-        throw new Error(updatedAdmin.message);
+        setResponseModal({
+          title: 'ERROR!',
+          description: updatedAdmin.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       }
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -161,15 +220,15 @@ function Admins() {
     saveVisible();
     setIdStatus(id);
 
-    const data = admins.find((admin) => admin._id === id);
+    const data = admins?.find((admin) => admin._id === id);
     setFormChange({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      dni: data.dni,
-      phone: data.phone,
-      email: data.email,
-      city: data.city,
-      password: data.password
+      firstName: data?.firstName,
+      lastName: data?.lastName,
+      dni: data?.dni,
+      phone: data?.phone,
+      email: data?.email,
+      city: data?.city,
+      password: data?.password
     });
   }
 
@@ -191,13 +250,29 @@ function Admins() {
     setSaveVisible(true);
   };
 
+  const openModalConfirm = (id) => {
+    setIdDelete(id);
+    setResponseModal({
+      title: '',
+      description: 'Are you sure you want to delete it?',
+      isConfirm: true
+    });
+    setIsOpen(true);
+  };
+
   return (
     <div className={styles.container}>
       <section>
+        <Modal
+          title={responseModal.title}
+          desc={responseModal.description}
+          isOpen={isOpen}
+          confirmModal={responseModal.isConfirm}
+          handleClose={() => setIsOpen(!isOpen)}
+          deleteFunction={() => deleteAdmin(idDelete)}
+        />
         <h2 className={styles.title}>Admins</h2>
-        <button className={styles.createBtn} onClick={create}>
-          Create
-        </button>
+        <Button text="Create" clickAction={create} type="create" />
         <table className={styles.mainTable}>
           <thead>
             <tr className={styles.rowsHead}>
@@ -211,22 +286,22 @@ function Admins() {
             </tr>
           </thead>
           <tbody>
-            {admins.map((admin) => {
+            {admins?.map((admin) => {
               return (
-                <tr className={styles.rows} key={admin._id}>
-                  <td className={styles.columns}>{admin.firstName}</td>
-                  <td className={styles.columns}>{admin.lastName}</td>
-                  <td className={styles.columns}>{admin.dni}</td>
-                  <td className={styles.columns}>{admin.phone}</td>
-                  <td className={styles.columns}>{admin.email}</td>
-                  <td className={styles.columns}>{admin.city}</td>
-                  <td>
-                    <button className={styles.editBtn} onClick={() => edit(admin._id)}>
-                      Edit
-                    </button>
-                    <button className={styles.deleteBtn} onClick={() => deleteAdmin(admin._id)}>
-                      X
-                    </button>
+                <tr className={styles.rows} key={admin?._id}>
+                  <td className={styles.columns}>{admin?.firstName}</td>
+                  <td className={styles.columns}>{admin?.lastName}</td>
+                  <td className={styles.columns}>{admin?.dni}</td>
+                  <td className={styles.columns}>{admin?.phone}</td>
+                  <td className={styles.columns}>{admin?.email}</td>
+                  <td className={styles.columns}>{admin?.city}</td>
+                  <td className={styles.columns}>
+                    <Button text="Edit" type="edit" clickAction={() => edit(admin._id)} />
+                    <Button
+                      text="X"
+                      type="deleteCancel"
+                      clickAction={() => openModalConfirm(admin._id)}
+                    />
                   </td>
                 </tr>
               );
@@ -238,97 +313,82 @@ function Admins() {
             <form className={styles.form} onSubmit={onSubmit}>
               <div className={styles.block}>
                 <div className={styles.firstPart}>
-                  <label className={styles.label}>First Name</label>
-                  <input
-                    className={styles.input}
-                    name="firstName"
+                  <TextInput
+                    labelName="First name"
+                    inputType="text"
+                    inputName="firstName"
                     id="firstName"
-                    value={formChange.firstName}
-                    type="text"
-                    onChange={onChangeInput}
+                    text={formChange.firstName}
+                    changeAction={(e) => onChangeInput(e)}
                   />
                 </div>
                 <div className={styles.firstPart}>
-                  <label className={styles.label}>Last Name</label>
-                  <input
-                    className={styles.input}
-                    name="lastName"
+                  <TextInput
+                    labelName="Last name"
+                    inputType="text"
+                    inputName="lastName"
                     id="lastName"
-                    value={formChange.lastName}
-                    type="text"
-                    onChange={onChangeInput}
+                    text={formChange.lastName}
+                    changeAction={(e) => onChangeInput(e)}
                   />
                 </div>
                 <div className={styles.firstPart}>
-                  <label className={styles.label}>DNI</label>
-                  <input
-                    className={styles.input}
-                    name="dni"
+                  <TextInput
+                    labelName="DNI"
+                    inputType="text"
+                    inputName="dni"
                     id="dni"
-                    value={formChange.dni}
-                    type="text"
-                    onChange={onChangeInput}
+                    text={formChange.dni}
+                    changeAction={(e) => onChangeInput(e)}
                   />
                 </div>
                 <div className={styles.firstPart}>
-                  <label className={styles.label}>Phone</label>
-                  <input
-                    className={styles.input}
-                    name="phone"
+                  <TextInput
+                    labelName="Phone"
+                    inputType="text"
+                    inputName="phone"
                     id="phone"
-                    value={formChange.phone}
-                    type="text"
-                    onChange={onChangeInput}
+                    text={formChange.phone}
+                    changeAction={(e) => onChangeInput(e)}
                   />
                 </div>
                 <div className={styles.firstPart}>
-                  <label className={styles.label}>Email</label>
-                  <input
-                    className={styles.input}
-                    name="email"
+                  <TextInput
+                    labelName="Email"
+                    inputType="text"
+                    inputName="email"
                     id="email"
-                    value={formChange.email}
-                    type="text"
-                    onChange={onChangeInput}
+                    text={formChange.email}
+                    changeAction={(e) => onChangeInput(e)}
                   />
                 </div>
                 <div className={styles.firstPart}>
-                  <label className={styles.label}>City</label>
-                  <input
-                    className={styles.input}
-                    name="city"
+                  <TextInput
+                    labelName="City"
+                    inputType="text"
+                    inputName="city"
                     id="city"
-                    value={formChange.city}
-                    type="text"
-                    onChange={onChangeInput}
+                    text={formChange.city}
+                    changeAction={(e) => onChangeInput(e)}
                   />
                 </div>
                 <div className={styles.firstPart}>
-                  <label className={styles.label}>Password</label>
-                  <input
-                    className={styles.input}
-                    name="password"
+                  <TextInput
+                    labelName="Password"
+                    inputType="password"
+                    inputName="password"
                     id="password"
-                    value={formChange.password}
-                    type="password"
-                    onChange={onChangeInput}
+                    text={formChange.password}
+                    changeAction={(e) => onChangeInput(e)}
                   />
                 </div>
               </div>
               <div className={styles.btnContainer}>
-                <button className={`${styles.cancelBtn} && ${styles.createBtn2}`} onClick={cancel}>
-                  Cancel
-                </button>
+                <Button text="Cancel" clickAction={cancel} type="cancel" />
                 {buttonAddIsVisible && (
-                  <button className={`${styles.createBtn} && ${styles.createBtn2}`} type="submit">
-                    Create
-                  </button>
+                  <Button text="Create" clickAction={onSubmit} type="Create" />
                 )}
-                {buttonSaveIsVisible && (
-                  <button className={`${styles.createBtn} && ${styles.createBtn2}`} onClick={save}>
-                    Save
-                  </button>
-                )}
+                {buttonSaveIsVisible && <Button text="Save" clickAction={save} type="save" />}
               </div>
             </form>
           </section>
