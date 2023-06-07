@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from './subscriptions.module.css';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
+import DatePicker from '../Shared/DatePicker';
 
 function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -333,13 +334,12 @@ function Subscriptions() {
             })}
           </select>
           <label htmlFor="">Date</label>
-          <input
+          <DatePicker
             className={style.inputForm}
-            defaultValue={create.date.substring(0, 10)}
             type="date"
             name="date"
-            value={create.date}
-            onChange={onchangeInput}
+            val={create.date}
+            changeAction={onchangeInput}
           />
           <Button
             text={button === 'Create' ? 'add' : 'Save'}
