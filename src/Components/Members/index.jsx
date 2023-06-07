@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
+import TextInput from '../Shared/TextInput';
+import Select from '../Shared/Select';
 
 const Members = () => {
   const [members, setMembers] = useState([]);
@@ -151,96 +153,88 @@ const Members = () => {
         <form className={styles.form} onSubmit={onSubmit}>
           <div className={styles.subContainer}>
             <div className={styles.inputContainer}>
-              <label className={styles.label}>First Name</label>
-              <input
-                className={styles.input}
-                name="firstName"
-                type="text"
-                value={memberValues.firstName}
-                onChange={(e) => onChange(e)}
+              <TextInput
+                labelName={'First Name'}
+                inputName={'firstName'}
+                changeAction={(e) => onChange(e)}
+                inputType={'text'}
+                text={memberValues.firstName}
               />
             </div>
             <div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>Last Name</label>
-                <input
-                  className={styles.input}
-                  name="lastName"
-                  type="text"
-                  value={memberValues.lastName}
-                  onChange={(e) => onChange(e)}
+                <TextInput
+                  labelName={'Last Name'}
+                  inputName={'lastName'}
+                  changeAction={(e) => onChange(e)}
+                  inputType={'text'}
+                  text={memberValues.lastName}
                 />
               </div>
             </div>
             <div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>Email</label>
-                <input
-                  className={styles.input}
-                  name="email"
-                  type="text"
-                  value={memberValues.email}
-                  onChange={(e) => onChange(e)}
+                <TextInput
+                  labelName={'Email'}
+                  inputName={'email'}
+                  changeAction={(e) => onChange(e)}
+                  inputType={'text'}
+                  text={memberValues.email}
                 />
               </div>
             </div>
             <div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>DNI</label>
-                <input
-                  className={styles.input}
-                  name="dni"
-                  type="number"
-                  value={memberValues.dni}
-                  onChange={(e) => onChange(e)}
+                <TextInput
+                  labelName={'DNI'}
+                  inputName={'dni'}
+                  changeAction={(e) => onChange(e)}
+                  inputType={'number'}
+                  text={memberValues.dni}
                 />
               </div>
             </div>
             <div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>Phone</label>
-                <input
-                  className={styles.input}
-                  name="phone"
-                  type="number"
-                  value={memberValues.phone}
-                  onChange={(e) => onChange(e)}
+                <TextInput
+                  labelName={'Phone'}
+                  inputName={'phone'}
+                  changeAction={(e) => onChange(e)}
+                  inputType={'number'}
+                  text={memberValues.phone}
                 />
               </div>
             </div>
             <div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>City</label>
-                <input
-                  className={styles.input}
-                  name="city"
-                  type="text"
-                  value={memberValues.city}
-                  onChange={(e) => onChange(e)}
+                <TextInput
+                  labelName={'City'}
+                  inputName={'city'}
+                  changeAction={(e) => onChange(e)}
+                  inputType={'text'}
+                  text={memberValues.city}
                 />
               </div>
             </div>
             <div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>Birthday</label>
-                <input
-                  className={styles.input}
-                  name="birthday"
-                  type="date"
-                  value={getDateValue()}
-                  onChange={(e) => onChange(e)}
+                <TextInput
+                  labelName={'Birthday'}
+                  inputName={'birthday'}
+                  changeAction={(e) => onChange(e)}
+                  inputType={'date'}
+                  text={getDateValue()}
                 />
               </div>
             </div>
             <div>
               <div className={styles.inputContainer}>
-                <label className={styles.label}>PostalCode</label>
-                <input
-                  className={styles.input}
-                  name="postalCode"
-                  type="number"
-                  value={memberValues.postalCode}
-                  onChange={(e) => onChange(e)}
+                <TextInput
+                  labelName={'PostalCode'}
+                  inputName={'postalCode'}
+                  changeAction={(e) => onChange(e)}
+                  inputType={'number'}
+                  text={memberValues.postalCode}
                 />
               </div>
             </div>
@@ -264,7 +258,16 @@ const Members = () => {
             <div>
               <div className={styles.inputContainer}>
                 <label className={styles.label}>Status</label>
-                <select
+                <Select
+                  changeAction={onChange}
+                  name={'isActive'}
+                  selectID={''}
+                  selectValue={memberValues.isActive}
+                >
+                  <option value={true}>Active</option>
+                  <option value={false}>Inactive</option>
+                </Select>
+                {/* <select
                   className={styles.input}
                   name="isActive"
                   value={memberValues.isActive}
@@ -272,7 +275,7 @@ const Members = () => {
                 >
                   <option value={true}>Active</option>
                   <option value={false}>Inactive</option>
-                </select>
+                </select> */}
               </div>
             </div>
 
