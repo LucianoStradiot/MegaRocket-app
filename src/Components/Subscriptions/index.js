@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import style from './subscriptions.module.css';
 import Modal from '../Shared/Modal';
+import Button from '../Shared/Button';
 
 function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -121,7 +122,6 @@ function Subscriptions() {
       const createdSubscription = await response.json();
       if (response.ok) {
         setSubscriptions((currentSubscriptions) => {
-          console.log(createdSubscription.data);
           return [...currentSubscriptions, createdSubscription.data];
         });
         setCreate({
@@ -229,9 +229,9 @@ function Subscriptions() {
         handleClose={() => setIsOpen(!isOpen)}
         deleteFunction={() => deleteSubscriptions(idDelete)}
       />
-      <button
-        className={style.createButton}
-        onClick={() => {
+      <Button
+        text="Create"
+        clickAction={() => {
           setShowForm(true);
           setButton('Create');
           getMembers();
@@ -241,9 +241,8 @@ function Subscriptions() {
             date: ''
           });
         }}
-      >
-        Add
-      </button>
+        type="create"
+      />
       <table className={style.contTable}>
         <thead className={style.theadTable}>
           <tr>
@@ -269,18 +268,19 @@ function Subscriptions() {
                   {searchActivity(subs.classes && subs.classes.activity)}
                 </td>
                 <td className={style.thTable}>
-                  <button
-                    className={style.updateButton}
-                    onClick={() => {
+                  <Button
+                    text="Edit"
+                    type="edit"
+                    clickAction={() => {
                       getSubscriptionsById(subs._id);
                       setButton('Modify');
                     }}
-                  >
-                    Modify
-                  </button>
-                  <button className={style.deleteButton} onClick={() => openModalConfirm(subs._id)}>
-                    X
-                  </button>
+                  />
+                  <Button
+                    text="X"
+                    type="deleteCancel"
+                    clickAction={() => openModalConfirm(subs._id)}
+                  />
                 </td>
               </tr>
             );
@@ -341,18 +341,14 @@ function Subscriptions() {
             value={create.date}
             onChange={onchangeInput}
           />
-          <button
-            className={button === 'Create' ? style.buttonAdd : style.buttonModify}
-            type="button"
-            onClick={
+          <Button
+            text={button === 'Create' ? 'add' : 'Save'}
+            type={button === 'Create' ? 'add' : 'save'}
+            clickAction={
               button === 'Create' ? createSubscription : () => updateSubscription(create._id)
             }
-          >
-            {button}
-          </button>
-          <button className={style.cancelButton} type="button" onClick={() => setShowForm(false)}>
-            Cancel
-          </button>
+          />
+          <Button text="Cancel" type="cancel" clickAction={() => setShowForm(false)} />
         </form>
       )}
     </section>
