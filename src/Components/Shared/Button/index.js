@@ -11,6 +11,7 @@ function Button({ text, type, clickAction }) {
           : `${styles.buttonCreateAdd} ${styles.button}`
       }
       onClick={clickAction}
+      type="button"
     >
       {text}
     </button>
