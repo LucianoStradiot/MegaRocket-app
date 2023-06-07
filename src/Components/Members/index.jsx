@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import styles from './members.module.css';
 import TextInput from '../Shared/TextInput';
 import Select from '../Shared/Select';
+import Button from '../Shared/Button';
+import DatePicker from '../Shared/DatePicker';
+import Modal from '../Shared/Modal';
 
 const Members = () => {
   const [members, setMembers] = useState([]);
@@ -19,7 +22,12 @@ const Members = () => {
     isActive: true
   });
   const [idMember, setIdMember] = useState('');
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalInfo, setModalInfo] = useState({
+    title: '',
+    desc: ''
+  });
+  const [confirmModal, setConfirmModal] = useState(false);
   const getMembers = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
     const data = await response.json();
@@ -36,8 +44,6 @@ const Members = () => {
       [e.target.name]: e.target.value
     });
   };
-
-  console.log(memberValues);
 
   const getDateValue = () => {
     const date = new Date(memberValues.birthday);
@@ -99,14 +105,20 @@ const Members = () => {
           updatedMembers[dataIndex] = updatedMember.data;
           return updatedMembers;
         });
-
-        alert('Miembro actualizado exitosamente');
+        setModalInfo({
+          title: 'Success',
+          desc: updatedMember.message
+        });
+        modalConfirmFalse();
       } else {
-        throw new Error('Error al actualizar el miembro');
+        throw new Error(updatedMember.message);
       }
     } catch (error) {
-      console.error(error);
-      alert('Ha ocurrido un error al actualizar el miembro');
+      setModalInfo({
+        title: 'Error',
+        desc: error.message
+      });
+      modalConfirmFalse();
     }
   };
 
@@ -120,34 +132,84 @@ const Members = () => {
         },
         body: JSON.stringify({ ...member, birthday: dateFormat })
       });
+      const dataResponse = await response.json();
       if (response.ok) {
         setMembers([...members, member]);
-        alert('Miembro creado exitosamente');
+        setModalInfo({
+          title: 'Success',
+          desc: 'Member created successfully'
+        });
+        modalConfirmFalse();
         getMembers();
       } else {
-        throw new Error('Error al crear el miembro');
+        throw new Error(dataResponse.message);
       }
     } catch (error) {
-      console.error(error);
-      alert('Ha ocurrido un error al crear el miembro');
+      setModalInfo({
+        title: 'Error',
+        desc: error.message
+      });
+      modalConfirmFalse();
     }
   };
 
   const deleteMember = async (memberId) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/members/${memberId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${memberId}`, {
         method: 'DELETE'
       });
       setMembers([...members.filter((member) => member._id !== memberId)]);
-      alert('Miembro eliminado exitosamente');
+      const dataResponse = await response.json();
+      if (!response.ok) {
+        throw new Error(dataResponse.message);
+      } else {
+        setModalInfo({
+          title: 'Success',
+          desc: dataResponse.message
+        });
+        setConfirmModal(false);
+      }
     } catch (error) {
-      console.error(error);
-      alert('Ha ocurrido un error al eliminar el miembro');
+      setModalInfo({
+        title: 'Error',
+        desc: error.message
+      });
+      setConfirmModal(false);
     }
+  };
+  const switchIsOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const modalConfirmTrue = () => {
+    setConfirmModal(true);
+    switchIsOpen();
+  };
+
+  const modalConfirmFalse = () => {
+    setConfirmModal(false);
+    switchIsOpen();
+  };
+
+  const confirmDelete = (id) => {
+    setIdMember(id);
+    modalConfirmTrue();
+    setModalInfo({
+      title: 'Confirm',
+      desc: 'Are you sure?'
+    });
   };
 
   return (
     <section className={styles.container}>
+      <Modal
+        title={modalInfo.title}
+        desc={modalInfo.desc}
+        isOpen={isOpen}
+        handleClose={switchIsOpen}
+        confirmModal={confirmModal}
+        deleteFunction={() => deleteMember(idMember)}
+      />
       <h2>Members</h2>
       {showForm ? (
         <form className={styles.form} onSubmit={onSubmit}>
@@ -216,17 +278,14 @@ const Members = () => {
                 />
               </div>
             </div>
-            <div>
-              <div className={styles.inputContainer}>
-                <TextInput
-                  labelName={'Birthday'}
-                  inputName={'birthday'}
-                  changeAction={(e) => onChange(e)}
-                  inputType={'date'}
-                  text={getDateValue()}
-                />
-              </div>
-            </div>
+
+            <DatePicker
+              changeAction={(e) => onChange(e)}
+              name={'birthday'}
+              title={'Birthday'}
+              val={getDateValue()}
+            />
+
             <div>
               <div className={styles.inputContainer}>
                 <TextInput
@@ -241,17 +300,17 @@ const Members = () => {
             <div>
               <div className={styles.inputContainer}>
                 <label className={styles.label}>Membership</label>
-                <select
-                  className={styles.input}
-                  name="membership"
-                  value={memberValues.membership}
-                  onChange={(e) => onChange(e)}
+                <Select
+                  changeAction={(e) => onChange(e)}
+                  name={'membership'}
+                  selectID={''}
+                  selectValue={memberValues.membership}
                 >
                   <option value="">Seleccionar</option>
                   <option value="Black Membership">Black Membership</option>
                   <option value="Classic Membership">Classic Membership</option>
                   <option value="Only Classes Membership">Only Classes Membership</option>
-                </select>
+                </Select>
               </div>
             </div>
 
@@ -267,24 +326,11 @@ const Members = () => {
                   <option value={true}>Active</option>
                   <option value={false}>Inactive</option>
                 </Select>
-                {/* <select
-                  className={styles.input}
-                  name="isActive"
-                  value={memberValues.isActive}
-                  onChange={onChange}
-                >
-                  <option value={true}>Active</option>
-                  <option value={false}>Inactive</option>
-                </select> */}
               </div>
             </div>
-
-            <button className={styles.button} type="submit">
-              {idMember ? 'Edit' : 'Add'}
-            </button>
-            <button
-              className={styles.button}
-              onClick={() => {
+            <Button text={idMember ? 'Edit' : 'Add'} type={idMember ? 'edit' : 'Add'} />
+            <Button
+              clickAction={() => {
                 setShowForm(false);
                 setIdMember('');
                 setMemberValues({
@@ -300,9 +346,9 @@ const Members = () => {
                   isActive: true
                 });
               }}
-            >
-              Cancel
-            </button>
+              text={'Cancel'}
+              type={'deleteCancel'}
+            />
           </div>
         </form>
       ) : (
@@ -324,9 +370,8 @@ const Members = () => {
                       <td className={styles.tdMember}>{member.firstName}</td>
                       <td className={styles.tdMember}>{member.lastName}</td>
                       <td className={styles.tdMember}>
-                        <button
-                          className={styles.editButton}
-                          onClick={() => {
+                        <Button
+                          clickAction={() => {
                             setIdMember(member._id);
                             setShowForm(true);
                             setMemberValues({
@@ -342,35 +387,32 @@ const Members = () => {
                               isActive: member.isActive
                             });
                           }}
-                        >
-                          Edit
-                        </button>
+                          text={'Edit'}
+                          type={'edit'}
+                        />
                       </td>
                       <td className={styles.tdMember}>
-                        <button
-                          className={styles.deleteButton}
-                          onClick={() => {
-                            setIdMember(member._id);
-                            deleteMember(member._id);
+                        <Button
+                          clickAction={() => {
+                            confirmDelete(member._id);
                           }}
-                        >
-                          X
-                        </button>
+                          text={'X'}
+                          type={'deleteCancel'}
+                        />
                       </td>
                     </tr>
                   );
                 })}
             </tbody>
           </table>
-          <button
-            className={styles.button}
-            onClick={() => {
+          <Button
+            clickAction={() => {
               setShowForm(true);
               setIdMember('');
             }}
-          >
-            Add
-          </button>
+            text={'Add'}
+            type={'add'}
+          />
         </>
       )}
     </section>
