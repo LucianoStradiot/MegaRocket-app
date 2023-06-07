@@ -92,7 +92,7 @@
   height: 26px;
   border: none;
   border-radius: 4px;
-  background-color: #ff0000;
+  background-color: #f55348;
   color: #fff;
 }
 
@@ -116,14 +116,15 @@
   font-size: 15px;
 }
 
-/* .block {
+.block {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: 30px;
   padding: 40px;
   width: 500px;
   border-radius: 7px;
-} */
+  margin-right: 20px;
+}
 
 .btnContainer {
   width: 85%;
@@ -147,7 +148,7 @@
   border-radius: 8px;
   margin: 0 145px;
 }
-/* 
+
 .input {
   padding: 9px;
   border: 1px solid #fff;
@@ -160,4 +161,4 @@
   color: #3a3b7b;
   font-weight: 700;
   font-size: 16px;
-} */
+}
