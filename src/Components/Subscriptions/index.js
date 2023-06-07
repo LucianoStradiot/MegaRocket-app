@@ -3,6 +3,7 @@ import style from './subscriptions.module.css';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import DatePicker from '../Shared/DatePicker';
+import Select from '../Shared/Select';
 
 function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -291,12 +292,11 @@ function Subscriptions() {
       {showForm && (
         <form className={style.formSubscription}>
           <label htmlFor="">Classes</label>
-          <select
-            className={style.inputForm}
+          <Select
             name="classes"
-            id="classes"
-            onChange={onchangeInput}
-            value={create.classes}
+            selectID="classes"
+            changeAction={onchangeInput}
+            selectValue={create.classes}
           >
             <option value="" disabled>
               Choose a classes
@@ -313,14 +313,13 @@ function Subscriptions() {
                 </option>
               );
             })}
-          </select>
+          </Select>
           <label htmlFor="">Member Email</label>
-          <select
-            className={style.inputForm}
+          <Select
             name="member"
-            id="member"
-            onChange={onchangeInput}
-            value={create.member}
+            selectID="member"
+            changeAction={onchangeInput}
+            selectValue={create.member}
           >
             <option value="" disabled>
               Choose a Member
@@ -332,7 +331,7 @@ function Subscriptions() {
                 </option>
               );
             })}
-          </select>
+          </Select>
           <label htmlFor="">Date</label>
           <DatePicker
             className={style.inputForm}
