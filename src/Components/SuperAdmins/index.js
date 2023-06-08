@@ -3,6 +3,7 @@ import styles from './super-admins.module.css';
 import Button from '../Shared/Button';
 import TextInput from '../Shared/TextInput';
 import Modal from '../Shared/Modal';
+import { Link } from 'react-router-dom';
 
 function SuperAdmins() {
   const [superAdmins, setSuperAdmin] = useState([]);
@@ -240,6 +241,9 @@ function SuperAdmins() {
       />
       <h2 className={styles.h2}>SuperAdmin</h2>
       <section>
+        <Link to="/superAdmins/form">
+          <Button text="Open form" clickAction={() => console.log('hola')} type="create" />
+        </Link>
         <Button text="Create" clickAction={create} type="create" />
         <table className={styles.table}>
           <thead className={styles.thead}>
