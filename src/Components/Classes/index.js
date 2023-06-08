@@ -4,7 +4,7 @@ import Button from '../Shared/Button';
 import TextInput from '../Shared/TextInput';
 import Select from '../Shared/Select';
 import Modal from '../Shared/Modal';
-
+import { Link } from 'react-router-dom';
 function Classes() {
   const [formData, setFormData] = useState({
     day: '',
@@ -268,6 +268,9 @@ function Classes() {
         deleteFunction={() => deleteClass(idDelete)}
       />
       <h2>Classes</h2>
+      <Link to="/classes/form">
+        <Button text="Add" type="create" />
+      </Link>
       <Button
         text="Create"
         type="create"
@@ -310,6 +313,9 @@ function Classes() {
                 <td className={styles.td}>{activityName}</td>
                 <td className={styles.td}>{oneClass.slots}</td>
                 <td className={styles.td}>
+                  <Link to={`/classes/form/${oneClass._id}`}>
+                    <Button text="edit" type="edit" />
+                  </Link>
                   <Button text="Edit" type="edit" clickAction={() => formEdit(oneClass._id)} />
                 </td>
                 <td className={styles.td}>
