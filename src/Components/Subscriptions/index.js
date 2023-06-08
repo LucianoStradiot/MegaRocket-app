@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import style from './subscriptions.module.css';
+import Modal from '../Shared/Modal';
+import Button from '../Shared/Button';
+import DatePicker from '../Shared/DatePicker';
+import Select from '../Shared/Select';
 
 function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -12,6 +16,13 @@ function Subscriptions() {
   });
   const [showForm, setShowForm] = useState(false);
   const [button, setButton] = useState('');
+  const [idDelete, setIdDelete] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [responseModal, setResponseModal] = useState({
+    title: '',
+    description: '',
+    isConfirm: false
+  });
   const getMembers = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
@@ -68,15 +79,29 @@ function Subscriptions() {
 
   const deleteSubscriptions = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
-        method: 'DELETE'
-      });
+      const responseSubscription = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/subscriptions/${idDelete}`,
+        {
+          method: 'DELETE'
+        }
+      );
       setSubscriptions((currentSubscriptions) => {
         return currentSubscriptions.filter((subs) => subs._id !== id);
       });
-      alert('Subscription successfully deleted.');
+      const response = await responseSubscription.json();
+      setResponseModal({
+        title: 'Succes!',
+        description: response.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -99,7 +124,6 @@ function Subscriptions() {
       const createdSubscription = await response.json();
       if (response.ok) {
         setSubscriptions((currentSubscriptions) => {
-          console.log(createdSubscription.data);
           return [...currentSubscriptions, createdSubscription.data];
         });
         setCreate({
@@ -108,12 +132,22 @@ function Subscriptions() {
           date: ''
         });
         setShowForm(false);
-        alert(createdSubscription.message);
+        setResponseModal({
+          title: 'Succes!',
+          description: createdSubscription.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       } else {
         throw new Error(createdSubscription.message);
       }
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
   };
 
@@ -141,22 +175,23 @@ function Subscriptions() {
           return updateSub;
         });
         setShowForm(false);
-        alert(updatedSubscription.message);
+        setResponseModal({
+          title: 'Succes!',
+          description: updatedSubscription.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
       } else {
         throw new Error(updatedSubscription.message);
       }
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
     }
-  };
-  const searchActivity = (id) => {
-    let dat;
-    classes.map((oneClass) => {
-      if (id === oneClass.activity._id) {
-        dat = oneClass.activity.name;
-      }
-    });
-    return dat;
   };
 
   const showDate = (date) => {
@@ -166,11 +201,30 @@ function Subscriptions() {
       return date.substring(0, 10);
     }
   };
+
+  const openModalConfirm = (id) => {
+    setIdDelete(id);
+    setResponseModal({
+      title: '',
+      description: 'Are you sure you want to delete it?',
+      isConfirm: true
+    });
+    setIsOpen(true);
+  };
+
   return (
     <section className={style.container}>
-      <button
-        className={style.createButton}
-        onClick={() => {
+      <Modal
+        title={responseModal.title}
+        desc={responseModal.description}
+        isOpen={isOpen}
+        confirmModal={responseModal.isConfirm}
+        handleClose={() => setIsOpen(!isOpen)}
+        deleteFunction={() => deleteSubscriptions(idDelete)}
+      />
+      <Button
+        text="Create"
+        clickAction={() => {
           setShowForm(true);
           setButton('Create');
           getMembers();
@@ -180,9 +234,8 @@ function Subscriptions() {
             date: ''
           });
         }}
-      >
-        Add
-      </button>
+        type="create"
+      />
       <table className={style.contTable}>
         <thead className={style.theadTable}>
           <tr>
@@ -205,24 +258,22 @@ function Subscriptions() {
                   {subs.member && subs.classes && subs.classes.hour}
                 </td>
                 <td className={style.thTable}>
-                  {searchActivity(subs.classes && subs.classes.activity)}
+                  {subs.classes.activity ? subs.classes.activity.name : 'Empty'}
                 </td>
                 <td className={style.thTable}>
-                  <button
-                    className={style.updateButton}
-                    onClick={() => {
+                  <Button
+                    text="Edit"
+                    type="edit"
+                    clickAction={() => {
                       getSubscriptionsById(subs._id);
                       setButton('Modify');
                     }}
-                  >
-                    Modify
-                  </button>
-                  <button
-                    className={style.deleteButton}
-                    onClick={() => deleteSubscriptions(subs._id)}
-                  >
-                    X
-                  </button>
+                  />
+                  <Button
+                    text="X"
+                    type="deleteCancel"
+                    clickAction={() => openModalConfirm(subs._id)}
+                  />
                 </td>
               </tr>
             );
@@ -232,12 +283,11 @@ function Subscriptions() {
       {showForm && (
         <form className={style.formSubscription}>
           <label htmlFor="">Classes</label>
-          <select
-            className={style.inputForm}
+          <Select
             name="classes"
-            id="classes"
-            onChange={onchangeInput}
-            value={create.classes}
+            selectID="classes"
+            changeAction={onchangeInput}
+            selectValue={create.classes}
           >
             <option value="" disabled>
               Choose a classes
@@ -249,19 +299,18 @@ function Subscriptions() {
                   key={oneClass._id}
                   selected={oneClass._id === create.classes}
                 >
-                  {oneClass.hour} {oneClass.activity.name}, Trainer:{' '}
+                  {oneClass.hour} {oneClass?.activity?.name}, Trainer:{' '}
                   {oneClass.trainer && oneClass.trainer.firstName}
                 </option>
               );
             })}
-          </select>
+          </Select>
           <label htmlFor="">Member Email</label>
-          <select
-            className={style.inputForm}
+          <Select
             name="member"
-            id="member"
-            onChange={onchangeInput}
-            value={create.member}
+            selectID="member"
+            changeAction={onchangeInput}
+            selectValue={create.member}
           >
             <option value="" disabled>
               Choose a Member
@@ -273,28 +322,23 @@ function Subscriptions() {
                 </option>
               );
             })}
-          </select>
+          </Select>
           <label htmlFor="">Date</label>
-          <input
+          <DatePicker
             className={style.inputForm}
-            defaultValue={create.date.substring(0, 10)}
             type="date"
             name="date"
-            value={create.date}
-            onChange={onchangeInput}
+            val={create.date}
+            changeAction={onchangeInput}
           />
-          <button
-            className={button === 'Create' ? style.buttonAdd : style.buttonModify}
-            type="button"
-            onClick={
+          <Button
+            text={button === 'Create' ? 'add' : 'Save'}
+            type={button === 'Create' ? 'add' : 'save'}
+            clickAction={
               button === 'Create' ? createSubscription : () => updateSubscription(create._id)
             }
-          >
-            {button}
-          </button>
-          <button className={style.cancelButton} type="button" onClick={() => setShowForm(false)}>
-            Cancel
-          </button>
+          />
+          <Button text="Cancel" type="cancel" clickAction={() => setShowForm(false)} />
         </form>
       )}
     </section>
