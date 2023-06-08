@@ -4,7 +4,7 @@ import TextInput from '../../Shared/TextInput';
 import Select from '../../Shared/Select';
 import Modal from '../../Shared/Modal';
 import styles from './form-classes.module.css';
-
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 const FormClasses = () => {
   // const [sendVisible, setSendVisible] = useState(false);
   // const [updateVisible, setUpdateVisible] = useState(false);
@@ -12,7 +12,8 @@ const FormClasses = () => {
   // const updateButtonVisible = () => setUpdateVisible(true);
   // const updateButtonNotVisible = () => setUpdateVisible(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [, setClasses] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const { id } = useParams;
   // const [idStatus, setIDStatus] = useState('');
   const [formData, setFormData] = useState({
     day: '',
@@ -85,7 +86,6 @@ const FormClasses = () => {
         },
         body: JSON.stringify(formData)
       });
-
       const createdClassData = await createdClass.json();
       if (!createdClass.ok) {
         throw new Error(createdClassData.message);
@@ -114,7 +114,48 @@ const FormClasses = () => {
       setIsOpen(true);
     }
   };
-
+  const editClass = async () => {
+    try {
+      const updatedClass = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      const updatedClassData = await updatedClass.json();
+      if (!updatedClass.ok) {
+        throw new Error(updatedClassData.message);
+      } else {
+        const updatedClassIndex = classes.findIndex((oneClass) => oneClass._id === id);
+        setClasses((currentClasses) => {
+          const updatedClasses = [...currentClasses];
+          updatedClasses[updatedClassIndex] = updatedClassData.data;
+          return updatedClasses;
+        });
+        setFormData({
+          day: '',
+          hour: '',
+          trainer: '',
+          activity: '',
+          slots: ''
+        });
+        setResponseModal({
+          title: 'Success!',
+          description: updatedClassData.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
+      }
+    } catch (error) {
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message,
+        isConfirm: false
+      });
+      setIsOpen(true);
+    }
+  };
   useEffect(() => {
     getActivities();
     getTrainers();
@@ -122,36 +163,50 @@ const FormClasses = () => {
   }, []);
   // const formEdit = (id) => {
   //   // visible();
-  //   updateButtonVisible();
-  //   sendButtonNotVisible();
-  //   setIDStatus(id);
-
-  //   const data = classes.find((oneClass) => oneClass._id === id);
-
-  //   setFormData({
-  //     day: data.day,
-  //     hour: data.hour,
-  //     trainer: data.trainer ? data.trainer._id : '',
-  //     activity: data.activity ? data.activity._id : '',
-  //     slots: data.slots
-  //   });
+  //   // updateButtonVisible();
+  //   // sendButtonNotVisible();
+  //   // setIDStatus(id);
+  //   console.log('primero', formData);
+  //   if (id !== 'a') {
+  //     const data = classes.find((oneClass) => oneClass._id === id);
+  //     console.log('data', data);
+  //     console.log('clases', classes);
+  //     setFormData({
+  //       day: data.day,
+  //       hour: data.hour,
+  //       trainer: data.trainer ? data.trainer._id : '',
+  //       activity: data.activity ? data.activity._id : '',
+  //       slots: data.slots
+  //     });
+  //   } else {
+  //     setFormData({
+  //       day: '',
+  //       hour: '',
+  //       trainer: '',
+  //       activity: '',
+  //       slots: ''
+  //     });
+  //   }
+  //   console.log('segundo', formData);
   // };
   const create = () => {
     createClass();
     // notVisible();
     // sendButtonNotVisible();
   };
-
+  const save = () => {
+    editClass();
+    // notVisible();
+    // updateButtonNotVisible();
+  };
   // const [formVisible, setFormVisible] = useState(false);
-
   // const visible = () => setFormVisible(true);
-
   // const notVisible = () => setFormVisible(false);
-
   // const sendButtonVisible = () => setSendVisible(true);
-
   return (
     <div>
+      <Button text="llenar" clickAction={console.log(id)} />
+      {/* {() => formEdit(id)} */}
       <Modal
         title={responseModal.title}
         desc={responseModal.description}
@@ -250,12 +305,18 @@ const FormClasses = () => {
               // updateButtonNotVisible();
             }}
           />
-
           <Button
             text="Submit"
             type="create"
             clickAction={() => {
               create();
+            }}
+          />
+          <Button
+            text="Update"
+            type="create"
+            clickAction={() => {
+              save();
             }}
           />
         </div>
