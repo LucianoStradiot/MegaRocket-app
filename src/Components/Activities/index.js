@@ -5,6 +5,7 @@ import TextArea from '../Shared/TextArea';
 import Select from '../Shared/Select';
 import TextInput from '../Shared/TextInput';
 import Button from '../Shared/Button';
+import { Link } from 'react-router-dom';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -342,6 +343,9 @@ function Activities() {
           </form>
         </section>
       )}
+      <Link to="/activities/form">
+        <Button text="holis" />
+      </Link>
     </div>
   );
 }
