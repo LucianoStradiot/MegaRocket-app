@@ -152,6 +152,9 @@ function Activities() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+  };
+
+  const add = () => {
     createActivity();
     formInvisible();
   };
@@ -328,7 +331,7 @@ function Activities() {
               )}
               <div className={styles.btnContainer}>
                 <Button text="Cancel" clickAction={cancel} />
-                {buttonAddIsVisible && <Button text="Add" />}
+                {buttonAddIsVisible && <Button text="Add" clickAction={add} />}
                 {buttonSaveIsVisible && (
                   <div>
                     <Button clickAction={save} text="Save" />
