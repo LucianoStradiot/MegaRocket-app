@@ -336,8 +336,8 @@ const FormTrainers = () => {
               history.goBack();
             }}
           />
-          {buttonAddIsVisible && <Button text="Submit" type="create" clickAction={create} />}
-          {buttonSaveIsVisible && <Button text="Update" type="create" clickAction={save} />}
+          {buttonAddIsVisible && <Button text="Add" type="create" clickAction={create} />}
+          {buttonSaveIsVisible && <Button text="Save" type="create" clickAction={save} />}
         </div>
       </form>
     </section>
