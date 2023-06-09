@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Button from '../../Shared/Button';
 import DatePicker from '../../Shared/DatePicker';
 import Select from '../../Shared/Select';
-import style from '../../Subscriptions/subscriptions.module.css';
+import style from './formSubscriptions.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Modal from '../../Shared/Modal';
 
@@ -21,8 +21,7 @@ const FormSubscriptions = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({
     title: '',
-    description: '',
-    isConfirm: false
+    description: ''
   });
   const [isSubscriptionCreated, setSubscriptionCreated] = useState(false);
   const getMembers = async () => {
@@ -122,8 +121,7 @@ const FormSubscriptions = () => {
         });
         setResponseModal({
           title: 'Succes!',
-          description: createdSubscription.message,
-          isConfirm: false
+          description: createdSubscription.message
         });
         setSubscriptionCreated(true);
       } else {
@@ -133,8 +131,7 @@ const FormSubscriptions = () => {
     } catch (error) {
       setResponseModal({
         title: 'ERROR!',
-        description: error.message,
-        isConfirm: false
+        description: error.message
       });
     }
     setIsOpen(true);
@@ -161,8 +158,7 @@ const FormSubscriptions = () => {
         });
         setResponseModal({
           title: 'Succes!',
-          description: updatedSubscription.message,
-          isConfirm: false
+          description: updatedSubscription.message
         });
         setSubscriptionCreated(true);
       } else {
@@ -172,8 +168,7 @@ const FormSubscriptions = () => {
     } catch (error) {
       setResponseModal({
         title: 'ERROR!',
-        description: error.message,
-        isConfirm: false
+        description: error.message
       });
     }
     setIsOpen(true);
@@ -187,12 +182,11 @@ const FormSubscriptions = () => {
   };
 
   return (
-    <form className={style.formSubscription}>
+    <form className={style.form}>
       <Modal
         title={responseModal.title}
         desc={responseModal.description}
         isOpen={isOpen}
-        confirmModal={responseModal.isConfirm}
         handleClose={closeForm}
       />
       <label htmlFor="">Classes</label>
@@ -240,12 +234,14 @@ const FormSubscriptions = () => {
         val={create.date}
         changeAction={onchangeInput}
       />
-      <Button
-        text={button === 'Create' ? 'add' : 'Save'}
-        type={button === 'Create' ? 'add' : 'save'}
-        clickAction={button === 'Create' ? createSubscription : updateSubscription}
-      />
-      <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
+      <div className={style.btnContainer}>
+        <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
+        <Button
+          text={button === 'Create' ? 'add' : 'Save'}
+          type={button === 'Create' ? 'add' : 'save'}
+          clickAction={button === 'Create' ? createSubscription : updateSubscription}
+        />
+      </div>
     </form>
   );
 };

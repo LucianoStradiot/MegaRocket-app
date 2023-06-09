@@ -85,8 +85,9 @@ function Subscriptions() {
         handleClose={() => setIsOpen(!isOpen)}
         deleteFunction={() => deleteSubscriptions(idDelete)}
       />
+      <h2 className={style.h2}>Subscriptions</h2>
       <Link to="/subscriptions/form">
-        <Button type="add" text="add" />
+        <Button type="add" text="Create" className={style.btnCreate} />
       </Link>
       <table className={style.contTable}>
         <thead className={style.theadTable}>

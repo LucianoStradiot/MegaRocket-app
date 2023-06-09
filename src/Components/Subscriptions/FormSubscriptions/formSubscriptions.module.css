@@ -1,0 +1,13 @@
+.form {
+  color: #373867;
+  background-color: #eee;
+  padding: 25px;
+  border-radius: 8px;
+  width: 400px;
+  margin: 10vh auto;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: space-between;
+}
