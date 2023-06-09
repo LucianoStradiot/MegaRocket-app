@@ -1,18 +1,18 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 5%;
   background-color: none;
   width: 100%;
   margin-bottom: 20px;
 }
 
 .datePicker {
+  box-sizing: border-box;
   padding: 5px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  width: 88%;
+  width: 100%;
   text-align: center;
+  margin-top: 10px;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }

@@ -10,6 +10,7 @@ import Home from '../Home/index';
 import Header from '../Header/index';
 import Footer from '../Footer/index';
 import styles from './layout.module.css';
+import FormSubscriptions from '../Subscriptions/FormSubscriptions/index';
 import FormActivity from '../Activities/FormActivity';
 import FormTrainers from '../Trainers/FormTrainers';
 import FormSuperAdmin from '../SuperAdmins/Form';
@@ -28,7 +29,9 @@ function Layout() {
             <Route path="/admins" component={Admins} />
             <Route path="/classes" component={Classes} />
             <Route path="/members" component={Members} />
-            <Route path="/subscriptions" component={Subscriptions} />
+            <Route path="/subscriptions" exact component={Subscriptions} />
+            <Route path="/subscriptions/form" exact component={FormSubscriptions} />
+            <Route path="/subscriptions/form/:id" component={FormSubscriptions} />
             <Route exact path="/trainers" component={Trainers} />
             <Route exact path="/trainers/formTrainers" component={FormTrainers} />
             <Route path="/trainers/formTrainers/:id" component={FormTrainers} />
