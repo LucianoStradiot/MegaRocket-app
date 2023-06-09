@@ -2,20 +2,10 @@ import React, { useEffect, useState } from 'react';
 import style from './subscriptions.module.css';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
-import DatePicker from '../Shared/DatePicker';
-import Select from '../Shared/Select';
+import { Link } from 'react-router-dom';
 
 function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
-  const [members, setMembers] = useState([]);
-  const [classes, setClasses] = useState([]);
-  const [create, setCreate] = useState({
-    classes: '',
-    member: '',
-    date: ''
-  });
-  const [showForm, setShowForm] = useState(false);
-  const [button, setButton] = useState('');
   const [idDelete, setIdDelete] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({
@@ -23,29 +13,6 @@ function Subscriptions() {
     description: '',
     isConfirm: false
   });
-  const getMembers = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
-        method: 'GET'
-      });
-      const { data: members } = await response.json();
-      setMembers(members);
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  const getClasses = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
-        method: 'GET'
-      });
-      const { data: classes } = await response.json();
-      setClasses(classes);
-    } catch (error) {
-      alert(error);
-    }
-  };
 
   const getSubscriptions = async () => {
     try {
@@ -60,22 +27,7 @@ function Subscriptions() {
   };
   useEffect(() => {
     getSubscriptions();
-    getClasses();
-    getMembers();
-  }, [showForm]);
-
-  const getSubscriptionsById = (id) => {
-    const subscription = subscriptions.find((subs) => subs._id === id);
-    if (subscription) {
-      setCreate({
-        _id: subscription._id ? subscription._id : '',
-        classes: subscription.classes ? subscription.classes._id : '',
-        member: subscription.member ? subscription.member._id : '',
-        date: subscription.date || ''
-      });
-      setShowForm(true);
-    }
-  };
+  }, []);
 
   const deleteSubscriptions = async (id) => {
     try {
@@ -95,95 +47,6 @@ function Subscriptions() {
         isConfirm: false
       });
       setIsOpen(true);
-    } catch (error) {
-      setResponseModal({
-        title: 'ERROR!',
-        description: error.message,
-        isConfirm: false
-      });
-      setIsOpen(true);
-    }
-  };
-
-  const onchangeInput = (e) => {
-    setCreate({
-      ...create,
-      [e.target.name]: e.target.value || ''
-    });
-  };
-
-  const createSubscription = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(create)
-      });
-      const createdSubscription = await response.json();
-      if (response.ok) {
-        setSubscriptions((currentSubscriptions) => {
-          return [...currentSubscriptions, createdSubscription.data];
-        });
-        setCreate({
-          classes: '',
-          member: '',
-          date: ''
-        });
-        setShowForm(false);
-        setResponseModal({
-          title: 'Succes!',
-          description: createdSubscription.message,
-          isConfirm: false
-        });
-        setIsOpen(true);
-      } else {
-        throw new Error(createdSubscription.message);
-      }
-    } catch (error) {
-      setResponseModal({
-        title: 'ERROR!',
-        description: error.message,
-        isConfirm: false
-      });
-      setIsOpen(true);
-    }
-  };
-
-  const updateSubscription = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          classes: create.classes,
-          member: create.member,
-          date: create.date
-        })
-      });
-      const updatedSubscription = await response.json();
-      if (response.ok) {
-        const dataIndex = subscriptions.findIndex((sub) => {
-          sub._id === id;
-        });
-        setSubscriptions((currentSub) => {
-          const updateSub = [...currentSub];
-          updateSub[dataIndex] = updateSub.data;
-          return updateSub;
-        });
-        setShowForm(false);
-        setResponseModal({
-          title: 'Succes!',
-          description: updatedSubscription.message,
-          isConfirm: false
-        });
-        setIsOpen(true);
-      } else {
-        throw new Error(updatedSubscription.message);
-      }
     } catch (error) {
       setResponseModal({
         title: 'ERROR!',
@@ -222,20 +85,9 @@ function Subscriptions() {
         handleClose={() => setIsOpen(!isOpen)}
         deleteFunction={() => deleteSubscriptions(idDelete)}
       />
-      <Button
-        text="Create"
-        clickAction={() => {
-          setShowForm(true);
-          setButton('Create');
-          getMembers();
-          setCreate({
-            classes: '',
-            member: '',
-            date: ''
-          });
-        }}
-        type="create"
-      />
+      <Link to="/subscriptions/form">
+        <Button type="add" text="add" />
+      </Link>
       <table className={style.contTable}>
         <thead className={style.theadTable}>
           <tr>
@@ -255,20 +107,15 @@ function Subscriptions() {
                   {subs.member && subs.member.firstName} {subs.member && subs.member.lastName}
                 </td>
                 <td className={style.thTable}>
-                  {subs.member && subs.classes && subs.classes.hour}
+                  {subs.classes && subs.classes.hour ? subs.classes.hour : 'Empty'}
                 </td>
                 <td className={style.thTable}>
-                  {subs.classes.activity ? subs.classes.activity.name : 'Empty'}
+                  {subs.classes && subs.classes.activity ? subs.classes.activity.name : 'Empty'}
                 </td>
                 <td className={style.thTable}>
-                  <Button
-                    text="Edit"
-                    type="edit"
-                    clickAction={() => {
-                      getSubscriptionsById(subs._id);
-                      setButton('Modify');
-                    }}
-                  />
+                  <Link to={`/subscriptions/form/${subs._id}`}>
+                    <Button type="edit" text="Edit" />
+                  </Link>
                   <Button
                     text="X"
                     type="deleteCancel"
@@ -280,67 +127,6 @@ function Subscriptions() {
           })}
         </tbody>
       </table>
-      {showForm && (
-        <form className={style.formSubscription}>
-          <label htmlFor="">Classes</label>
-          <Select
-            name="classes"
-            selectID="classes"
-            changeAction={onchangeInput}
-            selectValue={create.classes}
-          >
-            <option value="" disabled>
-              Choose a classes
-            </option>
-            {classes.map((oneClass) => {
-              return (
-                <option
-                  value={oneClass._id}
-                  key={oneClass._id}
-                  selected={oneClass._id === create.classes}
-                >
-                  {oneClass.hour} {oneClass?.activity?.name}, Trainer:{' '}
-                  {oneClass.trainer && oneClass.trainer.firstName}
-                </option>
-              );
-            })}
-          </Select>
-          <label htmlFor="">Member Email</label>
-          <Select
-            name="member"
-            selectID="member"
-            changeAction={onchangeInput}
-            selectValue={create.member}
-          >
-            <option value="" disabled>
-              Choose a Member
-            </option>
-            {members.map((subs) => {
-              return (
-                <option value={subs._id} key={subs._id} selected={subs._id === create.member}>
-                  {subs.email}
-                </option>
-              );
-            })}
-          </Select>
-          <label htmlFor="">Date</label>
-          <DatePicker
-            className={style.inputForm}
-            type="date"
-            name="date"
-            val={create.date}
-            changeAction={onchangeInput}
-          />
-          <Button
-            text={button === 'Create' ? 'add' : 'Save'}
-            type={button === 'Create' ? 'add' : 'save'}
-            clickAction={
-              button === 'Create' ? createSubscription : () => updateSubscription(create._id)
-            }
-          />
-          <Button text="Cancel" type="cancel" clickAction={() => setShowForm(false)} />
-        </form>
-      )}
     </section>
   );
 }
