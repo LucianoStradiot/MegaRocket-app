@@ -15,3 +15,8 @@
   width: 350px;
   margin: 10vh auto;
 }
+
+.btnContainer {
+  display: flex;
+  justify-content: space-between;
+}
