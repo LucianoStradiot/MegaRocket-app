@@ -10,6 +10,7 @@ import Home from '../Home/index';
 import Header from '../Header/index';
 import Footer from '../Footer/index';
 import styles from './layout.module.css';
+import FormTrainers from '../Trainers/FormTrainers';
 import FormSuperAdmin from '../SuperAdmins/Form';
 
 function Layout() {
@@ -25,8 +26,10 @@ function Layout() {
             <Route path="/classes" component={Classes} />
             <Route path="/members" component={Members} />
             <Route path="/subscriptions" component={Subscriptions} />
+            <Route exact path="/trainers" component={Trainers} />
+            <Route exact path="/trainers/formTrainers" component={FormTrainers} />
+            <Route path="/trainers/formTrainers/:id" component={FormTrainers} />
             <Route path="/superAdmins" exact component={SuperAdmins} />
-            <Route path="/trainers" component={Trainers} />
             <Route path="/superAdmins/form" exact component={FormSuperAdmin} />
             <Route path="/superAdmins/form/:id" component={FormSuperAdmin} />
           </Switch>
