@@ -6,16 +6,16 @@ import TextArea from '../../Shared/TextArea';
 import Select from '../../Shared/Select';
 import Modal from '../../Shared/Modal';
 import styles from './FormActivities.module.css';
-import { useHistory /* useParams */ } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 const FormActivities = () => {
   const history = useHistory();
-  /* const {id} = useParams(); */
+  const { id } = useParams();
 
   const [activityFormValue, setActivityFormValue] = useState({
     name: '',
     description: '',
-    isActive: ''
+    isActive: true
   });
   const [activities, setActivities] = useState([]);
   const [modalInfo, setModalInfo] = useState({
@@ -23,9 +23,8 @@ const FormActivities = () => {
     desc: ''
   });
   const [isOpen, setIsOpen] = useState(false);
-  /* const [buttonAddIsVisible, setAddVisible] = useState(false);
-  const [buttonSaveIsVisible, setSaveVisible] = useState(false); */
-  const [idStatus, setIdStatus] = useState('');
+  const [buttonAddIsVisible, setAddVisible] = useState(false);
+  const [buttonSaveIsVisible, setSaveVisible] = useState(false);
   const getActivities = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
@@ -39,20 +38,11 @@ const FormActivities = () => {
     }
   };
   const [isActivityCreated, setIsActivityCreated] = useState(false);
+  const [activeVisible, setActiveVisible] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
   };
-
-  /* const addVisible = () => {
-    setAddVisible(true);
-    setSaveVisible(false);
-  }; */
-
-  /* const saveVisible = () => {
-    setAddVisible(false);
-    setSaveVisible(true);
-  }; */
 
   const createActivity = async () => {
     try {
@@ -91,7 +81,7 @@ const FormActivities = () => {
   const updateActivity = async () => {
     try {
       const updatedActivityResponse = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/activities/${idStatus}`,
+        `${process.env.REACT_APP_API_URL}/api/activities/${id}`,
         {
           method: 'PUT',
           headers: {
@@ -104,7 +94,7 @@ const FormActivities = () => {
       if (!updatedActivityResponse.ok) {
         throw new Error(response.message);
       } else {
-        const activityDataIndex = activities.findIndex((activity) => activity._id === idStatus);
+        const activityDataIndex = activities.findIndex((activity) => activity._id === id);
 
         setActivities((currentActivities) => {
           const updatedActivities = [...currentActivities];
@@ -114,9 +104,8 @@ const FormActivities = () => {
         setActivityFormValue({
           name: '',
           description: '',
-          isActive: ''
+          isActive: true
         });
-        setIdStatus('');
         setModalInfo({
           title: 'Success',
           desc: response.message
@@ -140,22 +129,55 @@ const FormActivities = () => {
     });
   };
 
+  const formEdit = () => {
+    if (id) {
+      const data = activities.find((activity) => activity._id === id);
+      if (data) {
+        setActivityFormValue({
+          name: data.name,
+          description: data.description,
+          isActive: data.isActive
+        });
+        setAddVisible(false);
+        setActiveVisible(true);
+        setSaveVisible(true);
+      } else {
+        return false;
+      }
+    } else {
+      setActivityFormValue({
+        name: '',
+        description: '',
+        isActive: true
+      });
+      setAddVisible(true);
+      setActiveVisible(false);
+      setSaveVisible(false);
+    }
+  };
+
   const switchIsOpen = () => {
     setIsOpen(!isOpen);
   };
 
   const closeForm = () => {
-    console.log(isActivityCreated);
     if (isActivityCreated) {
       setIsOpen(false);
       history.goBack();
+    } else {
+      switchIsOpen();
     }
-    switchIsOpen();
   };
 
   useEffect(() => {
     getActivities();
   }, []);
+
+  useEffect(() => {
+    if (activities.length > 0) {
+      formEdit();
+    }
+  }, [activities]);
 
   return (
     <>
@@ -184,26 +206,24 @@ const FormActivities = () => {
               val={activityFormValue.description}
             />
           </div>
-          {
-            <div>
-              <Select name="isActive" changeAction={onChangeInput}>
-                <option value={true} selected={!activityFormValue.isActive}>
-                  Active
-                </option>
-                <option value={false} selected={!activityFormValue.isActive}>
-                  Inactive
-                </option>
-              </Select>
-            </div>
-          }
+          {activeVisible && (
+            <Select name="isActive" changeAction={onChangeInput}>
+              <option value={true} selected={!activityFormValue.isActive}>
+                Active
+              </option>
+              <option value={false} selected={!activityFormValue.isActive}>
+                Inactive
+              </option>
+            </Select>
+          )}
           <div className={styles.btnContainer}>
-            <Button text="Cancel" /* clickAction={cancel} */ />
-            {/* buttonAddIsVisible &&  */ <Button text="Add" clickAction={createActivity} />}
-            {
-              /* buttonSaveIsVisible && */ <div>
+            <Button text="Cancel" clickAction={() => history.goBack()} />
+            {buttonAddIsVisible && <Button text="Add" clickAction={createActivity} />}
+            {buttonSaveIsVisible && (
+              <div>
                 <Button clickAction={updateActivity} text="Save" />
               </div>
-            }
+            )}
           </div>
         </div>
       </form>

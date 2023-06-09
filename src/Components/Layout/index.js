@@ -10,7 +10,7 @@ import Home from '../Home/index';
 import Header from '../Header/index';
 import Footer from '../Footer/index';
 import styles from './layout.module.css';
-import FormActivities from '../Activities/FormActivity';
+import FormActivity from '../Activities/FormActivity';
 import FormSuperAdmin from '../SuperAdmins/Form';
 
 function Layout() {
@@ -22,8 +22,8 @@ function Layout() {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/activities" exact component={Activities} />
-            <Route path="/activities/form" exact component={FormActivities} />
-            <Route path="/activities/form/:id" component={FormActivities} />
+            <Route path="/activities/form" exact component={FormActivity} />
+            <Route path="/activities/form/:id" component={FormActivity} />
             <Route path="/admins" component={Admins} />
             <Route path="/classes" component={Classes} />
             <Route path="/members" component={Members} />
