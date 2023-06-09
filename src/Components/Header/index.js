@@ -1,34 +1,48 @@
 import styles from './header.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Header() {
+  const location = useLocation();
+  let name = '';
+
+  switch (location.pathname) {
+    case '/':
+      name = 'Home';
+      break;
+    case '/activities':
+      name = 'Activities';
+      break;
+    case '/admins':
+      name = 'Admins';
+      break;
+    case '/classes':
+      name = 'Classes';
+      break;
+    case '/members':
+      name = 'Members';
+      break;
+    case '/subscriptions':
+      name = 'Subscriptions';
+      break;
+    case '/superAdmins':
+      name = 'Super Admins';
+      break;
+    case '/trainers':
+      name = 'Trainers';
+      break;
+    default:
+      name = 'Form';
+      break;
+  }
   return (
     <header>
       <div className={styles.container}>
-        <div className={styles.brand}>Radium Rocket</div>
+        <h2 className={styles.brand}>{name}</h2>
         <div>
-          <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/facebook.svg`}
-            />
-          </a>
-          <a href={'https://twitter.com/radiumrocket'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/twitter.svg`}
-            />
-          </a>
-          <a href={'https://www.instagram.com/radium.rocket/'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/instagram.svg`}
-            />
-          </a>
+          <img src={`${process.env.PUBLIC_URL}/assets/images/logo-header.png`} />
         </div>
       </div>
       <nav className={styles.navbar}>
-        <h1 className={styles.appName}>MegaRocket</h1>
         <ul className={styles.rutes}>
           <li>
             <Link to="/">Home</Link>
