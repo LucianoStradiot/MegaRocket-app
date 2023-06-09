@@ -11,13 +11,13 @@ const FormSubscriptions = () => {
   const { id } = useParams();
   const [subscriptions, setSubscriptions] = useState([]);
   const [members, setMembers] = useState([]);
-  const [classList, setClassList] = useState([]);
+  const [classes, setClasses] = useState([]);
   const [create, setCreate] = useState({
     classes: '',
     member: '',
     date: ''
   });
-  const [button] = useState('');
+  const [button, setButton] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({
     title: '',
@@ -43,7 +43,7 @@ const FormSubscriptions = () => {
         method: 'GET'
       });
       const { data: classes } = await response.json();
-      setClassList(classes);
+      setClasses(classes);
     } catch (error) {
       alert(error);
     }
@@ -66,11 +66,13 @@ const FormSubscriptions = () => {
     getMembers();
     console.log(create.classes);
   }, []);
+
   useEffect(() => {
     if (subscriptions.length > 0) {
       formEdit(id);
     }
   }, [subscriptions]);
+
   const formEdit = (id) => {
     if (id) {
       const data = subscriptions.find((aux) => aux._id === id);
@@ -80,6 +82,7 @@ const FormSubscriptions = () => {
           member: data.member,
           date: data.date
         });
+        setButton('edit');
       } else {
         console.log('No hay nada pa');
       }
@@ -89,6 +92,7 @@ const FormSubscriptions = () => {
         member: '',
         date: ''
       });
+      setButton('Create');
     }
   };
 
@@ -207,7 +211,7 @@ const FormSubscriptions = () => {
         <option value="" disabled>
           Choose a class
         </option>
-        {classList.map((oneClass) => {
+        {classes.map((oneClass) => {
           return (
             <option
               value={oneClass._id}
