@@ -22,8 +22,7 @@ const FormClasses = () => {
   });
   const [responseModal, setResponseModal] = useState({
     title: '',
-    description: '',
-    isConfirm: false
+    description: ''
   });
   const [activities, setActivities] = useState([]);
   const [trainers, setTrainers] = useState([]);
@@ -35,8 +34,7 @@ const FormClasses = () => {
     } catch (error) {
       setResponseModal({
         title: 'ERROR!',
-        description: error.message,
-        isConfirm: false
+        description: error.message
       });
       setIsOpen(true);
     }
@@ -49,8 +47,7 @@ const FormClasses = () => {
     } catch (error) {
       setResponseModal({
         title: 'ERROR!',
-        description: error.message,
-        isConfirm: false
+        description: error.message
       });
       setIsOpen(true);
     }
@@ -63,8 +60,7 @@ const FormClasses = () => {
     } catch (error) {
       setResponseModal({
         title: 'ERROR!',
-        description: error.message,
-        isConfirm: false
+        description: error.message
       });
       setIsOpen(true);
     }
@@ -98,8 +94,7 @@ const FormClasses = () => {
         });
         setResponseModal({
           title: 'Success!',
-          description: createdClassData.message,
-          isConfirm: false
+          description: createdClassData.message
         });
         setIsClassCreated(true);
         setIsOpen(true);
@@ -107,8 +102,7 @@ const FormClasses = () => {
     } catch (error) {
       setResponseModal({
         title: 'ERROR!',
-        description: error.message,
-        isConfirm: false
+        description: error.message
       });
       setIsOpen(true);
       setIsClassCreated(false);
@@ -142,8 +136,7 @@ const FormClasses = () => {
         });
         setResponseModal({
           title: 'Success!',
-          description: updatedClassData.message,
-          isConfirm: false
+          description: updatedClassData.message
         });
         setIsOpen(true);
         setIsClassCreated(true);
@@ -151,8 +144,7 @@ const FormClasses = () => {
     } catch (error) {
       setResponseModal({
         title: 'ERROR!',
-        description: error.message,
-        isConfirm: false
+        description: error.message
       });
       setIsOpen(true);
       setIsClassCreated(false);
@@ -215,7 +207,6 @@ const FormClasses = () => {
         title={responseModal.title}
         desc={responseModal.description}
         isOpen={isOpen}
-        confirmModal={responseModal.isConfirm}
         handleClose={closeForm}
       />
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
