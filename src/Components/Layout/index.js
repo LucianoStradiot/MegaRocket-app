@@ -27,7 +27,8 @@ function Layout() {
             <Route path="/subscriptions" component={Subscriptions} />
             <Route path="/superAdmins" component={SuperAdmins} />
             <Route path="/trainers" component={Trainers} />
-            <Route path="/activities/form" component={FormActivities} />
+            <Route path="/activities/form" exact component={FormActivities} />
+            <Route path="/activities/form/:id" component={FormActivities} />
           </Switch>
         </div>
         <Footer />

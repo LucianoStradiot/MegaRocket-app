@@ -267,6 +267,9 @@ function Activities() {
       <section>
         <h2 className={styles.h2}>Activities</h2>
         <Button clickAction={create} text="Create" />
+        <Link to="/activities/form">
+          <Button text="holis" />
+        </Link>
         <table className={styles.table}>
           <thead className={styles.thead}>
             <th className={`${styles.head} ${styles.th}`}>Activity Name</th>
@@ -343,9 +346,6 @@ function Activities() {
           </form>
         </section>
       )}
-      <Link to="/activities/form">
-        <Button text="holis" />
-      </Link>
     </div>
   );
 }
