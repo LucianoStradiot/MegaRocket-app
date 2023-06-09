@@ -78,13 +78,11 @@ const FormSubscriptions = () => {
       const data = subscriptions.find((aux) => aux._id === id);
       if (data) {
         setCreate({
-          classes: data.classes,
-          member: data.member,
+          classes: data.classes._id,
+          member: data.member._id,
           date: data.date
         });
         setButton('edit');
-      } else {
-        console.log('No hay nada pa');
       }
     } else {
       setCreate({
@@ -149,11 +147,7 @@ const FormSubscriptions = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          classes: create.classes,
-          member: create.member,
-          date: create.date
-        })
+        body: JSON.stringify(create)
       });
       const updatedSubscription = await response.json();
       if (response.ok) {
@@ -213,11 +207,7 @@ const FormSubscriptions = () => {
         </option>
         {classes.map((oneClass) => {
           return (
-            <option
-              value={oneClass._id}
-              key={oneClass._id}
-              selected={create.classes === oneClass._id}
-            >
+            <option value={oneClass._id} key={oneClass._id}>
               {oneClass.hour} {oneClass?.activity?.name}, Trainer:{' '}
               {oneClass.trainer && oneClass.trainer.firstName}
             </option>
