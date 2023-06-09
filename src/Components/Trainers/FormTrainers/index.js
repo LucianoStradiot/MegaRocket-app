@@ -10,11 +10,11 @@ const FormTrainers = () => {
   const [trainers, setTrainers] = useState([]);
   const history = useHistory();
   const { id } = useParams();
-  const [idStatus, setIdStatus] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [buttonAddIsVisible, setAddVisible] = useState(false);
   const [isTrainerCreated, setIsTrainerCreated] = useState(false);
   const [buttonSaveIsVisible, setSaveVisible] = useState(false);
+  const [activeVisible, setActiveVisible] = useState(false);
   const [formValue, setFormValue] = useState({
     firstName: '',
     lastName: '',
@@ -98,7 +98,7 @@ const FormTrainers = () => {
   const updateTrainer = async () => {
     try {
       const updatedTrainerResponse = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/trainers/${idStatus}`,
+        `${process.env.REACT_APP_API_URL}/api/trainers/${id}`,
         {
           method: 'PUT',
           headers: {
@@ -109,7 +109,7 @@ const FormTrainers = () => {
       );
       const updatedTrainer = await updatedTrainerResponse.json();
       if (updatedTrainerResponse.ok) {
-        const dataIndex = trainers.findIndex((trainer) => trainer._id === idStatus);
+        const dataIndex = trainers.findIndex((trainer) => trainer._id === id);
 
         setTrainers((currentTrainers) => {
           const updatedTrainers = [...currentTrainers];
@@ -129,7 +129,6 @@ const FormTrainers = () => {
           isActive: ''
         });
 
-        setIdStatus('');
         setResponseModal({
           title: 'Succes!',
           description: updatedTrainer.message,
@@ -156,7 +155,6 @@ const FormTrainers = () => {
   }, []);
 
   useEffect(() => {
-    getTrainers();
     if (trainers.length > 0) {
       formEdit(id);
     }
@@ -178,6 +176,7 @@ const FormTrainers = () => {
           isActive: data.isActive
         });
         setAddVisible(false);
+        setActiveVisible(true);
         setSaveVisible(true);
       } else {
         return false;
@@ -192,9 +191,10 @@ const FormTrainers = () => {
         city: '',
         password: '',
         salary: '',
-        isActive: ''
+        isActive: true
       });
       setAddVisible(true);
+      setActiveVisible(false);
       setSaveVisible(false);
     }
   };
@@ -314,17 +314,19 @@ const FormTrainers = () => {
               changeAction={onChangeInput}
             />
           </div>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Status</label>
-            <Select name="isActive" changeAction={onChangeInput}>
-              <option value={true} selected={!formValue.isActive}>
-                Active
-              </option>
-              <option value={false} selected={!formValue.isActive}>
-                Inactive
-              </option>
-            </Select>
-          </div>
+          {activeVisible && (
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>Status</label>
+              <Select name="isActive" changeAction={onChangeInput}>
+                <option value={true} selected={!formValue.isActive}>
+                  Active
+                </option>
+                <option value={false} selected={!formValue.isActive}>
+                  Inactive
+                </option>
+              </Select>
+            </div>
+          )}
         </div>
         <div className={styles.btnContainer}>
           <Button
