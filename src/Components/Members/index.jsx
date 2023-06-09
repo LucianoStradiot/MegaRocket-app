@@ -16,7 +16,7 @@ const Members = () => {
     dni: '',
     phone: '',
     city: '',
-    birthday: new Date(),
+    birthday: '',
     postalCode: '',
     membership: '',
     isActive: true
@@ -45,24 +45,6 @@ const Members = () => {
     });
   };
 
-  const getDateValue = () => {
-    const date = new Date(memberValues.birthday);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const dateValue = `${year}-${month}-${day}`;
-    return dateValue;
-  };
-
-  const changeDateFormat = (date) => {
-    const newDate = new Date(date);
-    const day = newDate.getDate().toString().padStart(2, '0');
-    const month = (newDate.getMonth() + 1).toString().padStart(2, '0');
-    const year = newDate.getFullYear();
-    const formattedDate = `${day}/${month}/${year}`;
-    return formattedDate;
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
     if (idMember === '') {
@@ -79,7 +61,7 @@ const Members = () => {
       dni: '',
       phone: '',
       city: '',
-      birthday: new Date(),
+      birthday: '',
       postalCode: '',
       membership: '',
       isActive: true
@@ -87,14 +69,13 @@ const Members = () => {
   };
 
   const updateMember = async (idMember) => {
-    const dateFormat = changeDateFormat(memberValues.birthday);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${idMember}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ ...memberValues, birthday: dateFormat })
+        body: JSON.stringify(memberValues)
       });
 
       const updatedMember = await response.json();
@@ -124,14 +105,13 @@ const Members = () => {
   };
 
   const addMember = async (member) => {
-    const dateFormat = changeDateFormat(member.birthday);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ ...member, birthday: dateFormat })
+        body: JSON.stringify(memberValues)
       });
       const dataResponse = await response.json();
       if (response.ok) {
@@ -213,7 +193,7 @@ const Members = () => {
       />
       <h2>Members</h2>
       {showForm ? (
-        <form className={styles.form} onSubmit={onSubmit}>
+        <form className={styles.form}>
           <div className={styles.subContainer}>
             <div className={styles.inputContainer}>
               <TextInput
@@ -283,7 +263,7 @@ const Members = () => {
               changeAction={(e) => onChange(e)}
               name={'birthday'}
               title={'Birthday'}
-              val={getDateValue()}
+              val={memberValues.birthday}
             />
             <div>
               <div className={styles.inputContainer}>
@@ -327,7 +307,11 @@ const Members = () => {
                 </Select>
               </div>
             </div>
-            <Button text={idMember ? 'Edit' : 'Add'} type={idMember ? 'edit' : 'Add'} />
+            <Button
+              clickAction={onSubmit}
+              text={idMember ? 'Edit' : 'Add'}
+              type={idMember ? 'edit' : 'Add'}
+            />
             <Button
               clickAction={() => {
                 setShowForm(false);
@@ -339,7 +323,7 @@ const Members = () => {
                   dni: '',
                   phone: '',
                   city: '',
-                  birthday: new Date().toISOString(),
+                  birthday: '',
                   postalCode: '',
                   membership: '',
                   isActive: true
@@ -382,7 +366,7 @@ const Members = () => {
                               dni: member.dni,
                               phone: member.phone,
                               city: member.city,
-                              birthday: changeDateFormat(member.birthday),
+                              birthday: member.birthday,
                               postalCode: member.postalCode,
                               membership: member.membership,
                               isActive: member.isActive

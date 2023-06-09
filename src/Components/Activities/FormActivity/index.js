@@ -5,7 +5,7 @@ import TextInput from '../../Shared/TextInput';
 import TextArea from '../../Shared/TextArea';
 import Select from '../../Shared/Select';
 import Modal from '../../Shared/Modal';
-import styles from './formActivities.module.css';
+import styles from './FormActivities.module.css';
 import { useHistory /* useParams */ } from 'react-router-dom';
 
 const FormActivities = () => {
@@ -23,7 +23,6 @@ const FormActivities = () => {
     desc: ''
   });
   const [isOpen, setIsOpen] = useState(false);
-  const [confirmModal, setConfirmModal] = useState(false);
   /* const [buttonAddIsVisible, setAddVisible] = useState(false);
   const [buttonSaveIsVisible, setSaveVisible] = useState(false); */
   const [idStatus, setIdStatus] = useState('');
@@ -39,19 +38,10 @@ const FormActivities = () => {
       });
     }
   };
+  const [isActivityCreated, setIsActivityCreated] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
-  };
-
-  const add = () => {
-    createActivity();
-    /* formInvisible(); */
-  };
-
-  const save = () => {
-    updateActivity();
-    /* formInvisible(); */
   };
 
   /* const addVisible = () => {
@@ -78,6 +68,7 @@ const FormActivities = () => {
         throw new Error(response.message);
       } else {
         setActivities((currentActivities) => [...currentActivities, response.data]);
+        setIsActivityCreated(true);
         setActivityFormValue({
           name: '',
           descriptionription: ''
@@ -86,15 +77,15 @@ const FormActivities = () => {
           title: 'success',
           desc: response.message
         });
-        modalConfirmFalse();
       }
     } catch (error) {
+      setIsActivityCreated(false);
       setModalInfo({
         title: 'Error',
         desc: error.message
       });
-      modalConfirmFalse();
     }
+    switchIsOpen();
   };
 
   const updateActivity = async () => {
@@ -130,15 +121,16 @@ const FormActivities = () => {
           title: 'Success',
           desc: response.message
         });
-        modalConfirmFalse();
+        setIsActivityCreated(true);
       }
     } catch (error) {
       setModalInfo({
         title: 'Error',
         desc: error.message
       });
-      modalConfirmFalse();
+      setIsActivityCreated(false);
     }
+    switchIsOpen();
   };
 
   const onChangeInput = (e) => {
@@ -148,24 +140,16 @@ const FormActivities = () => {
     });
   };
 
-  /* const modify = (id) => {
-    saveVisible();
-    setIdStatus(id);
-    const data = activities.find((activity) => activity._id === id);
-
-    setActivityFormValue({
-      name: data.name,
-      description: data.description,
-      isActive: data.isActive
-    });
-  }; */
-
   const switchIsOpen = () => {
     setIsOpen(!isOpen);
   };
 
-  const modalConfirmFalse = () => {
-    setConfirmModal(false);
+  const closeForm = () => {
+    console.log(isActivityCreated);
+    if (isActivityCreated) {
+      setIsOpen(false);
+      history.goBack();
+    }
     switchIsOpen();
   };
 
@@ -179,8 +163,7 @@ const FormActivities = () => {
         title={modalInfo.title}
         desc={modalInfo.desc}
         isOpen={isOpen}
-        handleClose={() => history.goBack()}
-        confirmModal={confirmModal}
+        handleClose={closeForm}
       />
       <form className={styles.form} onSubmit={onSubmit} id="form">
         <div className={styles.subContainer}>
@@ -215,10 +198,10 @@ const FormActivities = () => {
           }
           <div className={styles.btnContainer}>
             <Button text="Cancel" /* clickAction={cancel} */ />
-            {/* buttonAddIsVisible &&  */ <Button text="Add" clickAction={add} />}
+            {/* buttonAddIsVisible &&  */ <Button text="Add" clickAction={createActivity} />}
             {
               /* buttonSaveIsVisible && */ <div>
-                <Button clickAction={save} text="Save" />
+                <Button clickAction={updateActivity} text="Save" />
               </div>
             }
           </div>
