@@ -4,17 +4,15 @@ import TextInput from '../../Shared/TextInput';
 import Select from '../../Shared/Select';
 import Modal from '../../Shared/Modal';
 import styles from './form-classes.module.css';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useParams, useHistory } from 'react-router-dom';
 const FormClasses = () => {
-  // const [sendVisible, setSendVisible] = useState(false);
-  // const [updateVisible, setUpdateVisible] = useState(false);
-  // const sendButtonNotVisible = () => setSendVisible(false);
-  // const updateButtonVisible = () => setUpdateVisible(true);
-  // const updateButtonNotVisible = () => setUpdateVisible(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [classes, setClasses] = useState([]);
-  const { id } = useParams;
-  // const [idStatus, setIDStatus] = useState('');
+  const history = useHistory();
+  const { id } = useParams();
+  const [btnAddIsVisible, setAddVisible] = useState(false);
+  const [btnSaveIsVisible, setSaveVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isClassCreated, setIsClassCreated] = useState(false);
   const [formData, setFormData] = useState({
     day: '',
     hour: '',
@@ -103,6 +101,7 @@ const FormClasses = () => {
           description: createdClassData.message,
           isConfirm: false
         });
+        setIsClassCreated(true);
         setIsOpen(true);
       }
     } catch (error) {
@@ -112,6 +111,7 @@ const FormClasses = () => {
         isConfirm: false
       });
       setIsOpen(true);
+      setIsClassCreated(false);
     }
   };
   const editClass = async () => {
@@ -146,6 +146,7 @@ const FormClasses = () => {
           isConfirm: false
         });
         setIsOpen(true);
+        setIsClassCreated(true);
       }
     } catch (error) {
       setResponseModal({
@@ -154,6 +155,7 @@ const FormClasses = () => {
         isConfirm: false
       });
       setIsOpen(true);
+      setIsClassCreated(false);
     }
   };
   useEffect(() => {
@@ -161,58 +163,60 @@ const FormClasses = () => {
     getTrainers();
     getClasses();
   }, []);
-  // const formEdit = (id) => {
-  //   // visible();
-  //   // updateButtonVisible();
-  //   // sendButtonNotVisible();
-  //   // setIDStatus(id);
-  //   console.log('primero', formData);
-  //   if (id !== 'a') {
-  //     const data = classes.find((oneClass) => oneClass._id === id);
-  //     console.log('data', data);
-  //     console.log('clases', classes);
-  //     setFormData({
-  //       day: data.day,
-  //       hour: data.hour,
-  //       trainer: data.trainer ? data.trainer._id : '',
-  //       activity: data.activity ? data.activity._id : '',
-  //       slots: data.slots
-  //     });
-  //   } else {
-  //     setFormData({
-  //       day: '',
-  //       hour: '',
-  //       trainer: '',
-  //       activity: '',
-  //       slots: ''
-  //     });
-  //   }
-  //   console.log('segundo', formData);
-  // };
+  useEffect(() => {
+    if (classes.length > 0) {
+      formEdit(id);
+    }
+  }, [classes]);
+  const formEdit = (id) => {
+    if (id) {
+      const data = classes.find((oneClass) => oneClass._id === id);
+      if (data) {
+        setFormData({
+          day: data.day,
+          hour: data.hour,
+          trainer: data.trainer ? data.trainer._id : '',
+          activity: data.activity ? data.activity._id : '',
+          slots: data.slots
+        });
+        setAddVisible(false);
+        setSaveVisible(true);
+      } else {
+        return false;
+      }
+    } else {
+      setFormData({
+        day: '',
+        hour: '',
+        trainer: '',
+        activity: '',
+        slots: ''
+      });
+      setAddVisible(true);
+      setSaveVisible(false);
+    }
+  };
   const create = () => {
     createClass();
-    // notVisible();
-    // sendButtonNotVisible();
   };
   const save = () => {
     editClass();
-    // notVisible();
-    // updateButtonNotVisible();
   };
-  // const [formVisible, setFormVisible] = useState(false);
-  // const visible = () => setFormVisible(true);
-  // const notVisible = () => setFormVisible(false);
-  // const sendButtonVisible = () => setSendVisible(true);
+  const closeForm = () => {
+    if (isClassCreated) {
+      setIsOpen(false);
+      history.goBack();
+    }
+    setIsOpen(!isOpen);
+  };
   return (
     <div>
-      <Button text="llenar" clickAction={console.log(id)} />
-      {/* {() => formEdit(id)} */}
       <Modal
         title={responseModal.title}
         desc={responseModal.description}
         isOpen={isOpen}
         confirmModal={responseModal.isConfirm}
-        handleClose={() => setIsOpen(!isOpen)}
+        handleClose={closeForm}
       />
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.formContainer}>
@@ -296,29 +300,9 @@ const FormClasses = () => {
           />
         </div>
         <div className={styles.sendContainer}>
-          <Button
-            text="Cancel"
-            type="cancel"
-            clickAction={() => {
-              // notVisible();
-              // sendButtonNotVisible();
-              // updateButtonNotVisible();
-            }}
-          />
-          <Button
-            text="Submit"
-            type="create"
-            clickAction={() => {
-              create();
-            }}
-          />
-          <Button
-            text="Update"
-            type="create"
-            clickAction={() => {
-              save();
-            }}
-          />
+          <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
+          {btnAddIsVisible && <Button text="Add" clickAction={create} type="add" />}
+          {btnSaveIsVisible && <Button text="Save" clickAction={save} type="save" />}
         </div>
       </form>
     </div>
