@@ -149,16 +149,6 @@ const FormSuperAdmin = () => {
     updSuperAdmin();
   };
 
-  // this ask you before leave the form
-  // const openModalConfirm = () => {
-  //   setResponseModal({
-  //     title: '',
-  //     description: 'Are you sure you want to cancel?',
-  //     isConfirm: true
-  //   });
-  //   setIsOpen(true);
-  // };
-
   const formEdit = (id) => {
     if (id) {
       const data = superAdmins.find((aux) => aux._id === id);
@@ -170,7 +160,7 @@ const FormSuperAdmin = () => {
         setAddVisible(false);
         setSaveVisible(true);
       } else {
-        console.log('No hay nada pa');
+        return false;
       }
     } else {
       setDataForm({
