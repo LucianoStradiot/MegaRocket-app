@@ -1,28 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styles from './trainers.module.css';
 import Button from '../Shared/Button';
-import TextInput from '../Shared/TextInput';
 import Modal from '../Shared/Modal';
-import Select from '../Shared/Select';
+import { Link } from 'react-router-dom';
 
 function Trainers() {
   const [trainers, setTrainers] = useState([]);
-  const [isVisible, setIsVisible] = useState(false);
-  const [buttonAddIsVisible, setAddVisible] = useState(false);
-  const [buttonSaveIsVisible, setSaveVisible] = useState(false);
-  const [activeIsVisible, setActiveVisible] = useState(false);
-  const [idStatus, setIdStatus] = useState('');
-  const [formValue, setFormValue] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    password: '',
-    salary: '',
-    isActive: ''
-  });
   const [idDelete, setIdDelete] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({
@@ -30,7 +13,6 @@ function Trainers() {
     description: '',
     isConfirm: false
   });
-
   const getTrainers = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
@@ -76,192 +58,6 @@ function Trainers() {
     }
   };
 
-  const createTrainer = async () => {
-    try {
-      const createdTrainerResponse = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formValue)
-      });
-      const createdTrainer = await createdTrainerResponse.json();
-      if (createdTrainerResponse.ok) {
-        setTrainers((currentTrainers) => {
-          return [...currentTrainers, createdTrainer.data];
-        });
-
-        setFormValue({
-          firstName: '',
-          lastName: '',
-          dni: '',
-          phone: '',
-          email: '',
-          city: '',
-          password: '',
-          salary: '',
-          isActive: true
-        });
-        setResponseModal({
-          title: 'Succes!',
-          description: createdTrainer.message,
-          isConfirm: false
-        });
-        setIsOpen(true);
-      } else {
-        throw new Error(createdTrainer.message);
-      }
-    } catch (error) {
-      setResponseModal({
-        title: 'ERROR!',
-        description: error.message,
-        isConfirm: false
-      });
-      setIsOpen(true);
-    }
-  };
-
-  const updateTrainer = async () => {
-    try {
-      const updatedTrainerResponse = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/trainers/${idStatus}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formValue)
-        }
-      );
-      const updatedTrainer = await updatedTrainerResponse.json();
-      if (updatedTrainerResponse.ok) {
-        const dataIndex = trainers.findIndex((trainer) => trainer._id === idStatus);
-
-        setTrainers((currentTrainers) => {
-          const updatedTrainers = [...currentTrainers];
-          updatedTrainers[dataIndex] = updatedTrainer.data;
-          return updatedTrainers;
-        });
-
-        setFormValue({
-          firstName: '',
-          lastName: '',
-          dni: '',
-          phone: '',
-          email: '',
-          city: '',
-          password: '',
-          salary: '',
-          isActive: ''
-        });
-
-        setIdStatus('');
-        setResponseModal({
-          title: 'Succes!',
-          description: updatedTrainer.message,
-          isConfirm: false
-        });
-        setIsOpen(true);
-      } else {
-        throw new Error(updatedTrainer.message);
-      }
-    } catch (error) {
-      setResponseModal({
-        title: 'ERROR!',
-        description: error.message,
-        isConfirm: false
-      });
-      setIsOpen(true);
-    }
-  };
-
-  const onChangeInput = (e) => {
-    setFormValue({
-      ...formValue,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const submit = (e) => {
-    e.preventDefault();
-    createTrainer();
-    formInvisible();
-  };
-
-  const save = () => {
-    updateTrainer();
-    formInvisible();
-  };
-
-  const cancel = () => {
-    formInvisible();
-  };
-
-  const create = () => {
-    formVisible();
-    addVisible();
-    activeInvisible();
-
-    setFormValue({
-      firstName: '',
-      lastName: '',
-      dni: '',
-      phone: '',
-      email: '',
-      city: '',
-      password: '',
-      salary: '',
-      isActive: true
-    });
-  };
-
-  const edit = (id) => {
-    formVisible();
-    saveVisible();
-    activeVisible();
-    setIdStatus(id);
-
-    const data = trainers.find((trainer) => trainer._id === id);
-
-    setFormValue({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      dni: data.dni,
-      phone: data.phone,
-      email: data.email,
-      city: data.city,
-      password: data.password,
-      salary: data.salary,
-      isActive: data.isActive
-    });
-  };
-
-  const formVisible = () => {
-    setIsVisible(true);
-  };
-
-  const formInvisible = () => {
-    setIsVisible(false);
-  };
-
-  const addVisible = () => {
-    setAddVisible(true);
-    setSaveVisible(false);
-  };
-
-  const saveVisible = () => {
-    setAddVisible(false);
-    setSaveVisible(true);
-  };
-
-  const activeVisible = () => {
-    setActiveVisible(true);
-  };
-
-  const activeInvisible = () => {
-    setActiveVisible(false);
-  };
-
   const showActive = (active) => {
     if (active) {
       return 'active';
@@ -296,7 +92,9 @@ function Trainers() {
       />
       <section>
         <h2 className={styles.h2}>Trainers</h2>
-        <Button text="Create" clickAction={create} type="create" />
+        <Link to="/trainers/formTrainers">
+          <Button text="Create" type="create" />
+        </Link>
         <table className={styles.table}>
           <thead className={styles.thead}>
             <tr>
@@ -325,7 +123,9 @@ function Trainers() {
                   <td className={styles.row}>{showActive(trainer.isActive)}</td>
                   <td className={styles.row}>
                     <div className={styles.containerButtons}>
-                      <Button text="Edit" type="edit" clickAction={() => edit(trainer._id)} />
+                      <Link to={`/trainers/formTrainers/${trainer._id}`}>
+                        <Button text="Edit" type="edit" />
+                      </Link>
                       <Button
                         text="X"
                         type="deleteCancel"
@@ -339,112 +139,7 @@ function Trainers() {
           </tbody>
         </table>
       </section>
-      {isVisible && (
-        <section className={styles.sectionForm}>
-          <form className={styles.form} onSubmit={submit} id="form">
-            <div className={styles.subContainer}>
-              <div className={styles.inputContainer}>
-                <TextInput
-                  labelName="First name"
-                  inputType="text"
-                  inputName="firstName"
-                  id="firstName"
-                  text={formValue.firstName}
-                  changeAction={onChangeInput}
-                />
-              </div>
-              <div className={styles.inputContainer}>
-                <TextInput
-                  labelName="Last name"
-                  inputType="text"
-                  inputName="lastName"
-                  id="lastName"
-                  text={formValue.lastName}
-                  changeAction={onChangeInput}
-                />
-              </div>
-              <div className={styles.inputContainer}>
-                <TextInput
-                  labelName="DNI"
-                  inputType="text"
-                  inputName="dni"
-                  id="dni"
-                  text={formValue.dni}
-                  changeAction={onChangeInput}
-                />
-              </div>
-              <div className={styles.inputContainer}>
-                <TextInput
-                  labelName="Phone"
-                  inputType="text"
-                  inputName="phone"
-                  id="phone"
-                  text={formValue.phone}
-                  changeAction={onChangeInput}
-                />
-              </div>
-              <div className={styles.inputContainer}>
-                <TextInput
-                  labelName="Email"
-                  inputType="text"
-                  inputName="email"
-                  id="email"
-                  text={formValue.email}
-                  changeAction={onChangeInput}
-                />
-              </div>
-              <div className={styles.inputContainer}>
-                <TextInput
-                  labelName="City"
-                  inputType="text"
-                  inputName="city"
-                  id="city"
-                  text={formValue.city}
-                  changeAction={onChangeInput}
-                />
-              </div>
-              <div className={styles.inputContainer}>
-                <TextInput
-                  labelName="Password"
-                  inputType="password"
-                  inputName="password"
-                  id="password"
-                  text={formValue.password}
-                  changeAction={onChangeInput}
-                />
-              </div>
-              <div className={styles.inputContainer}>
-                <TextInput
-                  labelName="Salary"
-                  inputType="text"
-                  inputName="salary"
-                  id="salary"
-                  text={formValue.salary}
-                  changeAction={onChangeInput}
-                />
-              </div>
-              {activeIsVisible && (
-                <div className={styles.inputContainer}>
-                  <label className={styles.label}>Status</label>
-                  <Select name="isActive" changeAction={onChangeInput}>
-                    <option value={true} selected={!formValue.isActive}>
-                      Active
-                    </option>
-                    <option value={false} selected={!formValue.isActive}>
-                      Inactive
-                    </option>
-                  </Select>
-                </div>
-              )}
-            </div>
-            <div className={styles.btnContainer}>
-              <Button text="Cancel" clickAction={cancel} type="cancel" />
-              {buttonAddIsVisible && <Button text="Add" clickAction={submit} type="add" />}
-              {buttonSaveIsVisible && <Button text="Save" clickAction={save} type="save" />}
-            </div>
-          </form>
-        </section>
-      )}
+      <section className={styles.sectionForm}></section>
     </section>
   );
 }
