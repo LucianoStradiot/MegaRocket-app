@@ -11,7 +11,7 @@ const FormSubscriptions = () => {
   const { id } = useParams();
   const [subscriptions, setSubscriptions] = useState([]);
   const [members, setMembers] = useState([]);
-  const [classes, setClasses] = useState([]);
+  const [classList, setClassList] = useState([]);
   const [create, setCreate] = useState({
     classes: '',
     member: '',
@@ -43,7 +43,7 @@ const FormSubscriptions = () => {
         method: 'GET'
       });
       const { data: classes } = await response.json();
-      setClasses(classes);
+      setClassList(classes);
     } catch (error) {
       alert(error);
     }
@@ -64,6 +64,7 @@ const FormSubscriptions = () => {
     getSubscriptions();
     getClasses();
     getMembers();
+    console.log(create.classes);
   }, []);
   useEffect(() => {
     if (subscriptions.length > 0) {
@@ -90,19 +91,6 @@ const FormSubscriptions = () => {
       });
     }
   };
-
-  // const getSubscriptionsById = (id) => {
-  //   const subscription = subscriptions.find((subs) => subs._id === id);
-  //   if (subscription) {
-  //     setCreate({
-  //       _id: subscription._id ? subscription._id : '',
-  //       classes: subscription.classes ? subscription.classes._id : '',
-  //       member: subscription.member ? subscription.member._id : '',
-  //       date: subscription.date || ''
-  //     });
-  //     setShowForm(true);
-  //   }
-  // };
 
   const onchangeInput = (e) => {
     setCreate({
@@ -217,14 +205,14 @@ const FormSubscriptions = () => {
         selectValue={create.classes}
       >
         <option value="" disabled>
-          Choose a classes
+          Choose a class
         </option>
-        {classes.map((oneClass) => {
+        {classList.map((oneClass) => {
           return (
             <option
               value={oneClass._id}
               key={oneClass._id}
-              selected={oneClass._id === create.classes}
+              selected={create.classes === oneClass._id}
             >
               {oneClass.hour} {oneClass?.activity?.name}, Trainer:{' '}
               {oneClass.trainer && oneClass.trainer.firstName}
