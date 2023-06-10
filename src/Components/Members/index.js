@@ -118,6 +118,14 @@ const Members = () => {
     </section>
   ) : (
     <section className={styles.container}>
+      <Modal
+        title={modalInfo.title}
+        desc={modalInfo.desc}
+        isOpen={isOpen}
+        handleClose={switchIsOpen}
+        confirmModal={confirmModal}
+        deleteFunction={() => deleteMember(idMember)}
+      />
       <section>
         <Link to="/members/form">
           <Button text="Create" type="create" />
