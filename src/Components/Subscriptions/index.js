@@ -105,7 +105,9 @@ function Subscriptions() {
                 <tr key={subs._id}>
                   <td className={style.thTable}>{showDate(subs.date)}</td>
                   <td className={style.thTable}>
-                    {subs.member && subs.member.firstName} {subs.member && subs.member.lastName}
+                    {subs.member && subs.member.firstName && subs.member.lastName
+                      ? `${subs.member.firstName} ${subs.member.lastName}`
+                      : 'empty'}
                   </td>
                   <td className={style.thTable}>
                     {subs.classes && subs.classes.hour ? subs.classes.hour : 'Empty'}
