@@ -50,6 +50,7 @@ const FormMembers = () => {
           membership: data.membership,
           isActive: true
         });
+        setIsActiveVisible(true);
       }
     } else {
       setMemberValues({
@@ -64,8 +65,10 @@ const FormMembers = () => {
         membership: '',
         isActive: true
       });
+      setIsActiveVisible(false);
     }
   };
+  const [isActiveVisible, setIsActiveVisible] = useState(false);
 
   useEffect(() => {
     getMembers();
@@ -168,7 +171,6 @@ const FormMembers = () => {
     }
     setIsOpen(!isOpen);
   };
-
   return (
     <section className={styles.container}>
       <Modal
@@ -267,21 +269,25 @@ const FormMembers = () => {
             </Select>
           </div>
           <div className={styles.inputContainer}>
-            <label className={styles.label}>Status</label>
-            <Select
-              changeAction={onChange}
-              name={'isActive'}
-              selectID={''}
-              selectValue={memberValues.isActive}
-            >
-              <option value={true}>Active</option>
-              <option value={false}>Inactive</option>
-            </Select>
+            {isActiveVisible && (
+              <>
+                <label className={styles.label}>Status</label>
+                <Select
+                  changeAction={onChange}
+                  name={'isActive'}
+                  selectID={''}
+                  selectValue={memberValues.isActive}
+                >
+                  <option value={true}>Active</option>
+                  <option value={false}>Inactive</option>
+                </Select>
+              </>
+            )}
           </div>
         </div>
         <div className={styles.contButton}>
-          <Button clickAction={submit} text={id ? 'Edit' : 'Add'} type={id ? 'edit' : 'Add'} />
-          <Button clickAction={() => history.goBack()} text={'Cancel'} type={'deleteCancel'} />
+          <Button clickAction={() => history.goBack()} text={'Cancel'} />
+          <Button clickAction={submit} text={id ? 'Save' : 'Add'} />
         </div>
       </form>
     </section>
