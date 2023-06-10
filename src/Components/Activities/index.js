@@ -76,8 +76,8 @@ function Activities() {
     });
   };
 
-  const showActive = (active) => {
-    if (active) {
+  const showActive = (activ) => {
+    if (activ) {
       return 'active';
     } else {
       return 'inactive';
