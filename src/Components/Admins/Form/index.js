@@ -261,7 +261,7 @@ const AdminForm = () => {
         </div>
         <div className={styles.btnContainer}>
           <Button text="Cancel" clickAction={cancel} type="cancel" />
-          {!id && <Button text="Create" clickAction={onSubmit} type="Create" />}
+          {!id && <Button text="Add" clickAction={onSubmit} type="Create" />}
           {id && <Button text="Save" clickAction={onSubmit} type="Create" />}
         </div>
       </form>
