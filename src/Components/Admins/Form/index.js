@@ -66,7 +66,7 @@ const AdminForm = () => {
           password: ''
         });
         setResponseModal({
-          title: 'Succes!',
+          title: 'Success!',
           description: createdAdminsData.message,
           isConfirm: false
         });
@@ -135,7 +135,7 @@ const AdminForm = () => {
   };
 
   const cancel = () => {
-    history.push(`${process.env.REACT_APP_API_URL}/api/admins/`);
+    history.push('/admins');
   };
 
   const onSubmit = async (e) => {
@@ -162,7 +162,7 @@ const AdminForm = () => {
 
   const handleClose = () => {
     setIsOpen(!isOpen);
-    history.push(`${process.env.REACT_APP_API_URL}/api/admins/`);
+    history.push('/admins');
   };
 
   return (
