@@ -85,49 +85,50 @@ function Subscriptions() {
         handleClose={() => setIsOpen(!isOpen)}
         deleteFunction={() => deleteSubscriptions(idDelete)}
       />
-      <h2 className={style.h2}>Subscriptions</h2>
-      <Link to="/subscriptions/form">
-        <Button type="add" text="Create" className={style.btnCreate} />
-      </Link>
-      <table className={style.contTable}>
-        <thead className={style.theadTable}>
-          <tr>
-            <th className={style.thTable}>Subscription Date</th>
-            <th className={style.thTable}>Name</th>
-            <th className={style.thTable}>Class Hour</th>
-            <th className={style.thTable}>Activity </th>
-            <th className={style.thTable}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {subscriptions.map((subs) => {
-            return (
-              <tr key={subs._id}>
-                <td className={style.thTable}>{showDate(subs.date)}</td>
-                <td className={style.thTable}>
-                  {subs.member && subs.member.firstName} {subs.member && subs.member.lastName}
-                </td>
-                <td className={style.thTable}>
-                  {subs.classes && subs.classes.hour ? subs.classes.hour : 'Empty'}
-                </td>
-                <td className={style.thTable}>
-                  {subs.classes && subs.classes.activity ? subs.classes.activity.name : 'Empty'}
-                </td>
-                <td className={style.thTable}>
-                  <Link to={`/subscriptions/form/${subs._id}`}>
-                    <Button type="edit" text="Edit" />
-                  </Link>
-                  <Button
-                    text="X"
-                    type="deleteCancel"
-                    clickAction={() => openModalConfirm(subs._id)}
-                  />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div>
+        <Link to="/subscriptions/form">
+          <Button type="add" text="Create" className={style.btnCreate} />
+        </Link>
+        <table className={style.contTable}>
+          <thead className={style.theadTable}>
+            <tr>
+              <th className={style.thTable}>Subscription Date</th>
+              <th className={style.thTable}>Name</th>
+              <th className={style.thTable}>Class Hour</th>
+              <th className={style.thTable}>Activity </th>
+              <th className={style.thTable}></th>
+            </tr>
+          </thead>
+          <tbody>
+            {subscriptions.map((subs) => {
+              return (
+                <tr key={subs._id}>
+                  <td className={style.thTable}>{showDate(subs.date)}</td>
+                  <td className={style.thTable}>
+                    {subs.member && subs.member.firstName} {subs.member && subs.member.lastName}
+                  </td>
+                  <td className={style.thTable}>
+                    {subs.classes && subs.classes.hour ? subs.classes.hour : 'Empty'}
+                  </td>
+                  <td className={style.thTable}>
+                    {subs.classes && subs.classes.activity ? subs.classes.activity.name : 'Empty'}
+                  </td>
+                  <td className={style.thTable}>
+                    <Link to={`/subscriptions/form/${subs._id}`}>
+                      <Button type="edit" text="Edit" />
+                    </Link>
+                    <Button
+                      text="X"
+                      type="deleteCancel"
+                      clickAction={() => openModalConfirm(subs._id)}
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 }

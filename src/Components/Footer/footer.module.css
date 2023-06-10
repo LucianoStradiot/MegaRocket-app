@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #000000;
+  background-color: #373867;
+  color: #fff;
 }
 
 .main {
@@ -11,7 +12,7 @@
   align-items: center;
   padding: 0 5%;
   width: 90%;
-  height: 250px;
+  height: 150px;
 }
 
 .appName {
@@ -22,9 +23,14 @@
 
 .rutes {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: space-evenly;
   list-style-type: none;
+  margin-left: 130px;
+}
+
+.rutes > li :hover {
+  background-color: #6daf50;
+  cursor: pointer;
 }
 
 .rutes > li > a {
@@ -36,37 +42,12 @@
   color: #FFF;
 }
 
-.license {
+.licenseContainer {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 50px;
-  width: 90%;
-  padding: 0 20px;
-  background-color: #EA3354;
+  flex-direction: column;
 }
 
-.copyright {
-  font-size: 0.7rem;
-  font-style: italic;
-}
-
-.socialIcon {
-  margin-left: 5px;
-}
-
-@media screen and (min-width: 750px) {
-  .main {
-    padding: 0 20%;
-    width: unset;
-  }
-
-  .license {
-    padding: 0 20px;
-    width: calc(60% - 40px);
-  }
-
-  .socialIcon {
-    margin-left: 15px;
-  }
+.licenseContainer img {
+  background-color: #fff;
+  border-radius: 50px;
 }

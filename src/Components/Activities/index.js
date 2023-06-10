@@ -95,7 +95,6 @@ function Activities() {
         deleteFunction={() => deleteActiviy(deleteID)}
       />
       <section>
-        <h2 className={styles.h2}>Activities</h2>
         <Link to="/activities/form">
           <Button text="Create" />
         </Link>
