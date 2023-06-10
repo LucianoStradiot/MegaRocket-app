@@ -84,7 +84,6 @@ const FormClasses = () => {
       if (!createdClass.ok) {
         throw new Error(createdClassData.message);
       } else {
-        setClasses((currentClasses) => [...currentClasses, createdClassData.data]);
         setFormData({
           day: '',
           hour: '',
@@ -121,12 +120,6 @@ const FormClasses = () => {
       if (!updatedClass.ok) {
         throw new Error(updatedClassData.message);
       } else {
-        const updatedClassIndex = classes.findIndex((oneClass) => oneClass._id === id);
-        setClasses((currentClasses) => {
-          const updatedClasses = [...currentClasses];
-          updatedClasses[updatedClassIndex] = updatedClassData.data;
-          return updatedClasses;
-        });
         setFormData({
           day: '',
           hour: '',
@@ -156,9 +149,7 @@ const FormClasses = () => {
     getClasses();
   }, []);
   useEffect(() => {
-    if (classes.length > 0) {
-      formEdit(id);
-    }
+    formEdit(id);
   }, [classes]);
   const formEdit = (id) => {
     if (id) {

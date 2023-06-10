@@ -71,7 +71,7 @@ function Admins() {
     setIsOpen(true);
   };
 
-  return (
+  return admins.length > 0 ? (
     <div className={styles.container}>
       <section>
         <Modal
@@ -124,6 +124,15 @@ function Admins() {
         </table>
       </section>
     </div>
+  ) : (
+    <section className={styles.container}>
+      <section>
+        <Link to="/admins/form">
+          <Button text="Create" type="create" />
+        </Link>
+        <p className={styles.info}>There is no Admin yet.</p>
+      </section>
+    </section>
   );
 }
 

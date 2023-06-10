@@ -75,7 +75,7 @@ function Subscriptions() {
     setIsOpen(true);
   };
 
-  return (
+  return subscriptions.length > 0 ? (
     <section className={style.container}>
       <Modal
         title={responseModal.title}
@@ -129,6 +129,15 @@ function Subscriptions() {
           </tbody>
         </table>
       </div>
+    </section>
+  ) : (
+    <section className={style.container}>
+      <section>
+        <Link to="/subscriptions/form">
+          <Button text="Create" type="create" />
+        </Link>
+        <p className={style.info}>There is no Subscription yet.</p>
+      </section>
     </section>
   );
 }

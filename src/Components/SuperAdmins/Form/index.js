@@ -51,9 +51,13 @@ const FormSuperAdmin = () => {
       });
       const createdSuperAdminData = await createdSuperAdmin.json();
       if (createdSuperAdmin.ok) {
-        setSuperAdmin((currentSuperAdmins) => {
-          return [...currentSuperAdmins, createdSuperAdminData.data];
-        });
+        if (superAdmins) {
+          setSuperAdmin((currentSuperAdmins) => {
+            return [...currentSuperAdmins, createdSuperAdminData.data];
+          });
+        } else {
+          setSuperAdmin(createdSuperAdminData.data);
+        }
         setDataForm({
           email: '',
           password: ''
@@ -98,12 +102,6 @@ const FormSuperAdmin = () => {
       );
       const updSuperAdminData = await updatedSuperAdmin.json();
       if (updatedSuperAdmin.ok) {
-        const dataIndex = superAdmins.findIndex((superAdmin) => superAdmin._id === id);
-        setSuperAdmin((currentSuperAdmin) => {
-          const updatedSuperAdmins = [...currentSuperAdmin];
-          updatedSuperAdmins[dataIndex] = updSuperAdminData.data;
-          return updatedSuperAdmins;
-        });
         setDataForm({
           email: '',
           password: ''
@@ -185,9 +183,7 @@ const FormSuperAdmin = () => {
   }, []);
 
   useEffect(() => {
-    if (superAdmins.length > 0) {
-      formEdit(id);
-    }
+    formEdit(id);
   }, [superAdmins]);
 
   return (

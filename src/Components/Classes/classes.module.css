@@ -12,6 +12,14 @@
   margin-top: 10px;
 }
 
+.info {
+  font-size: 24px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #aaa;
+  font-weight: 600;
+  color: #373867;
+}
+
 .th {
   background-color: #eee;
   padding: 10px 16px;

@@ -57,7 +57,6 @@ const FormActivities = () => {
       if (!createdActivity.ok) {
         throw new Error(response.message);
       } else {
-        setActivities((currentActivities) => [...currentActivities, response.data]);
         setIsActivityCreated(true);
         setActivityFormValue({
           name: '',
@@ -94,13 +93,6 @@ const FormActivities = () => {
       if (!updatedActivityResponse.ok) {
         throw new Error(response.message);
       } else {
-        const activityDataIndex = activities.findIndex((activity) => activity._id === id);
-
-        setActivities((currentActivities) => {
-          const updatedActivities = [...currentActivities];
-          updatedActivities[activityDataIndex] = response.data;
-          return updatedActivities;
-        });
         setActivityFormValue({
           name: '',
           description: '',
@@ -174,9 +166,7 @@ const FormActivities = () => {
   }, []);
 
   useEffect(() => {
-    if (activities.length > 0) {
-      formEdit();
-    }
+    formEdit();
   }, [activities]);
 
   return (

@@ -41,7 +41,11 @@ const AdminForm = () => {
         password: data.data.password
       });
     } catch (error) {
-      console.error(error);
+      setResponseModal({
+        title: 'ERROR!',
+        description: error.message
+      });
+      setIsOpen(true);
     }
   };
   const createAdmin = async () => {
@@ -159,11 +163,6 @@ const AdminForm = () => {
       [e.target.name]: e.target.value
     });
   };
-
-  // const handleClose = () => {
-  //   setIsOpen(!isOpen);
-  //   history.push('/admins');
-  // };
 
   const switchIsOpen = () => {
     setIsOpen(!isOpen);

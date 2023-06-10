@@ -93,6 +93,14 @@
   margin-bottom: 20px;
 }
 
+.info {
+  font-size: 24px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #aaa;
+  font-weight: 600;
+  color: #373867;
+}
+
 
 .inputContainer {
   display: flex;

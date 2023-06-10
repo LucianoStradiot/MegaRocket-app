@@ -37,7 +37,7 @@ function Header() {
   return (
     <header>
       <div className={styles.container}>
-        <h2 className={styles.brand}>{name}</h2>
+        <h1 className={styles.brand}>{name}</h1>
         <div>
           <img src={`${process.env.PUBLIC_URL}/assets/images/logo-header.png`} />
         </div>
