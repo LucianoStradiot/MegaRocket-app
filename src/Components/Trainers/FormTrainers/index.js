@@ -36,7 +36,6 @@ const FormTrainers = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
       const { data: trainers } = await response.json();
-
       setTrainers(trainers);
     } catch (error) {
       setResponseModal({
@@ -59,10 +58,6 @@ const FormTrainers = () => {
       });
       const createdTrainer = await createdTrainerResponse.json();
       if (createdTrainerResponse.ok) {
-        setTrainers((currentTrainers) => {
-          return [...currentTrainers, createdTrainer.data];
-        });
-
         setFormValue({
           firstName: '',
           lastName: '',
@@ -109,14 +104,6 @@ const FormTrainers = () => {
       );
       const updatedTrainer = await updatedTrainerResponse.json();
       if (updatedTrainerResponse.ok) {
-        const dataIndex = trainers.findIndex((trainer) => trainer._id === id);
-
-        setTrainers((currentTrainers) => {
-          const updatedTrainers = [...currentTrainers];
-          updatedTrainers[dataIndex] = updatedTrainer.data;
-          return updatedTrainers;
-        });
-
         setFormValue({
           firstName: '',
           lastName: '',
@@ -155,9 +142,7 @@ const FormTrainers = () => {
   }, []);
 
   useEffect(() => {
-    if (trainers.length > 0) {
-      formEdit(id);
-    }
+    formEdit(id);
   }, [trainers]);
 
   const formEdit = (id) => {

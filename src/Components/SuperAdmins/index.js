@@ -70,7 +70,7 @@ function SuperAdmins() {
     getSuperAdmins();
   }, []);
 
-  return (
+  return superAdmins ? (
     <section className={styles.container}>
       <Modal
         title={responseModal.title}
@@ -113,6 +113,15 @@ function SuperAdmins() {
             })}
           </tbody>
         </table>
+      </section>
+    </section>
+  ) : (
+    <section className={styles.container}>
+      <section>
+        <Link to="/superAdmins/form">
+          <Button text="Create" type="create" />
+        </Link>
+        <p className={styles.info}>There is no SuperAdmins yet.</p>
       </section>
     </section>
   );

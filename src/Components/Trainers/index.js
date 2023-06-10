@@ -80,7 +80,7 @@ function Trainers() {
     getTrainers();
   }, []);
 
-  return (
+  return trainers.length > 0 ? (
     <section className={styles.container}>
       <Modal
         title={responseModal.title}
@@ -139,6 +139,15 @@ function Trainers() {
         </table>
       </section>
       <section className={styles.sectionForm}></section>
+    </section>
+  ) : (
+    <section className={styles.container}>
+      <section>
+        <Link to="/trainers/formTrainers">
+          <Button text="Create" type="create" />
+        </Link>
+        <p className={styles.info}>There is no Trainers yet.</p>
+      </section>
     </section>
   );
 }

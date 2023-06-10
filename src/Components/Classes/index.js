@@ -108,7 +108,7 @@ function Classes() {
     });
     setIsOpen(true);
   };
-  return (
+  return classes.length > 0 ? (
     <section className={styles.container}>
       <Modal
         title={responseModal.title}
@@ -163,6 +163,15 @@ function Classes() {
             })}
           </tbody>
         </table>
+      </section>
+    </section>
+  ) : (
+    <section className={styles.container}>
+      <section>
+        <Link to="/classes/form">
+          <Button text="Create" type="create" />
+        </Link>
+        <p className={styles.info}>There is no Class yet.</p>
       </section>
     </section>
   );

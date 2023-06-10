@@ -75,9 +75,7 @@ const FormMembers = () => {
   }, []);
 
   useEffect(() => {
-    if (members.length > 0) {
-      formEdit(id);
-    }
+    formEdit(id);
   }, [members]);
 
   const onChange = (e) => {
@@ -108,13 +106,6 @@ const FormMembers = () => {
 
       const updatedMember = await response.json();
       if (response.ok) {
-        const dataIndex = members.findIndex((Member) => Member._id === id);
-
-        setMembers((currentMembers) => {
-          const updatedMembers = [...currentMembers];
-          updatedMembers[dataIndex] = updatedMember.data;
-          return updatedMembers;
-        });
         setModalInfo({
           title: 'Success',
           desc: updatedMember.message
@@ -144,7 +135,6 @@ const FormMembers = () => {
       });
       const dataResponse = await response.json();
       if (response.ok) {
-        setMembers([...members, dataResponse.data]);
         setModalInfo({
           title: 'Success',
           desc: 'Member created successfully'

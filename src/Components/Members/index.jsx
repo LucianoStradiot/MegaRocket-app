@@ -66,7 +66,7 @@ const Members = () => {
     });
   };
 
-  return (
+  return members.length > 0 ? (
     <section className={styles.container}>
       <Modal
         title={modalInfo.title}
@@ -115,6 +115,15 @@ const Members = () => {
           </tbody>
         </table>
       </div>
+    </section>
+  ) : (
+    <section className={styles.container}>
+      <section>
+        <Link to="/members/form">
+          <Button text="Create" type="create" />
+        </Link>
+        <p className={styles.info}>There is no Member yet.</p>
+      </section>
     </section>
   );
 };

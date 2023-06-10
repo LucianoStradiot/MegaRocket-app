@@ -31,6 +31,14 @@
   padding: 8px 0px;
 }
 
+.info {
+  font-size: 24px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #aaa;
+  font-weight: 600;
+  color: #373867;
+}
+
 .columns1 {
   width: 100px;
   border-radius: 8px 0 0 0;

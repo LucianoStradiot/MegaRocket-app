@@ -63,13 +63,10 @@ const FormSubscriptions = () => {
     getSubscriptions();
     getClasses();
     getMembers();
-    console.log(create.classes);
   }, []);
 
   useEffect(() => {
-    if (subscriptions.length > 0) {
-      formEdit(id);
-    }
+    formEdit(id);
   }, [subscriptions]);
 
   const formEdit = (id) => {
@@ -111,9 +108,6 @@ const FormSubscriptions = () => {
       });
       const createdSubscription = await response.json();
       if (response.ok) {
-        setSubscriptions((currentSubscriptions) => {
-          return [...currentSubscriptions, createdSubscription.data];
-        });
         setCreate({
           classes: '',
           member: '',
@@ -148,14 +142,6 @@ const FormSubscriptions = () => {
       });
       const updatedSubscription = await response.json();
       if (response.ok) {
-        const dataIndex = subscriptions.findIndex((sub) => {
-          sub._id === id;
-        });
-        setSubscriptions((currentSub) => {
-          const updateSub = [...currentSub];
-          updateSub[dataIndex] = updateSub.data;
-          return updateSub;
-        });
         setResponseModal({
           title: 'Succes!',
           description: updatedSubscription.message
@@ -173,6 +159,7 @@ const FormSubscriptions = () => {
     }
     setIsOpen(true);
   };
+
   const closeForm = () => {
     if (isSubscriptionCreated) {
       setIsOpen(false);

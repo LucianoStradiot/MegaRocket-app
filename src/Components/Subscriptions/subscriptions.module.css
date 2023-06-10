@@ -27,6 +27,14 @@
   margin-left: 20px;
 }
 
+.info {
+  font-size: 24px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #aaa;
+  font-weight: 600;
+  color: #373867;
+}
+
 .createButton {
   color: #fff;
   background-color: #3a3b7b;

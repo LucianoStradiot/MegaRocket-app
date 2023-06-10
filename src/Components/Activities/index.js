@@ -84,7 +84,7 @@ function Activities() {
     }
   };
 
-  return (
+  return activities.length > 0 ? (
     <div className={styles.container}>
       <Modal
         title={modalInfo.title}
@@ -131,6 +131,15 @@ function Activities() {
         </table>
       </section>
     </div>
+  ) : (
+    <section className={styles.container}>
+      <section>
+        <Link to="/activities/form">
+          <Button text="Create" type="create" />
+        </Link>
+        <p className={styles.info}>There is no Activity yet.</p>
+      </section>
+    </section>
   );
 }
 
