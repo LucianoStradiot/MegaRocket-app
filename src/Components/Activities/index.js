@@ -133,6 +133,14 @@ function Activities() {
     </div>
   ) : (
     <section className={styles.container}>
+      <Modal
+        title={modalInfo.title}
+        desc={modalInfo.desc}
+        isOpen={isOpen}
+        handleClose={switchIsOpen}
+        confirmModal={confirmModal}
+        deleteFunction={() => deleteActiviy(deleteID)}
+      />
       <section>
         <Link to="/activities/form">
           <Button text="Create" type="create" />
