@@ -91,7 +91,6 @@ function Trainers() {
         deleteFunction={() => deleteTrainer(idDelete)}
       />
       <section>
-        <h2 className={styles.h2}>Trainers</h2>
         <Link to="/trainers/formTrainers">
           <Button text="Create" type="create" />
         </Link>

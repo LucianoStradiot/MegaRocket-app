@@ -80,7 +80,6 @@ function SuperAdmins() {
         handleClose={() => setIsOpen(!isOpen)}
         deleteFunction={() => deleteSuperAdmin(idDelete)}
       />
-      <h2 className={styles.h2}>SuperAdmin</h2>
       <section>
         <Link to="/superAdmins/form">
           <Button text="Create" type="create" />

@@ -118,7 +118,6 @@ function Classes() {
         handleClose={() => setIsOpen(!isOpen)}
         deleteFunction={() => deleteClass(idDelete)}
       />
-      <h2>Classes</h2>
       <section>
         <Link to="/classes/form">
           <Button text="Create" type="create" />
