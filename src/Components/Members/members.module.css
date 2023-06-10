@@ -2,18 +2,14 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-}
-.subContainer{
-  width: 60%;
-  align-self: center;
 }
 
 .tableMember {
   margin-top: 10px;
   border-collapse: collapse;
   color: #373867;
-  width: 100%;
 }
 .thead{
   background-color: #eee;

@@ -76,7 +76,6 @@ const Members = () => {
         confirmModal={confirmModal}
         deleteFunction={() => deleteMember(idMember)}
       />
-      <h2>Members</h2>
       <div className={styles.subContainer}>
         <Link className={styles.buttonCreate} to="/members/form">
           <Button text={'Create'} type={'add'} />

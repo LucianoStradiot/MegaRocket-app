@@ -6,10 +6,7 @@
   align-items: center;
 }
 
-
-
 .rows {
-  height: 45px;
   background-color: #fff;
   text-align: center;
   border-bottom: 1px solid #DDD;
@@ -20,15 +17,18 @@
   background-color: #eee;
   color: #3a3b7b;
   text-align: center;
+
 }
 
 .mainTable {
   border-collapse: collapse;
+  margin-top: 10px;
 }
 
 .columns {
   width: 130px;
   color: #3a3b7b;
+  padding: 8px 0px;
 }
 
 .columns1 {

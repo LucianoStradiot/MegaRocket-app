@@ -15,11 +15,11 @@
 .th {
   background-color: #eee;
   padding: 10px 16px;
+  font-size: 16px;
 }
 
 .td {
-  text-align: center;
-  padding: 10px 16px;
+  padding: 10px 26px;
   border-bottom: 1px solid #ddd;
 }
 

@@ -82,7 +82,6 @@ function Admins() {
           handleClose={() => setIsOpen(!isOpen)}
           deleteFunction={() => deleteAdmin(idDelete)}
         />
-        <h2 className={styles.title}>Admins</h2>
         <Link to="/admins/form">
           <Button text="Create" type="create" />
         </Link>
