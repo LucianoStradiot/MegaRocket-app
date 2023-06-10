@@ -10,6 +10,7 @@ import Home from '../Home/index';
 import Header from '../Header/index';
 import Footer from '../Footer/index';
 import styles from './layout.module.css';
+import FormMembers from '../Members/FormMembers';
 
 function Layout() {
   return (
@@ -22,7 +23,9 @@ function Layout() {
             <Route path="/activities" component={Activities} />
             <Route path="/admins" component={Admins} />
             <Route path="/classes" component={Classes} />
-            <Route path="/members" component={Members} />
+            <Route path="/members" exact component={Members} />
+            <Route path="/members/form" exact component={FormMembers} />
+            <Route path="/members/form/:id" component={FormMembers} />
             <Route path="/subscriptions" component={Subscriptions} />
             <Route path="/superAdmins" component={SuperAdmins} />
             <Route path="/trainers" component={Trainers} />
