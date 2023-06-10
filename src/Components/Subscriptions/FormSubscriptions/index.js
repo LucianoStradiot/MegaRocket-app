@@ -74,8 +74,8 @@ const FormSubscriptions = () => {
       const data = subscriptions.find((aux) => aux._id === id);
       if (data) {
         setCreate({
-          classes: data.classes._id,
-          member: data.member._id,
+          classes: data.classes && data.classes._id ? data.classes._id : '',
+          member: data.member && data.member._id ? data.member._id : '',
           date: data.date
         });
         setButton('edit');
