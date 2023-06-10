@@ -18,10 +18,11 @@ const AdminForm = () => {
     password: ''
   });
 
+  const [isAdminCreated, setIsAdminCreated] = useState(false);
+
   const [responseModal, setResponseModal] = useState({
     title: '',
-    description: '',
-    isConfirm: false
+    description: ''
   });
 
   const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +46,6 @@ const AdminForm = () => {
   };
   const createAdmin = async () => {
     try {
-      console.log('formChange', formChange);
       const createdAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
         method: 'POST',
         headers: {
@@ -65,25 +65,25 @@ const AdminForm = () => {
           city: '',
           password: ''
         });
+        setIsAdminCreated(true);
         setResponseModal({
           title: 'Success!',
-          description: createdAdminsData.message,
-          isConfirm: false
+          description: createdAdminsData.message
         });
         setIsOpen(true);
       } else {
+        setIsAdminCreated(false);
         setResponseModal({
           title: 'ERROR!',
-          description: createdAdminsData.message,
-          isConfirm: false
+          description: createdAdminsData.message
         });
         setIsOpen(true);
       }
     } catch (error) {
+      setIsAdminCreated(false);
       setResponseModal({
         title: 'ERROR!',
-        description: error.message,
-        isConfirm: false
+        description: error.message
       });
       setIsOpen(true);
     }
@@ -110,25 +110,25 @@ const AdminForm = () => {
           city: '',
           password: ''
         });
+        setIsAdminCreated(true);
         setResponseModal({
           title: 'Success!',
-          description: updatedAdmin.message,
-          isConfirm: false
+          description: updatedAdmin.message
         });
         setIsOpen(true);
       } else {
+        setIsAdminCreated(false);
         setResponseModal({
           title: 'ERROR!',
-          description: updatedAdmin.message,
-          isConfirm: false
+          description: updatedAdmin.message
         });
         setIsOpen(true);
       }
     } catch (error) {
+      setIsAdminCreated(false);
       setResponseModal({
         title: 'ERROR!',
-        description: error.message,
-        isConfirm: false
+        description: error.message
       });
       setIsOpen(true);
     }
@@ -160,9 +160,22 @@ const AdminForm = () => {
     });
   };
 
-  const handleClose = () => {
+  // const handleClose = () => {
+  //   setIsOpen(!isOpen);
+  //   history.push('/admins');
+  // };
+
+  const switchIsOpen = () => {
     setIsOpen(!isOpen);
-    history.push('/admins');
+  };
+
+  const closeForm = () => {
+    if (isAdminCreated) {
+      setIsOpen(false);
+      history.goBack();
+    } else {
+      switchIsOpen();
+    }
   };
 
   return (
@@ -171,12 +184,11 @@ const AdminForm = () => {
         title={responseModal.title}
         desc={responseModal.description}
         isOpen={isOpen}
-        confirmModal={responseModal.isConfirm}
-        handleClose={() => handleClose()}
+        handleClose={() => closeForm()}
       />
       <form className={styles.form} onSubmit={onSubmit}>
-        <div className={styles.block}>
-          <div className={styles.firstPart}>
+        <div className={styles.subContainer}>
+          <div>
             <TextInput
               labelName="First name"
               inputType="text"
@@ -186,7 +198,7 @@ const AdminForm = () => {
               changeAction={(e) => onChangeInput(e)}
             />
           </div>
-          <div className={styles.firstPart}>
+          <div>
             <TextInput
               labelName="Last name"
               inputType="text"
@@ -196,7 +208,7 @@ const AdminForm = () => {
               changeAction={(e) => onChangeInput(e)}
             />
           </div>
-          <div className={styles.firstPart}>
+          <div>
             <TextInput
               labelName="DNI"
               inputType="text"
@@ -206,7 +218,7 @@ const AdminForm = () => {
               changeAction={(e) => onChangeInput(e)}
             />
           </div>
-          <div className={styles.firstPart}>
+          <div>
             <TextInput
               labelName="Phone"
               inputType="text"
@@ -216,7 +228,7 @@ const AdminForm = () => {
               changeAction={(e) => onChangeInput(e)}
             />
           </div>
-          <div className={styles.firstPart}>
+          <div>
             <TextInput
               labelName="Email"
               inputType="text"
@@ -226,7 +238,7 @@ const AdminForm = () => {
               changeAction={(e) => onChangeInput(e)}
             />
           </div>
-          <div className={styles.firstPart}>
+          <div>
             <TextInput
               labelName="City"
               inputType="text"
@@ -236,7 +248,7 @@ const AdminForm = () => {
               changeAction={(e) => onChangeInput(e)}
             />
           </div>
-          <div className={styles.firstPart}>
+          <div>
             <TextInput
               labelName="Password"
               inputType="password"
@@ -249,7 +261,8 @@ const AdminForm = () => {
         </div>
         <div className={styles.btnContainer}>
           <Button text="Cancel" clickAction={cancel} type="cancel" />
-          <Button text="Confirm" clickAction={onSubmit} type="Create" />
+          {!id && <Button text="Create" clickAction={onSubmit} type="Create" />}
+          {id && <Button text="Save" clickAction={onSubmit} type="Create" />}
         </div>
       </form>
     </section>

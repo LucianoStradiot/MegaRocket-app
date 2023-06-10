@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal';
-import { Link } from 'react-router-dom/cjs/react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);
