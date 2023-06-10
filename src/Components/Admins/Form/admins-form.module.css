@@ -1,0 +1,36 @@
+.sectionForm {
+    margin: 40px 0;
+}
+
+.form {
+    color: #373867;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #DDD;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 0 145px;
+}
+
+.firstPart {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.block {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    padding: 40px;
+    width: 500px;
+    border-radius: 7px;
+    margin-right: 20px;
+}
+
+.btnContainer {
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+}
