@@ -14,6 +14,7 @@ import FormSubscriptions from '../Subscriptions/FormSubscriptions/index';
 import FormActivity from '../Activities/FormActivity';
 import FormTrainers from '../Trainers/FormTrainers';
 import FormSuperAdmin from '../SuperAdmins/Form';
+import AdminForm from '../Admins/Form';
 
 import FormClasses from '../Classes/FormClasses/index';
 
@@ -28,7 +29,9 @@ function Layout() {
             <Route path="/activities" exact component={Activities} />
             <Route path="/activities/form" exact component={FormActivity} />
             <Route path="/activities/form/:id" component={FormActivity} />
-            <Route path="/admins" component={Admins} />
+            <Route path="/admins" exact component={Admins} />
+            <Route path="/admins/form" exact component={AdminForm} />
+            <Route path="/admins/form/:id" component={AdminForm} />{' '}
             <Route path="/classes" exact component={Classes} />
             <Route path="/classes/form" exact component={FormClasses} />
             <Route path="/classes/form/:id" component={FormClasses} />
