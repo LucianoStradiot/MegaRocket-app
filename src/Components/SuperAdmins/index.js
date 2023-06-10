@@ -117,6 +117,14 @@ function SuperAdmins() {
     </section>
   ) : (
     <section className={styles.container}>
+      <Modal
+        title={responseModal.title}
+        desc={responseModal.description}
+        isOpen={isOpen}
+        confirmModal={responseModal.isConfirm}
+        handleClose={() => setIsOpen(!isOpen)}
+        deleteFunction={() => deleteSuperAdmin(idDelete)}
+      />
       <section>
         <Link to="/superAdmins/form">
           <Button text="Create" type="create" />

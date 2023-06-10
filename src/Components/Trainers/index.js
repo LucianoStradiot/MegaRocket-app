@@ -142,6 +142,14 @@ function Trainers() {
     </section>
   ) : (
     <section className={styles.container}>
+      <Modal
+        title={responseModal.title}
+        desc={responseModal.description}
+        isOpen={isOpen}
+        confirmModal={responseModal.isConfirm}
+        handleClose={() => setIsOpen(!isOpen)}
+        deleteFunction={() => deleteTrainer(idDelete)}
+      />
       <section>
         <Link to="/trainers/formTrainers">
           <Button text="Create" type="create" />

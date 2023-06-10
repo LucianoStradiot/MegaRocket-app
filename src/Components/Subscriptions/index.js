@@ -132,6 +132,14 @@ function Subscriptions() {
     </section>
   ) : (
     <section className={style.container}>
+      <Modal
+        title={responseModal.title}
+        desc={responseModal.description}
+        isOpen={isOpen}
+        confirmModal={responseModal.isConfirm}
+        handleClose={() => setIsOpen(!isOpen)}
+        deleteFunction={() => deleteSubscriptions(idDelete)}
+      />
       <section>
         <Link to="/subscriptions/form">
           <Button text="Create" type="create" />
