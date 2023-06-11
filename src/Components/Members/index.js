@@ -35,14 +35,14 @@ const Members = () => {
         throw new Error(dataResponse.message);
       } else {
         setModalInfo({
-          title: 'Success',
+          title: 'Success!',
           desc: dataResponse.message
         });
         setConfirmModal(false);
       }
     } catch (error) {
       setModalInfo({
-        title: 'Error',
+        title: 'Error!',
         desc: error.message
       });
       setConfirmModal(false);
@@ -62,7 +62,7 @@ const Members = () => {
     modalConfirmTrue();
     setModalInfo({
       title: 'Confirm',
-      desc: 'Are you sure?'
+      desc: 'Are you sure you want to delete it?'
     });
   };
 

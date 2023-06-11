@@ -20,7 +20,7 @@ function Classes() {
       setClasses(classes);
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message,
         isConfirm: false
       });
@@ -36,7 +36,7 @@ function Classes() {
       setActivities(activities);
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message,
         isConfirm: false
       });
@@ -52,7 +52,7 @@ function Classes() {
       setTrainers(trainers);
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message,
         isConfirm: false
       });
@@ -85,7 +85,7 @@ function Classes() {
       setIsOpen(true);
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message,
         isConfirm: false
       });
@@ -102,7 +102,7 @@ function Classes() {
   const openModalConfirm = (id) => {
     setIdDelete(id);
     setResponseModal({
-      title: '',
+      title: 'Confirm',
       description: 'Are you sure you want to delete it?',
       isConfirm: true
     });

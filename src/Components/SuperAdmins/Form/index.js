@@ -7,7 +7,6 @@ import { useParams, useHistory } from 'react-router-dom';
 
 const FormSuperAdmin = () => {
   const [superAdmins, setSuperAdmin] = useState([]);
-  //need for the buttons
   const [btnAddIsVisible, setAddVisible] = useState(false);
   const [btnSaveIsVisible, setSaveVisible] = useState(false);
   const [isUserCreated, setIsUserCreated] = useState(false);
@@ -15,7 +14,6 @@ const FormSuperAdmin = () => {
     email: '',
     password: ''
   });
-  //need for the modal
   const [isModalOpen, setModalIsOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({
     title: '',
@@ -32,7 +30,7 @@ const FormSuperAdmin = () => {
       setSuperAdmin(superAdmins);
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message,
         isConfirm: false
       });
@@ -63,7 +61,7 @@ const FormSuperAdmin = () => {
           password: ''
         });
         setResponseModal({
-          title: 'Succes!',
+          title: 'Success!',
           description: createdSuperAdminData.message,
           isConfirm: false
         });
@@ -71,7 +69,7 @@ const FormSuperAdmin = () => {
         setIsUserCreated(true);
       } else {
         setResponseModal({
-          title: 'ERROR!',
+          title: 'Error!',
           description: createdSuperAdminData.message,
           isConfirm: false
         });
@@ -80,7 +78,7 @@ const FormSuperAdmin = () => {
       }
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message,
         isConfirm: false
       });
@@ -107,7 +105,7 @@ const FormSuperAdmin = () => {
           password: ''
         });
         setResponseModal({
-          title: 'Succes!',
+          title: 'Success!',
           description: updSuperAdminData.message,
           isConfirm: false
         });
@@ -115,7 +113,7 @@ const FormSuperAdmin = () => {
         setModalIsOpen(true);
       } else {
         setResponseModal({
-          title: 'ERROR!',
+          title: 'Error!',
           description: updSuperAdminData.message,
           isConfirm: false
         });
@@ -124,7 +122,7 @@ const FormSuperAdmin = () => {
       }
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message,
         isConfirm: false
       });
