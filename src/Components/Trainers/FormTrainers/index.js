@@ -39,7 +39,7 @@ const FormTrainers = () => {
       setTrainers(trainers);
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message,
         isConfirm: false
       });
@@ -70,7 +70,7 @@ const FormTrainers = () => {
           isActive: true
         });
         setResponseModal({
-          title: 'Succes!',
+          title: 'Success!',
           description: createdTrainer.message,
           isConfirm: false
         });
@@ -81,7 +81,7 @@ const FormTrainers = () => {
       }
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message,
         isConfirm: false
       });
@@ -117,7 +117,7 @@ const FormTrainers = () => {
         });
 
         setResponseModal({
-          title: 'Succes!',
+          title: 'Success!',
           description: updatedTrainer.message,
           isConfirm: false
         });
@@ -128,7 +128,7 @@ const FormTrainers = () => {
       }
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message,
         isConfirm: false
       });

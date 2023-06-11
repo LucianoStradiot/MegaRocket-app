@@ -32,7 +32,10 @@ const FormSubscriptions = () => {
       const { data: members } = await response.json();
       setMembers(members);
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'Error!',
+        description: error.message
+      });
     }
   };
 
@@ -44,7 +47,10 @@ const FormSubscriptions = () => {
       const { data: classes } = await response.json();
       setClasses(classes);
     } catch (error) {
-      alert(error);
+      setResponseModal({
+        title: 'Error!',
+        description: error.message
+      });
     }
   };
 
@@ -56,7 +62,10 @@ const FormSubscriptions = () => {
       const { data: subscriptions } = await response.json();
       setSubscriptions(subscriptions);
     } catch (error) {
-      alert(error.message);
+      setResponseModal({
+        title: 'Error!',
+        description: error.message
+      });
     }
   };
   useEffect(() => {
@@ -114,7 +123,7 @@ const FormSubscriptions = () => {
           date: ''
         });
         setResponseModal({
-          title: 'Succes!',
+          title: 'Success!',
           description: createdSubscription.message
         });
         setSubscriptionCreated(true);
@@ -124,7 +133,7 @@ const FormSubscriptions = () => {
       }
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message
       });
     }
@@ -143,7 +152,7 @@ const FormSubscriptions = () => {
       const updatedSubscription = await response.json();
       if (response.ok) {
         setResponseModal({
-          title: 'Succes!',
+          title: 'Success!',
           description: updatedSubscription.message
         });
         setSubscriptionCreated(true);
@@ -153,7 +162,7 @@ const FormSubscriptions = () => {
       }
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message
       });
     }

@@ -42,7 +42,7 @@ const AdminForm = () => {
       });
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message
       });
       setIsOpen(true);
@@ -78,7 +78,7 @@ const AdminForm = () => {
       } else {
         setIsAdminCreated(false);
         setResponseModal({
-          title: 'ERROR!',
+          title: 'Error!',
           description: createdAdminsData.message
         });
         setIsOpen(true);
@@ -86,7 +86,7 @@ const AdminForm = () => {
     } catch (error) {
       setIsAdminCreated(false);
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message
       });
       setIsOpen(true);
@@ -123,7 +123,7 @@ const AdminForm = () => {
       } else {
         setIsAdminCreated(false);
         setResponseModal({
-          title: 'ERROR!',
+          title: 'Error!',
           description: updatedAdmin.message
         });
         setIsOpen(true);
@@ -131,7 +131,7 @@ const AdminForm = () => {
     } catch (error) {
       setIsAdminCreated(false);
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message
       });
       setIsOpen(true);

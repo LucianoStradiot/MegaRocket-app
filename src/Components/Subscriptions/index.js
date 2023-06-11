@@ -22,7 +22,10 @@ function Subscriptions() {
       const { data: subscriptions } = await response.json();
       setSubscriptions(subscriptions);
     } catch (error) {
-      alert(error.message);
+      setResponseModal({
+        title: 'Error!',
+        description: error.message
+      });
     }
   };
   useEffect(() => {
@@ -42,14 +45,14 @@ function Subscriptions() {
       });
       const response = await responseSubscription.json();
       setResponseModal({
-        title: 'Succes!',
+        title: 'Success!',
         description: response.message,
         isConfirm: false
       });
       setIsOpen(true);
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message,
         isConfirm: false
       });
@@ -59,7 +62,7 @@ function Subscriptions() {
 
   const showDate = (date) => {
     if (date == undefined) {
-      return 'empty';
+      return 'Empty';
     } else {
       return date.substring(0, 10);
     }
@@ -68,7 +71,7 @@ function Subscriptions() {
   const openModalConfirm = (id) => {
     setIdDelete(id);
     setResponseModal({
-      title: '',
+      title: 'Confirm',
       description: 'Are you sure you want to delete it?',
       isConfirm: true
     });
@@ -107,7 +110,7 @@ function Subscriptions() {
                   <td className={style.thTable}>
                     {subs.member && subs.member.firstName && subs.member.lastName
                       ? `${subs.member.firstName} ${subs.member.lastName}`
-                      : 'empty'}
+                      : 'Empty'}
                   </td>
                   <td className={style.thTable}>
                     {subs.classes && subs.classes.hour ? subs.classes.hour : 'Empty'}

@@ -107,7 +107,7 @@ const FormMembers = () => {
       const updatedMember = await response.json();
       if (response.ok) {
         setModalInfo({
-          title: 'Success',
+          title: 'Success!',
           desc: updatedMember.message
         });
         setIsMemberCreated(true);
@@ -117,7 +117,7 @@ const FormMembers = () => {
       }
     } catch (error) {
       setModalInfo({
-        title: 'Error',
+        title: 'Error!',
         desc: error.message
       });
     }
@@ -136,8 +136,8 @@ const FormMembers = () => {
       const dataResponse = await response.json();
       if (response.ok) {
         setModalInfo({
-          title: 'Success',
-          desc: 'Member created successfully'
+          title: 'Success!',
+          desc: dataResponse.message
         });
         getMembers();
         setIsMemberCreated(true);
@@ -147,7 +147,7 @@ const FormMembers = () => {
       }
     } catch (error) {
       setModalInfo({
-        title: 'Error',
+        title: 'Error!',
         desc: error.message
       });
     }
