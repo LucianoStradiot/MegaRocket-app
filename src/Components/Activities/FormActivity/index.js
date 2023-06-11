@@ -32,7 +32,7 @@ const FormActivities = () => {
       setActivities(activities);
     } catch (error) {
       setModalInfo({
-        title: 'error',
+        title: 'Error!',
         desc: error.message
       });
     }
@@ -63,14 +63,14 @@ const FormActivities = () => {
           descriptionription: ''
         });
         setModalInfo({
-          title: 'success',
+          title: 'Success!',
           desc: response.message
         });
       }
     } catch (error) {
       setIsActivityCreated(false);
       setModalInfo({
-        title: 'Error',
+        title: 'Error!',
         desc: error.message
       });
     }
@@ -99,14 +99,14 @@ const FormActivities = () => {
           isActive: true
         });
         setModalInfo({
-          title: 'Success',
+          title: 'Success!',
           desc: response.message
         });
         setIsActivityCreated(true);
       }
     } catch (error) {
       setModalInfo({
-        title: 'Error',
+        title: 'Error!',
         desc: error.message
       });
       setIsActivityCreated(false);

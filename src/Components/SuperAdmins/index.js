@@ -21,7 +21,7 @@ function SuperAdmins() {
       setSuperAdmin(superAdmins);
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message,
         isConfirm: false
       });
@@ -41,14 +41,14 @@ function SuperAdmins() {
       });
       const response = await responseSuperAdmin.json();
       setResponseModal({
-        title: 'Succes!',
+        title: 'Success!',
         description: response.message,
         isConfirm: false
       });
       setIsOpen(true);
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message,
         isConfirm: false
       });
@@ -59,7 +59,7 @@ function SuperAdmins() {
   const openModalConfirm = (id) => {
     setIdDelete(id);
     setResponseModal({
-      title: '',
+      title: 'Confirm',
       description: 'Are you sure you want to delete it?',
       isConfirm: true
     });

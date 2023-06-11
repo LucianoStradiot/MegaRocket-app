@@ -20,7 +20,7 @@ function Activities() {
       setActivities(activities);
     } catch (error) {
       setModalInfo({
-        title: 'error',
+        title: 'Error!',
         desc: error.message
       });
     }
@@ -40,14 +40,14 @@ function Activities() {
         throw new Error(response.message);
       } else {
         setModalInfo({
-          title: 'Success',
+          title: 'Success!',
           desc: response.message
         });
         setConfirmModal(false);
       }
     } catch (error) {
       setModalInfo({
-        title: 'Error',
+        title: 'Error!',
         desc: error.message
       });
       setConfirmModal(false);
@@ -72,7 +72,7 @@ function Activities() {
     modalConfirmTrue();
     setModalInfo({
       title: 'Confirm',
-      desc: 'Are you sure?'
+      desc: 'Are you sure you want to delete it?'
     });
   };
 

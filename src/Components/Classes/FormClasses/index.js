@@ -33,7 +33,7 @@ const FormClasses = () => {
       setClasses(classes);
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message
       });
       setIsOpen(true);
@@ -46,7 +46,7 @@ const FormClasses = () => {
       setActivities(activities);
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message
       });
       setIsOpen(true);
@@ -59,7 +59,7 @@ const FormClasses = () => {
       setTrainers(trainers);
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message
       });
       setIsOpen(true);
@@ -100,7 +100,7 @@ const FormClasses = () => {
       }
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message
       });
       setIsOpen(true);
@@ -136,7 +136,7 @@ const FormClasses = () => {
       }
     } catch (error) {
       setResponseModal({
-        title: 'ERROR!',
+        title: 'Error!',
         description: error.message
       });
       setIsOpen(true);
