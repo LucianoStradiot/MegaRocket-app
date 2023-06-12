@@ -13,7 +13,7 @@ import {
   DEL_TRAINERS_ERROR
 } from './constants';
 
-export const getTrainersending = () => ({
+export const getTrainersPending = () => ({
   type: GET_TRAINERS_PENDING
 });
 
@@ -74,10 +74,10 @@ export const deleteTrainersPending = () => {
   };
 };
 
-export const deleteTrainersSuccess = (id) => {
+export const deleteTrainersSuccess = (deleteTrainers) => {
   return {
     type: DEL_TRAINERS_SUCCESS,
-    payload: id
+    payload: deleteTrainers
   };
 };
 

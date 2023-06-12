@@ -1,21 +1,106 @@
-import { GET_TRAINERS_LOADING, SET_TRAINERS_SUCCESS, GET_TRAINERS_ERROR } from './constants';
+import {
+  GET_TRAINERS_PENDING,
+  GET_TRAINERS_SUCCESS,
+  GET_TRAINERS_ERROR,
+  ADD_TRAINERS_PENDING,
+  ADD_TRAINERS_SUCCESS,
+  ADD_TRAINERS_ERROR,
+  PUT_TRAINERS_PENDING,
+  PUT_TRAINERS_SUCCESS,
+  PUT_TRAINERS_ERROR,
+  DEL_TRAINERS_PENDING,
+  DEL_TRAINERS_SUCCESS,
+  DEL_TRAINERS_ERROR
+} from './constants';
 
 const INITIAL_STATE = {
   data: [],
-  isLoading: false,
+  isPending: false,
   error: null
 };
 
-export const activitiesReducer = (state = INITIAL_STATE, action) => {
+export const trainersReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case GET_TRAINERS_LOADING: {
-      return { ...state, isLoading: true, error: null };
-    }
-    case SET_TRAINERS_SUCCESS: {
-      return { ...state, data: action.payload };
-    }
-    case GET_TRAINERS_ERROR: {
-      return { ...state };
-    }
+    case GET_TRAINERS_PENDING:
+      return {
+        ...state,
+        isPending: true,
+        error: null
+      };
+    case GET_TRAINERS_SUCCESS:
+      return {
+        ...state,
+        isPending: false,
+        data: action.payload,
+        error: null
+      };
+    case GET_TRAINERS_ERROR:
+      return {
+        ...state,
+        isPending: false,
+        error: action.payload
+      };
+
+    case ADD_TRAINERS_PENDING:
+      return {
+        ...state,
+        isPending: true,
+        error: null
+      };
+    case ADD_TRAINERS_SUCCESS:
+      return {
+        ...state,
+        isPending: false,
+        data: action.payload,
+        error: null
+      };
+    case ADD_TRAINERS_ERROR:
+      return {
+        ...state,
+        isPending: false,
+        error: action.payload
+      };
+
+    case PUT_TRAINERS_PENDING:
+      return {
+        ...state,
+        isPending: true,
+        error: null
+      };
+    case PUT_TRAINERS_SUCCESS:
+      return {
+        ...state,
+        isPending: false,
+        data: action.payload,
+        error: null
+      };
+    case PUT_TRAINERS_ERROR:
+      return {
+        ...state,
+        isPending: false,
+        error: action.payload
+      };
+
+    case DEL_TRAINERS_PENDING:
+      return {
+        ...state,
+        isPending: true,
+        error: null
+      };
+    case DEL_TRAINERS_SUCCESS:
+      return {
+        ...state,
+        isPending: false,
+        data: action.payload,
+        error: null
+      };
+    case DEL_TRAINERS_ERROR:
+      return {
+        ...state,
+        isPending: false,
+        error: action.payload
+      };
+    default:
+      return state;
   }
 };
