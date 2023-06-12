@@ -78,7 +78,7 @@ const FormSubscriptions = () => {
   //   }
   // };
   useEffect(() => {
-    getSubscriptions(dispatch);
+    dispatch(getSubscriptions());
     getClasses();
     getMembers();
   }, []);
@@ -116,19 +116,18 @@ const FormSubscriptions = () => {
   };
 
   const handleCreationSub = async () => {
-    const response = await createSubscription(dispatch, create);
-    const createdSubscription = await response.json();
-    if (response.ok) {
+    const response = await dispatch(createSubscription(create));
+    if (!response.error) {
       setResponseModal({
         title: 'Success!',
-        description: createdSubscription.message
+        description: response.message
       });
       setSubscriptionCreated(true);
     } else {
       setSubscriptionCreated(false);
       setResponseModal({
         title: 'Error!',
-        description: createdSubscription.message
+        description: response.message
       });
     }
     setIsOpen(true);
@@ -139,20 +138,19 @@ const FormSubscriptions = () => {
       id: id,
       body: create
     };
-    const response = await updateSubscription(dispatch, payload);
-    const updatedSubscription = await response.json();
+    const response = await dispatch(updateSubscription(payload));
 
-    if (response.ok) {
+    if (!response.error) {
       setResponseModal({
         title: 'Success!',
-        description: updatedSubscription.message
+        description: response.message
       });
       setSubscriptionCreated(true);
     } else {
       setSubscriptionCreated(false);
       setResponseModal({
         title: 'Error!',
-        description: updatedSubscription.message
+        description: response.message
       });
     }
     setIsOpen(true);

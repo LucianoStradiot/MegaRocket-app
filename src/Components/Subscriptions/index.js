@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSubscriptions } from '../../Redux/Subscriptions/thunks';
+import { getSubscriptions, deleteSubscription } from '../../Redux/Subscriptions/thunks';
 import style from './subscriptions.module.css';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
@@ -22,81 +22,26 @@ function Subscriptions() {
   const pending = useSelector((state) => state.subscriptions.isPending);
 
   useEffect(() => {
-    // getSubscriptions(dispatch)
-    getSubscriptions(dispatch);
+    dispatch(getSubscriptions());
   }, [dispatch]);
 
-  const deleteSubscriptions = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/subscriptions/${idDelete}`,
-        {
-          method: 'DELETE'
-        }
-      );
-      const data = await response.json();
-      if (response.ok) {
-        setResponseModal({
-          title: 'Success!',
-          description: data.message,
-          isConfirm: false
-        });
-        setIsOpen(true);
-        getSubscriptions(dispatch);
-      } else {
-        throw new Error(data.message);
-      }
-    } catch (error) {
+  const handleDeleteSub = async () => {
+    const response = await dispatch(deleteSubscription(idDelete));
+    if (!response.error) {
       setResponseModal({
-        title: 'Error!',
-        description: error.message,
+        title: 'Success!',
+        description: response.message,
         isConfirm: false
       });
-      setIsOpen(true);
+    } else {
+      setResponseModal({
+        title: 'Error!',
+        description: response.message,
+        isConfirm: false
+      });
     }
+    setIsOpen(true);
   };
-  // const getSubscriptions = async () => {
-  //   try {
-  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
-  //       method: 'GET'
-  //     });
-  //     const { data: subscriptions } = await response.json();
-  //     setSubscriptions(subscriptions);
-  //   } catch (error) {
-  //     setResponseModal({
-  //       title: 'Error!',
-  //       description: error.message
-  //     });
-  //   }
-  // };
-
-  // const deleteSubscriptions = async (id) => {
-  //   try {
-  //     const responseSubscription = await fetch(
-  //       `${process.env.REACT_APP_API_URL}/api/subscriptions/${idDelete}`,
-  //       {
-  //         method: 'DELETE'
-  //       }
-  //     );
-  //     setSubscriptions((currentSubscriptions) => {
-  //       return currentSubscriptions.filter((subs) => subs._id !== id);
-  //     });
-  //     const response = await responseSubscription.json();
-  //     setResponseModal({
-  //       title: 'Success!',
-  //       description: response.message,
-  //       isConfirm: false
-  //     });
-  //     setIsOpen(true);
-  //   } catch (error) {
-  //     setResponseModal({
-  //       title: 'Error!',
-  //       description: error.message,
-  //       isConfirm: false
-  //     });
-  //     setIsOpen(true);
-  //   }
-  // };
 
   const showDate = (date) => {
     if (date == undefined) {
@@ -124,7 +69,7 @@ function Subscriptions() {
         isOpen={isOpen}
         confirmModal={responseModal.isConfirm}
         handleClose={() => setIsOpen(!isOpen)}
-        deleteFunction={() => deleteSubscriptions(idDelete)}
+        deleteFunction={() => handleDeleteSub(idDelete)}
       />
       {pending && <Spinner />}
       {!pending && (
@@ -184,7 +129,7 @@ function Subscriptions() {
         isOpen={isOpen}
         confirmModal={responseModal.isConfirm}
         handleClose={() => setIsOpen(!isOpen)}
-        deleteFunction={() => deleteSubscriptions(idDelete)}
+        deleteFunction={() => handleDeleteSub(idDelete)}
       />
       {pending && <Spinner />}
       {!pending && (
