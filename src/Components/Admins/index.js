@@ -3,66 +3,71 @@ import styles from './admins.module.css';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal';
 import { Link } from 'react-router-dom';
-
+import { getAdmins } from '../../Redux/Admins/thunks';
+import { useDispatch, useSelector } from 'react-redux';
+import Spinner from '../Shared/Spinner';
 function Admins() {
-  const [admins, setAdmins] = useState([]);
-  const [idDelete, setIdDelete] = useState('');
+  // const [admins, setAdmins] = useState([]);
+  // const [idDelete, setIdDelete] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({
     title: '',
     description: '',
     isConfirm: false
   });
+  const dispatch = useDispatch();
+  const admins = useSelector((state) => state.admins.data);
+  const loading = useSelector((state) => state.admins.isLoading);
 
-  const getAdmins = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
+  // const getAdmins = async () => {
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
 
-      const { data: admins } = await response.json();
+  //     const { data: admins } = await response.json();
 
-      setAdmins(admins);
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message,
-        isConfirm: false
-      });
-      setIsOpen(true);
-    }
-  };
+  //     setAdmins(admins);
+  //   } catch (error) {
+  //     setResponseModal({
+  //       title: 'Error!',
+  //       description: error.message,
+  //       isConfirm: false
+  //     });
+  //     setIsOpen(true);
+  //   }
+  // };
 
-  const deleteAdmin = async () => {
-    try {
-      const responseAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${idDelete}`, {
-        method: 'DELETE'
-      });
+  // const deleteAdmin = async () => {
+  //   try {
+  //     const responseAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${idDelete}`, {
+  //       method: 'DELETE'
+  //     });
 
-      setAdmins((currentAdmins) => {
-        return currentAdmins.filter((admin) => admin._id !== idDelete);
-      });
-      const response = await responseAdmin.json();
-      setResponseModal({
-        title: 'Success!',
-        description: response.message,
-        isConfirm: false
-      });
-      setIsOpen(true);
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message,
-        isConfirm: false
-      });
-      setIsOpen(true);
-    }
-  };
+  //     setAdmins((currentAdmins) => {
+  //       return currentAdmins.filter((admin) => admin._id !== idDelete);
+  //     });
+  //     const response = await responseAdmin.json();
+  //     setResponseModal({
+  //       title: 'Success!',
+  //       description: response.message,
+  //       isConfirm: false
+  //     });
+  //     setIsOpen(true);
+  //   } catch (error) {
+  //     setResponseModal({
+  //       title: 'Error!',
+  //       description: error.message,
+  //       isConfirm: false
+  //     });
+  //     setIsOpen(true);
+  //   }
+  // };
 
   useEffect(() => {
-    getAdmins();
+    dispatch(getAdmins());
   }, []);
 
-  const openModalConfirm = (id) => {
-    setIdDelete(id);
+  const openModalConfirm = () => {
+    // setIdDelete(id);
     setResponseModal({
       title: 'Confirm',
       description: 'Are you sure you want to delete it?',
@@ -80,48 +85,53 @@ function Admins() {
           isOpen={isOpen}
           confirmModal={responseModal.isConfirm}
           handleClose={() => setIsOpen(!isOpen)}
-          deleteFunction={() => deleteAdmin(idDelete)}
+          // deleteFunction={() => deleteAdmin(idDelete)}
         />
-        <Link to="/admins/form">
-          <Button text="Create" type="create" />
-        </Link>
-        <table className={styles.mainTable}>
-          <thead>
-            <tr className={styles.rowsHead}>
-              <th className={styles.columns1}>Name</th>
-              <th>Last Name</th>
-              <th>DNI</th>
-              <th>Phone</th>
-              <th>E-mail</th>
-              <th>City</th>
-              <th className={styles.columns2}></th>
-            </tr>
-          </thead>
-          <tbody>
-            {admins?.map((admin) => {
-              return (
-                <tr className={styles.rows} key={admin?._id}>
-                  <td className={styles.columns}>{admin?.firstName}</td>
-                  <td className={styles.columns}>{admin?.lastName}</td>
-                  <td className={styles.columns}>{admin?.dni}</td>
-                  <td className={styles.columns}>{admin?.phone}</td>
-                  <td className={styles.columns}>{admin?.email}</td>
-                  <td className={styles.columns}>{admin?.city}</td>
-                  <td className={styles.columns}>
-                    <Link to={`/admins/form/${admin._id}`}>
-                      <Button text="Edit" type="edit" />
-                    </Link>
-                    <Button
-                      text="X"
-                      type="deleteCancel"
-                      clickAction={() => openModalConfirm(admin._id)}
-                    />
-                  </td>
+        {loading && <Spinner />}
+        {!loading && (
+          <div>
+            <Link to="/admins/form">
+              <Button text="Create" type="create" />
+            </Link>
+            <table className={styles.mainTable}>
+              <thead>
+                <tr className={styles.rowsHead}>
+                  <th className={styles.columns1}>Name</th>
+                  <th>Last Name</th>
+                  <th>DNI</th>
+                  <th>Phone</th>
+                  <th>E-mail</th>
+                  <th>City</th>
+                  <th className={styles.columns2}></th>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {admins?.map((admin) => {
+                  return (
+                    <tr className={styles.rows} key={admin?._id}>
+                      <td className={styles.columns}>{admin?.firstName}</td>
+                      <td className={styles.columns}>{admin?.lastName}</td>
+                      <td className={styles.columns}>{admin?.dni}</td>
+                      <td className={styles.columns}>{admin?.phone}</td>
+                      <td className={styles.columns}>{admin?.email}</td>
+                      <td className={styles.columns}>{admin?.city}</td>
+                      <td className={styles.columns}>
+                        <Link to={`/admins/form/${admin._id}`}>
+                          <Button text="Edit" type="edit" />
+                        </Link>
+                        <Button
+                          text="X"
+                          type="deleteCancel"
+                          clickAction={() => openModalConfirm(admin._id)}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
     </div>
   ) : (
@@ -132,7 +142,7 @@ function Admins() {
         isOpen={isOpen}
         confirmModal={responseModal.isConfirm}
         handleClose={() => setIsOpen(!isOpen)}
-        deleteFunction={() => deleteAdmin(idDelete)}
+        // deleteFunction={() => deleteAdmin(idDelete)}
       />
       <section>
         <Link to="/admins/form">

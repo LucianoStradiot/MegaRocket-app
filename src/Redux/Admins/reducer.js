@@ -19,15 +19,18 @@ export const adminsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         data: action.payload,
-        isLoading: false
+        isLoading: false,
+        error: null
       };
     }
     case GET_ADMINS_ERROR: {
       return {
         ...state,
-        data: action.payload,
+        error: action.payload,
         isLoading: false
       };
     }
+    default:
+      return state;
   }
 };
