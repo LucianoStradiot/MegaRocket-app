@@ -5,11 +5,19 @@ import Select from '../../Shared/Select';
 import style from './formSubscriptions.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Modal from '../../Shared/Modal';
+import {
+  createSubscription,
+  updateSubscription,
+  getSubscriptions
+} from '../../../Redux/Subscriptions/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const FormSubscriptions = () => {
+  const dispatch = useDispatch();
+  const subscriptions = useSelector((state) => state.subscriptions.data);
   const history = useHistory();
   const { id } = useParams();
-  const [subscriptions, setSubscriptions] = useState([]);
+  // const [subscriptions, setSubscriptions] = useState([]);
   const [members, setMembers] = useState([]);
   const [classes, setClasses] = useState([]);
   const [create, setCreate] = useState({
@@ -24,6 +32,7 @@ const FormSubscriptions = () => {
     description: ''
   });
   const [isSubscriptionCreated, setSubscriptionCreated] = useState(false);
+
   const getMembers = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
@@ -54,29 +63,29 @@ const FormSubscriptions = () => {
     }
   };
 
-  const getSubscriptions = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
-        method: 'GET'
-      });
-      const { data: subscriptions } = await response.json();
-      setSubscriptions(subscriptions);
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message
-      });
-    }
-  };
+  // const getSubscriptions = async () => {
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
+  //       method: 'GET'
+  //     });
+  //     const { data: subscriptions } = await response.json();
+  //     setSubscriptions(subscriptions);
+  //   } catch (error) {
+  //     setResponseModal({
+  //       title: 'Error!',
+  //       description: error.message
+  //     });
+  //   }
+  // };
   useEffect(() => {
-    getSubscriptions();
+    getSubscriptions(dispatch);
     getClasses();
     getMembers();
   }, []);
 
   useEffect(() => {
     formEdit(id);
-  }, [subscriptions]);
+  }, [dispatch]);
 
   const formEdit = (id) => {
     if (id) {
@@ -106,64 +115,44 @@ const FormSubscriptions = () => {
     });
   };
 
-  const createSubscription = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(create)
+  const handleCreationSub = async () => {
+    const response = await createSubscription(dispatch, create);
+    const createdSubscription = await response.json();
+    if (response.ok) {
+      setResponseModal({
+        title: 'Success!',
+        description: createdSubscription.message
       });
-      const createdSubscription = await response.json();
-      if (response.ok) {
-        setCreate({
-          classes: '',
-          member: '',
-          date: ''
-        });
-        setResponseModal({
-          title: 'Success!',
-          description: createdSubscription.message
-        });
-        setSubscriptionCreated(true);
-      } else {
-        setSubscriptionCreated(false);
-        throw new Error(createdSubscription.message);
-      }
-    } catch (error) {
+      setSubscriptionCreated(true);
+    } else {
+      setSubscriptionCreated(false);
       setResponseModal({
         title: 'Error!',
-        description: error.message
+        description: createdSubscription.message
       });
     }
     setIsOpen(true);
   };
 
-  const updateSubscription = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(create)
+  const handleUpdateSub = async () => {
+    const payload = {
+      id: id,
+      body: create
+    };
+    const response = await updateSubscription(dispatch, payload);
+    const updatedSubscription = await response.json();
+
+    if (response.ok) {
+      setResponseModal({
+        title: 'Success!',
+        description: updatedSubscription.message
       });
-      const updatedSubscription = await response.json();
-      if (response.ok) {
-        setResponseModal({
-          title: 'Success!',
-          description: updatedSubscription.message
-        });
-        setSubscriptionCreated(true);
-      } else {
-        setSubscriptionCreated(false);
-        throw new Error(updatedSubscription.message);
-      }
-    } catch (error) {
+      setSubscriptionCreated(true);
+    } else {
+      setSubscriptionCreated(false);
       setResponseModal({
         title: 'Error!',
-        description: error.message
+        description: updatedSubscription.message
       });
     }
     setIsOpen(true);
@@ -235,7 +224,7 @@ const FormSubscriptions = () => {
         <Button
           text={button === 'Create' ? 'add' : 'Save'}
           type={button === 'Create' ? 'add' : 'save'}
-          clickAction={button === 'Create' ? createSubscription : updateSubscription}
+          clickAction={button === 'Create' ? handleCreationSub : handleUpdateSub}
         />
       </div>
     </form>

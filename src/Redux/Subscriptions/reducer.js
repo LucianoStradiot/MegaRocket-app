@@ -1,6 +1,6 @@
 import {
   GET_SUBSCRIPTIONS_PENDING,
-  GET_SUBSCRIPTIONS_SUCCESS,
+  SET_SUBSCRIPTIONS_SUCCESS,
   GET_SUBSCRIPTIONS_ERROR
 } from './constants';
 
@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   error: null
 };
 
-const subscriptionsReducer = (state = INITIAL_STATE, action) => {
+export const subscriptionsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_SUBSCRIPTIONS_PENDING:
       return {
@@ -18,7 +18,7 @@ const subscriptionsReducer = (state = INITIAL_STATE, action) => {
         isPending: true,
         error: null
       };
-    case GET_SUBSCRIPTIONS_SUCCESS:
+    case SET_SUBSCRIPTIONS_SUCCESS:
       return {
         ...state,
         isPending: false,
@@ -35,5 +35,3 @@ const subscriptionsReducer = (state = INITIAL_STATE, action) => {
       return state;
   }
 };
-
-export default subscriptionsReducer;

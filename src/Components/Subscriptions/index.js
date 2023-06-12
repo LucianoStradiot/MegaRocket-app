@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getSubscriptions } from '../../Redux/Subscriptions/thunks';
 import style from './subscriptions.module.css';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
+import Spinner from '../Shared/Spinner';
 import { Link } from 'react-router-dom';
 
 function Subscriptions() {
-  const [subscriptions, setSubscriptions] = useState([]);
+  //const [subscriptions, setSubscriptions] = useState([]);
   const [idDelete, setIdDelete] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({
@@ -15,42 +17,35 @@ function Subscriptions() {
     isConfirm: false
   });
 
-  const getSubscriptions = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
-        method: 'GET'
-      });
-      const { data: subscriptions } = await response.json();
-      setSubscriptions(subscriptions);
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message
-      });
-    }
-  };
-  useEffect(() => {
-    getSubscriptions();
-  }, []);
+  const dispatch = useDispatch();
+  const subscriptions = useSelector((state) => state.subscriptions.data);
+  const pending = useSelector((state) => state.subscriptions.isPending);
 
-  const deleteSubscriptions = async (id) => {
+  useEffect(() => {
+    // getSubscriptions(dispatch)
+    getSubscriptions(dispatch);
+  }, [dispatch]);
+
+  const deleteSubscriptions = async () => {
     try {
-      const responseSubscription = await fetch(
+      const response = await fetch(
         `${process.env.REACT_APP_API_URL}/api/subscriptions/${idDelete}`,
         {
           method: 'DELETE'
         }
       );
-      setSubscriptions((currentSubscriptions) => {
-        return currentSubscriptions.filter((subs) => subs._id !== id);
-      });
-      const response = await responseSubscription.json();
-      setResponseModal({
-        title: 'Success!',
-        description: response.message,
-        isConfirm: false
-      });
-      setIsOpen(true);
+      const data = await response.json();
+      if (response.ok) {
+        setResponseModal({
+          title: 'Success!',
+          description: data.message,
+          isConfirm: false
+        });
+        setIsOpen(true);
+        getSubscriptions(dispatch);
+      } else {
+        throw new Error(data.message);
+      }
     } catch (error) {
       setResponseModal({
         title: 'Error!',
@@ -60,6 +55,48 @@ function Subscriptions() {
       setIsOpen(true);
     }
   };
+  // const getSubscriptions = async () => {
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
+  //       method: 'GET'
+  //     });
+  //     const { data: subscriptions } = await response.json();
+  //     setSubscriptions(subscriptions);
+  //   } catch (error) {
+  //     setResponseModal({
+  //       title: 'Error!',
+  //       description: error.message
+  //     });
+  //   }
+  // };
+
+  // const deleteSubscriptions = async (id) => {
+  //   try {
+  //     const responseSubscription = await fetch(
+  //       `${process.env.REACT_APP_API_URL}/api/subscriptions/${idDelete}`,
+  //       {
+  //         method: 'DELETE'
+  //       }
+  //     );
+  //     setSubscriptions((currentSubscriptions) => {
+  //       return currentSubscriptions.filter((subs) => subs._id !== id);
+  //     });
+  //     const response = await responseSubscription.json();
+  //     setResponseModal({
+  //       title: 'Success!',
+  //       description: response.message,
+  //       isConfirm: false
+  //     });
+  //     setIsOpen(true);
+  //   } catch (error) {
+  //     setResponseModal({
+  //       title: 'Error!',
+  //       description: error.message,
+  //       isConfirm: false
+  //     });
+  //     setIsOpen(true);
+  //   }
+  // };
 
   const showDate = (date) => {
     if (date == undefined) {
@@ -89,52 +126,55 @@ function Subscriptions() {
         handleClose={() => setIsOpen(!isOpen)}
         deleteFunction={() => deleteSubscriptions(idDelete)}
       />
-      <div>
-        <Link to="/subscriptions/form">
-          <Button type="add" text="Create" className={style.btnCreate} />
-        </Link>
-        <table className={style.contTable}>
-          <thead className={style.theadTable}>
-            <tr>
-              <th className={style.thTable}>Subscription Date</th>
-              <th className={style.thTable}>Name</th>
-              <th className={style.thTable}>Class Hour</th>
-              <th className={style.thTable}>Activity </th>
-              <th className={style.thTable}></th>
-            </tr>
-          </thead>
-          <tbody>
-            {subscriptions.map((subs) => {
-              return (
-                <tr key={subs._id}>
-                  <td className={style.thTable}>{showDate(subs.date)}</td>
-                  <td className={style.thTable}>
-                    {subs.member && subs.member.firstName && subs.member.lastName
-                      ? `${subs.member.firstName} ${subs.member.lastName}`
-                      : 'Empty'}
-                  </td>
-                  <td className={style.thTable}>
-                    {subs.classes && subs.classes.hour ? subs.classes.hour : 'Empty'}
-                  </td>
-                  <td className={style.thTable}>
-                    {subs.classes && subs.classes.activity ? subs.classes.activity.name : 'Empty'}
-                  </td>
-                  <td className={style.thTable}>
-                    <Link to={`/subscriptions/form/${subs._id}`}>
-                      <Button type="edit" text="Edit" />
-                    </Link>
-                    <Button
-                      text="X"
-                      type="deleteCancel"
-                      clickAction={() => openModalConfirm(subs._id)}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      {pending && <Spinner />}
+      {!pending && (
+        <div>
+          <Link to="/subscriptions/form">
+            <Button type="add" text="Create" className={style.btnCreate} />
+          </Link>
+          <table className={style.contTable}>
+            <thead className={style.theadTable}>
+              <tr>
+                <th className={style.thTable}>Subscription Date</th>
+                <th className={style.thTable}>Name</th>
+                <th className={style.thTable}>Class Hour</th>
+                <th className={style.thTable}>Activity </th>
+                <th className={style.thTable}></th>
+              </tr>
+            </thead>
+            <tbody>
+              {subscriptions.map((subs) => {
+                return (
+                  <tr key={subs._id}>
+                    <td className={style.thTable}>{showDate(subs.date)}</td>
+                    <td className={style.thTable}>
+                      {subs.member && subs.member.firstName && subs.member.lastName
+                        ? `${subs.member.firstName} ${subs.member.lastName}`
+                        : 'Empty'}
+                    </td>
+                    <td className={style.thTable}>
+                      {subs.classes && subs.classes.hour ? subs.classes.hour : 'Empty'}
+                    </td>
+                    <td className={style.thTable}>
+                      {subs.classes && subs.classes.activity ? subs.classes.activity.name : 'Empty'}
+                    </td>
+                    <td className={style.thTable}>
+                      <Link to={`/subscriptions/form/${subs._id}`}>
+                        <Button type="edit" text="Edit" />
+                      </Link>
+                      <Button
+                        text="X"
+                        type="deleteCancel"
+                        clickAction={() => openModalConfirm(subs._id)}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
     </section>
   ) : (
     <section className={style.container}>
@@ -146,12 +186,15 @@ function Subscriptions() {
         handleClose={() => setIsOpen(!isOpen)}
         deleteFunction={() => deleteSubscriptions(idDelete)}
       />
-      <section>
-        <Link to="/subscriptions/form">
-          <Button text="Create" type="create" />
-        </Link>
-        <p className={style.info}>There is no Subscription yet.</p>
-      </section>
+      {pending && <Spinner />}
+      {!pending && (
+        <section>
+          <Link to="/subscriptions/form">
+            <Button text="Create" type="create" />
+          </Link>
+          <p className={style.info}>There is no Subscription yet.</p>
+        </section>
+      )}
     </section>
   );
 }
