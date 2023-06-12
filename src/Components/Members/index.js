@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getMembers } from '../../Redux/Members/thunks';
+
+//import Loader from '../Shared/Loader/Index';
 import styles from './members.module.css';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal';
-import { Link } from 'react-router-dom';
 
 const Members = () => {
-  const [members, setMembers] = useState([]);
+  // const [members, setMembers] = useState([]);
+  const { listMembers } = useSelector((state) => state.members);
   const [idMember, setIdMember] = useState();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -14,22 +19,28 @@ const Members = () => {
     desc: ''
   });
   const [confirmModal, setConfirmModal] = useState(false);
-  const getMembers = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
-    const data = await response.json();
-    setMembers(data.data);
-  };
 
+  const dispatch = useDispatch();
+
+  // const getMembers = async () => {
+  //   const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
+  //   const data = await response.json();
+  //   setMembers(data.data);
+  // };
+
+  // useEffect(() => {
+  //   getMembers();
+  // }, []);
   useEffect(() => {
-    getMembers();
-  }, []);
+    dispatch(getMembers());
+  }, [dispatch]);
 
   const deleteMember = async (memberId) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${memberId}`, {
         method: 'DELETE'
       });
-      setMembers([...members.filter((member) => member._id !== memberId)]);
+      // setMembers([...members.filter((member) => member._id !== memberId)]);
       const dataResponse = await response.json();
       if (!response.ok) {
         throw new Error(dataResponse.message);
@@ -66,7 +77,7 @@ const Members = () => {
     });
   };
 
-  return members.length > 0 ? (
+  return listMembers ? (
     <section className={styles.container}>
       <Modal
         title={modalInfo.title}
@@ -90,8 +101,8 @@ const Members = () => {
             </tr>
           </thead>
           <tbody>
-            {members?.length > 0 &&
-              members?.map((member) => {
+            {listMembers?.length > 0 &&
+              listMembers?.map((member) => {
                 return (
                   <tr key={member._id}>
                     <td className={styles.tdMember}>{member.firstName}</td>
