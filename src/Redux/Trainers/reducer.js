@@ -51,7 +51,7 @@ export const trainersReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        data: action.payload,
+        data: [...state.data, action.payload],
         error: null
       };
     case ADD_TRAINERS_ERROR:
@@ -71,7 +71,7 @@ export const trainersReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        data: action.payload,
+        data: [],
         error: null
       };
     case PUT_TRAINERS_ERROR:
