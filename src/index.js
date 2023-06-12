@@ -1,19 +1,16 @@
 import Layout from './Components/Layout';
 import './index.css';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import rootReducer from './Redux/rootReducer';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-
-const store = createStore(rootReducer);
+import store from './Redux/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
-    <React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store}>
       <Layout />
-    </React.StrictMode>
-  </Provider>
+    </Provider>
+  </React.StrictMode>
 );
