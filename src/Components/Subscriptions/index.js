@@ -23,7 +23,7 @@ function Subscriptions() {
 
   useEffect(() => {
     dispatch(getSubscriptions());
-  }, [dispatch]);
+  }, []);
 
   const handleDeleteSub = async () => {
     const response = await dispatch(deleteSubscription(idDelete));
@@ -33,6 +33,7 @@ function Subscriptions() {
         description: response.message,
         isConfirm: false
       });
+      dispatch(getSubscriptions());
     } else {
       setResponseModal({
         title: 'Error!',

@@ -94,7 +94,7 @@ export const deleteSubscription = (id) => {
       });
       const data = await response.json();
       if (response.ok) {
-        dispatch(deleteSubscriptionsSuccess(id));
+        dispatch(deleteSubscriptionsSuccess(data.data));
         return data;
       } else {
         throw new Error(data.message);

@@ -17,7 +17,6 @@ const FormSubscriptions = () => {
   const subscriptions = useSelector((state) => state.subscriptions.data);
   const history = useHistory();
   const { id } = useParams();
-  // const [subscriptions, setSubscriptions] = useState([]);
   const [members, setMembers] = useState([]);
   const [classes, setClasses] = useState([]);
   const [create, setCreate] = useState({
@@ -63,20 +62,6 @@ const FormSubscriptions = () => {
     }
   };
 
-  // const getSubscriptions = async () => {
-  //   try {
-  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
-  //       method: 'GET'
-  //     });
-  //     const { data: subscriptions } = await response.json();
-  //     setSubscriptions(subscriptions);
-  //   } catch (error) {
-  //     setResponseModal({
-  //       title: 'Error!',
-  //       description: error.message
-  //     });
-  //   }
-  // };
   useEffect(() => {
     dispatch(getSubscriptions());
     getClasses();
@@ -85,7 +70,7 @@ const FormSubscriptions = () => {
 
   useEffect(() => {
     formEdit(id);
-  }, [dispatch]);
+  }, []);
 
   const formEdit = (id) => {
     if (id) {

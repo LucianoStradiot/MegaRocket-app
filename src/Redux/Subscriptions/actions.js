@@ -74,10 +74,10 @@ export const deleteSubscriptionsPending = () => {
   };
 };
 
-export const deleteSubscriptionsSuccess = (id) => {
+export const deleteSubscriptionsSuccess = (deleteSubscription) => {
   return {
     type: DEL_SUBSCRIPTIONS_SUCCESS,
-    payload: id
+    payload: deleteSubscription
   };
 };
 
