@@ -3,12 +3,11 @@ import styles from './activities.module.css';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import { Link } from 'react-router-dom';
-import { getActivities } from '../../Redux/Activities/thunks';
+import { getActivities, delActivities } from '../../Redux/Activities/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../Shared/Spinner';
 
 function Activities() {
-  /* const [activities, setActivities] = useState([]); */
   const [isOpen, setIsOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState({
     title: '',
@@ -20,28 +19,11 @@ function Activities() {
   const activities = useSelector((state) => state.activities.data);
   const loading = useSelector((state) => state.activities.isLoading);
 
-  /* const getActivities = async () => {
+  const handleDelActivity = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
-      const { data: activities } = await response.json();
-      setActivities(activities);
-    } catch (error) {
-      setModalInfo({
-        title: 'Error!',
-        desc: error.message
-      });
-    }
-  }; */
+      const response = await dispatch(delActivities(deleteID));
 
-  const deleteActiviy = async (id) => {
-    try {
-      const resp = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
-        method: 'DELETE'
-      });
-
-      getActivities();
-      const response = await resp.json();
-      if (!resp.ok) {
+      if (response.error) {
         throw new Error(response.message);
       } else {
         setModalInfo({
@@ -50,6 +32,7 @@ function Activities() {
         });
         setConfirmModal(false);
       }
+      dispatch(getActivities());
     } catch (error) {
       setModalInfo({
         title: 'Error!',
@@ -61,7 +44,7 @@ function Activities() {
 
   useEffect(() => {
     dispatch(getActivities());
-  }, [dispatch]);
+  }, []);
 
   const switchIsOpen = () => {
     setIsOpen(!isOpen);
@@ -89,7 +72,7 @@ function Activities() {
     }
   };
 
-  return activities ? (
+  return activities.length > 0 ? (
     <div className={styles.container}>
       <Modal
         title={modalInfo.title}
@@ -97,7 +80,7 @@ function Activities() {
         isOpen={isOpen}
         handleClose={switchIsOpen}
         confirmModal={confirmModal}
-        deleteFunction={() => deleteActiviy(deleteID)}
+        deleteFunction={() => handleDelActivity()}
       />
       {loading && <Spinner />}
       {!loading && (
@@ -147,7 +130,7 @@ function Activities() {
         isOpen={isOpen}
         handleClose={switchIsOpen}
         confirmModal={confirmModal}
-        deleteFunction={() => deleteActiviy(deleteID)}
+        deleteFunction={() => handleDelActivity()}
       />
       <section>
         <Link to="/activities/form">

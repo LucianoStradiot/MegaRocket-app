@@ -7,17 +7,23 @@ import Select from '../../Shared/Select';
 import Modal from '../../Shared/Modal';
 import styles from './FormActivities.module.css';
 import { useHistory, useParams } from 'react-router-dom';
+import {
+  getActivities,
+  createActivities,
+  updateActivities
+} from '../../../Redux/Activities/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const FormActivities = () => {
   const history = useHistory();
   const { id } = useParams();
-
+  const activities = useSelector((state) => state.activities.data);
+  const dispatch = useDispatch();
   const [activityFormValue, setActivityFormValue] = useState({
     name: '',
     description: '',
     isActive: true
   });
-  const [activities, setActivities] = useState([]);
   const [modalInfo, setModalInfo] = useState({
     title: '',
     desc: ''
@@ -25,7 +31,7 @@ const FormActivities = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [buttonAddIsVisible, setAddVisible] = useState(false);
   const [buttonSaveIsVisible, setSaveVisible] = useState(false);
-  const getActivities = async () => {
+  /* const getActivities = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
       const { data: activities } = await response.json();
@@ -36,7 +42,7 @@ const FormActivities = () => {
         desc: error.message
       });
     }
-  };
+  }; */
   const [isActivityCreated, setIsActivityCreated] = useState(false);
   const [activeVisible, setActiveVisible] = useState(false);
 
@@ -44,24 +50,13 @@ const FormActivities = () => {
     e.preventDefault();
   };
 
-  const createActivity = async () => {
+  const handleCreateActivity = async () => {
     try {
-      const createdActivity = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(activityFormValue)
-      });
-      const response = await createdActivity.json();
-      if (!createdActivity.ok) {
+      const response = await dispatch(createActivities(activityFormValue));
+      if (response.error) {
         throw new Error(response.message);
       } else {
         setIsActivityCreated(true);
-        setActivityFormValue({
-          name: '',
-          descriptionription: ''
-        });
         setModalInfo({
           title: 'Success!',
           desc: response.message
@@ -77,27 +72,17 @@ const FormActivities = () => {
     switchIsOpen();
   };
 
-  const updateActivity = async () => {
+  const handleUpdateActivity = async () => {
     try {
-      const updatedActivityResponse = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/activities/${id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(activityFormValue)
-        }
-      );
-      const response = await updatedActivityResponse.json();
-      if (!updatedActivityResponse.ok) {
+      const payload = {
+        id: id,
+        body: activityFormValue
+      };
+      const response = await dispatch(updateActivities(payload));
+
+      if (response.error) {
         throw new Error(response.message);
       } else {
-        setActivityFormValue({
-          name: '',
-          description: '',
-          isActive: true
-        });
         setModalInfo({
           title: 'Success!',
           desc: response.message
@@ -162,8 +147,8 @@ const FormActivities = () => {
   };
 
   useEffect(() => {
-    getActivities();
-  }, []);
+    dispatch(getActivities());
+  }, [dispatch]);
 
   useEffect(() => {
     formEdit();
@@ -208,10 +193,10 @@ const FormActivities = () => {
           )}
           <div className={styles.btnContainer}>
             <Button text="Cancel" clickAction={() => history.goBack()} />
-            {buttonAddIsVisible && <Button text="Add" clickAction={createActivity} />}
+            {buttonAddIsVisible && <Button text="Add" clickAction={handleCreateActivity} />}
             {buttonSaveIsVisible && (
               <div>
-                <Button clickAction={updateActivity} text="Save" />
+                <Button clickAction={handleUpdateActivity} text="Save" />
               </div>
             )}
           </div>
