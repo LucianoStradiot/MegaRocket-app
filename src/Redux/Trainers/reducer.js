@@ -71,7 +71,7 @@ export const trainersReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        data: [],
+        data: [...state.data, action.payload],
         error: null
       };
     case PUT_TRAINERS_ERROR:
@@ -87,13 +87,16 @@ export const trainersReducer = (state = INITIAL_STATE, action) => {
         isPending: true,
         error: null
       };
-    case DEL_TRAINERS_SUCCESS:
+    case DEL_TRAINERS_SUCCESS: {
+      const idDeletedTrainer = [action.payload.id];
+      const currentTrainers = state.data.filter((trainers) => trainers.id !== idDeletedTrainer);
       return {
         ...state,
-        isPending: false,
-        data: action.payload,
+        usuarios: currentTrainers,
+        isLoading: false,
         error: null
       };
+    }
     case DEL_TRAINERS_ERROR:
       return {
         ...state,

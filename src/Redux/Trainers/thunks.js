@@ -46,12 +46,11 @@ export const createTrainer = (payload) => {
       const data = await response.json();
       if (response.ok) {
         dispatch(postTrainersSuccess(data.data));
-        return data;
       } else {
-        throw new Error(data.message);
+        dispatch(postTrainersError(data.message));
       }
+      return data;
     } catch (error) {
-      dispatch(postTrainersError(error));
       return error;
     }
   };
@@ -71,12 +70,11 @@ export const updateTrainer = (payload) => {
       const data = await response.json();
       if (response.ok) {
         dispatch(putTrainersSuccess(data.data, payload.id));
-        return data;
       } else {
-        throw new Error(data.message);
+        dispatch(putTrainersError(data.message));
       }
+      return data;
     } catch (error) {
-      dispatch(putTrainersError(error));
       return error;
     }
   };

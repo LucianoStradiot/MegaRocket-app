@@ -38,24 +38,8 @@ const FormTrainers = () => {
     dispatch(getTrainers());
   }, [dispatch]);
 
-  // const getTrainers = async () => {
-  //   try {
-  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
-  //     const { data: trainers } = await response.json();
-  //     setTrainers(trainers);
-  //   } catch (error) {
-  //     setResponseModal({
-  //       title: 'Error!',
-  //       description: error.message,
-  //       isConfirm: false
-  //     });
-  //     setIsOpen(true);
-  //   }
-  // };
-
   const handleCreationTrainer = async () => {
     const response = await dispatch(createTrainer(formValue));
-    console.log(response);
     if (!response.error) {
       setResponseModal({
         title: 'Success!',
@@ -71,49 +55,6 @@ const FormTrainers = () => {
     }
     setIsOpen(true);
   };
-
-  // const createTrainer = async () => {
-  //   try {
-  //     const createdTrainerResponse = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(formValue)
-  //     });
-  //     const createdTrainer = await createdTrainerResponse.json();
-  //     if (createdTrainerResponse.ok) {
-  //       setFormValue({
-  //         firstName: '',
-  //         lastName: '',
-  //         dni: '',
-  //         phone: '',
-  //         email: '',
-  //         city: '',
-  //         password: '',
-  //         salary: '',
-  //         isActive: true
-  //       });
-  //       setResponseModal({
-  //         title: 'Success!',
-  //         description: createdTrainer.message,
-  //         isConfirm: false
-  //       });
-  //       setIsOpen(true);
-  //       setIsTrainerCreated(true);
-  //     } else {
-  //       throw new Error(createdTrainer.message);
-  //     }
-  //   } catch (error) {
-  //     setResponseModal({
-  //       title: 'Error!',
-  //       description: error.message,
-  //       isConfirm: false
-  //     });
-  //     setIsOpen(true);
-  //     setIsTrainerCreated(false);
-  //   }
-  // };
 
   const handleUpdateTrainer = async () => {
     const payload = {
@@ -137,53 +78,6 @@ const FormTrainers = () => {
     }
     setIsOpen(true);
   };
-
-  // const updateTrainer = async () => {
-  //   try {
-  //     const updatedTrainerResponse = await fetch(
-  //       `${process.env.REACT_APP_API_URL}/api/trainers/${id}`,
-  //       {
-  //         method: 'PUT',
-  //         headers: {
-  //           'Content-Type': 'application/json'
-  //         },
-  //         body: JSON.stringify(formValue)
-  //       }
-  //     );
-  //     const updatedTrainer = await updatedTrainerResponse.json();
-  //     if (updatedTrainerResponse.ok) {
-  //       setFormValue({
-  //         firstName: '',
-  //         lastName: '',
-  //         dni: '',
-  //         phone: '',
-  //         email: '',
-  //         city: '',
-  //         password: '',
-  //         salary: '',
-  //         isActive: ''
-  //       });
-
-  //       setResponseModal({
-  //         title: 'Success!',
-  //         description: updatedTrainer.message,
-  //         isConfirm: false
-  //       });
-  //       setIsOpen(true);
-  //       setIsTrainerCreated(true);
-  //     } else {
-  //       throw new Error(updatedTrainer.message);
-  //     }
-  //   } catch (error) {
-  //     setResponseModal({
-  //       title: 'Error!',
-  //       description: error.message,
-  //       isConfirm: false
-  //     });
-  //     setIsOpen(true);
-  //     setIsTrainerCreated(false);
-  //   }
-  // };
 
   useEffect(() => {
     getTrainers();
@@ -231,14 +125,6 @@ const FormTrainers = () => {
       setSaveVisible(false);
     }
   };
-
-  // const create = () => {
-  //   createTrainer();
-  // };
-
-  // const save = () => {
-  //   updateTrainer();
-  // };
 
   const onChangeInput = (e) => {
     setFormValue({

@@ -20,7 +20,6 @@ function Trainers() {
   const loading = useSelector((state) => state.trainers.isLoading);
 
   useEffect(() => {
-    //agregar if chequeando si hay o no trainers
     dispatch(getTrainers());
   }, []);
 
