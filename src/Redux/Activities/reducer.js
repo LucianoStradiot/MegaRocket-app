@@ -37,7 +37,7 @@ export const activitiesReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        data: state.data.filter((activity) => activity._id !== action.payload.id),
+        data: state.data.filter((activity) => activity._id !== action.payload._id),
         error: null
       };
     }

@@ -6,6 +6,7 @@ import TextArea from '../../Shared/TextArea';
 import Select from '../../Shared/Select';
 import Modal from '../../Shared/Modal';
 import styles from './FormActivities.module.css';
+import Spinner from '../../Shared/Spinner';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   getActivities,
@@ -31,20 +32,9 @@ const FormActivities = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [buttonAddIsVisible, setAddVisible] = useState(false);
   const [buttonSaveIsVisible, setSaveVisible] = useState(false);
-  /* const getActivities = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
-      const { data: activities } = await response.json();
-      setActivities(activities);
-    } catch (error) {
-      setModalInfo({
-        title: 'Error!',
-        desc: error.message
-      });
-    }
-  }; */
   const [isActivityCreated, setIsActivityCreated] = useState(false);
   const [activeVisible, setActiveVisible] = useState(false);
+  const loading = useSelector((state) => state.activities.isLoading);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -162,6 +152,7 @@ const FormActivities = () => {
         isOpen={isOpen}
         handleClose={closeForm}
       />
+      {loading && <Spinner />}
       <form className={styles.form} onSubmit={onSubmit} id="form">
         <div className={styles.subContainer}>
           <div className={styles.inputContainer}>
