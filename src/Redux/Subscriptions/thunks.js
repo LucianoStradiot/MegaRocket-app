@@ -46,12 +46,11 @@ export const createSubscription = (payload) => {
       const data = await response.json();
       if (response.ok) {
         dispatch(postSubscriptionsSuccess(data.data));
-        return data;
       } else {
-        throw new Error(data.message);
+        dispatch(postSubscriptionsError(data.message));
       }
+      return data;
     } catch (error) {
-      dispatch(postSubscriptionsError(error));
       return error;
     }
   };
@@ -74,12 +73,11 @@ export const updateSubscription = (payload) => {
       const data = await response.json();
       if (response.ok) {
         dispatch(putSubscriptionsSuccess(data.data, payload.id));
-        return data;
       } else {
-        throw new Error(data.message);
+        dispatch(putSubscriptionsError(data.message));
       }
+      return data;
     } catch (error) {
-      dispatch(putSubscriptionsError(error));
       return error;
     }
   };
@@ -95,12 +93,11 @@ export const deleteSubscription = (id) => {
       const data = await response.json();
       if (response.ok) {
         dispatch(deleteSubscriptionsSuccess(data.data));
-        return data;
       } else {
-        throw new Error(data.message);
+        dispatch(deleteSubscriptionsError(data.data));
       }
+      return data;
     } catch (error) {
-      dispatch(deleteSubscriptionsError(error));
       return error;
     }
   };

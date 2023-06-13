@@ -51,7 +51,7 @@ export const subscriptionsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        data: action.payload,
+        data: [...state.data, action.payload],
         error: null
       };
     case ADD_SUBSCRIPTIONS_ERROR:
@@ -71,7 +71,7 @@ export const subscriptionsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        data: action.payload,
+        data: state.data.map((sub) => (sub._id === action.id ? action.payload : sub)),
         error: null
       };
     case PUT_SUBSCRIPTIONS_ERROR:
@@ -91,7 +91,7 @@ export const subscriptionsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        data: action.payload,
+        data: state.data.filter((sub) => sub._id !== action.payload.id),
         error: null
       };
     case DEL_SUBSCRIPTIONS_ERROR:

@@ -5,6 +5,7 @@ import Select from '../../Shared/Select';
 import style from './formSubscriptions.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Modal from '../../Shared/Modal';
+import Spinner from '../../Shared/Spinner';
 import {
   createSubscription,
   updateSubscription,
@@ -14,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const FormSubscriptions = () => {
   const dispatch = useDispatch();
+  const pending = useSelector((state) => state.subscriptions.isPending);
   const subscriptions = useSelector((state) => state.subscriptions.data);
   const history = useHistory();
   const { id } = useParams();
@@ -84,11 +86,6 @@ const FormSubscriptions = () => {
         setButton('edit');
       }
     } else {
-      setCreate({
-        classes: '',
-        member: '',
-        date: ''
-      });
       setButton('Create');
     }
   };
@@ -109,11 +106,11 @@ const FormSubscriptions = () => {
       });
       setSubscriptionCreated(true);
     } else {
-      setSubscriptionCreated(false);
       setResponseModal({
         title: 'Error!',
         description: response.message
       });
+      setSubscriptionCreated(false);
     }
     setIsOpen(true);
   };
@@ -132,11 +129,11 @@ const FormSubscriptions = () => {
       });
       setSubscriptionCreated(true);
     } else {
-      setSubscriptionCreated(false);
       setResponseModal({
         title: 'Error!',
         description: response.message
       });
+      setSubscriptionCreated(false);
     }
     setIsOpen(true);
   };
@@ -157,58 +154,62 @@ const FormSubscriptions = () => {
         isOpen={isOpen}
         handleClose={closeForm}
       />
-      <label htmlFor="">Classes</label>
-      <Select
-        name="classes"
-        selectID="classes"
-        changeAction={onchangeInput}
-        selectValue={create.classes}
-      >
-        <option value="" disabled>
-          Choose a class
-        </option>
-        {classes.map((oneClass) => {
-          return (
-            <option value={oneClass._id} key={oneClass._id}>
-              {oneClass.hour} {oneClass?.activity?.name}, Trainer:{' '}
-              {oneClass.trainer && oneClass.trainer.firstName}
-            </option>
-          );
-        })}
-      </Select>
-      <label htmlFor="">Member Email</label>
-      <Select
-        name="member"
-        selectID="member"
-        changeAction={onchangeInput}
-        selectValue={create.member}
-      >
-        <option value="" disabled>
-          Choose a Member
-        </option>
-        {members.map((subs) => {
-          return (
-            <option value={subs._id} key={subs._id} selected={subs._id === create.member}>
-              {subs.email}
-            </option>
-          );
-        })}
-      </Select>
-      <DatePicker
-        title="Date"
-        className={style.inputForm}
-        type="date"
-        name="date"
-        val={create.date}
-        changeAction={onchangeInput}
-      />
-      <div className={style.btnContainer}>
-        <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
-        <Button
-          text={button === 'Create' ? 'add' : 'Save'}
-          type={button === 'Create' ? 'add' : 'save'}
-          clickAction={button === 'Create' ? handleCreationSub : handleUpdateSub}
+      {pending && <Spinner />}
+
+      <div>
+        <label htmlFor="">Classes</label>
+        <Select
+          name="classes"
+          selectID="classes"
+          changeAction={onchangeInput}
+          selectValue={create.classes}
+        >
+          <option value="" disabled>
+            Choose a class
+          </option>
+          {classes.map((oneClass) => {
+            return (
+              <option value={oneClass._id} key={oneClass._id}>
+                {oneClass.hour} {oneClass?.activity?.name}, Trainer:{' '}
+                {oneClass.trainer && oneClass.trainer.firstName}
+              </option>
+            );
+          })}
+        </Select>
+        <label htmlFor="">Member Email</label>
+        <Select
+          name="member"
+          selectID="member"
+          changeAction={onchangeInput}
+          selectValue={create.member}
+        >
+          <option value="" disabled>
+            Choose a Member
+          </option>
+          {members.map((subs) => {
+            return (
+              <option value={subs._id} key={subs._id} selected={subs._id === create.member}>
+                {subs.email}
+              </option>
+            );
+          })}
+        </Select>
+        <DatePicker
+          title="Date"
+          className={style.inputForm}
+          type="date"
+          name="date"
+          val={create.date}
+          changeAction={onchangeInput}
         />
+        <div className={style.btnContainer}>
+          <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
+          <Button
+            text={button === 'Create' ? 'add' : 'Save'}
+            type={button === 'Create' ? 'add' : 'save'}
+            clickAction={button === 'Create' ? handleCreationSub : handleUpdateSub}
+          />
+        </div>
       </div>
     </form>
   );
