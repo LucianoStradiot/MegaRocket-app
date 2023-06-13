@@ -23,7 +23,7 @@ function Classes() {
   const handleDeleteClass = async () => {
     try {
       const response = await dispatch(deleteClass(idDelete));
-      if (!response.ok) {
+      if (response.error) {
         throw new Error(response.message);
       } else {
         setResponseModal({
@@ -45,7 +45,7 @@ function Classes() {
 
   useEffect(() => {
     dispatch(getClasses());
-  }, [dispatch]);
+  }, []);
 
   const openModalConfirm = (id) => {
     setIdDelete(id);

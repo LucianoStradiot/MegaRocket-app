@@ -5,14 +5,24 @@ import Select from '../../Shared/Select';
 import Modal from '../../Shared/Modal';
 import styles from './form-classes.module.css';
 import { useParams, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getClasses, createClass /* , updateClass */ } from '../../../Redux/Classes/thunks';
+
 const FormClasses = () => {
-  const [classes, setClasses] = useState([]);
+  const dispatch = useDispatch();
+  const classes = useSelector((state) => state.classes.data);
+
   const history = useHistory();
   const { id } = useParams();
+
+  const [activities, setActivities] = useState([]);
+  const [trainers, setTrainers] = useState([]);
+
   const [btnAddIsVisible, setAddVisible] = useState(false);
   const [btnSaveIsVisible, setSaveVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isClassCreated, setIsClassCreated] = useState(false);
+
   const [formData, setFormData] = useState({
     day: '',
     hour: '',
@@ -20,25 +30,12 @@ const FormClasses = () => {
     activity: '',
     slots: ''
   });
+
   const [responseModal, setResponseModal] = useState({
     title: '',
     description: ''
   });
-  const [activities, setActivities] = useState([]);
-  const [trainers, setTrainers] = useState([]);
-  const getClasses = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`);
-      const { data: classes } = await response.json();
-      setClasses(classes);
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message
-      });
-      setIsOpen(true);
-    }
-  };
+
   const getActivities = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
@@ -52,6 +49,7 @@ const FormClasses = () => {
       setIsOpen(true);
     }
   };
+
   const getTrainers = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
@@ -65,49 +63,37 @@ const FormClasses = () => {
       setIsOpen(true);
     }
   };
+
   const onChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
-  const createClass = async () => {
+
+  const handleCreateClass = async () => {
     try {
-      const createdClass = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-      const createdClassData = await createdClass.json();
-      if (!createdClass.ok) {
-        throw new Error(createdClassData.message);
+      const response = await dispatch(createClass(formData));
+      if (response.error) {
+        throw new Error(response.message);
       } else {
-        setFormData({
-          day: '',
-          hour: '',
-          trainer: '',
-          activity: '',
-          slots: ''
-        });
         setResponseModal({
           title: 'Success!',
-          description: createdClassData.message
+          description: response.message
         });
         setIsClassCreated(true);
-        setIsOpen(true);
       }
     } catch (error) {
       setResponseModal({
         title: 'Error!',
         description: error.message
       });
-      setIsOpen(true);
       setIsClassCreated(false);
     }
+    setIsOpen(true);
   };
-  const editClass = async () => {
+
+  const handleEditClass = async () => {
     try {
       const updatedClass = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
         method: 'PUT',
@@ -143,14 +129,17 @@ const FormClasses = () => {
       setIsClassCreated(false);
     }
   };
+
   useEffect(() => {
+    dispatch(getClasses);
     getActivities();
     getTrainers();
-    getClasses();
   }, []);
+
   useEffect(() => {
     formEdit(id);
   }, [classes]);
+
   const formEdit = (id) => {
     if (id) {
       const data = classes.find((oneClass) => oneClass._id === id);
@@ -179,12 +168,15 @@ const FormClasses = () => {
       setSaveVisible(false);
     }
   };
+
   const create = () => {
-    createClass();
+    handleCreateClass();
   };
+
   const save = () => {
-    editClass();
+    handleEditClass();
   };
+
   const closeForm = () => {
     if (isClassCreated) {
       setIsOpen(false);
@@ -192,6 +184,7 @@ const FormClasses = () => {
     }
     setIsOpen(!isOpen);
   };
+
   return (
     <div>
       <Modal
@@ -290,4 +283,5 @@ const FormClasses = () => {
     </div>
   );
 };
+
 export default FormClasses;
