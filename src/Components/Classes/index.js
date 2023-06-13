@@ -4,7 +4,7 @@ import Button from '../Shared/Button';
 import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
 import { Link } from 'react-router-dom';
-import { getClasses } from '../../Redux/Classes/thunks';
+import { deleteClass, getClasses } from '../../Redux/Classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 function Classes() {
@@ -12,7 +12,7 @@ function Classes() {
   const classes = useSelector((state) => state.classes.data);
   const loading = useSelector((state) => state.classes.isLoading);
 
-  const [/* idDelete,  */ setIdDelete] = useState('');
+  const [idDelete, setIdDelete] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({
     title: '',
@@ -20,39 +20,28 @@ function Classes() {
     isConfirm: false
   });
 
-  /* const [classes, setClasses] = useState([]); */
-
-  /* const deleteClass = async () => {
+  const handleDeleteClass = async () => {
     try {
-      const deleteActivity = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/classes/${idDelete}`,
-        {
-          method: 'DELETE'
-        }
-      );
-
-      const deletedActivity = await deleteActivity.json();
-      if (!deleteActivity.ok) {
-        throw new Error(deletedActivity.message);
+      const response = await dispatch(deleteClass(idDelete));
+      if (!response.ok) {
+        throw new Error(response.message);
+      } else {
+        setResponseModal({
+          title: 'Success!',
+          description: response.message,
+          isConfirm: false
+        });
+        dispatch(getClasses());
       }
-      setClasses((currentClasses) => {
-        return currentClasses.filter((oneClass) => oneClass._id !== idDelete);
-      });
-      setResponseModal({
-        title: 'Success!',
-        description: deletedActivity.message,
-        isConfirm: false
-      });
-      setIsOpen(true);
     } catch (error) {
       setResponseModal({
         title: 'Error!',
         description: error.message,
         isConfirm: false
       });
-      setIsOpen(true);
     }
-  }; */
+    setIsOpen(true);
+  };
 
   useEffect(() => {
     dispatch(getClasses());
@@ -67,6 +56,7 @@ function Classes() {
     });
     setIsOpen(true);
   };
+
   return classes.length > 0 ? (
     <section className={styles.container}>
       <Modal
@@ -75,7 +65,7 @@ function Classes() {
         isOpen={isOpen}
         confirmModal={responseModal.isConfirm}
         handleClose={() => setIsOpen(!isOpen)}
-        /* deleteFunction={() => deleteClass(idDelete)} */
+        deleteFunction={() => handleDeleteClass()}
       />
       {loading && <Spinner />}
       {!loading && (
@@ -135,7 +125,7 @@ function Classes() {
         isOpen={isOpen}
         confirmModal={responseModal.isConfirm}
         handleClose={() => setIsOpen(!isOpen)}
-        /* deleteFunction={() => deleteClass(idDelete)} */
+        deleteFunction={() => handleDeleteClass()}
       />
       <section>
         <Link to="/classes/form">
