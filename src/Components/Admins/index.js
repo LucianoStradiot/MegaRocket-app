@@ -3,12 +3,12 @@ import styles from './admins.module.css';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal';
 import { Link } from 'react-router-dom';
-import { getAdmins } from '../../Redux/Admins/thunks';
+import { deleteAdmin, getAdmins } from '../../Redux/Admins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../Shared/Spinner';
 function Admins() {
   // const [admins, setAdmins] = useState([]);
-  // const [idDelete, setIdDelete] = useState('');
+  const [idDelete, setIdDelete] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({
     title: '',
@@ -19,55 +19,35 @@ function Admins() {
   const admins = useSelector((state) => state.admins.data);
   const loading = useSelector((state) => state.admins.isLoading);
 
-  // const getAdmins = async () => {
-  //   try {
-  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
-
-  //     const { data: admins } = await response.json();
-
-  //     setAdmins(admins);
-  //   } catch (error) {
-  //     setResponseModal({
-  //       title: 'Error!',
-  //       description: error.message,
-  //       isConfirm: false
-  //     });
-  //     setIsOpen(true);
-  //   }
-  // };
-
-  // const deleteAdmin = async () => {
-  //   try {
-  //     const responseAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${idDelete}`, {
-  //       method: 'DELETE'
-  //     });
-
-  //     setAdmins((currentAdmins) => {
-  //       return currentAdmins.filter((admin) => admin._id !== idDelete);
-  //     });
-  //     const response = await responseAdmin.json();
-  //     setResponseModal({
-  //       title: 'Success!',
-  //       description: response.message,
-  //       isConfirm: false
-  //     });
-  //     setIsOpen(true);
-  //   } catch (error) {
-  //     setResponseModal({
-  //       title: 'Error!',
-  //       description: error.message,
-  //       isConfirm: false
-  //     });
-  //     setIsOpen(true);
-  //   }
-  // };
+  const handleDeleteAdmin = async () => {
+    try {
+      const response = await dispatch(deleteAdmin(idDelete));
+      if (!response.error) {
+        setResponseModal({
+          title: 'Success!',
+          description: response.message,
+          isConfirm: false
+        });
+        dispatch(getAdmins());
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      setResponseModal({
+        title: 'Error!',
+        description: error.message,
+        isConfirm: false
+      });
+    }
+    setIsOpen(true);
+  };
 
   useEffect(() => {
     dispatch(getAdmins());
   }, []);
 
-  const openModalConfirm = () => {
-    // setIdDelete(id);
+  const openModalConfirm = (id) => {
+    setIdDelete(id);
     setResponseModal({
       title: 'Confirm',
       description: 'Are you sure you want to delete it?',
@@ -85,7 +65,7 @@ function Admins() {
           isOpen={isOpen}
           confirmModal={responseModal.isConfirm}
           handleClose={() => setIsOpen(!isOpen)}
-          // deleteFunction={() => deleteAdmin(idDelete)}
+          deleteFunction={() => handleDeleteAdmin()}
         />
         {loading && <Spinner />}
         {!loading && (

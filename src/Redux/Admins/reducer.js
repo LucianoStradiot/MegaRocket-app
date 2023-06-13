@@ -1,4 +1,17 @@
-import { GET_ADMINS_LOADING, GET_ADMINS_SUCCESS, GET_ADMINS_ERROR } from './constants';
+import {
+  GET_ADMINS_LOADING,
+  GET_ADMINS_SUCCESS,
+  GET_ADMINS_ERROR,
+  PUT_ADMINS_LOADING,
+  PUT_ADMINS_ERROR,
+  PUT_ADMINS_SUCCESS,
+  POST_ADMINS_ERROR,
+  POST_ADMINS_LOADING,
+  POST_ADMINS_SUCCESS,
+  DEL_ADMINS_ERROR,
+  DEL_ADMINS_LOADING,
+  DEL_ADMINS_SUCCESS
+} from './constants';
 
 const INITIAL_STATE = {
   data: [],
@@ -24,6 +37,72 @@ export const adminsReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case GET_ADMINS_ERROR: {
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    }
+    case PUT_ADMINS_LOADING: {
+      return {
+        ...state,
+        isLoading: true,
+        error: null
+      };
+    }
+    case PUT_ADMINS_SUCCESS: {
+      return {
+        ...state,
+        data: action.payload,
+        isLoading: false,
+        error: null
+      };
+    }
+    case PUT_ADMINS_ERROR: {
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    }
+    case POST_ADMINS_LOADING: {
+      return {
+        ...state,
+        isLoading: true,
+        error: null
+      };
+    }
+    case POST_ADMINS_SUCCESS: {
+      return {
+        ...state,
+        data: action.payload,
+        isLoading: false,
+        error: null
+      };
+    }
+    case POST_ADMINS_ERROR: {
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    }
+    case DEL_ADMINS_LOADING: {
+      return {
+        ...state,
+        isLoading: true,
+        error: null
+      };
+    }
+    case DEL_ADMINS_SUCCESS: {
+      return {
+        ...state,
+        data: [action.payload],
+        isLoading: false,
+        error: null
+      };
+    }
+    case DEL_ADMINS_ERROR: {
       return {
         ...state,
         error: action.payload,
