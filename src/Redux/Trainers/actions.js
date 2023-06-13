@@ -53,11 +53,10 @@ export const putTrainersPending = () => {
   };
 };
 
-export const putTrainersSuccess = (updateTrainer, id) => {
+export const putTrainersSuccess = (updateTrainer) => {
   return {
     type: PUT_TRAINERS_SUCCESS,
-    payload: updateTrainer,
-    id
+    payload: updateTrainer
   };
 };
 

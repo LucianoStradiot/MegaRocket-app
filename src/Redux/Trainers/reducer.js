@@ -88,11 +88,11 @@ export const trainersReducer = (state = INITIAL_STATE, action) => {
         error: null
       };
     case DEL_TRAINERS_SUCCESS: {
-      const idDeletedTrainer = [action.payload.id];
-      const currentTrainers = state.data.filter((trainers) => trainers.id !== idDeletedTrainer);
+      const idDeletedTrainer = [action.payload._id];
+      const currentTrainers = state.data.filter((trainers) => trainers._id !== idDeletedTrainer);
       return {
         ...state,
-        data: [currentTrainers],
+        data: currentTrainers,
         isLoading: false,
         error: null
       };
