@@ -8,17 +8,18 @@ import Spinner from '../../Shared/Spinner';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClasses, createClass, updateClass } from '../../../Redux/Classes/thunks';
+import { getActivities } from '../../../Redux/Activities/thunks';
+import { getTrainers } from '../../../Redux/Trainers/thunks';
 
 const FormClasses = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.classes.isLoading);
   const classes = useSelector((state) => state.classes.data);
+  const trainers = useSelector((state) => state.trainers.data);
+  const activities = useSelector((state) => state.activities.data);
 
   const history = useHistory();
   const { id } = useParams();
-
-  const [activities, setActivities] = useState([]);
-  const [trainers, setTrainers] = useState([]);
 
   const [btnAddIsVisible, setAddVisible] = useState(false);
   const [btnSaveIsVisible, setSaveVisible] = useState(false);
@@ -37,34 +38,6 @@ const FormClasses = () => {
     title: '',
     description: ''
   });
-
-  const getActivities = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`);
-      const { data: activities } = await response.json();
-      setActivities(activities);
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message
-      });
-      setIsOpen(true);
-    }
-  };
-
-  const getTrainers = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
-      const { data: trainers } = await response.json();
-      setTrainers(trainers);
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message
-      });
-      setIsOpen(true);
-    }
-  };
 
   const onChange = (e) => {
     setFormData({
@@ -123,8 +96,8 @@ const FormClasses = () => {
 
   useEffect(() => {
     dispatch(getClasses());
-    getActivities();
-    getTrainers();
+    dispatch(getActivities());
+    dispatch(getTrainers());
   }, [dispatch]);
 
   useEffect(() => {

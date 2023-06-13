@@ -79,10 +79,10 @@ export const putClassLoading = () => {
   };
 };
 
-export const putClassSuccess = (newClass, id) => {
+export const putClassSuccess = (updClass, id) => {
   return {
     type: PUT_CLASSES_SUCCESS,
-    payload: newClass,
+    payload: updClass,
     id
   };
 };
