@@ -29,14 +29,14 @@ const Members = () => {
     if (!response.error) {
       setModalInfo({
         title: 'Success!',
-        description: response.message,
+        desc: response.message,
         isConfirm: false
       });
       dispatch(getMembers());
     } else {
       setModalInfo({
         title: 'Error!',
-        description: response.message,
+        desc: response.message,
         isConfirm: false
       });
     }

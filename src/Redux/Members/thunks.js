@@ -47,12 +47,11 @@ export const createMember = (payload) => {
       const data = await response.json();
       if (response.ok) {
         dispatch(createMembersSuccess(data.data));
-        return data;
       } else {
-        throw new Error(data.message);
+        dispatch(createMembersError(data.message));
       }
+      return data;
     } catch (error) {
-      dispatch(createMembersError(error));
       return error;
     }
   };
@@ -72,12 +71,11 @@ export const updateMember = (payload) => {
       const data = await response.json();
       if (response.ok) {
         dispatch(updateMembersSuccess(data.data, payload.id));
-        return data;
       } else {
-        throw new Error(data.message);
+        dispatch(updateMembersError(data.message));
       }
+      return data;
     } catch (error) {
-      dispatch(updateMembersError(error));
       return error;
     }
   };
@@ -93,12 +91,11 @@ export const deleteMember = (payload) => {
       const data = await response.json();
       if (response.ok) {
         dispatch(deleteMembersSuccess(data.data));
-        return data;
       } else {
-        throw new Error(data.message);
+        dispatch(deleteMembersError(data.message));
       }
+      return data;
     } catch (error) {
-      dispatch(deleteMembersError(error));
       return error;
     }
   };

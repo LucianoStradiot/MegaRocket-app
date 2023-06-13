@@ -8,12 +8,14 @@ import { useHistory, useParams } from 'react-router-dom';
 import Modal from '../../Shared/Modal';
 import { createMember, getMembers, updateMember } from '../../../Redux/Members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import Spinner from '../../Shared/Spinner';
 
 const FormMembers = () => {
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
   const listMembers = useSelector((state) => state.members.data);
+  const loading = useSelector((state) => state.members.isPending);
   const [isOpen, setIsOpen] = useState(false);
   const [isMemberCreated, setIsMemberCreated] = useState(false);
   const [modalInfo, setModalInfo] = useState({
@@ -42,7 +44,6 @@ const FormMembers = () => {
 
   useEffect(() => {
     formEdit(id);
-    console.log(id);
   }, []);
 
   const formEdit = (id) => {
@@ -50,8 +51,16 @@ const FormMembers = () => {
       const data = listMembers.find((aux) => aux._id === id);
       if (data) {
         setMemberValues({
-          ...data,
-          isActive: true
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          dni: data.dni,
+          phone: data.phone,
+          city: data.city,
+          birthday: data.birthday,
+          postalCode: data.postalCode,
+          membership: data.membership,
+          isActive: data.isActive
         });
         setIsMemberCreated(true);
       }
@@ -128,7 +137,7 @@ const FormMembers = () => {
         isOpen={isOpen}
         handleClose={closeForm}
       />
-      <h2>Members</h2>
+      {loading && <Spinner />}
       <form className={styles.form} onSubmit={submit}>
         <div className={styles.subContainer}>
           <div>
