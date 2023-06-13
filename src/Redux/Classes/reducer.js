@@ -51,9 +51,12 @@ export const classesReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case DEL_CLASSES_SUCCESS: {
+      const idDeletedoneClass = action.payload._id;
+      const currentclasses = state.data.filter((oneClass) => oneClass._id !== idDeletedoneClass);
+
       return {
         ...state,
-        data: action.payload, // ver
+        data: currentclasses,
         isLoading: false,
         error: null
       };
@@ -97,7 +100,9 @@ export const classesReducer = (state = INITIAL_STATE, action) => {
     case PUT_CLASSES_SUCCESS: {
       return {
         ...state,
-        data: [action.payload],
+        data: state.data.map((oneClass) =>
+          oneClass._id === action.id ? action.payload : oneClass
+        ),
         isLoading: false,
         error: null
       };

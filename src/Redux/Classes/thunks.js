@@ -7,7 +7,10 @@ import {
   deleteClassError,
   postClassLoading,
   postClassSuccess,
-  postClassError
+  postClassError,
+  putClassLoading,
+  putClassSuccess,
+  putClassError
 } from './actions';
 
 export const getClasses = () => {
@@ -37,7 +40,8 @@ export const deleteClass = (id) => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message);
+        dispatch(deleteClassError(data.message));
+        return response;
       } else {
         dispatch(deleteClassSuccess(data.data));
         return data;
@@ -62,13 +66,38 @@ export const createClass = (payload) => {
       });
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.message);
+        dispatch(postClassError(data.message));
+        return data;
       } else {
         dispatch(postClassSuccess(data.data));
         return data;
       }
     } catch (error) {
-      dispatch(postClassError(error));
+      return error;
+    }
+  };
+};
+
+export const updateClass = (payload) => {
+  return async (dispatch) => {
+    try {
+      dispatch(putClassLoading());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${payload.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload.body)
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        dispatch(putClassError(data.message));
+        return data;
+      } else {
+        dispatch(putClassSuccess(data.data, payload.id));
+        return data;
+      }
+    } catch (error) {
       return error;
     }
   };

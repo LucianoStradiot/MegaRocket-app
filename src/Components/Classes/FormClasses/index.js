@@ -4,12 +4,14 @@ import TextInput from '../../Shared/TextInput';
 import Select from '../../Shared/Select';
 import Modal from '../../Shared/Modal';
 import styles from './form-classes.module.css';
+import Spinner from '../../Shared/Spinner';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClasses, createClass /* , updateClass */ } from '../../../Redux/Classes/thunks';
+import { getClasses, createClass, updateClass } from '../../../Redux/Classes/thunks';
 
 const FormClasses = () => {
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.classes.isLoading);
   const classes = useSelector((state) => state.classes.data);
 
   const history = useHistory();
@@ -95,29 +97,18 @@ const FormClasses = () => {
 
   const handleEditClass = async () => {
     try {
-      const updatedClass = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-      const updatedClassData = await updatedClass.json();
-      if (!updatedClass.ok) {
-        throw new Error(updatedClassData.message);
+      const payload = {
+        id: id,
+        body: formData
+      };
+      const response = await dispatch(updateClass(payload));
+      if (response.error) {
+        throw new Error(response.message);
       } else {
-        setFormData({
-          day: '',
-          hour: '',
-          trainer: '',
-          activity: '',
-          slots: ''
-        });
         setResponseModal({
           title: 'Success!',
-          description: updatedClassData.message
+          description: response.message
         });
-        setIsOpen(true);
         setIsClassCreated(true);
       }
     } catch (error) {
@@ -125,16 +116,16 @@ const FormClasses = () => {
         title: 'Error!',
         description: error.message
       });
-      setIsOpen(true);
       setIsClassCreated(false);
     }
+    setIsOpen(true);
   };
 
   useEffect(() => {
-    dispatch(getClasses);
+    dispatch(getClasses());
     getActivities();
     getTrainers();
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     formEdit(id);
@@ -157,13 +148,6 @@ const FormClasses = () => {
         return false;
       }
     } else {
-      setFormData({
-        day: '',
-        hour: '',
-        trainer: '',
-        activity: '',
-        slots: ''
-      });
       setAddVisible(true);
       setSaveVisible(false);
     }
@@ -193,6 +177,7 @@ const FormClasses = () => {
         isOpen={isOpen}
         handleClose={closeForm}
       />
+      {loading && <Spinner />}
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.formContainer}>
           <label className={styles.label} htmlFor="day">
