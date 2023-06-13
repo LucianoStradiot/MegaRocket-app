@@ -7,7 +7,6 @@ import { deleteAdmin, getAdmins } from '../../Redux/Admins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../Shared/Spinner';
 function Admins() {
-  // const [admins, setAdmins] = useState([]);
   const [idDelete, setIdDelete] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({
@@ -122,7 +121,7 @@ function Admins() {
         isOpen={isOpen}
         confirmModal={responseModal.isConfirm}
         handleClose={() => setIsOpen(!isOpen)}
-        // deleteFunction={() => deleteAdmin(idDelete)}
+        deleteFunction={() => handleDeleteAdmin()}
       />
       <section>
         <Link to="/admins/form">

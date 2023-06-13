@@ -53,7 +53,7 @@ export const adminsReducer = (state = INITIAL_STATE, action) => {
     case PUT_ADMINS_SUCCESS: {
       return {
         ...state,
-        data: action.payload,
+        data: state.data.map((admin) => (admin._id === action.id ? action.payload : admin)),
         isLoading: false,
         error: null
       };
@@ -75,7 +75,7 @@ export const adminsReducer = (state = INITIAL_STATE, action) => {
     case POST_ADMINS_SUCCESS: {
       return {
         ...state,
-        data: action.payload,
+        data: [...state.data, action.payload],
         isLoading: false,
         error: null
       };
@@ -95,9 +95,11 @@ export const adminsReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case DEL_ADMINS_SUCCESS: {
+      const idDeletedAdmin = [action.payload.id];
+      const currentAdmins = state.data.filter((admins) => admins.id !== idDeletedAdmin);
       return {
         ...state,
-        data: [action.payload],
+        data: [currentAdmins],
         isLoading: false,
         error: null
       };

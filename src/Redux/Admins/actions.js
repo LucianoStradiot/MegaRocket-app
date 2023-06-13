@@ -66,7 +66,7 @@ export const putAdminsSuccess = (updAdmin) => {
   };
 };
 
-export const putAdminError = (error) => {
+export const putAdminsError = (error) => {
   return {
     type: PUT_ADMINS_ERROR,
     payload: error
@@ -86,7 +86,7 @@ export const postAdminsSuccess = (newAdmin) => {
   };
 };
 
-export const postAdminError = (error) => {
+export const postAdminsError = (error) => {
   return {
     type: POST_ADMINS_ERROR,
     payload: error
