@@ -91,7 +91,7 @@ export const putAdmins = (payload) => {
 
       const data = await updatedAdminRes.json();
       if (updatedAdminRes.ok) {
-        dispatch(putAdminsSuccess(data.data, data.id));
+        dispatch(putAdminsSuccess(data.data, payload.id));
       } else {
         dispatch(putAdminsError(data.message));
       }

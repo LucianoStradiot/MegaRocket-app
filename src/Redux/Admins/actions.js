@@ -59,10 +59,11 @@ export const putAdminsLoading = () => {
   };
 };
 
-export const putAdminsSuccess = (updAdmin) => {
+export const putAdminsSuccess = (updAdmin, id) => {
   return {
     type: PUT_ADMINS_SUCCESS,
-    payload: updAdmin
+    payload: updAdmin,
+    id
   };
 };
 

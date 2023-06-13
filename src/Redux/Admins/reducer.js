@@ -95,11 +95,11 @@ export const adminsReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case DEL_ADMINS_SUCCESS: {
-      const idDeletedAdmin = [action.payload.id];
-      const currentAdmins = state.data.filter((admins) => admins.id !== idDeletedAdmin);
+      const idDeletedAdmin = [action.payload._id];
+      const currentAdmins = state.data.filter((admins) => admins._id !== idDeletedAdmin);
       return {
         ...state,
-        data: [currentAdmins],
+        data: currentAdmins,
         isLoading: false,
         error: null
       };

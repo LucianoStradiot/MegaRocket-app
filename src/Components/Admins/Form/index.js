@@ -4,8 +4,9 @@ import Button from '../../Shared/Button';
 import TextInput from '../../Shared/TextInput';
 import Modal from '../../Shared/Modal';
 import { useParams, useHistory } from 'react-router-dom';
-import { createAdmin, putAdmins } from '../../../Redux/Admins/thunks';
+import { createAdmin, getAdmins, putAdmins } from '../../../Redux/Admins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import Spinner from '../../Shared/Spinner';
 const AdminForm = () => {
   const history = useHistory();
   const admins = useSelector((state) => state.admins.data);
@@ -21,7 +22,7 @@ const AdminForm = () => {
   });
   const dispatch = useDispatch();
   const [isAdminCreated, setIsAdminCreated] = useState(false);
-
+  const loading = useSelector((state) => state.admins.isLoading);
   const [responseModal, setResponseModal] = useState({
     title: '',
     description: ''
@@ -32,11 +33,12 @@ const AdminForm = () => {
   useEffect(() => {
     formEdit(id);
   }, []);
-
+  useEffect(() => {
+    dispatch(getAdmins());
+  }, [dispatch]);
   const formEdit = (id) => {
     if (id) {
       const data = admins.find((aux) => aux._id === id);
-      console.log('data', data);
       if (data) {
         setFormChange({
           firstName: data.firstName,
@@ -143,6 +145,7 @@ const AdminForm = () => {
         isOpen={isOpen}
         handleClose={() => closeForm()}
       />
+      {loading && <Spinner />}
       <form className={styles.form} onSubmit={onSubmit}>
         <div className={styles.subContainer}>
           <div>
