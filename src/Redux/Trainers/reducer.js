@@ -92,7 +92,7 @@ export const trainersReducer = (state = INITIAL_STATE, action) => {
       const currentTrainers = state.data.filter((trainers) => trainers.id !== idDeletedTrainer);
       return {
         ...state,
-        usuarios: currentTrainers,
+        data: [currentTrainers],
         isLoading: false,
         error: null
       };

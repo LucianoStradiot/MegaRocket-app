@@ -92,10 +92,10 @@ export const deleteTrainer = (id) => {
         dispatch(deleteTrainersSuccess(data.data));
         return data;
       } else {
-        throw new Error(data.message);
+        dispatch(deleteTrainersError(data.message));
       }
+      return data;
     } catch (error) {
-      dispatch(deleteTrainersError(error));
       return error;
     }
   };
