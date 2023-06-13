@@ -5,20 +5,45 @@ const INITIAL_STATE = {
   isPending: false,
   error: ''
 };
-const membersReducer = (state = INITIAL_STATE, action) => {
+export const membersReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actionCreator.GET_MEMBERS_PENDING: {
-      return { ...state, isPending: true };
+      return { ...state, isPending: true, error: null };
     }
     case actionCreator.GET_MEMBERS_SUCCESS: {
-      return { ...state, isPending: false, data: action.payload };
+      return { ...state, isPending: false, data: action.payload, error: null };
     }
     case actionCreator.GET_MEMBERS_ERROR: {
+      return { ...state, isPending: false, error: action.payload };
+    }
+    case actionCreator.PUT_MEMBERS_PENDING: {
+      return { ...state, isPending: true, error: null };
+    }
+    case actionCreator.PUT_MEMBERS_SUCCESS: {
+      return { ...state, isPending: false, data: action.payload, error: null };
+    }
+    case actionCreator.PUT_MEMBERS_ERROR: {
+      return { ...state, isPending: false, error: action.payload };
+    }
+    case actionCreator.POST_MEMBERS_PENDING: {
+      return { ...state, isPending: true, error: null };
+    }
+    case actionCreator.POST_MEMBERS_SUCCESS: {
+      return { ...state, isPending: false, data: action.payload, error: null };
+    }
+    case actionCreator.POST_MEMBERS_ERROR: {
+      return { ...state, isPending: false, error: action.payload };
+    }
+    case actionCreator.DELETE_MEMBERS_PENDING: {
+      return { ...state, isPending: true, error: null };
+    }
+    case actionCreator.DELETE_MEMBERS_SUCCESS: {
+      return { ...state, isPending: false, data: action.payload, error: null };
+    }
+    case actionCreator.DELETE_MEMBERS_ERROR: {
       return { ...state, isPending: false, error: action.payload };
     }
     default:
       return state;
   }
 };
-
-export default membersReducer;

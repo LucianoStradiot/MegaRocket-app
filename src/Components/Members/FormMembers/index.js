@@ -6,13 +6,26 @@ import Button from '../../Shared/Button';
 import DatePicker from '../../Shared/DatePicker';
 import { useHistory, useParams } from 'react-router-dom';
 import Modal from '../../Shared/Modal';
+import { createMember, getMembers, updateMember } from '../../../Redux/Members/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const FormMembers = () => {
   const history = useHistory();
   const { id } = useParams();
-  const [members, setMembers] = useState([]);
+  const dispatch = useDispatch();
+  const listMembers = useSelector((state) => state.members.data);
+  const [isOpen, setIsOpen] = useState(false);
   const [isMemberCreated, setIsMemberCreated] = useState(false);
-  const [memberValues, setMemberValues] = useState({
+  const [modalInfo, setModalInfo] = useState({
+    title: '',
+    desc: ''
+  });
+
+  useEffect(() => {
+    dispatch(getMembers());
+  }, []);
+
+  const initialMemberValues = {
     firstName: '',
     lastName: '',
     email: '',
@@ -23,65 +36,35 @@ const FormMembers = () => {
     postalCode: '',
     membership: '',
     isActive: true
-  });
-  const [isOpen, setIsOpen] = useState(false);
-  const [modalInfo, setModalInfo] = useState({
-    title: '',
-    desc: ''
-  });
-  const getMembers = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
-    const data = await response.json();
-    setMembers(data.data);
   };
-  const formEdit = (id) => {
-    if (id) {
-      const data = members.find((aux) => aux._id === id);
-      if (data) {
-        setMemberValues({
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          dni: data.dni,
-          phone: data.phone,
-          city: data.city,
-          birthday: data.birthday,
-          postalCode: data.postalCode,
-          membership: data.membership,
-          isActive: true
-        });
-        setIsActiveVisible(true);
-      }
-    } else {
-      setMemberValues({
-        firstName: '',
-        lastName: '',
-        email: '',
-        dni: '',
-        phone: '',
-        city: '',
-        birthday: '',
-        postalCode: '',
-        membership: '',
-        isActive: true
-      });
-      setIsActiveVisible(false);
-    }
-  };
-  const [isActiveVisible, setIsActiveVisible] = useState(false);
 
-  useEffect(() => {
-    getMembers();
-  }, []);
+  const [memberValues, setMemberValues] = useState(initialMemberValues);
 
   useEffect(() => {
     formEdit(id);
-  }, [members]);
+    console.log(id);
+  }, []);
 
-  const onChange = (e) => {
+  const formEdit = (id) => {
+    if (id) {
+      const data = listMembers.find((aux) => aux._id === id);
+      if (data) {
+        setMemberValues({
+          ...data,
+          isActive: true
+        });
+        setIsMemberCreated(true);
+      }
+    } else {
+      setMemberValues(initialMemberValues);
+      setIsMemberCreated(false);
+    }
+  };
+
+  const onChange = ({ target: { name, value } }) => {
     setMemberValues({
       ...memberValues,
-      [e.target.name]: e.target.value
+      [name]: value
     });
   };
 
@@ -90,68 +73,43 @@ const FormMembers = () => {
     if (!id) {
       addMember();
     } else {
-      updateMember();
+      handleUpdateMember();
     }
   };
 
-  const updateMember = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(memberValues)
-      });
-
-      const updatedMember = await response.json();
-      if (response.ok) {
-        setModalInfo({
-          title: 'Success!',
-          desc: updatedMember.message
-        });
-        setIsMemberCreated(true);
-      } else {
-        setIsMemberCreated(false);
-        throw new Error(updatedMember.message);
-      }
-    } catch (error) {
-      setModalInfo({
-        title: 'Error!',
-        desc: error.message
-      });
-    }
+  const handleUpdateMember = async () => {
+    const payload = {
+      id: id,
+      body: memberValues
+    };
+    const response = await dispatch(updateMember(payload));
+    const modalData = {
+      title: response.error ? 'Error!' : 'Success!',
+      desc: response.message
+    };
+    setModalInfo(modalData);
     setIsOpen(true);
   };
 
   const addMember = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(memberValues)
-      });
-      const dataResponse = await response.json();
-      if (response.ok) {
-        setModalInfo({
-          title: 'Success!',
-          desc: dataResponse.message
-        });
-        getMembers();
-        setIsMemberCreated(true);
-      } else {
-        setIsMemberCreated(false);
-        throw new Error(dataResponse.message);
-      }
+      const dataResponse = await dispatch(createMember(memberValues));
+      const modalData = {
+        title: dataResponse.error ? 'Error!' : 'Success!',
+        desc: dataResponse.message
+      };
+      setModalInfo(modalData);
+      dispatch(getMembers());
+      setIsOpen(true);
+      setIsMemberCreated(true);
     } catch (error) {
-      setModalInfo({
+      const modalData = {
         title: 'Error!',
         desc: error.message
-      });
+      };
+      setModalInfo(modalData);
+      setIsOpen(true);
     }
-    setIsOpen(true);
   };
 
   const closeForm = () => {
@@ -161,6 +119,7 @@ const FormMembers = () => {
     }
     setIsOpen(!isOpen);
   };
+
   return (
     <section className={styles.container}>
       <Modal
@@ -170,13 +129,13 @@ const FormMembers = () => {
         handleClose={closeForm}
       />
       <h2>Members</h2>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={submit}>
         <div className={styles.subContainer}>
           <div>
             <TextInput
               labelName={'First Name'}
               inputName={'firstName'}
-              changeAction={(e) => onChange(e)}
+              changeAction={onChange}
               inputType={'text'}
               text={memberValues.firstName}
             />
@@ -185,7 +144,7 @@ const FormMembers = () => {
             <TextInput
               labelName={'Last Name'}
               inputName={'lastName'}
-              changeAction={(e) => onChange(e)}
+              changeAction={onChange}
               inputType={'text'}
               text={memberValues.lastName}
             />
@@ -194,7 +153,7 @@ const FormMembers = () => {
             <TextInput
               labelName={'Email'}
               inputName={'email'}
-              changeAction={(e) => onChange(e)}
+              changeAction={onChange}
               inputType={'text'}
               text={memberValues.email}
             />
@@ -203,17 +162,16 @@ const FormMembers = () => {
             <TextInput
               labelName={'DNI'}
               inputName={'dni'}
-              changeAction={(e) => onChange(e)}
+              changeAction={onChange}
               inputType={'number'}
               text={memberValues.dni}
             />
           </div>
-
           <div>
             <TextInput
               labelName={'Phone'}
               inputName={'phone'}
-              changeAction={(e) => onChange(e)}
+              changeAction={onChange}
               inputType={'number'}
               text={memberValues.phone}
             />
@@ -222,7 +180,7 @@ const FormMembers = () => {
             <TextInput
               labelName={'City'}
               inputName={'city'}
-              changeAction={(e) => onChange(e)}
+              changeAction={onChange}
               inputType={'text'}
               text={memberValues.city}
             />
@@ -231,14 +189,14 @@ const FormMembers = () => {
             <TextInput
               labelName={'PostalCode'}
               inputName={'postalCode'}
-              changeAction={(e) => onChange(e)}
+              changeAction={onChange}
               inputType={'number'}
               text={memberValues.postalCode}
             />
           </div>
           <div className={styles.contDate}>
             <DatePicker
-              changeAction={(e) => onChange(e)}
+              changeAction={onChange}
               name={'birthday'}
               title={'Birthday'}
               val={memberValues.birthday}
@@ -247,7 +205,7 @@ const FormMembers = () => {
           <div className={styles.inputContainer}>
             <label>Membership</label>
             <Select
-              changeAction={(e) => onChange(e)}
+              changeAction={onChange}
               name={'membership'}
               selectID={''}
               selectValue={memberValues.membership}
@@ -259,7 +217,7 @@ const FormMembers = () => {
             </Select>
           </div>
           <div className={styles.inputContainer}>
-            {isActiveVisible && (
+            {memberValues.isActive && (
               <>
                 <label className={styles.label}>Status</label>
                 <Select
