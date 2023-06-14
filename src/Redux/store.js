@@ -4,10 +4,11 @@ import thunk from 'redux-thunk';
 import { adminsReducer } from './Admins/reducer';
 import { trainersReducer } from './Trainers/reducer';
 import { superAdminsReducer } from './SuperAdmins/reducer';
-import { membersReducer } from './Members/reducer';
+
 import { subscriptionsReducer } from './Subscriptions/reducer';
 import { classesReducer } from './Classes/reducer';
 import { activitiesReducer } from './Activities/reducer';
+import { membersReducer } from './Members/reducer';
 
 const rootReducer = combineReducers({
   admins: adminsReducer,
