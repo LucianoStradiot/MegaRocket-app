@@ -1,3 +1,47 @@
 .container {
-  background-color: red;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+.contTable {
+  margin-top: 10px;
+  border-collapse: collapse;
+  color: #373867;
+  margin-bottom: 40px;
+}
+.theadTable {
+  background-color: #eee;
+}
+.thTable {
+  padding: 10px 16px;
+}
+
+.theadTable,
+.thTable {
+  padding: 10px 16px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+.deleteButton {
+  margin-left: 20px;
+}
+
+.info {
+  font-size: 24px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #aaa;
+  font-weight: 600;
+  color: #373867;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+
