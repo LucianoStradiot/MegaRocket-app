@@ -8,7 +8,6 @@ import Spinner from '../Shared/Spinner';
 import { Link } from 'react-router-dom';
 
 function Subscriptions() {
-  //const [subscriptions, setSubscriptions] = useState([]);
   const [idDelete, setIdDelete] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({
