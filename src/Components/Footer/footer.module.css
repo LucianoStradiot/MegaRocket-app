@@ -28,17 +28,19 @@
   margin-left: 130px;
 }
 
-.rutes > li :hover {
+.rutes>li :hover {
   background-color: #6daf50;
   cursor: pointer;
 }
 
-.rutes > li > a {
+.rutes>li>a {
+  display: inline-block;
   margin-left: 15px;
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
   text-transform: capitalize;
+  border-radius: 50px;
   color: #FFF;
 }
 
@@ -48,6 +50,8 @@
 }
 
 .licenseContainer img {
+  display: inline-block;
+  vertical-align: middle;
   background-color: #fff;
   border-radius: 50px;
 }

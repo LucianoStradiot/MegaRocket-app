@@ -4,17 +4,39 @@ function Footer() {
   return (
     <footer className={styles.container}>
       <div className={styles.main}>
-        <img src={`${process.env.PUBLIC_URL}/assets/images/logo-footer.png`} />
+        <img
+          src={`${process.env.PUBLIC_URL}/assets/images/logo-footer.png`}
+          alt="Mega Rocket Logo"
+        />
         <div className={styles.licenseContainer}>
           <ul className={styles.rutes}>
             <li>
-              <img src={`${process.env.PUBLIC_URL}/assets/images/facebook.svg`} />
+              <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/images/facebook.svg`}
+                  alt="Facebook Logo"
+                />
+              </a>
             </li>
             <li>
-              <img src={`${process.env.PUBLIC_URL}/assets/images/instagram.svg`} />
+              <a
+                href={'https://www.instagram.com/radium.rocket/'}
+                target={'_blank'}
+                rel="noreferrer"
+              >
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/images/instagram.svg`}
+                  alt="Instagram Logo"
+                />
+              </a>
             </li>
             <li>
-              <img src={`${process.env.PUBLIC_URL}/assets/images/twitter.svg`} />
+              <a href={'https://twitter.com/radiumrocket'} target={'_blank'} rel="noreferrer">
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/images/twitter.svg`}
+                  alt="Twitter Logo"
+                />
+              </a>
             </li>
           </ul>
           <div className={styles.license}>
