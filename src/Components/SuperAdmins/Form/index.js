@@ -10,9 +10,11 @@ import {
   editSuperAdmin,
   getSuperAdmins
 } from '../../../Redux/SuperAdmins/thunks';
+import Spinner from '../../Shared/Spinner';
 
 const FormSuperAdmin = () => {
   const superAdmins = useSelector((state) => state.superAdmins.data);
+  const isLoading = useSelector((state) => state.superAdmins.loading);
   const dispatch = useDispatch();
 
   const [btnAddIsVisible, setAddVisible] = useState(false);
@@ -51,8 +53,7 @@ const FormSuperAdmin = () => {
     } else {
       setResponseModal({
         title: 'Success!',
-        description: response.message,
-        isConfirm: false
+        description: response.message
       });
       setModalIsOpen(true);
       setIsUserCreated(false);
@@ -64,17 +65,17 @@ const FormSuperAdmin = () => {
     if (response.error) {
       setResponseModal({
         title: 'Error!',
-        description: response.message,
-        isConfirm: false
+        description: response.message
       });
       setModalIsOpen(true);
+      setIsUserCreated(true);
     } else {
       setResponseModal({
         title: 'Success!',
-        description: response.message,
-        isConfirm: false
+        description: response.message
       });
       setModalIsOpen(true);
+      setIsUserCreated(false);
     }
   };
 
@@ -120,44 +121,47 @@ const FormSuperAdmin = () => {
   }, [superAdmins]);
 
   return (
-    <section className={styles.sectionForm}>
-      <Modal
-        title={responseModal.title}
-        desc={responseModal.description}
-        isOpen={isModalOpen}
-        confirmModal={responseModal.isConfirm}
-        handleClose={() => closeForm()}
-      />
-      <form className={styles.form} id="form">
-        <div>
-          <div className={styles.inputContainer}>
-            <TextInput
-              labelName="Email"
-              inputType="text"
-              inputName="email"
-              id="email"
-              text={dataForm.email}
-              changeAction={onChange}
-            />
+    <>
+      {isLoading && <Spinner />}
+      <section className={styles.sectionForm}>
+        <Modal
+          title={responseModal.title}
+          desc={responseModal.description}
+          isOpen={isModalOpen}
+          confirmModal={responseModal.isConfirm}
+          handleClose={() => closeForm()}
+        />
+        <form className={styles.form} id="form">
+          <div>
+            <div className={styles.inputContainer}>
+              <TextInput
+                labelName="Email"
+                inputType="text"
+                inputName="email"
+                id="email"
+                text={dataForm.email}
+                changeAction={onChange}
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <TextInput
+                labelName="Password"
+                inputType="password"
+                inputName="password"
+                id="password"
+                text={dataForm.password}
+                changeAction={onChange}
+              />
+            </div>
           </div>
-          <div className={styles.inputContainer}>
-            <TextInput
-              labelName="Password"
-              inputType="password"
-              inputName="password"
-              id="password"
-              text={dataForm.password}
-              changeAction={onChange}
-            />
+          <div className={styles.btnContainer}>
+            <Button text="Cancel" clickAction={() => history.goBack()} type="cancel" />
+            {btnAddIsVisible && <Button text="Add" clickAction={() => submit()} type="add" />}
+            {btnSaveIsVisible && <Button text="Save" clickAction={() => save()} type="save" />}
           </div>
-        </div>
-        <div className={styles.btnContainer}>
-          <Button text="Cancel" clickAction={() => history.goBack()} type="cancel" />
-          {btnAddIsVisible && <Button text="Add" clickAction={() => submit()} type="add" />}
-          {btnSaveIsVisible && <Button text="Save" clickAction={() => save()} type="save" />}
-        </div>
-      </form>
-    </section>
+        </form>
+      </section>
+    </>
   );
 };
 

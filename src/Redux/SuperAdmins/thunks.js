@@ -21,8 +21,12 @@ export const getSuperAdmins = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`);
       const data = await response.json();
-      dispatch(getSuperAdminsSuccess(data.data));
-      return data;
+      if (response.ok) {
+        dispatch(getSuperAdminsSuccess(data.data));
+        return data;
+      } else {
+        throw new Error(data.message);
+      }
     } catch (error) {
       dispatch(getSuperAdminsError(error));
     }
