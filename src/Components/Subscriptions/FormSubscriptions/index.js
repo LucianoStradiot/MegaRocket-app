@@ -5,13 +5,24 @@ import Select from '../../Shared/Select';
 import style from './formSubscriptions.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Modal from '../../Shared/Modal';
+import Spinner from '../../Shared/Spinner';
+import {
+  createSubscription,
+  updateSubscription,
+  getSubscriptions
+} from '../../../Redux/Subscriptions/thunks';
+import { getClasses } from '../../../Redux/Classes/thunks';
+import { getMembers } from '../../../Redux/Members/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const FormSubscriptions = () => {
+  const dispatch = useDispatch();
+  const pending = useSelector((state) => state.subscriptions.isPending);
+  const subscriptions = useSelector((state) => state.subscriptions.data);
+  const classes = useSelector((state) => state.classes.data);
+  const members = useSelector((state) => state.members.data);
   const history = useHistory();
   const { id } = useParams();
-  const [subscriptions, setSubscriptions] = useState([]);
-  const [members, setMembers] = useState([]);
-  const [classes, setClasses] = useState([]);
   const [create, setCreate] = useState({
     classes: '',
     member: '',
@@ -24,59 +35,16 @@ const FormSubscriptions = () => {
     description: ''
   });
   const [isSubscriptionCreated, setSubscriptionCreated] = useState(false);
-  const getMembers = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
-        method: 'GET'
-      });
-      const { data: members } = await response.json();
-      setMembers(members);
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message
-      });
-    }
-  };
 
-  const getClasses = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
-        method: 'GET'
-      });
-      const { data: classes } = await response.json();
-      setClasses(classes);
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message
-      });
-    }
-  };
-
-  const getSubscriptions = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
-        method: 'GET'
-      });
-      const { data: subscriptions } = await response.json();
-      setSubscriptions(subscriptions);
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message
-      });
-    }
-  };
   useEffect(() => {
-    getSubscriptions();
-    getClasses();
-    getMembers();
+    dispatch(getSubscriptions());
+    dispatch(getClasses());
+    dispatch(getMembers());
   }, []);
 
   useEffect(() => {
     formEdit(id);
-  }, [subscriptions]);
+  }, []);
 
   const formEdit = (id) => {
     if (id) {
@@ -85,16 +53,11 @@ const FormSubscriptions = () => {
         setCreate({
           classes: data.classes && data.classes._id ? data.classes._id : '',
           member: data.member && data.member._id ? data.member._id : '',
-          date: data.date
+          date: data.date.substring(0, 10)
         });
         setButton('edit');
       }
     } else {
-      setCreate({
-        classes: '',
-        member: '',
-        date: ''
-      });
       setButton('Create');
     }
   };
@@ -106,65 +69,43 @@ const FormSubscriptions = () => {
     });
   };
 
-  const createSubscription = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(create)
+  const handleCreationSub = async () => {
+    const response = await dispatch(createSubscription(create));
+    if (!response.error) {
+      setResponseModal({
+        title: 'Success!',
+        description: response.message
       });
-      const createdSubscription = await response.json();
-      if (response.ok) {
-        setCreate({
-          classes: '',
-          member: '',
-          date: ''
-        });
-        setResponseModal({
-          title: 'Success!',
-          description: createdSubscription.message
-        });
-        setSubscriptionCreated(true);
-      } else {
-        setSubscriptionCreated(false);
-        throw new Error(createdSubscription.message);
-      }
-    } catch (error) {
+      setSubscriptionCreated(true);
+    } else {
       setResponseModal({
         title: 'Error!',
-        description: error.message
+        description: response.message
       });
+      setSubscriptionCreated(false);
     }
     setIsOpen(true);
   };
 
-  const updateSubscription = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(create)
+  const handleUpdateSub = async () => {
+    const payload = {
+      id: id,
+      body: create
+    };
+    const response = await dispatch(updateSubscription(payload));
+
+    if (!response.error) {
+      setResponseModal({
+        title: 'Success!',
+        description: response.message
       });
-      const updatedSubscription = await response.json();
-      if (response.ok) {
-        setResponseModal({
-          title: 'Success!',
-          description: updatedSubscription.message
-        });
-        setSubscriptionCreated(true);
-      } else {
-        setSubscriptionCreated(false);
-        throw new Error(updatedSubscription.message);
-      }
-    } catch (error) {
+      setSubscriptionCreated(true);
+    } else {
       setResponseModal({
         title: 'Error!',
-        description: error.message
+        description: response.message
       });
+      setSubscriptionCreated(false);
     }
     setIsOpen(true);
   };
@@ -185,58 +126,61 @@ const FormSubscriptions = () => {
         isOpen={isOpen}
         handleClose={closeForm}
       />
-      <label htmlFor="">Classes</label>
-      <Select
-        name="classes"
-        selectID="classes"
-        changeAction={onchangeInput}
-        selectValue={create.classes}
-      >
-        <option value="" disabled>
-          Choose a class
-        </option>
-        {classes.map((oneClass) => {
-          return (
-            <option value={oneClass._id} key={oneClass._id}>
-              {oneClass.hour} {oneClass?.activity?.name}, Trainer:{' '}
-              {oneClass.trainer && oneClass.trainer.firstName}
-            </option>
-          );
-        })}
-      </Select>
-      <label htmlFor="">Member Email</label>
-      <Select
-        name="member"
-        selectID="member"
-        changeAction={onchangeInput}
-        selectValue={create.member}
-      >
-        <option value="" disabled>
-          Choose a Member
-        </option>
-        {members.map((subs) => {
-          return (
-            <option value={subs._id} key={subs._id} selected={subs._id === create.member}>
-              {subs.email}
-            </option>
-          );
-        })}
-      </Select>
-      <DatePicker
-        title="Date"
-        className={style.inputForm}
-        type="date"
-        name="date"
-        val={create.date}
-        changeAction={onchangeInput}
-      />
-      <div className={style.btnContainer}>
-        <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
-        <Button
-          text={button === 'Create' ? 'add' : 'Save'}
-          type={button === 'Create' ? 'add' : 'save'}
-          clickAction={button === 'Create' ? createSubscription : updateSubscription}
+      {pending && <Spinner />}
+      <div>
+        <label htmlFor="">Classes</label>
+        <Select
+          name="classes"
+          selectID="classes"
+          changeAction={onchangeInput}
+          selectValue={create.classes}
+        >
+          <option value="" disabled>
+            Choose a class
+          </option>
+          {classes.map((oneClass) => {
+            return (
+              <option value={oneClass._id} key={oneClass._id}>
+                {oneClass.hour} {oneClass?.activity?.name}, Trainer:{' '}
+                {oneClass.trainer && oneClass.trainer.firstName}
+              </option>
+            );
+          })}
+        </Select>
+        <label htmlFor="">Member Email</label>
+        <Select
+          name="member"
+          selectID="member"
+          changeAction={onchangeInput}
+          selectValue={create.member}
+        >
+          <option value="" disabled>
+            Choose a Member
+          </option>
+          {members.map((subs) => {
+            return (
+              <option value={subs._id} key={subs._id} selected={subs._id === create.member}>
+                {subs.email}
+              </option>
+            );
+          })}
+        </Select>
+        <DatePicker
+          title="Date"
+          className={style.inputForm}
+          type="date"
+          name="date"
+          val={create.date}
+          changeAction={onchangeInput}
         />
+        <div className={style.btnContainer}>
+          <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
+          <Button
+            text={button === 'Create' ? 'add' : 'Save'}
+            type={button === 'Create' ? 'add' : 'save'}
+            clickAction={button === 'Create' ? handleCreationSub : handleUpdateSub}
+          />
+        </div>
       </div>
     </form>
   );
