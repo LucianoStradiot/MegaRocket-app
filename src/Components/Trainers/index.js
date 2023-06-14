@@ -17,7 +17,7 @@ function Trainers() {
   });
   const dispatch = useDispatch();
   const trainers = useSelector((state) => state.trainers.data);
-  const loading = useSelector((state) => state.trainers.isLoading);
+  const loading = useSelector((state) => state.trainers.isPending);
 
   useEffect(() => {
     dispatch(getTrainers());
