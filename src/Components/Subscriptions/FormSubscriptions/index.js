@@ -12,6 +12,7 @@ import {
   getSubscriptions
 } from '../../../Redux/Subscriptions/thunks';
 import { getClasses } from '../../../Redux/Classes/thunks';
+import { getMembers } from '../../../Redux/Members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const FormSubscriptions = () => {
@@ -19,10 +20,9 @@ const FormSubscriptions = () => {
   const pending = useSelector((state) => state.subscriptions.isPending);
   const subscriptions = useSelector((state) => state.subscriptions.data);
   const classes = useSelector((state) => state.classes.data);
+  const members = useSelector((state) => state.members.data);
   const history = useHistory();
   const { id } = useParams();
-  const [members, setMembers] = useState([]);
-  //const [classes, setClasses] = useState([]);
   const [create, setCreate] = useState({
     classes: '',
     member: '',
@@ -36,40 +36,10 @@ const FormSubscriptions = () => {
   });
   const [isSubscriptionCreated, setSubscriptionCreated] = useState(false);
 
-  const getMembers = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
-        method: 'GET'
-      });
-      const { data: members } = await response.json();
-      setMembers(members);
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message
-      });
-    }
-  };
-
-  // const getClasses = async () => {
-  //   try {
-  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
-  //       method: 'GET'
-  //     });
-  //     const { data: classes } = await response.json();
-  //     setClasses(classes);
-  //   } catch (error) {
-  //     setResponseModal({
-  //       title: 'Error!',
-  //       description: error.message
-  //     });
-  //   }
-  // };
-
   useEffect(() => {
     dispatch(getSubscriptions());
     dispatch(getClasses());
-    getMembers();
+    dispatch(getMembers());
   }, []);
 
   useEffect(() => {
@@ -83,7 +53,7 @@ const FormSubscriptions = () => {
         setCreate({
           classes: data.classes && data.classes._id ? data.classes._id : '',
           member: data.member && data.member._id ? data.member._id : '',
-          date: data.date
+          date: data.date.substring(0, 10)
         });
         setButton('edit');
       }
@@ -157,7 +127,6 @@ const FormSubscriptions = () => {
         handleClose={closeForm}
       />
       {pending && <Spinner />}
-
       <div>
         <label htmlFor="">Classes</label>
         <Select
