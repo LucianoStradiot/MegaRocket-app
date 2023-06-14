@@ -39,7 +39,10 @@ function Header() {
       <div className={styles.container}>
         <h1 className={styles.brand}>{name}</h1>
         <div>
-          <img src={`${process.env.PUBLIC_URL}/assets/images/logo-header.png`} />
+          <img
+            src={`${process.env.PUBLIC_URL}/assets/images/logo-header.png`}
+            alt="Mega Rocket Header Logo"
+          />
         </div>
       </div>
       <nav className={styles.navbar}>
