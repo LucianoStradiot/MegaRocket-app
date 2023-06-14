@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './admins-form.module.css';
 import Button from '../../Shared/Button';
 import TextInput from '../../Shared/TextInput';
 import Modal from '../../Shared/Modal';
 import { useParams, useHistory } from 'react-router-dom';
-
+import { createAdmin, getAdmins, putAdmins } from '../../../Redux/Admins/thunks';
+import { useDispatch, useSelector } from 'react-redux';
+import Spinner from '../../Shared/Spinner';
 const AdminForm = () => {
   const history = useHistory();
+  const admins = useSelector((state) => state.admins.data);
   const { id } = useParams();
   const [formChange, setFormChange] = useState({
     firstName: '',
@@ -17,9 +20,9 @@ const AdminForm = () => {
     city: '',
     password: ''
   });
-
+  const dispatch = useDispatch();
   const [isAdminCreated, setIsAdminCreated] = useState(false);
-
+  const loading = useSelector((state) => state.admins.isLoading);
   const [responseModal, setResponseModal] = useState({
     title: '',
     description: ''
@@ -27,61 +30,41 @@ const AdminForm = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const getAdminById = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`);
-      const data = await response.json();
-      setFormChange({
-        firstName: data.data.firstName,
-        lastName: data.data.lastName,
-        dni: data.data.dni,
-        phone: data.data.phone,
-        email: data.data.email,
-        city: data.data.city,
-        password: data.data.password
-      });
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message
-      });
-      setIsOpen(true);
+  useEffect(() => {
+    formEdit(id);
+  }, []);
+  useEffect(() => {
+    dispatch(getAdmins());
+  }, [dispatch]);
+  const formEdit = (id) => {
+    if (id) {
+      const data = admins.find((aux) => aux._id === id);
+      if (data) {
+        setFormChange({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          dni: data.dni,
+          phone: data.phone,
+          email: data.email,
+          city: data.city,
+          password: data.password
+        });
+      }
     }
   };
-  const createAdmin = async () => {
-    try {
-      const createdAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formChange)
-      });
 
-      const createdAdminsData = await createdAdmin.json();
-      if (createdAdmin.ok) {
-        setFormChange({
-          firstName: '',
-          lastName: '',
-          dni: '',
-          phone: '',
-          email: '',
-          city: '',
-          password: ''
-        });
+  const handleCreateAdmin = async () => {
+    try {
+      const response = await dispatch(createAdmin(formChange));
+      if (!response.error) {
         setIsAdminCreated(true);
         setResponseModal({
           title: 'Success!',
-          description: createdAdminsData.message
+          description: response.message
         });
         setIsOpen(true);
       } else {
-        setIsAdminCreated(false);
-        setResponseModal({
-          title: 'Error!',
-          description: createdAdminsData.message
-        });
-        setIsOpen(true);
+        throw new Error(response.message);
       }
     } catch (error) {
       setIsAdminCreated(false);
@@ -93,41 +76,24 @@ const AdminForm = () => {
     }
   };
 
-  const updateAdmins = async () => {
+  const handleupdateAdmins = async () => {
+    const payload = {
+      id: id,
+      body: formChange
+    };
     try {
-      const updatedAdminRes = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formChange)
-      });
+      const response = await dispatch(putAdmins(payload));
 
-      const updatedAdmin = await updatedAdminRes.json();
-      if (updatedAdminRes.ok) {
-        setFormChange({
-          firstName: '',
-          lastName: '',
-          dni: '',
-          phone: '',
-          email: '',
-          city: '',
-          password: ''
-        });
+      if (response.error) {
+        throw new Error(response.message);
+      } else {
         setIsAdminCreated(true);
         setResponseModal({
           title: 'Success!',
-          description: updatedAdmin.message
+          description: response.message
         });
-        setIsOpen(true);
-      } else {
-        setIsAdminCreated(false);
-        setResponseModal({
-          title: 'Error!',
-          description: updatedAdmin.message
-        });
-        setIsOpen(true);
       }
+      setIsOpen(true);
     } catch (error) {
       setIsAdminCreated(false);
       setResponseModal({
@@ -145,17 +111,11 @@ const AdminForm = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (id) {
-      updateAdmins();
+      handleupdateAdmins();
     } else {
-      createAdmin();
+      handleCreateAdmin();
     }
   };
-
-  useEffect(() => {
-    if (id) {
-      getAdminById(id);
-    }
-  }, []);
 
   const onChangeInput = (e) => {
     setFormChange({
@@ -185,6 +145,7 @@ const AdminForm = () => {
         isOpen={isOpen}
         handleClose={() => closeForm()}
       />
+      {loading && <Spinner />}
       <form className={styles.form} onSubmit={onSubmit}>
         <div className={styles.subContainer}>
           <div>
