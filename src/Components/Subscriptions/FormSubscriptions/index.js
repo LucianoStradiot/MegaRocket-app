@@ -11,16 +11,18 @@ import {
   updateSubscription,
   getSubscriptions
 } from '../../../Redux/Subscriptions/thunks';
+import { getClasses } from '../../../Redux/Classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const FormSubscriptions = () => {
   const dispatch = useDispatch();
   const pending = useSelector((state) => state.subscriptions.isPending);
   const subscriptions = useSelector((state) => state.subscriptions.data);
+  const classes = useSelector((state) => state.classes.data);
   const history = useHistory();
   const { id } = useParams();
   const [members, setMembers] = useState([]);
-  const [classes, setClasses] = useState([]);
+  //const [classes, setClasses] = useState([]);
   const [create, setCreate] = useState({
     classes: '',
     member: '',
@@ -49,24 +51,24 @@ const FormSubscriptions = () => {
     }
   };
 
-  const getClasses = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
-        method: 'GET'
-      });
-      const { data: classes } = await response.json();
-      setClasses(classes);
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message
-      });
-    }
-  };
+  // const getClasses = async () => {
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
+  //       method: 'GET'
+  //     });
+  //     const { data: classes } = await response.json();
+  //     setClasses(classes);
+  //   } catch (error) {
+  //     setResponseModal({
+  //       title: 'Error!',
+  //       description: error.message
+  //     });
+  //   }
+  // };
 
   useEffect(() => {
     dispatch(getSubscriptions());
-    getClasses();
+    dispatch(getClasses());
     getMembers();
   }, []);
 
