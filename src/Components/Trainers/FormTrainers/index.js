@@ -7,6 +7,7 @@ import styles from './form-trainers.module.css';
 import { useParams, useHistory } from 'react-router-dom';
 import { getTrainers, createTrainer, updateTrainer } from '../../../Redux/Trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import Spinner from '../../Shared/Spinner';
 
 const FormTrainers = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const FormTrainers = () => {
     description: '',
     isConfirm: false
   });
+  const loading = useSelector((state) => state.trainers.isPending);
   useEffect(() => {
     dispatch(getTrainers());
   }, [dispatch]);
@@ -78,10 +80,6 @@ const FormTrainers = () => {
     }
     setIsOpen(true);
   };
-
-  useEffect(() => {
-    getTrainers();
-  }, []);
 
   useEffect(() => {
     formEdit(id);
@@ -151,6 +149,7 @@ const FormTrainers = () => {
         confirmModal={responseModal.isConfirm}
         handleClose={closeForm}
       />
+      {loading && <Spinner />}
       <form className={styles.form} onSubmit={(e) => e.preventDefault()} id="form">
         <div className={styles.subContainer}>
           <div className={styles.inputContainer}>
