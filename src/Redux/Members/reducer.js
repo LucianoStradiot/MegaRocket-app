@@ -40,9 +40,7 @@ export const membersReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        data: state.data.map((member) =>
-          member._id === action.payload.id ? action.payload : member
-        ),
+        data: state.data.map((member) => (member._id === action.id ? action.payload : member)),
         error: null
       };
     }
@@ -86,7 +84,7 @@ export const membersReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        data: state.data.filter((member) => member._id !== action.payload.id),
+        data: state.data.filter((member) => member._id !== action.payload._id),
         error: null
       };
     }

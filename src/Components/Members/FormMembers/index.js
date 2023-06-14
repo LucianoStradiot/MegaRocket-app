@@ -97,7 +97,14 @@ const FormMembers = () => {
       desc: response.message
     };
     setModalInfo(modalData);
-    setIsOpen(true);
+
+    if (response.error) {
+      setIsOpen(true);
+      setIsMemberCreated(false);
+    } else {
+      setIsOpen(true);
+      setIsMemberCreated(true);
+    }
   };
 
   const addMember = async () => {
@@ -109,15 +116,19 @@ const FormMembers = () => {
       };
       setModalInfo(modalData);
       dispatch(getMembers());
-      setIsOpen(true);
-      setIsMemberCreated(true);
+      if (dataResponse.error) {
+        setIsOpen(true);
+        setIsMemberCreated(false);
+      } else {
+        setIsOpen(true);
+        setIsMemberCreated(true);
+      }
     } catch (error) {
       const modalData = {
         title: 'Error!',
         desc: error.message
       };
       setModalInfo(modalData);
-      setIsOpen(true);
     }
   };
 
@@ -226,7 +237,7 @@ const FormMembers = () => {
             </Select>
           </div>
           <div className={styles.inputContainer}>
-            {memberValues.isActive && (
+            {id && (
               <>
                 <label className={styles.label}>Status</label>
                 <Select
