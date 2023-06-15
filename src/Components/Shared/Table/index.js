@@ -11,16 +11,38 @@ import { Link } from 'react-router-dom';
  */
 
 const Table = ({ list, column, fields, link, action }) => {
+  const headers = column.length;
+
   return (
     <section className={styles.container}>
       <table className={styles.contTable}>
         <thead className={styles.theadTable}>
           {column.map((aux, index) => {
-            return (
-              <th key={index} className={styles.thTable}>
-                {aux}
-              </th>
-            );
+            if (index === headers - 1) {
+              return (
+                <th
+                  key={index}
+                  className={`${styles.thTable} ${styles.headers} ${styles.borderRight}`}
+                >
+                  {aux}
+                </th>
+              );
+            } else if (index === 0) {
+              return (
+                <th
+                  key={index}
+                  className={`${styles.thTable} ${styles.headers} ${styles.borderLeft}`}
+                >
+                  {aux}
+                </th>
+              );
+            } else {
+              return (
+                <th key={index} className={`${styles.thTable} ${styles.headers}`}>
+                  {aux}
+                </th>
+              );
+            }
           })}
         </thead>
         <tbody>
@@ -31,8 +53,13 @@ const Table = ({ list, column, fields, link, action }) => {
                   {fields.map((field, index) => {
                     const nestedFields = field.split('.');
                     const fieldData = nestedFields.reduce((obj, field) => obj && obj[field], item);
-                    const transformedFieldData =
+                    let transformedFieldData =
                       field === 'date' ? fieldData.substring(0, 10) : fieldData;
+                    if (field === 'isActive') {
+                      fieldData
+                        ? (transformedFieldData = 'Active')
+                        : (transformedFieldData = 'Inactive');
+                    }
                     return (
                       <td key={index} className={styles.thTable}>
                         {transformedFieldData}

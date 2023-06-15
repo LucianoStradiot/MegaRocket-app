@@ -23,6 +23,9 @@
   border-bottom: 1px solid #ddd;
   text-align: center;
 }
+.headers {
+  padding: 15px 16px;
+}
 .deleteButton {
   margin-left: 20px;
 }
@@ -42,6 +45,14 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 5px;
+}
+
+.borderLeft {
+  border-radius: 8px 0px 0px 0px;
+}
+
+.borderRight {
+  border-radius: 0px 8px 0px 0px;
 }
 
 
