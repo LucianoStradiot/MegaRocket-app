@@ -4,17 +4,22 @@
   flex-direction: column;
   align-items: center;
 }
+
 .contTable {
   margin-top: 10px;
   border-collapse: collapse;
   color: #373867;
   margin-bottom: 40px;
 }
+
 .theadTable {
   background-color: #eee;
 }
+
 .thTable {
   padding: 10px 16px;
+  width: 10px;
+  white-space: pre-wrap;
 }
 
 .theadTable,
@@ -23,9 +28,11 @@
   border-bottom: 1px solid #ddd;
   text-align: center;
 }
+
 .headers {
   padding: 15px 16px;
 }
+
 .deleteButton {
   margin-left: 20px;
 }
@@ -54,5 +61,3 @@
 .borderRight {
   border-radius: 0px 8px 0px 0px;
 }
-
-
