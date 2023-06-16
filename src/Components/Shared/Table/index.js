@@ -13,6 +13,27 @@ import { Link } from 'react-router-dom';
 const Table = ({ list, column, fields, link, action }) => {
   const headers = column.length;
 
+  const splitDescription = (description, maxLength) => {
+    const words = description.split(' ');
+    let line = '';
+    let lines = [];
+
+    words.forEach((word) => {
+      if (line.length + word.length <= maxLength) {
+        line += word + ' ';
+      } else {
+        lines.push(line.trim());
+        line = word + ' ';
+      }
+    });
+
+    if (line.trim() !== '') {
+      lines.push(line.trim());
+    }
+
+    return lines;
+  };
+
   return (
     <section className={styles.container}>
       <table className={styles.contTable}>
@@ -59,6 +80,16 @@ const Table = ({ list, column, fields, link, action }) => {
                       fieldData
                         ? (transformedFieldData = 'Active')
                         : (transformedFieldData = 'Inactive');
+                    }
+                    if (field === 'description') {
+                      transformedFieldData = splitDescription(fieldData, 50);
+                      return (
+                        <td key={index} className={styles.thTable}>
+                          {transformedFieldData.map((line, index) => (
+                            <div key={index}>{line}</div>
+                          ))}
+                        </td>
+                      );
                     }
                     return (
                       <td key={index} className={styles.thTable}>
