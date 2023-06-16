@@ -12,7 +12,8 @@ import {
   CREATE_SUPERADMINS_SUCCESS,
   CREATE_SUPERADMINS_ERROR,
   EDIT_SUPERADMIN_PENDING,
-  EDIT_SUPERADMIN_SUCCESS
+  EDIT_SUPERADMIN_SUCCESS,
+  EDIT_SUPERADMIN_ERROR
 } from './constants';
 
 export const getSuperAdminsPending = () => {
@@ -81,16 +82,17 @@ export const editSuperAdminPending = () => {
   };
 };
 
-export const editSuperAdminSuccess = (updatedSuperAdmin) => {
+export const editSuperAdminSuccess = (updatedSuperAdmin, id) => {
   return {
     type: EDIT_SUPERADMIN_SUCCESS,
-    payload: updatedSuperAdmin
+    payload: updatedSuperAdmin,
+    id
   };
 };
 
 export const editSuperAdminError = (error) => {
   return {
-    type: EDIT_SUPERADMIN_SUCCESS,
+    type: EDIT_SUPERADMIN_ERROR,
     payload: error
   };
 };

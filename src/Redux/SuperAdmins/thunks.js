@@ -12,7 +12,8 @@ import {
   createSuperAdminSuccess,
   createSuperAdminError,
   editSuperAdminPending,
-  editSuperAdminError
+  editSuperAdminError,
+  editSuperAdminSuccess
 } from './actions';
 
 export const getSuperAdmins = () => {
@@ -62,7 +63,7 @@ export const createSuperAdmin = (superAdmin) => {
       });
       const data = await response.json();
       if (!data.error || data.error === false) {
-        dispatch(createSuperAdminSuccess(data));
+        dispatch(createSuperAdminSuccess(data.data));
         return data;
       } else {
         dispatch(createSuperAdminError(data.message.toString()));
@@ -86,8 +87,8 @@ export const editSuperAdmin = (id, superAdmin) => {
         body: JSON.stringify(superAdmin)
       });
       const data = await response.json();
-      if (!data.error || data.error === false) {
-        dispatch(editSuperAdminPending(data.data));
+      if (!data.error) {
+        dispatch(editSuperAdminSuccess(data.data));
         return data;
       } else {
         dispatch(editSuperAdminError(data.message.toString()));

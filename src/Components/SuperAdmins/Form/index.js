@@ -49,14 +49,14 @@ const FormSuperAdmin = () => {
         isConfirm: false
       });
       setModalIsOpen(true);
-      setIsUserCreated(true);
+      setIsUserCreated(false);
     } else {
       setResponseModal({
         title: 'Success!',
         description: response.message
       });
       setModalIsOpen(true);
-      setIsUserCreated(false);
+      setIsUserCreated(true);
     }
   };
 
@@ -68,14 +68,14 @@ const FormSuperAdmin = () => {
         description: response.message
       });
       setModalIsOpen(true);
-      setIsUserCreated(true);
+      setIsUserCreated(false);
     } else {
       setResponseModal({
         title: 'Success!',
         description: response.message
       });
       setModalIsOpen(true);
-      setIsUserCreated(false);
+      setIsUserCreated(true);
     }
   };
 
@@ -105,7 +105,7 @@ const FormSuperAdmin = () => {
   };
 
   const closeForm = () => {
-    if (!isUserCreated) {
+    if (isUserCreated) {
       setModalIsOpen(false);
       history.goBack();
     }

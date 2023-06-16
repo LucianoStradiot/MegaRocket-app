@@ -54,7 +54,7 @@ function SuperAdmins() {
   return (
     <>
       {isLoading && <Spinner />}
-      {superAdmins ? (
+      {superAdmins.length > 0 ? (
         <section className={styles.container}>
           <Modal
             title={responseModal.title}
