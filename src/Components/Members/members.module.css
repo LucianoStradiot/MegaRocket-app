@@ -13,27 +13,3 @@
   font-weight: 600;
   color: #373867;
 }
-
-.tableMember {
-  margin-top: 10px;
-  border-collapse: collapse;
-  color: #373867;
-}
-.thead{
-  background-color: #eee;
-}
-
-.thMember{
-  padding: 10px 16px;
-}
-.tdMember {
-  padding: 10px 16px;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-}
-.buttonCreate{
-  align-self: start;
-}
-
-
-

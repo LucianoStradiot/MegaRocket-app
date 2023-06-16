@@ -6,6 +6,7 @@ import styles from './members.module.css';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
+import Table from '../Shared/Table';
 
 const Members = () => {
   const listMembers = useSelector((state) => state.members.data);
@@ -70,40 +71,13 @@ const Members = () => {
           <Link className={styles.buttonCreate} to="/members/form">
             <Button text={'Create'} type={'add'} />
           </Link>
-          <table className={styles.tableMember}>
-            <thead className={styles.thead}>
-              <tr>
-                <th className={styles.thMember}>Name</th>
-                <th className={styles.thMember}>Last Name</th>
-                <th className={styles.thMember}>Birthday</th>
-                <th className={styles.thMember}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {listMembers?.length > 0 &&
-                listMembers?.map((member) => {
-                  return (
-                    <tr key={member._id}>
-                      <td className={styles.tdMember}>{member.firstName}</td>
-                      <td className={styles.tdMember}>{member.lastName}</td>
-                      <td className={styles.tdMember}>{member.birthday}</td>
-                      <td className={styles.tdMember}>
-                        <Link to={`/members/form/${member._id}`}>
-                          <Button text={'Edit'} type={'edit'} />
-                        </Link>
-                        <Button
-                          clickAction={() => {
-                            confirmDelete(member._id);
-                          }}
-                          text={'X'}
-                          type={'deleteCancel'}
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+          <Table
+            list={listMembers}
+            column={['Name', 'Last Name', 'DNI', 'Phone', 'Email', 'Membership', 'Status', '']}
+            fields={['firstName', 'lastName', 'dni', 'phone', 'email', 'membership', 'isActive']}
+            link={'/members/form/'}
+            action={confirmDelete}
+          />
         </div>
       )}
     </section>

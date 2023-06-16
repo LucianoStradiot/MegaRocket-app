@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSuperAdmins, deleteSuperAdmin } from '../../Redux/SuperAdmins/thunks';
 import Spinner from '../Shared/Spinner';
+import Table from '../Shared/Table';
 
 function SuperAdmins() {
   const superAdmins = useSelector((state) => state.superAdmins.data);
@@ -68,35 +69,13 @@ function SuperAdmins() {
             <Link to="/superAdmins/form">
               <Button text="Create" type="create" />
             </Link>
-            <table className={styles.table}>
-              <thead className={styles.thead}>
-                <tr>
-                  <th className={styles.th}>Email</th>
-                  <th className={styles.th}></th>
-                </tr>
-              </thead>
-              <tbody>
-                {superAdmins.map((superAdmin) => {
-                  return (
-                    <tr key={superAdmin._id}>
-                      <td className={styles.row}>{superAdmin.email}</td>
-                      <td className={styles.row}>
-                        <div className={styles.containerButtons}>
-                          <Link to={`/superAdmins/form/${superAdmin._id}`}>
-                            <Button text="Edit" type="edit" />
-                          </Link>
-                          <Button
-                            text="X"
-                            type="deleteCancel"
-                            clickAction={() => openModalConfirm(superAdmin._id)}
-                          />
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <Table
+              list={superAdmins}
+              column={['Email', '']}
+              fields={['email']}
+              link={'/superAdmins/form/'}
+              action={openModalConfirm}
+            />
           </section>
         </section>
       ) : (

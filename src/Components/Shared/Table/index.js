@@ -38,33 +38,35 @@ const Table = ({ list, column, fields, link, action }) => {
     <section className={styles.container}>
       <table className={styles.contTable}>
         <thead className={styles.theadTable}>
-          {column.map((aux, index) => {
-            if (index === headers - 1) {
-              return (
-                <th
-                  key={index}
-                  className={`${styles.thTable} ${styles.headers} ${styles.borderRight}`}
-                >
-                  {aux}
-                </th>
-              );
-            } else if (index === 0) {
-              return (
-                <th
-                  key={index}
-                  className={`${styles.thTable} ${styles.headers} ${styles.borderLeft}`}
-                >
-                  {aux}
-                </th>
-              );
-            } else {
-              return (
-                <th key={index} className={`${styles.thTable} ${styles.headers}`}>
-                  {aux}
-                </th>
-              );
-            }
-          })}
+          <tr>
+            {column.map((aux, index) => {
+              if (index === headers - 1) {
+                return (
+                  <th
+                    key={index}
+                    className={`${styles.thTable} ${styles.headers} ${styles.borderRight}`}
+                  >
+                    {aux}
+                  </th>
+                );
+              } else if (index === 0) {
+                return (
+                  <th
+                    key={index}
+                    className={`${styles.thTable} ${styles.headers} ${styles.borderLeft}`}
+                  >
+                    {aux}
+                  </th>
+                );
+              } else {
+                return (
+                  <th key={index} className={`${styles.thTable} ${styles.headers}`}>
+                    {aux}
+                  </th>
+                );
+              }
+            })}
+          </tr>
         </thead>
         <tbody>
           {list.map((item) => {
@@ -90,6 +92,9 @@ const Table = ({ list, column, fields, link, action }) => {
                           ))}
                         </td>
                       );
+                    }
+                    if (fieldData === (undefined || null)) {
+                      if (!fieldData) transformedFieldData = 'empty';
                     }
                     return (
                       <td key={index} className={styles.thTable}>

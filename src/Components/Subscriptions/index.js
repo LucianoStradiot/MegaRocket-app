@@ -5,6 +5,7 @@ import style from './subscriptions.module.css';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import Spinner from '../Shared/Spinner';
+import Table from '../Shared/Table';
 import { Link } from 'react-router-dom';
 
 function Subscriptions() {
@@ -43,14 +44,6 @@ function Subscriptions() {
     setIsOpen(true);
   };
 
-  const showDate = (date) => {
-    if (date == undefined) {
-      return 'Empty';
-    } else {
-      return date.substring(0, 10);
-    }
-  };
-
   const openModalConfirm = (id) => {
     setIdDelete(id);
     setResponseModal({
@@ -77,47 +70,13 @@ function Subscriptions() {
           <Link to="/subscriptions/form">
             <Button type="add" text="Create" className={style.btnCreate} />
           </Link>
-          <table className={style.contTable}>
-            <thead className={style.theadTable}>
-              <tr>
-                <th className={style.thTable}>Subscription Date</th>
-                <th className={style.thTable}>Name</th>
-                <th className={style.thTable}>Class Hour</th>
-                <th className={style.thTable}>Activity </th>
-                <th className={style.thTable}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {subscriptions.map((subs) => {
-                return (
-                  <tr key={subs._id}>
-                    <td className={style.thTable}>{showDate(subs.date)}</td>
-                    <td className={style.thTable}>
-                      {subs.member && subs.member.firstName && subs.member.lastName
-                        ? `${subs.member.firstName} ${subs.member.lastName}`
-                        : 'Empty'}
-                    </td>
-                    <td className={style.thTable}>
-                      {subs.classes && subs.classes.hour ? subs.classes.hour : 'Empty'}
-                    </td>
-                    <td className={style.thTable}>
-                      {subs.classes && subs.classes.activity ? subs.classes.activity.name : 'Empty'}
-                    </td>
-                    <td className={style.thTable}>
-                      <Link to={`/subscriptions/form/${subs._id}`}>
-                        <Button type="edit" text="Edit" />
-                      </Link>
-                      <Button
-                        text="X"
-                        type="deleteCancel"
-                        clickAction={() => openModalConfirm(subs._id)}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <Table
+            list={subscriptions}
+            column={['Date', 'Name', 'Class Hour', 'Activity Name', '']}
+            fields={['date', 'member.lastName', 'classes.hour', 'classes.activity.name']}
+            link={'/subscriptions/form/'}
+            action={openModalConfirm}
+          />
         </div>
       )}
     </section>
@@ -134,7 +93,7 @@ function Subscriptions() {
       {pending && <Spinner />}
       {!pending && (
         <section>
-          <Link to="/subscriptions/form">
+          <Link to="/subscriptions/form/">
             <Button text="Create" type="create" />
           </Link>
           <p className={style.info}>There is no Subscription yet.</p>

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { getActivities, delActivities } from '../../Redux/Activities/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../Shared/Spinner';
+import Table from '../Shared/Table';
 
 function Activities() {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,14 +65,6 @@ function Activities() {
     });
   };
 
-  const showActive = (activ) => {
-    if (activ) {
-      return 'active';
-    } else {
-      return 'inactive';
-    }
-  };
-
   return activities.length > 0 ? (
     <div className={styles.container}>
       <Modal
@@ -88,37 +81,13 @@ function Activities() {
           <Link to="/activities/form">
             <Button text="Create" />
           </Link>
-          <table className={styles.table}>
-            <thead className={styles.thead}>
-              <th className={`${styles.head} ${styles.th}`}>Activity Name</th>
-              <th className={styles.th}>description</th>
-              <th className={styles.th}>Status</th>
-              <th className={`${styles.headEnd} ${styles.th}`}></th>
-            </thead>
-            <tbody>
-              {activities.map((activity) => {
-                return (
-                  <tr key={activity._id} className={styles.row}>
-                    <td className={styles.row}>{activity.name}</td>
-                    <td className={styles.row}>{activity.description}</td>
-                    <td className={styles.row}>{showActive(activity.isActive)}</td>
-                    <td className={styles.row}>
-                      <div className={styles.containerButtons}>
-                        <Link to={`/activities/form/${activity._id}`}>
-                          <Button text="Edit" type="edit" />
-                        </Link>
-                        <Button
-                          clickAction={() => confirmDelete(activity._id)}
-                          type="deleteCancel"
-                          text="X"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <Table
+            list={activities}
+            column={['Activity name', 'Description', 'Status', '']}
+            fields={['name', 'description', 'isActive']}
+            link={'/activities/form/'}
+            action={confirmDelete}
+          />
         </section>
       )}
     </div>
