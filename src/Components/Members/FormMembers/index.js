@@ -183,7 +183,7 @@ const FormMembers = () => {
               labelName={'DNI'}
               inputName={'dni'}
               changeAction={onChange}
-              inputType={'number'}
+              inputType={'text'}
               text={memberValues.dni}
             />
           </div>
@@ -192,7 +192,7 @@ const FormMembers = () => {
               labelName={'Phone'}
               inputName={'phone'}
               changeAction={onChange}
-              inputType={'number'}
+              inputType={'text'}
               text={memberValues.phone}
             />
           </div>
@@ -210,7 +210,7 @@ const FormMembers = () => {
               labelName={'PostalCode'}
               inputName={'postalCode'}
               changeAction={onChange}
-              inputType={'number'}
+              inputType={'text'}
               text={memberValues.postalCode}
             />
           </div>

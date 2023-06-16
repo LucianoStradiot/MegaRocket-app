@@ -1,30 +1,9 @@
 .container {
-  width: 100%;
+  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-}
-.contTable {
-  margin-top: 10px;
-  border-collapse: collapse;
-  color: #373867;
-  margin-bottom: 40px;
-}
-.theadTable {
-  background-color: #eee;
-}
-.thTable {
-  padding: 10px 16px;
-}
-
-.theadTable,
-.thTable {
-  padding: 10px 16px;
-  border-bottom: 1px solid #ddd;
-  text-align: center;
-}
-.deleteButton {
-  margin-left: 20px;
 }
 
 .info {
@@ -34,104 +13,3 @@
   font-weight: 600;
   color: #373867;
 }
-
-.createButton {
-  color: #fff;
-  background-color: #3a3b7b;
-  border: none;
-  width: 10rem;
-  border-radius: 5px;
-  padding: 7px 12px;
-  cursor: pointer;
-  font-size: 15px;
-  margin-right: 65.5rem;
-}
-
-.button:hover,
-.createButton:hover {
-  background-color: #1b1b5d;
-}
-
-.updateButton {
-  background-color: #fff;
-  color: #4caf50;
-  border: 1px solid #4caf50;
-  border-radius: 3px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.updateButton:hover {
-  background-color: #4caf50;
-  color: #fff;
-}
-
-.deleteButton {
-  background-color: #f55348;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.deleteButton:hover {
-  background-color: #ee190a;
-}
-.formSubscription {
-  margin-bottom: 40px;
-  color: #373867;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #eee;
-  width: 30rem;
-  padding: 20px;
-  border-radius: 8px;
-}
-.inputForm {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  width: 90%;
-  text-align: center;
-}
-.formSubscription button{
-  width: 90%;
-  height: 30px;
-  margin: 5px;
-  border-radius: 4px;
-}
-.buttonModify{
-  background-color: #fff;
-  color: #4caf50;
-  border: 1px solid #4caf50;
-
-}
-.buttonAdd{
-  color: #fff;
-  background-color: #3a3b7b;
-  border: none;
-}
-.cancelButton{
-  background-color: #f55348;
-  color: white;
-  border: none;
-}
-
-.container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.btnCreate{
-  align-self: left  ;
-}
-

@@ -5,6 +5,7 @@ import Modal from '../Shared/Modal';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../Shared/Spinner';
+import Table from '../Shared/Table';
 import { getTrainers, deleteTrainer } from '../../Redux/Trainers/thunks';
 
 function Trainers() {
@@ -42,14 +43,6 @@ function Trainers() {
     setIsOpen(true);
   };
 
-  const showActive = (active) => {
-    if (active) {
-      return 'active';
-    } else {
-      return 'inactive';
-    }
-  };
-
   const openModalConfirm = (id) => {
     setIdDelete(id);
     setResponseModal({
@@ -76,49 +69,22 @@ function Trainers() {
           <Link to="/trainers/formTrainers">
             <Button text="Create" type="create" />
           </Link>
-          <table className={styles.table}>
-            <thead className={styles.thead}>
-              <tr>
-                <th className={`${styles.head} ${styles.th}`}>Name</th>
-                <th className={styles.th}>Dni</th>
-                <th className={styles.th}>Email</th>
-                <th className={styles.th}>Phone</th>
-                <th className={styles.th}>City</th>
-                <th className={styles.th}>Salary</th>
-                <th className={styles.th}>Status</th>
-                <th className={`${styles.headEnd} ${styles.th}`}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {trainers.map((trainer) => {
-                return (
-                  <tr key={trainer._id}>
-                    <td className={styles.row}>
-                      {trainer.firstName} {trainer.lastName}
-                    </td>
-                    <td className={styles.row}>{trainer.dni}</td>
-                    <td className={styles.row}>{trainer.email}</td>
-                    <td className={styles.row}>{trainer.phone}</td>
-                    <td className={styles.row}>{trainer.city}</td>
-                    <td className={styles.row}>{trainer.salary}</td>
-                    <td className={styles.row}>{showActive(trainer.isActive)}</td>
-                    <td className={styles.row}>
-                      <div className={styles.containerButtons}>
-                        <Link to={`/trainers/formTrainers/${trainer._id}`}>
-                          <Button text="Edit" type="edit" />
-                        </Link>
-                        <Button
-                          text="X"
-                          type="deleteCancel"
-                          clickAction={() => openModalConfirm(trainer._id)}
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <Table
+            list={trainers}
+            column={['Name', 'Last Name', 'DNI', 'Email', 'Phone', 'City', 'Salary', 'Status', '']}
+            fields={[
+              'firstName',
+              'lastName',
+              'dni',
+              'email',
+              'phone',
+              'city',
+              'salary',
+              'isActive'
+            ]}
+            link={'/trainers/formTrainers/'}
+            action={openModalConfirm}
+          />
         </section>
       )}
       <section className={styles.sectionForm}></section>
