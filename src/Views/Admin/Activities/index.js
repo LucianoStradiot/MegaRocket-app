@@ -78,14 +78,14 @@ function Activities() {
       {loading && <Spinner />}
       {!loading && (
         <section>
-          <Link to="/activities/form">
+          <Link to="/admins/activities/form">
             <Button text="Create" />
           </Link>
           <Table
             list={activities}
             column={['Activity name', 'Description', 'Status', '']}
             fields={['name', 'description', 'isActive']}
-            link={'/activities/form/'}
+            link={'/admins/activities/form/'}
             action={confirmDelete}
           />
         </section>
@@ -102,7 +102,7 @@ function Activities() {
         deleteFunction={() => handleDelActivity()}
       />
       <section>
-        <Link to="/activities/form">
+        <Link to="/admins/activities/form">
           <Button text="Create" type="create" />
         </Link>
         <p className={styles.info}>There is no Activity yet.</p>

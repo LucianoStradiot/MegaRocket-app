@@ -66,7 +66,7 @@ function Trainers() {
       {loading && <Spinner />}
       {!loading && (
         <section>
-          <Link to="/trainers/formTrainers">
+          <Link to="/admins/trainers/formTrainers">
             <Button text="Create" type="create" />
           </Link>
           <Table
@@ -82,7 +82,7 @@ function Trainers() {
               'salary',
               'isActive'
             ]}
-            link={'/trainers/formTrainers/'}
+            link={'/admins/trainers/formTrainers/'}
             action={openModalConfirm}
           />
         </section>
@@ -100,7 +100,7 @@ function Trainers() {
         deleteFunction={() => deleteTrainer(idDelete)}
       />
       <section>
-        <Link to="/trainers/formTrainers">
+        <Link to="/admins/trainers/formTrainers">
           <Button text="Create" type="create" />
         </Link>
         <p className={styles.info}>There is no Trainers yet.</p>

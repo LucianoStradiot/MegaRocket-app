@@ -71,14 +71,14 @@ function Classes() {
       {loading && <Spinner />}
       {!loading && (
         <section>
-          <Link to="/classes/form">
+          <Link to="/admins/classes/form">
             <Button text="Create" type="create" />
           </Link>
           <Table
             list={classes}
             column={['Day', 'Hour', 'Trainer', 'Activity', 'Slots', '']}
             fields={['day', 'hour', 'trainer.lastName', 'activity.name', 'slots']}
-            link={'/classes/form/'}
+            link={'/admins/classes/form/'}
             action={openModalConfirm}
           />
         </section>
@@ -95,7 +95,7 @@ function Classes() {
         deleteFunction={() => handleDeleteClass()}
       />
       <section>
-        <Link to="/classes/form">
+        <Link to="/admins/classes/form">
           <Button text="Create" type="create" />
         </Link>
         <p className={styles.info}>There is no Class yet.</p>

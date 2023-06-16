@@ -51,25 +51,25 @@ function Header() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/activities">Activities</Link>
+            <Link to="/admins/activities">Activities</Link>
           </li>
           <li>
-            <Link to="/admins">Admins</Link>
+            <Link to="/superAdmins/admins">Admins</Link>
           </li>
           <li>
-            <Link to="/classes">Classes</Link>
+            <Link to="/admins/classes">Classes</Link>
           </li>
           <li>
-            <Link to="/members">Members</Link>
+            <Link to="/admins/members">Members</Link>
           </li>
           <li>
-            <Link to="/subscriptions">Subscriptions</Link>
+            <Link to="/admins/subscriptions">Subscriptions</Link>
           </li>
           <li>
             <Link to="/superAdmins">Super Admins</Link>
           </li>
           <li>
-            <Link to="/trainers">Trainers</Link>
+            <Link to="/admins/trainers">Trainers</Link>
           </li>
         </ul>
       </nav>

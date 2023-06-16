@@ -105,7 +105,7 @@ const AdminForm = () => {
   };
 
   const cancel = () => {
-    history.push('/admins');
+    history.push('/superAdmins/admins');
   };
 
   const onSubmit = async (e) => {

@@ -71,7 +71,7 @@ function Admins() {
         {loading && <Spinner />}
         {!loading && (
           <div>
-            <Link to="/admins/form">
+            <Link to="/superAdmins/admins/form">
               <Button text="Create" type="create" />
             </Link>
             <Table
@@ -96,7 +96,7 @@ function Admins() {
         deleteFunction={() => handleDeleteAdmin()}
       />
       <section>
-        <Link to="/admins/form">
+        <Link to="/superAdmins/admins/form">
           <Button text="Create" type="create" />
         </Link>
         <p className={styles.info}>There is no Admin yet.</p>
