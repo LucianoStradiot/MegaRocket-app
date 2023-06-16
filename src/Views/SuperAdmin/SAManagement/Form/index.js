@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import TextInput from '../../Shared/TextInput';
-import Button from '../../Shared/Button';
-import Modal from '../../Shared/Modal';
+import TextInput from '../../../../Components/Shared/TextInput';
+import Button from '../../../../Components/Shared/Button';
+import Modal from '../../../../Components/Shared/Modal';
 import styles from './formSuperAdmin.module.css';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,8 +9,8 @@ import {
   createSuperAdmin,
   editSuperAdmin,
   getSuperAdmins
-} from '../../../Redux/SuperAdmins/thunks';
-import Spinner from '../../Shared/Spinner';
+} from '../../../../Redux/SuperAdmins/thunks';
+import Spinner from '../../../../Components/Shared/Spinner';
 
 const FormSuperAdmin = () => {
   const superAdmins = useSelector((state) => state.superAdmins.data);

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import Button from '../../Shared/Button';
-import TextInput from '../../Shared/TextInput';
-import Select from '../../Shared/Select';
-import Modal from '../../Shared/Modal';
+import Button from 'Components/Shared/Button';
+import TextInput from 'Components/Shared/TextInput';
+import Select from 'Components/Shared/Select';
+import Modal from 'Components/Shared/Modal';
 import styles from './form-classes.module.css';
-import Spinner from '../../Shared/Spinner';
+import Spinner from 'Components/Shared/Spinner';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClasses, createClass, updateClass } from '../../../Redux/Classes/thunks';
-import { getActivities } from '../../../Redux/Activities/thunks';
-import { getTrainers } from '../../../Redux/Trainers/thunks';
+import { getClasses, createClass, updateClass } from 'Redux/Classes/thunks';
+import { getActivities } from 'Redux/Activities/thunks';
+import { getTrainers } from 'Redux/Trainers/thunks';
 
 const FormClasses = () => {
   const dispatch = useDispatch();

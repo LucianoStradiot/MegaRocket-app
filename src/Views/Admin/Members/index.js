@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteMember, getMembers } from '../../Redux/Members/thunks';
+import { deleteMember, getMembers } from 'Redux/Members/thunks';
 import styles from './members.module.css';
-import Button from '../Shared/Button';
-import Modal from '../Shared/Modal';
-import Spinner from '../Shared/Spinner';
-import Table from '../Shared/Table';
+import Button from 'Components/Shared/Button';
+import Modal from 'Components/Shared/Modal';
+import Spinner from 'Components/Shared/Spinner';
+import Table from 'Components/Shared/Table';
 
 const Members = () => {
   const listMembers = useSelector((state) => state.members.data);
@@ -68,14 +68,14 @@ const Members = () => {
       {pending && <Spinner />}
       {!pending && (
         <div className={styles.subContainer}>
-          <Link className={styles.buttonCreate} to="/members/form">
+          <Link className={styles.buttonCreate} to="/admins/members/form">
             <Button text={'Create'} type={'add'} />
           </Link>
           <Table
             list={listMembers}
             column={['Name', 'Last Name', 'DNI', 'Phone', 'Email', 'Membership', 'Status', '']}
             fields={['firstName', 'lastName', 'dni', 'phone', 'email', 'membership', 'isActive']}
-            link={'/members/form/'}
+            link={'/admins/members/form/'}
             action={confirmDelete}
           />
         </div>
@@ -92,7 +92,7 @@ const Members = () => {
         deleteFunction={() => handledeleteMember(idMember)}
       />
       <section>
-        <Link to="/members/form">
+        <Link to="/admins/members/form">
           <Button text="Create" type="create" />
         </Link>
         <p className={styles.info}>There is no Member yet.</p>

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import styles from './classes.module.css';
-import Button from '../Shared/Button';
-import Modal from '../Shared/Modal';
-import Spinner from '../Shared/Spinner';
+import Button from 'Components/Shared/Button';
+import Modal from 'Components/Shared/Modal';
+import Spinner from 'Components/Shared/Spinner';
 import { Link } from 'react-router-dom';
-import { deleteClass, getClasses } from '../../Redux/Classes/thunks';
+import { deleteClass, getClasses } from 'Redux/Classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import Table from '../Shared/Table';
+import Table from 'Components/Shared/Table';
 
 function Classes() {
   const dispatch = useDispatch();
@@ -71,14 +71,14 @@ function Classes() {
       {loading && <Spinner />}
       {!loading && (
         <section>
-          <Link to="/classes/form">
+          <Link to="/admins/classes/form">
             <Button text="Create" type="create" />
           </Link>
           <Table
             list={classes}
             column={['Day', 'Hour', 'Trainer', 'Activity', 'Slots', '']}
             fields={['day', 'hour', 'trainer.lastName', 'activity.name', 'slots']}
-            link={'/classes/form/'}
+            link={'/admins/classes/form/'}
             action={openModalConfirm}
           />
         </section>
@@ -95,7 +95,7 @@ function Classes() {
         deleteFunction={() => handleDeleteClass()}
       />
       <section>
-        <Link to="/classes/form">
+        <Link to="/admins/classes/form">
           <Button text="Create" type="create" />
         </Link>
         <p className={styles.info}>There is no Class yet.</p>

@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import styles from './form-members.module.css';
-import TextInput from '../../Shared/TextInput';
-import Select from '../../Shared/Select';
-import Button from '../../Shared/Button';
-import DatePicker from '../../Shared/DatePicker';
+import TextInput from 'Components/Shared/TextInput';
+import Select from 'Components/Shared/Select';
+import Button from 'Components/Shared/Button';
+import DatePicker from 'Components/Shared/DatePicker';
 import { useHistory, useParams } from 'react-router-dom';
-import Modal from '../../Shared/Modal';
-import { createMember, getMembers, updateMember } from '../../../Redux/Members/thunks';
+import Modal from 'Components/Shared/Modal';
+import { createMember, getMembers, updateMember } from 'Redux/Members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import Spinner from '../../Shared/Spinner';
+import Spinner from 'Components/Shared/Spinner';
 
 const FormMembers = () => {
   const history = useHistory();

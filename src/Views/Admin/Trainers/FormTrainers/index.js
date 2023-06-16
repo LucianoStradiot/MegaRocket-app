@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Button from '../../Shared/Button';
-import TextInput from '../../Shared/TextInput';
-import Select from '../../Shared/Select';
-import Modal from '../../Shared/Modal';
+import Button from 'Components/Shared/Button';
+import TextInput from 'Components/Shared/TextInput';
+import Select from 'Components/Shared/Select';
+import Modal from 'Components/Shared/Modal';
 import styles from './form-trainers.module.css';
 import { useParams, useHistory } from 'react-router-dom';
-import { getTrainers, createTrainer, updateTrainer } from '../../../Redux/Trainers/thunks';
+import { getTrainers, createTrainer, updateTrainer } from 'Redux/Trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import Spinner from '../../Shared/Spinner';
+import Spinner from 'Components/Shared/Spinner';
 
 const FormTrainers = () => {
   const dispatch = useDispatch();

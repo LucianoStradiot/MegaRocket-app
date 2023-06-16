@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
-import Button from '../Shared/Button';
-import Modal from '../Shared/Modal';
+import Button from 'Components/Shared/Button';
+import Modal from 'Components/Shared/Modal';
 import { Link } from 'react-router-dom';
-import { deleteAdmin, getAdmins } from '../../Redux/Admins/thunks';
+import { deleteAdmin, getAdmins } from 'Redux/Admins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import Spinner from '../Shared/Spinner';
-import Table from '../Shared/Table';
+import Spinner from 'Components/Shared/Spinner';
+import Table from 'Components/Shared/Table';
 
 function Admins() {
   const [idDelete, setIdDelete] = useState('');
@@ -71,7 +71,7 @@ function Admins() {
         {loading && <Spinner />}
         {!loading && (
           <div>
-            <Link to="/admins/form">
+            <Link to="/superAdmins/admins/form">
               <Button text="Create" type="create" />
             </Link>
             <Table
@@ -96,7 +96,7 @@ function Admins() {
         deleteFunction={() => handleDeleteAdmin()}
       />
       <section>
-        <Link to="/admins/form">
+        <Link to="/superAdmins/admins/form">
           <Button text="Create" type="create" />
         </Link>
         <p className={styles.info}>There is no Admin yet.</p>

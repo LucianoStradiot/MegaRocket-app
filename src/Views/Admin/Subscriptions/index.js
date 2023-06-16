@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSubscriptions, deleteSubscription } from '../../Redux/Subscriptions/thunks';
+import { getSubscriptions, deleteSubscription } from 'Redux/Subscriptions/thunks';
 import style from './subscriptions.module.css';
-import Modal from '../Shared/Modal';
-import Button from '../Shared/Button';
-import Spinner from '../Shared/Spinner';
-import Table from '../Shared/Table';
+import Modal from 'Components/Shared/Modal';
+import Button from 'Components/Shared/Button';
+import Spinner from 'Components/Shared/Spinner';
+import Table from 'Components/Shared/Table';
 import { Link } from 'react-router-dom';
 
 function Subscriptions() {
@@ -67,14 +67,14 @@ function Subscriptions() {
       {pending && <Spinner />}
       {!pending && (
         <div>
-          <Link to="/subscriptions/form">
+          <Link to="/admins/subscriptions/form">
             <Button type="add" text="Create" className={style.btnCreate} />
           </Link>
           <Table
             list={subscriptions}
             column={['Date', 'Name', 'Class Hour', 'Activity Name', '']}
             fields={['date', 'member.lastName', 'classes.hour', 'classes.activity.name']}
-            link={'/subscriptions/form/'}
+            link={'/admins/subscriptions/form/'}
             action={openModalConfirm}
           />
         </div>
@@ -93,7 +93,7 @@ function Subscriptions() {
       {pending && <Spinner />}
       {!pending && (
         <section>
-          <Link to="/subscriptions/form/">
+          <Link to="/admins/subscriptions/form/">
             <Button text="Create" type="create" />
           </Link>
           <p className={style.info}>There is no Subscription yet.</p>

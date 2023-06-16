@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import styles from './activities.module.css';
-import Modal from '../Shared/Modal';
-import Button from '../Shared/Button';
+import styles from 'Views/Admin/Activities/activities.module.css';
+import Modal from 'Components/Shared/Modal';
+import Button from 'Components/Shared/Button';
 import { Link } from 'react-router-dom';
-import { getActivities, delActivities } from '../../Redux/Activities/thunks';
+import { getActivities, delActivities } from 'Redux/Activities/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import Spinner from '../Shared/Spinner';
-import Table from '../Shared/Table';
+import Spinner from 'Components/Shared/Spinner';
+import Table from 'Components/Shared/Table';
 
 function Activities() {
   const [isOpen, setIsOpen] = useState(false);
@@ -78,14 +78,14 @@ function Activities() {
       {loading && <Spinner />}
       {!loading && (
         <section>
-          <Link to="/activities/form">
+          <Link to="/admins/activities/form">
             <Button text="Create" />
           </Link>
           <Table
             list={activities}
             column={['Activity name', 'Description', 'Status', '']}
             fields={['name', 'description', 'isActive']}
-            link={'/activities/form/'}
+            link={'/admins/activities/form/'}
             action={confirmDelete}
           />
         </section>
@@ -102,7 +102,7 @@ function Activities() {
         deleteFunction={() => handleDelActivity()}
       />
       <section>
-        <Link to="/activities/form">
+        <Link to="/admins/activities/form">
           <Button text="Create" type="create" />
         </Link>
         <p className={styles.info}>There is no Activity yet.</p>
