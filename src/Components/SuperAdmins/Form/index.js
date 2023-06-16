@@ -4,9 +4,19 @@ import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
 import styles from './formSuperAdmin.module.css';
 import { useParams, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  createSuperAdmin,
+  editSuperAdmin,
+  getSuperAdmins
+} from '../../../Redux/SuperAdmins/thunks';
+import Spinner from '../../Shared/Spinner';
 
 const FormSuperAdmin = () => {
-  const [superAdmins, setSuperAdmin] = useState([]);
+  const superAdmins = useSelector((state) => state.superAdmins.data);
+  const isLoading = useSelector((state) => state.superAdmins.loading);
+  const dispatch = useDispatch();
+
   const [btnAddIsVisible, setAddVisible] = useState(false);
   const [btnSaveIsVisible, setSaveVisible] = useState(false);
   const [isUserCreated, setIsUserCreated] = useState(false);
@@ -23,113 +33,6 @@ const FormSuperAdmin = () => {
   const history = useHistory();
   const { id } = useParams();
 
-  const getSuperAdmins = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`);
-      const { data: superAdmins } = await response.json();
-      setSuperAdmin(superAdmins);
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message,
-        isConfirm: false
-      });
-      setModalIsOpen(true);
-    }
-  };
-
-  const createSuperAdmin = async () => {
-    try {
-      const createdSuperAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataForm)
-      });
-      const createdSuperAdminData = await createdSuperAdmin.json();
-      if (createdSuperAdmin.ok) {
-        if (superAdmins) {
-          setSuperAdmin((currentSuperAdmins) => {
-            return [...currentSuperAdmins, createdSuperAdminData.data];
-          });
-        } else {
-          setSuperAdmin(createdSuperAdminData.data);
-        }
-        setDataForm({
-          email: '',
-          password: ''
-        });
-        setResponseModal({
-          title: 'Success!',
-          description: createdSuperAdminData.message,
-          isConfirm: false
-        });
-        setModalIsOpen(true);
-        setIsUserCreated(true);
-      } else {
-        setResponseModal({
-          title: 'Error!',
-          description: createdSuperAdminData.message,
-          isConfirm: false
-        });
-        setIsUserCreated(false);
-        setModalIsOpen(true);
-      }
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message,
-        isConfirm: false
-      });
-      setModalIsOpen(true);
-    }
-  };
-
-  const updSuperAdmin = async () => {
-    try {
-      const updatedSuperAdmin = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/super-admin/${id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(dataForm)
-        }
-      );
-      const updSuperAdminData = await updatedSuperAdmin.json();
-      if (updatedSuperAdmin.ok) {
-        setDataForm({
-          email: '',
-          password: ''
-        });
-        setResponseModal({
-          title: 'Success!',
-          description: updSuperAdminData.message,
-          isConfirm: false
-        });
-        setIsUserCreated(true);
-        setModalIsOpen(true);
-      } else {
-        setResponseModal({
-          title: 'Error!',
-          description: updSuperAdminData.message,
-          isConfirm: false
-        });
-        setIsUserCreated(false);
-        setModalIsOpen(true);
-      }
-    } catch (error) {
-      setResponseModal({
-        title: 'Error!',
-        description: error.message,
-        isConfirm: false
-      });
-      setModalIsOpen(true);
-    }
-  };
-
   const onChange = (e) => {
     setDataForm({
       ...dataForm,
@@ -137,12 +40,43 @@ const FormSuperAdmin = () => {
     });
   };
 
-  const submit = (e) => {
-    e.preventDefault();
-    createSuperAdmin();
+  const submit = async () => {
+    const response = await dispatch(createSuperAdmin(dataForm));
+    if (response.error) {
+      setResponseModal({
+        title: 'Error!',
+        description: response.message,
+        isConfirm: false
+      });
+      setModalIsOpen(true);
+      setIsUserCreated(false);
+    } else {
+      setResponseModal({
+        title: 'Success!',
+        description: response.message
+      });
+      setModalIsOpen(true);
+      setIsUserCreated(true);
+    }
   };
-  const save = () => {
-    updSuperAdmin();
+
+  const save = async () => {
+    const response = await dispatch(editSuperAdmin(id, dataForm));
+    if (response.error) {
+      setResponseModal({
+        title: 'Error!',
+        description: response.message
+      });
+      setModalIsOpen(true);
+      setIsUserCreated(false);
+    } else {
+      setResponseModal({
+        title: 'Success!',
+        description: response.message
+      });
+      setModalIsOpen(true);
+      setIsUserCreated(true);
+    }
   };
 
   const formEdit = (id) => {
@@ -155,6 +89,7 @@ const FormSuperAdmin = () => {
         });
         setAddVisible(false);
         setSaveVisible(true);
+        setIsUserCreated(false);
       } else {
         return false;
       }
@@ -165,6 +100,7 @@ const FormSuperAdmin = () => {
       });
       setAddVisible(true);
       setSaveVisible(false);
+      setIsUserCreated(true);
     }
   };
 
@@ -177,7 +113,7 @@ const FormSuperAdmin = () => {
   };
 
   useEffect(() => {
-    getSuperAdmins();
+    dispatch(getSuperAdmins());
   }, []);
 
   useEffect(() => {
@@ -185,44 +121,47 @@ const FormSuperAdmin = () => {
   }, [superAdmins]);
 
   return (
-    <section className={styles.sectionForm}>
-      <Modal
-        title={responseModal.title}
-        desc={responseModal.description}
-        isOpen={isModalOpen}
-        confirmModal={responseModal.isConfirm}
-        handleClose={closeForm}
-      />
-      <form className={styles.form} id="form">
-        <div>
-          <div className={styles.inputContainer}>
-            <TextInput
-              labelName="Email"
-              inputType="text"
-              inputName="email"
-              id="email"
-              text={dataForm.email}
-              changeAction={onChange}
-            />
+    <>
+      {isLoading && <Spinner />}
+      <section className={styles.sectionForm}>
+        <Modal
+          title={responseModal.title}
+          desc={responseModal.description}
+          isOpen={isModalOpen}
+          confirmModal={responseModal.isConfirm}
+          handleClose={() => closeForm()}
+        />
+        <form className={styles.form} id="form">
+          <div>
+            <div className={styles.inputContainer}>
+              <TextInput
+                labelName="Email"
+                inputType="text"
+                inputName="email"
+                id="email"
+                text={dataForm.email}
+                changeAction={onChange}
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <TextInput
+                labelName="Password"
+                inputType="password"
+                inputName="password"
+                id="password"
+                text={dataForm.password}
+                changeAction={onChange}
+              />
+            </div>
           </div>
-          <div className={styles.inputContainer}>
-            <TextInput
-              labelName="Password"
-              inputType="password"
-              inputName="password"
-              id="password"
-              text={dataForm.password}
-              changeAction={onChange}
-            />
+          <div className={styles.btnContainer}>
+            <Button text="Cancel" clickAction={() => history.goBack()} type="cancel" />
+            {btnAddIsVisible && <Button text="Add" clickAction={() => submit()} type="add" />}
+            {btnSaveIsVisible && <Button text="Save" clickAction={() => save()} type="save" />}
           </div>
-        </div>
-        <div className={styles.btnContainer}>
-          <Button text="Cancel" clickAction={() => history.goBack()} type="cancel" />
-          {btnAddIsVisible && <Button text="Add" clickAction={submit} type="add" />}
-          {btnSaveIsVisible && <Button text="Save" clickAction={save} type="save" />}
-        </div>
-      </form>
-    </section>
+        </form>
+      </section>
+    </>
   );
 };
 
