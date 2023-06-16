@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import styles from './activities.module.css';
-import Modal from '../Shared/Modal';
-import Button from '../Shared/Button';
+import styles from 'Views/Admin/Activities/activities.module.css';
+import Modal from 'Components/Shared/Modal';
+import Button from 'Components/Shared/Button';
 import { Link } from 'react-router-dom';
-import { getActivities, delActivities } from '../../Redux/Activities/thunks';
+import { getActivities, delActivities } from 'Redux/Activities/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import Spinner from '../Shared/Spinner';
-import Table from '../Shared/Table';
+import Spinner from 'Components/Shared/Spinner';
+import Table from 'Components/Shared/Table';
 
 function Activities() {
   const [isOpen, setIsOpen] = useState(false);

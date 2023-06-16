@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import Button from '../../Shared/Button';
-import DatePicker from '../../Shared/DatePicker';
-import Select from '../../Shared/Select';
+import Button from 'Components/Shared/Button';
+import DatePicker from 'Components/Shared/DatePicker';
+import Select from 'Components/Shared/Select';
 import style from './formSubscriptions.module.css';
 import { useHistory, useParams } from 'react-router-dom';
-import Modal from '../../Shared/Modal';
-import Spinner from '../../Shared/Spinner';
+import Modal from 'Components/Shared/Modal';
+import Spinner from 'Components/Shared/Spinner';
 import {
   createSubscription,
   updateSubscription,
   getSubscriptions
-} from '../../../Redux/Subscriptions/thunks';
-import { getClasses } from '../../../Redux/Classes/thunks';
-import { getMembers } from '../../../Redux/Members/thunks';
+} from 'Redux/Subscriptions/thunks';
+import { getClasses } from 'Redux/Classes/thunks';
+import { getMembers } from 'Redux/Members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const FormSubscriptions = () => {

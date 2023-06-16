@@ -1,18 +1,14 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import Button from '../../Shared/Button';
-import TextInput from '../../Shared/TextInput';
-import TextArea from '../../Shared/TextArea';
-import Select from '../../Shared/Select';
-import Modal from '../../Shared/Modal';
+import Button from 'Components/Shared/Button';
+import TextInput from 'Components/Shared/TextInput';
+import TextArea from 'Components/Shared/TextArea';
+import Select from 'Components/Shared/Select';
+import Modal from 'Components/Shared/Modal';
 import styles from './FormActivities.module.css';
-import Spinner from '../../Shared/Spinner';
+import Spinner from 'Components/Shared/Spinner';
 import { useHistory, useParams } from 'react-router-dom';
-import {
-  getActivities,
-  createActivities,
-  updateActivities
-} from '../../../Redux/Activities/thunks';
+import { getActivities, createActivities, updateActivities } from 'Redux/Activities/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const FormActivities = () => {

@@ -1,23 +1,23 @@
-import Activities from '../Activities';
-import Admins from '../Admins/index';
-import Classes from '../Classes';
-import Members from '../Members';
-import Subscriptions from '../Subscriptions';
-import SuperAdmins from '../SuperAdmins';
-import Trainers from '../Trainers';
+import Activities from 'Views/Admin/Activities';
+import Classes from 'Views/Admin/Classes';
+import Members from 'Views/Admin/Members';
+import Subscriptions from 'Views/Admin/Subscriptions';
+import SuperAdmins from 'Views/SuperAdmin/SAManagement';
+import Trainers from 'Views/Admin/Trainers';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Home from '../Home/index';
-import Header from '../Header/index';
-import Footer from '../Footer/index';
-import styles from './layout.module.css';
-import FormMembers from '../Members/FormMembers';
-import FormSubscriptions from '../Subscriptions/FormSubscriptions/index';
-import FormActivity from '../Activities/FormActivity';
-import FormTrainers from '../Trainers/FormTrainers';
-import FormSuperAdmin from '../SuperAdmins/Form';
-import AdminForm from '../Admins/Form';
+import Home from 'Components/Home/index';
+import Header from 'Components/Header/index';
+import Footer from 'Components/Footer/index';
+import styles from 'Components/Layout/layout.module.css';
+import FormMembers from 'Views/Admin/Members/FormMembers';
+import FormSubscriptions from 'Views/Admin/Subscriptions/FormSubscriptions/index';
+import FormActivity from 'Views/Admin/Activities/FormActivity';
+import FormTrainers from 'Views/Admin/Trainers/FormTrainers';
+import FormSuperAdmin from 'Views/SuperAdmin/SAManagement/Form';
+import Admins from 'Views/SuperAdmin/AdminManagement/index';
+import AdminForm from 'Views/SuperAdmin/AdminManagement/Form';
 
-import FormClasses from '../Classes/FormClasses/index';
+import FormClasses from 'Views/Admin/Classes/FormClasses/index';
 
 function Layout() {
   return (

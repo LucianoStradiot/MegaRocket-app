@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteMember, getMembers } from '../../Redux/Members/thunks';
+import { deleteMember, getMembers } from 'Redux/Members/thunks';
 import styles from './members.module.css';
-import Button from '../Shared/Button';
-import Modal from '../Shared/Modal';
-import Spinner from '../Shared/Spinner';
-import Table from '../Shared/Table';
+import Button from 'Components/Shared/Button';
+import Modal from 'Components/Shared/Modal';
+import Spinner from 'Components/Shared/Spinner';
+import Table from 'Components/Shared/Table';
 
 const Members = () => {
   const listMembers = useSelector((state) => state.members.data);

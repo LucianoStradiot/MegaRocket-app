@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import styles from './admins-form.module.css';
-import Button from '../../Shared/Button';
-import TextInput from '../../Shared/TextInput';
-import Modal from '../../Shared/Modal';
+import Button from 'Components/Shared/Button';
+import TextInput from 'Components/Shared/TextInput';
+import Modal from 'Components/Shared/Modal';
 import { useParams, useHistory } from 'react-router-dom';
-import { createAdmin, getAdmins, putAdmins } from '../../../Redux/Admins/thunks';
+import { createAdmin, getAdmins, putAdmins } from 'Redux/Admins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import Spinner from '../../Shared/Spinner';
+import Spinner from 'Components/Shared/Spinner';
 const AdminForm = () => {
   const history = useHistory();
   const admins = useSelector((state) => state.admins.data);

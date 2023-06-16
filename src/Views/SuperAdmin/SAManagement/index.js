@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
-import Button from '../Shared/Button';
-import Modal from '../Shared/Modal';
+import Button from '../../../Components/Shared/Button';
+import Modal from '../../../Components/Shared/Modal';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSuperAdmins, deleteSuperAdmin } from '../../Redux/SuperAdmins/thunks';
-import Spinner from '../Shared/Spinner';
-import Table from '../Shared/Table';
+import { getSuperAdmins, deleteSuperAdmin } from '../../../Redux/SuperAdmins/thunks';
+import Spinner from '../../../Components/Shared/Spinner';
+import Table from '../../../Components/Shared/Table';
 
 function SuperAdmins() {
   const superAdmins = useSelector((state) => state.superAdmins.data);
