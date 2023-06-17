@@ -1,17 +1,14 @@
 import styles from './select.module.css';
 import React from 'react';
 
-const Select = ({ name, selectValue, selectID, changeAction, children }) => {
+const Select = ({ name, selectID, register, children, error }) => {
   return (
-    <select
-      className={styles.select}
-      id={selectID}
-      name={name}
-      onChange={changeAction}
-      value={selectValue}
-    >
-      {children}
-    </select>
+    <div>
+      <select {...register(name)} className={styles.select} id={selectID} name={name}>
+        {children}
+      </select>
+      {error && <p className={styles.errorMsg}>{error}</p>}
+    </div>
   );
 };
 
