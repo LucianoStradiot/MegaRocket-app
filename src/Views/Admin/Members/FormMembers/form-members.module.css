@@ -5,27 +5,30 @@
   align-items: center;
   margin-bottom: 5px;
 }
+
 .subContainer {
   display: grid;
-  gap: 10px;
+  gap: 0 20px;
   grid-template-columns: repeat(2, 1fr);
 }
+
 .form {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 500px;
+  width: 600px;
   color: #373867;
   background-color: #eee;
   padding: 25px;
   border-radius: 8px;
   margin: 10vh auto;
-  text-align: center;
 }
+
 .inputContainer {
   display: flex;
   flex-direction: column;
 }
+
 .contButton {
   display: flex;
   justify-content: space-between;

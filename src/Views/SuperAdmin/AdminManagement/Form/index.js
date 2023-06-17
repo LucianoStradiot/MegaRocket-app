@@ -7,19 +7,14 @@ import { useParams, useHistory } from 'react-router-dom';
 import { createAdmin, getAdmins, putAdmins } from 'Redux/Admins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
+
 const AdminForm = () => {
   const history = useHistory();
   const admins = useSelector((state) => state.admins.data);
   const { id } = useParams();
-  const [formChange, setFormChange] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    password: ''
-  });
   const dispatch = useDispatch();
   const [isAdminCreated, setIsAdminCreated] = useState(false);
   const loading = useSelector((state) => state.admins.isLoading);
@@ -27,33 +22,99 @@ const AdminForm = () => {
     title: '',
     description: ''
   });
+  const RGXPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+  const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
+
+  const schema = Joi.object({
+    firstName: Joi.string()
+      .min(3)
+      .max(25)
+      .pattern(/^[a-zA-Z-]+$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'First name must contain letters only',
+        'string.min': 'First name can´t be shorter than 3 characters',
+        'string.max': 'First name can´t be longer than 25 characters',
+        'string.empty': 'First name can´t be empty'
+      }),
+    lastName: Joi.string()
+      .min(3)
+      .max(25)
+      .pattern(/^[a-zA-Z-]+$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'Last name must contain letters only',
+        'string.min': 'Last name can´t be shorter than 3 characters',
+        'string.max': 'Last name can´t be longer than 25 characters',
+        'string.empty': 'Last name can´t be empty'
+      }),
+    dni: Joi.string().min(7).max(9).required().messages({
+      'string.min': 'DNI must have 7-9 digits',
+      'string.max': 'DNI must have 7-9 digits',
+      'string.empty': 'DNI can´t be empty'
+    }),
+    phone: Joi.string()
+      .regex(/^[0-9]*$/)
+      .length(10)
+      .required()
+      .messages({
+        'string.length': 'Phone number must have 10 digits',
+        'string.empty': 'Phone number can´t be empty',
+        'string.pattern.base': 'Phone number must be only numbers'
+      }),
+    email: Joi.string().regex(RGXEmail).required().messages({
+      'string.empty': 'Email can´t be empty',
+      'string.pattern.base': 'Email must be in a valid format'
+    }),
+    city: Joi.string()
+      .min(4)
+      .pattern(/^[A-Za-z\s]+$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'City must contain letters and spaces only',
+        'string.empty': 'City can´t be empty',
+        'string.min': 'City must have at least 4 characters'
+      }),
+    password: Joi.string().regex(RGXPass).required().messages({
+      'string.pattern.base':
+        'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
+      'string.empty': 'Password can´t be empty'
+    })
+  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors }
+  } = useForm({ mode: 'onSubmit', resolver: joiResolver(schema) });
 
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     formEdit(id);
   }, []);
+
   useEffect(() => {
     dispatch(getAdmins());
   }, [dispatch]);
+
   const formEdit = (id) => {
     if (id) {
       const data = admins.find((aux) => aux._id === id);
       if (data) {
-        setFormChange({
-          firstName: data.firstName,
-          lastName: data.lastName,
-          dni: data.dni,
-          phone: data.phone,
-          email: data.email,
-          city: data.city,
-          password: data.password
-        });
+        setValue('firstName', data.firstName);
+        setValue('lastName', data.lastName);
+        setValue('dni', data.dni.toString());
+        setValue('phone', data.phone.toString());
+        setValue('email', data.email);
+        setValue('city', data.city);
+        setValue('password', data.password);
       }
     }
   };
 
-  const handleCreateAdmin = async () => {
+  const handleCreateAdmin = async (formChange) => {
     try {
       const response = await dispatch(createAdmin(formChange));
       if (!response.error) {
@@ -76,7 +137,7 @@ const AdminForm = () => {
     }
   };
 
-  const handleupdateAdmins = async () => {
+  const handleupdateAdmins = async (formChange) => {
     const payload = {
       id: id,
       body: formChange
@@ -104,24 +165,8 @@ const AdminForm = () => {
     }
   };
 
-  const cancel = () => {
-    history.push('/superAdmins/admins');
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (id) {
-      handleupdateAdmins();
-    } else {
-      handleCreateAdmin();
-    }
-  };
-
-  const onChangeInput = (e) => {
-    setFormChange({
-      ...formChange,
-      [e.target.name]: e.target.value
-    });
+  const onSubmit = (data) => {
+    id ? handleupdateAdmins(data) : handleCreateAdmin(data);
   };
 
   const switchIsOpen = () => {
@@ -146,83 +191,86 @@ const AdminForm = () => {
         handleClose={() => closeForm()}
       />
       {loading && <Spinner />}
-      <form className={styles.form} onSubmit={onSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.subContainer}>
           <div>
             <TextInput
               labelName="First name"
               inputType="text"
-              inputName="firstName"
+              name="firstName"
               id="firstName"
-              text={formChange.firstName}
-              changeAction={(e) => onChangeInput(e)}
+              register={register}
+              error={errors.firstName?.message}
             />
           </div>
           <div>
             <TextInput
               labelName="Last name"
               inputType="text"
-              inputName="lastName"
+              name="lastName"
               id="lastName"
-              text={formChange.lastName}
-              changeAction={(e) => onChangeInput(e)}
+              register={register}
+              error={errors.lastName?.message}
             />
           </div>
           <div>
             <TextInput
               labelName="DNI"
               inputType="text"
-              inputName="dni"
+              name="dni"
               id="dni"
-              text={formChange.dni}
-              changeAction={(e) => onChangeInput(e)}
+              register={register}
+              error={errors.dni?.message}
             />
           </div>
           <div>
             <TextInput
               labelName="Phone"
               inputType="text"
-              inputName="phone"
+              name="phone"
               id="phone"
-              text={formChange.phone}
-              changeAction={(e) => onChangeInput(e)}
+              register={register}
+              error={errors.phone?.message}
             />
           </div>
           <div>
             <TextInput
               labelName="Email"
               inputType="text"
-              inputName="email"
+              name="email"
               id="email"
-              text={formChange.email}
-              changeAction={(e) => onChangeInput(e)}
+              register={register}
+              error={errors.email?.message}
             />
           </div>
           <div>
             <TextInput
               labelName="City"
               inputType="text"
-              inputName="city"
+              name="city"
               id="city"
-              text={formChange.city}
-              changeAction={(e) => onChangeInput(e)}
+              register={register}
+              error={errors.city?.message}
             />
           </div>
           <div>
             <TextInput
               labelName="Password"
               inputType="password"
-              inputName="password"
+              name="password"
               id="password"
-              text={formChange.password}
-              changeAction={(e) => onChangeInput(e)}
+              register={register}
+              error={errors.password?.message}
             />
           </div>
         </div>
         <div className={styles.btnContainer}>
-          <Button text="Cancel" clickAction={cancel} type="cancel" />
-          {!id && <Button text="Add" clickAction={onSubmit} type="Create" />}
-          {id && <Button text="Save" clickAction={onSubmit} type="Create" />}
+          <div>
+            <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
+            <Button text="Reset" type="reset" clickAction={() => reset()} />
+          </div>
+          {!id && <Button text="Add" type="submit" />}
+          {id && <Button text="Save" type="submit" />}
         </div>
       </form>
     </section>

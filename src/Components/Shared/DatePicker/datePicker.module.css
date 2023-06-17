@@ -12,7 +12,16 @@
   width: 100%;
   text-align: center;
   margin-top: 10px;
+  margin-bottom: 10px;
   height: 40px;
   border-radius: 5px;
   border: 1px solid #ccc;
+}
+
+.errorMsg {
+  color: #EA3354;
+  font-size: 14px;
+  margin-top: -5px;
+  margin-bottom: 20px;
+  height: 5px;
 }

@@ -1,7 +1,7 @@
 import styles from './datePicker.module.css';
 import React from 'react';
 
-const DatePicker = ({ title, name, val, changeAction }) => {
+const DatePicker = ({ title, name, val, register, error }) => {
   return (
     <section className={styles.container}>
       <label className={styles.label}>{title}</label>
@@ -10,9 +10,9 @@ const DatePicker = ({ title, name, val, changeAction }) => {
         defaultValue={val ? val.substring(0, 10) : ''}
         type="date"
         name={name}
-        value={val}
-        onChange={changeAction}
+        {...register(name)}
       ></input>
+      <p className={styles.errorMsg}>{error}</p>
     </section>
   );
 };
