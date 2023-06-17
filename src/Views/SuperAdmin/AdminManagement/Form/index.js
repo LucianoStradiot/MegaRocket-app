@@ -32,7 +32,7 @@ const AdminForm = () => {
       .pattern(/^[a-zA-Z-]+$/)
       .required()
       .messages({
-        'string.pattern.base': 'First name must contain letters or hyphens only',
+        'string.pattern.base': 'First name must contain letters only',
         'string.min': 'First name can´t be shorter than 3 characters',
         'string.max': 'First name can´t be longer than 25 characters',
         'string.empty': 'First name can´t be empty'
@@ -43,7 +43,7 @@ const AdminForm = () => {
       .pattern(/^[a-zA-Z-]+$/)
       .required()
       .messages({
-        'string.pattern.base': 'Last name must contain letters or hyphens only',
+        'string.pattern.base': 'Last name must contain letters only',
         'string.min': 'Last name can´t be shorter than 3 characters',
         'string.max': 'Last name can´t be longer than 25 characters',
         'string.empty': 'Last name can´t be empty'
@@ -105,7 +105,7 @@ const AdminForm = () => {
       if (data) {
         setValue('firstName', data.firstName);
         setValue('lastName', data.lastName);
-        setValue('dni', data.dni);
+        setValue('dni', data.dni.toString());
         setValue('phone', data.phone.toString());
         setValue('email', data.email);
         setValue('city', data.city);

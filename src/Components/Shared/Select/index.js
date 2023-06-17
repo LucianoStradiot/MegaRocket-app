@@ -7,7 +7,7 @@ const Select = ({ name, selectID, register, children, error }) => {
       <select {...register(name)} className={styles.select} id={selectID} name={name}>
         {children}
       </select>
-      {error && <p className={styles.errorMsg}>{error}</p>}
+      <p className={styles.errorMsg}>{error}</p>
     </div>
   );
 };

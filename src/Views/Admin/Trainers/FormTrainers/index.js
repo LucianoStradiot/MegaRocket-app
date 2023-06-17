@@ -32,7 +32,10 @@ const FormTrainers = () => {
       .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
       .required()
       .messages({
-        'string.pattern.base': 'Name must contain only letters'
+        'string.pattern.base': 'First name must contain letters only',
+        'string.min': 'First name can´t be shorter than 3 characters',
+        'string.max': 'First name can´t be longer than 25 characters',
+        'string.empty': 'First name can´t be empty'
       }),
     lastName: Joi.string()
       .min(3)
@@ -40,20 +43,52 @@ const FormTrainers = () => {
       .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
       .required()
       .messages({
-        'string.pattern.base': 'Last name must contain only letters'
+        'string.pattern.base': 'Last name must contain letters only',
+        'string.min': 'Last name can´t be shorter than 3 characters',
+        'string.max': 'Last name can´t be longer than 25 characters',
+        'string.empty': 'Last name can´t be empty'
       }),
-    dni: Joi.number().min(1000000).max(99999999).required(),
-    phone: Joi.number().min(1000000000).max(9999999999).required(),
-    email: Joi.string().regex(RGXEmail).required(),
+    dni: Joi.string().min(7).max(9).required().messages({
+      'string.min': 'DNI must have 7-9 digits',
+      'string.max': 'DNI must have 7-9 digits',
+      'string.empty': 'DNI can´t be empty'
+    }),
+    phone: Joi.string()
+      .regex(/^[0-9]*$/)
+      .length(10)
+      .required()
+      .messages({
+        'string.length': 'Phone number must have 10 digits',
+        'string.empty': 'Phone number can´t be empty',
+        'string.pattern.base': 'Phone number must be only numbers'
+      }),
+    email: Joi.string().regex(RGXEmail).required().messages({
+      'string.empty': 'Email can´t be empty',
+      'string.pattern.base': 'Email must be in a valid format'
+    }),
     city: Joi.string()
       .min(3)
       .regex(/^[a-zA-Z\s.,]+$/)
-      .required(),
-    password: Joi.string().regex(RGXPass).min(8).required().messages({
+      .required()
+      .messages({
+        'string.pattern.base': 'City must contain letters and spaces only',
+        'string.empty': 'City can´t be empty',
+        'string.min': 'City must have at least 4 characters'
+      }),
+    password: Joi.string().regex(RGXPass).required().messages({
       'string.pattern.base':
-        'Password must contain at least one uppercase letter, one lowercase letter, and one digit'
+        'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
+      'string.empty': 'Password can´t be empty'
     }),
-    salary: Joi.number().min(1).required(),
+    salary: Joi.string()
+      .regex(/^[0-9]*$/)
+      .min(1)
+      .required()
+      .messages({
+        'string.pattern.base': 'Salary must contain letters and spaces only',
+        'string.empty': 'Salary can´t be empty',
+        'string.min': 'salary must have at least 1 characters'
+      }),
     isActive: Joi.boolean()
   });
   const {
@@ -125,12 +160,12 @@ const FormTrainers = () => {
       if (data) {
         setValue('firstName', data.firstName);
         setValue('lastName', data.lastName);
-        setValue('dni', data.dni);
-        setValue('phone', data.phone);
+        setValue('dni', data.dni.toString());
+        setValue('phone', data.phone.toString());
         setValue('email', data.email);
         setValue('city', data.city);
         setValue('password', data.password);
-        setValue('salary', data.salary);
+        setValue('salary', data.salary.toString());
         setValue('isActive', data.isActive);
         setAddVisible(false);
         setActiveVisible(true);
