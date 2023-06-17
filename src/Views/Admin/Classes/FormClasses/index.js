@@ -43,14 +43,10 @@ const FormClasses = () => {
         'any.only': 'Invalid day'
       }),
     hour: Joi.string()
-      .min(5)
-      .max(5)
-      .regex(/^([01]\d|2[0-3]):([0-5]\d)$/)
+      .regex(/^((0[9]|1[0-9]|2[01]):00)$/)
       .required()
       .messages({
-        'string.pattern.base': 'Hour must be in the format hh:mm',
-        'string.min': 'Hour must be at least 5 characters long',
-        'string.max': 'Hour must not exceed 5 characters'
+        'string.pattern.base': 'The classes always starts from 9:00 am to 21:00 pm sharp'
       }),
     trainer: Joi.string()
       .pattern(/^[a-zA-Z0-9]{24}$/)
@@ -132,11 +128,11 @@ const FormClasses = () => {
     dispatch(getClasses());
     dispatch(getActivities());
     dispatch(getTrainers());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     formEdit(id);
-  }, [classes]);
+  }, []);
 
   const formEdit = (id) => {
     if (id) {
@@ -170,6 +166,23 @@ const FormClasses = () => {
     setIsOpen(!isOpen);
   };
 
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const hours = [
+    '9:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
+    '18:00',
+    '19:00',
+    '20:00',
+    '21:00'
+  ];
+
   return (
     <div>
       <Modal
@@ -188,20 +201,29 @@ const FormClasses = () => {
             <option value="undefined" defaultValue>
               Choose a Day
             </option>
-            <option value="Monday">Monday</option>
-            <option value="Tuesday">Tuesday</option>
-            <option value="Wednesday">Wednesday</option>
-            <option value="Thursday">Thursday</option>
-            <option value="Friday">Friday</option>
-            <option value="Saturday">Saturday</option>
+            {days.map((day, index) => {
+              return (
+                <option key={index} value={day}>
+                  {day}
+                </option>
+              );
+            })}
           </Select>
-          <TextInput
-            name="hour"
-            inputType="text"
-            labelName="Hour"
-            register={register}
-            error={errors.hour?.message}
-          />
+          <label className={styles.label} htmlFor="hour">
+            Hour
+          </label>
+          <Select name="hour" selectID="hour" register={register} error={errors.hour?.message}>
+            <option value="undefined" defaultValue>
+              Choose an hour
+            </option>
+            {hours.map((hour, index) => {
+              return (
+                <option key={index} value={hour}>
+                  {hour}
+                </option>
+              );
+            })}
+          </Select>
           <label className={styles.label} htmlFor="trainer">
             Trainer
           </label>
