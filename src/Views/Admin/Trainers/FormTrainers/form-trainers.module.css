@@ -12,17 +12,18 @@
   background-color: #eee;
   padding: 25px;
   border-radius: 8px;
-  width: 400px;
+  width: 510px;
   margin: 10vh auto;
 }
 
 .subContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: 0 20px;
 }
 
 .btnContainer {
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }
