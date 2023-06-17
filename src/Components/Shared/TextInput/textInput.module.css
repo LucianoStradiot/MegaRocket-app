@@ -26,3 +26,9 @@
   width: 100%;
   margin-bottom: 10px;
 }
+
+.errorMsg {
+  color: #EA3354;
+  font-size: 14px;
+  margin-top: 0px;
+}
