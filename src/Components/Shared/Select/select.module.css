@@ -18,5 +18,7 @@
 .errorMsg {
   color: #EA3354;
   font-size: 14px;
-  margin-top: 0px;
+  margin-top: -5px;
+  margin-bottom: 20px;
+  height: 5px;
 }

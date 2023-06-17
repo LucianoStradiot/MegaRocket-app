@@ -6,7 +6,7 @@ const TextInput = ({ inputType, labelName, name, register, error }) => {
     <div>
       <label className={styles['form-label']}>{labelName}</label>
       <input {...register(name)} className={styles['form-input']} name={name} type={inputType} />
-      {error && <p className={styles.errorMsg}>{error}</p>}
+      <p className={styles.errorMsg}>{error}</p>
     </div>
   );
 };
