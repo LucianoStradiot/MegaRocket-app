@@ -62,7 +62,7 @@ const FormClasses = () => {
         'string.pattern.base': 'Activity should refer to a valid ID',
         'any.required': 'Activity is required'
       }),
-    slots: Joi.number().positive().min(2).max(15).optional()
+    slots: Joi.number().positive().integer().min(2).max(15).optional()
   });
 
   const {
