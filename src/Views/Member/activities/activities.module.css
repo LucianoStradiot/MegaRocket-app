@@ -1,3 +1,7 @@
+.containerTotal {
+  display: flex;
+}
+
 .boxActivity {
   display: flex;
   flex-direction: column;
@@ -14,17 +18,18 @@
 .boxActivity:hover {
   background-color: #f9fff6;
   transform: translateY(-5px);
+  transition: all 0.18s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   border: 2px solid #373867;
 }
 
-.container {
+/* .containerSidebar {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .titleActivity {
   text-transform: capitalize;
@@ -49,4 +54,54 @@
   border-bottom: 1px solid #aaa;
   font-weight: 600;
   color: #373867;
+}
+
+.containerSidebar {
+  width: 200px;
+
+  background-color: #e7e7e7;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  color: #1b1b5d;
+}
+
+.containerSidebar div {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  padding: 12px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.btn {
+  width: 150px;
+  background-color: #3a3b7b;
+  border: none;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 7px 12px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #fff;
+}
+
+.contact {
+  border: 2px solid #fff;
+}
+
+.contact li {
+  color: #1b1b5d;
+  text-decoration: none;
+  list-style: none;
+}
+
+.btn:hover {
+  background-color: #1b1b5d;
 }

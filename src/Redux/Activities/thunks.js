@@ -45,7 +45,6 @@ export const getActiveActivities = () => {
       });
       if (response.ok) {
         const activities = await response.json();
-        console.log(activities);
         const activeActivities = activities.data.filter((activity) => activity.isActive === true);
         if (activeActivities.length > 0) {
           dispatch(getActiveActivitiesSuccess(activeActivities));

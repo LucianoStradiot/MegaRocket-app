@@ -38,7 +38,6 @@ function Layout() {
             <Route path="/member/schedule" exact component={scheduleMember} />
             <Route path="/member/signUp" exact component={signUpMember} />
             <Route path="/" exact component={Home} />
-            <Route path="/memberUser" exact component={MemberUser} />
             <Route path="/admins/activities" exact component={Activities} />
             <Route path="/admins/activities/form" exact component={FormActivity} />
             <Route path="/admins/activities/form/:id" component={FormActivity} />
