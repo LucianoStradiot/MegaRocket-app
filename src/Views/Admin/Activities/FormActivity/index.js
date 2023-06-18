@@ -49,16 +49,17 @@ const FormActivities = () => {
       .required()
       .messages({
         'string.pattern.base': 'The description must contain letters only',
-        'string.min': 'The description cant be shorter than 3 characters',
-        'string.max': 'The description cant be longer than 15 characters',
+        'string.min': 'The description cant be shorter than 40 characters',
+        'string.max': 'The description cant be longer than 250 characters',
         'string.empty': 'The description cant be empty'
       }),
-    isActive: Joi.boolean().default(false)
+    isActive: Joi.boolean()
   });
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors }
   } = useForm({
     mode: 'onSubmit',
@@ -122,6 +123,9 @@ const FormActivities = () => {
     if (id) {
       const data = activities.find((activity) => activity._id === id);
       if (data) {
+        setValue('name', data.name);
+        setValue('description', data.description);
+        setValue('isActive', data.isActive);
         setAddVisible(false);
         setActiveVisible(true);
         setSaveVisible(true);
@@ -181,18 +185,23 @@ const FormActivities = () => {
             <TextArea name="description" register={register} error={errors.description?.message} />
           </div>
           {activeVisible && (
-            <Select name="isActive" register={register}>
-              <option value={true}>Active</option>
-              <option value={false}>Inactive</option>
-            </Select>
+            <div>
+              <label>Status</label>
+              <Select name="isActive" register={register} error={errors.isActive?.message}>
+                <option value={true}>Active</option>
+                <option value={false}>Inactive</option>
+              </Select>
+            </div>
           )}
           <div className={styles.btnContainer}>
-            <Button text="Cancel" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="reset" clickAction={() => reset()} />
-            {buttonAddIsVisible && <Button text="Add" clickAction={handleCreateActivity} />}
+            <div>
+              <Button text="Cancel" clickAction={() => history.goBack()} />
+              <Button text="Reset" type="reset" clickAction={() => reset()} />
+            </div>
+            {buttonAddIsVisible && <Button text="Add" type="submit" />}
             {buttonSaveIsVisible && (
               <div>
-                <Button clickAction={handleUpdateActivity} text="Save" />
+                <Button type="submit" text="Save" />
               </div>
             )}
           </div>
