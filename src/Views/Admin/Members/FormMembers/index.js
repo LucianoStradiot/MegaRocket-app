@@ -9,6 +9,9 @@ import Modal from 'Components/Shared/Modal';
 import { createMember, getMembers, updateMember } from 'Redux/Members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 
 const FormMembers = () => {
   const history = useHistory();
@@ -22,25 +25,94 @@ const FormMembers = () => {
     title: '',
     desc: ''
   });
+  const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
+
+  const schema = Joi.object({
+    firstName: Joi.string()
+      .min(3)
+      .max(11)
+      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'First name must contain letters only',
+        'string.min': 'First name can´t be shorter than 3 characters',
+        'string.max': 'First name can´t be longer than 25 characters',
+        'string.empty': 'First name can´t be empty'
+      }),
+    lastName: Joi.string()
+      .min(3)
+      .max(30)
+      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'Last name must contain letters only',
+        'string.min': 'Last name can´t be shorter than 3 characters',
+        'string.max': 'Last name can´t be longer than 25 characters',
+        'string.empty': 'Last name can´t be empty'
+      }),
+    email: Joi.string().regex(RGXEmail).required().messages({
+      'string.empty': 'Email can´t be empty',
+      'string.pattern.base': 'Email must be in a valid format'
+    }),
+    dni: Joi.string().min(7).max(9).required().messages({
+      'string.min': 'DNI must have 7-9 digits',
+      'string.max': 'DNI must have 7-9 digits',
+      'string.empty': 'DNI can´t be empty'
+    }),
+    phone: Joi.string()
+      .regex(/^[0-9]*$/)
+      .length(10)
+      .required()
+      .messages({
+        'string.length': 'Phone number must have 10 digits',
+        'string.empty': 'Phone number can´t be empty',
+        'string.pattern.base': 'Phone number must be only numbers'
+      }),
+    city: Joi.string()
+      .min(3)
+      .regex(/^[a-zA-Z\s.,]+$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'City must contain letters and spaces only',
+        'string.empty': 'City can´t be empty',
+        'string.min': 'City must have at least 4 characters'
+      }),
+    birthday: Joi.date().required().messages({
+      'date.base': 'Invalid birth date format'
+    }),
+    postalCode: Joi.string()
+      .regex(/^[0-9]*$/)
+      .min(4)
+      .max(5)
+      .required()
+      .messages({
+        'string.length': 'Postal code must have between 4 and 5 digits',
+        'string.empty': 'Postal code can´t be empty',
+        'string.pattern.base': 'Postal code must be only numbers'
+      }),
+    membership: Joi.string()
+      .valid('Only Classes Membership', 'Classic Membership', 'Black Membership')
+      .required()
+      .messages({
+        'any.required': 'Membership is required',
+        'any.only': 'Invalid Membership'
+      }),
+    isActive: Joi.boolean()
+  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors }
+  } = useForm({
+    mode: 'onSubmit',
+    resolver: joiResolver(schema)
+  });
 
   useEffect(() => {
     dispatch(getMembers());
   }, []);
-
-  const initialMemberValues = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    dni: '',
-    phone: '',
-    city: '',
-    birthday: '',
-    postalCode: '',
-    membership: '',
-    isActive: true
-  };
-
-  const [memberValues, setMemberValues] = useState(initialMemberValues);
 
   useEffect(() => {
     formEdit(id);
@@ -50,43 +122,24 @@ const FormMembers = () => {
     if (id) {
       const data = listMembers.find((aux) => aux._id === id);
       if (data) {
-        setMemberValues({
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          dni: data.dni,
-          phone: data.phone,
-          city: data.city,
-          birthday: data.birthday,
-          postalCode: data.postalCode,
-          membership: data.membership,
-          isActive: data.isActive
-        });
-        setIsMemberCreated(true);
+        setValue('firstName', data.firstName);
+        setValue('lastName', data.lastName);
+        setValue('email', data.email);
+        setValue('dni', data.dni.toString());
+        setValue('phone', data.phone.toString());
+        setValue('city', data.city);
+        setValue('birthday', data.birthday.toString().substring(0, 10));
+        setValue('postalCode', data.postalCode.toString());
+        setValue('membership', data.membership);
+        setValue('isActive', data.isActive);
       }
-    } else {
-      setMemberValues(initialMemberValues);
-      setIsMemberCreated(false);
     }
   };
 
-  const onChange = ({ target: { name, value } }) => {
-    setMemberValues({
-      ...memberValues,
-      [name]: value
-    });
+  const onSubmit = (data) => {
+    id ? handleUpdateMember(data) : addMember(data);
   };
-
-  const submit = (e) => {
-    e.preventDefault();
-    if (!id) {
-      addMember();
-    } else {
-      handleUpdateMember();
-    }
-  };
-
-  const handleUpdateMember = async () => {
+  const handleUpdateMember = async (memberValues) => {
     const payload = {
       id: id,
       body: memberValues
@@ -107,7 +160,7 @@ const FormMembers = () => {
     }
   };
 
-  const addMember = async () => {
+  const addMember = async (memberValues) => {
     try {
       const dataResponse = await dispatch(createMember(memberValues));
       const modalData = {
@@ -149,88 +202,88 @@ const FormMembers = () => {
         handleClose={closeForm}
       />
       {loading && <Spinner />}
-      <form className={styles.form} onSubmit={submit}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.subContainer}>
           <div>
             <TextInput
               labelName={'First Name'}
-              inputName={'firstName'}
-              changeAction={onChange}
+              name={'firstName'}
               inputType={'text'}
-              text={memberValues.firstName}
+              register={register}
+              error={errors.firstName?.message}
             />
           </div>
           <div>
             <TextInput
               labelName={'Last Name'}
-              inputName={'lastName'}
-              changeAction={onChange}
+              name={'lastName'}
               inputType={'text'}
-              text={memberValues.lastName}
+              register={register}
+              error={errors.lastName?.message}
             />
           </div>
           <div>
             <TextInput
               labelName={'Email'}
-              inputName={'email'}
-              changeAction={onChange}
+              name={'email'}
               inputType={'text'}
-              text={memberValues.email}
+              register={register}
+              error={errors.email?.message}
             />
           </div>
           <div>
             <TextInput
               labelName={'DNI'}
-              inputName={'dni'}
-              changeAction={onChange}
+              name={'dni'}
               inputType={'text'}
-              text={memberValues.dni}
+              register={register}
+              error={errors.dni?.message}
             />
           </div>
           <div>
             <TextInput
               labelName={'Phone'}
-              inputName={'phone'}
-              changeAction={onChange}
+              name={'phone'}
               inputType={'text'}
-              text={memberValues.phone}
+              register={register}
+              error={errors.phone?.message}
             />
           </div>
           <div>
             <TextInput
               labelName={'City'}
-              inputName={'city'}
-              changeAction={onChange}
+              name={'city'}
               inputType={'text'}
-              text={memberValues.city}
+              register={register}
+              error={errors.city?.message}
             />
           </div>
           <div>
             <TextInput
               labelName={'PostalCode'}
-              inputName={'postalCode'}
-              changeAction={onChange}
+              name={'postalCode'}
               inputType={'text'}
-              text={memberValues.postalCode}
+              register={register}
+              error={errors.postalCode?.message}
             />
           </div>
           <div className={styles.contDate}>
             <DatePicker
-              changeAction={onChange}
               name={'birthday'}
               title={'Birthday'}
-              val={memberValues.birthday}
+              register={register}
+              error={errors.birthday?.message}
             />
           </div>
           <div className={styles.inputContainer}>
             <label>Membership</label>
             <Select
-              changeAction={onChange}
               name={'membership'}
               selectID={''}
-              selectValue={memberValues.membership}
+              register={register}
+              error={errors.membership?.message}
             >
-              <option value="">Seleccionar</option>
+              <option value="">Choose a membership</option>
               <option value="Black Membership">Black Membership</option>
               <option value="Classic Membership">Classic Membership</option>
               <option value="Only Classes Membership">Only Classes Membership</option>
@@ -240,12 +293,7 @@ const FormMembers = () => {
             {id && (
               <>
                 <label className={styles.label}>Status</label>
-                <Select
-                  changeAction={onChange}
-                  name={'isActive'}
-                  selectID={''}
-                  selectValue={memberValues.isActive}
-                >
+                <Select name={'isActive'} selectID={''} register={register}>
                   <option value={true}>Active</option>
                   <option value={false}>Inactive</option>
                 </Select>
@@ -254,8 +302,11 @@ const FormMembers = () => {
           </div>
         </div>
         <div className={styles.contButton}>
-          <Button clickAction={() => history.goBack()} text={'Cancel'} />
-          <Button clickAction={submit} text={id ? 'Save' : 'Add'} />
+          <div>
+            <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
+            <Button text="Reset" type="reset" clickAction={() => reset()} />
+          </div>
+          <Button type="submit" text={id ? 'Save' : 'Add'} />
         </div>
       </form>
     </section>

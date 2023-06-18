@@ -1,0 +1,50 @@
+.container {
+  width: 200px;
+  height: 100vh;
+  background-color: #e7e7e7;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  align-items: center;
+}
+
+.title {
+  color: #1b1b5d;
+}
+
+.container div {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  padding: 12px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.btn {
+  width: 150px;
+  background-color: #3a3b7b;
+  border: none;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 7px 12px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #fff;
+}
+
+.contact {
+  border: 2px solid #fff;
+}
+
+.contact li {
+  color: #1b1b5d;
+  text-decoration: none;
+  list-style: none;
+}
+
+.btn:hover {
+  background-color: #1b1b5d;
+}

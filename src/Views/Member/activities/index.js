@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
-import styles from './activityInfo.module.css';
+import styles from './activities.module.css';
 import { getActiveActivities } from 'Redux/Activities/thunks';
 const ActivityInfo = () => {
   const activities = useSelector((state) => state.activities.data);

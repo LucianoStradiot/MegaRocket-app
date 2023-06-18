@@ -16,9 +16,14 @@ import FormTrainers from 'Views/Admin/Trainers/FormTrainers';
 import FormSuperAdmin from 'Views/SuperAdmin/SAManagement/Form';
 import Admins from 'Views/SuperAdmin/AdminManagement/index';
 import AdminForm from 'Views/SuperAdmin/AdminManagement/Form';
-import MemberUser from 'Views/MemberUser';
+import activitiesMember from 'Views/Member/activities';
+import loginMember from 'Views/Member/login';
+import membershipMember from 'Views/Member/memberships';
+import scheduleMember from 'Views/Member/schedule';
+import signUpMember from 'Views/Member/signUp';
 import FormClasses from 'Views/Admin/Classes/FormClasses/index';
-import ActivityInfo from 'Views/MemberUser/ActivityInfo/index';
+import MemberUser from 'Views/Member';
+
 function Layout() {
   return (
     <>
@@ -26,9 +31,14 @@ function Layout() {
         <Header />
         <div className={styles.container}>
           <Switch>
+            <Route path="/member" exact component={MemberUser} />
+            <Route path="/member/activities" exact component={activitiesMember} />
+            <Route path="/member/login" exact component={loginMember} />
+            <Route path="/member/membership" exact component={membershipMember} />
+            <Route path="/member/schedule" exact component={scheduleMember} />
+            <Route path="/member/signUp" exact component={signUpMember} />
             <Route path="/" exact component={Home} />
             <Route path="/memberUser" exact component={MemberUser} />
-            <Route path="/memberUser/activityInfo/" exact component={ActivityInfo} />
             <Route path="/admins/activities" exact component={Activities} />
             <Route path="/admins/activities/form" exact component={FormActivity} />
             <Route path="/admins/activities/form/:id" component={FormActivity} />

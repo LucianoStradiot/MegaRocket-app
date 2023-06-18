@@ -14,3 +14,11 @@
 .select:hover {
   box-shadow: 5px 3px 3px #00000015;
 }
+
+.errorMsg {
+  color: #EA3354;
+  font-size: 14px;
+  margin-top: -5px;
+  margin-bottom: 20px;
+  height: 5px;
+}
