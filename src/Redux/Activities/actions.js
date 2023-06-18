@@ -10,7 +10,10 @@ import {
   PUT_ACTIVITIES_ERROR,
   POST_ACTIVITIES_LOADING,
   POST_ACTIVITIES_SUCCESS,
-  POST_ACTIVITIES_ERROR
+  POST_ACTIVITIES_ERROR,
+  GET_ACTIVE_ACTIVITIES_ERROR,
+  GET_ACTIVE_ACTIVITIES_LOADING,
+  GET_ACTIVE_ACTIVITIES_SUCCESS
 } from './constants';
 
 export const getActivitiesLoading = () => {
@@ -23,6 +26,17 @@ export const getActivitiesSuccess = (activity) => {
 
 export const getActivitiesError = (error) => {
   return { type: GET_ACTIVITIES_ERROR, payload: error };
+};
+export const getActiveActivitiesLoading = () => {
+  return { type: GET_ACTIVE_ACTIVITIES_LOADING };
+};
+
+export const getActiveActivitiesSuccess = (activity) => {
+  return { type: GET_ACTIVE_ACTIVITIES_SUCCESS, payload: activity };
+};
+
+export const getActiveActivitiesError = (error) => {
+  return { type: GET_ACTIVE_ACTIVITIES_ERROR, payload: error };
 };
 
 export const delActivitiesLoading = () => {

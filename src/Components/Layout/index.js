@@ -16,9 +16,9 @@ import FormTrainers from 'Views/Admin/Trainers/FormTrainers';
 import FormSuperAdmin from 'Views/SuperAdmin/SAManagement/Form';
 import Admins from 'Views/SuperAdmin/AdminManagement/index';
 import AdminForm from 'Views/SuperAdmin/AdminManagement/Form';
-
+import MemberUser from 'Views/MemberUser';
 import FormClasses from 'Views/Admin/Classes/FormClasses/index';
-
+import ActivityInfo from 'Views/MemberUser/ActivityInfo/index';
 function Layout() {
   return (
     <>
@@ -27,6 +27,8 @@ function Layout() {
         <div className={styles.container}>
           <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/memberUser" exact component={MemberUser} />
+            <Route path="/memberUser/activityInfo/" exact component={ActivityInfo} />
             <Route path="/admins/activities" exact component={Activities} />
             <Route path="/admins/activities/form" exact component={FormActivity} />
             <Route path="/admins/activities/form/:id" component={FormActivity} />

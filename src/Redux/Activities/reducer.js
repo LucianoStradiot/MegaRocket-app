@@ -10,7 +10,10 @@ import {
   PUT_ACTIVITIES_ERROR,
   POST_ACTIVITIES_LOADING,
   POST_ACTIVITIES_SUCCESS,
-  POST_ACTIVITIES_ERROR
+  POST_ACTIVITIES_ERROR,
+  GET_ACTIVE_ACTIVITIES_ERROR,
+  GET_ACTIVE_ACTIVITIES_LOADING,
+  GET_ACTIVE_ACTIVITIES_SUCCESS
 } from './constants';
 
 const INITIAL_STATE = {
@@ -28,6 +31,15 @@ export const activitiesReducer = (state = INITIAL_STATE, action) => {
       return { ...state, isLoading: false, data: action.payload, error: null };
     }
     case GET_ACTIVITIES_ERROR: {
+      return { ...state, isLoading: false, error: action.payload };
+    }
+    case GET_ACTIVE_ACTIVITIES_LOADING: {
+      return { ...state, isLoading: true, error: null };
+    }
+    case GET_ACTIVE_ACTIVITIES_SUCCESS: {
+      return { ...state, isLoading: false, data: action.payload, error: null };
+    }
+    case GET_ACTIVE_ACTIVITIES_ERROR: {
       return { ...state, isLoading: false, error: action.payload };
     }
     case DEL_ACTIVITIES_LOADING: {
