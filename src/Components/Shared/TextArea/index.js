@@ -1,17 +1,17 @@
 import React from 'react';
 import styles from './textArea.module.css';
 
-const TextArea = ({ placeholder, val, changeAction, name }) => {
+const TextArea = ({ placeholder, name, register, error }) => {
   return (
     <div className={styles.textareaContainer}>
       <textarea
         type="text"
         className={styles.textarea}
         placeholder={placeholder}
-        value={val}
-        onChange={changeAction}
         name={name}
+        {...register(name)}
       ></textarea>
+      <p className={styles.errorMsg}>{error}</p>
     </div>
   );
 };
