@@ -29,14 +29,6 @@
   list-style-type: none;
 }
 
-/* .rutes li a {
-  width: 150px;
-  height: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
-
 .rutes li :hover{
   border-bottom: 2px solid #2E355B;
 }
