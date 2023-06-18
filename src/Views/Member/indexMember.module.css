@@ -18,13 +18,13 @@
   display: flex;
   flex-direction: column;
   height: 250px;
-  padding: 3px;
-  justify-content: space-between;
-  align-items: center;
+  padding: 12px;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .btn {
-  width: 114px;
+  width: 150px;
   background-color: #3a3b7b;
   border: none;
   border-radius: 5px;
@@ -35,6 +35,9 @@
   color: #fff;
 }
 
+.contact {
+  border: 2px solid #fff;
+}
 
 .contact li {
   color: #1b1b5d;
