@@ -9,25 +9,25 @@ function Header() {
     case '/':
       name = 'Home';
       break;
-    case '/activities':
+    case '/admins/activities':
       name = 'Activities';
       break;
-    case '/admins':
+    case '/superAdmins/admins':
       name = 'Admins';
       break;
-    case '/classes':
+    case '/admins/classes':
       name = 'Classes';
       break;
-    case '/members':
+    case '/admins/members':
       name = 'Members';
       break;
-    case '/subscriptions':
+    case '/admins/subscriptions':
       name = 'Subscriptions';
       break;
     case '/superAdmins':
       name = 'Super Admins';
       break;
-    case '/trainers':
+    case '/admins/trainers':
       name = 'Trainers';
       break;
     default:

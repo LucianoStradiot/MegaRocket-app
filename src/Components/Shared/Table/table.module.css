@@ -8,12 +8,18 @@
 .contTable {
   margin-top: 10px;
   border-collapse: collapse;
-  color: #373867;
+  color: #2E355B;
   margin-bottom: 40px;
+  max-height: 400px ;
+  overflow-y: auto;
 }
 
 .theadTable {
-  background-color: #eee;
+  background-color: #2E355B;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .thTable {
@@ -24,8 +30,15 @@
 .theadTable,
 .thTable {
   padding: 10px 16px;
-  border-bottom: 1px solid #ddd;
   text-align: center;
+}
+
+.rows {
+  border-bottom: 2px solid #ddd;
+}
+
+.rows:hover {
+  background-color: #eee;
 }
 
 .headers {

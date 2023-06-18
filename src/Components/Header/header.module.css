@@ -4,7 +4,7 @@
   align-items: center;
   padding: 0 5%;
   height: 120px;
-  background-color: #373867;
+  background-color: #2E355B;
   color: #fff;
 }
 
@@ -18,7 +18,7 @@
   justify-content: space-between;
   align-items: center;
   height: 70px;
-  background-color: #AACE9B;
+  background-color: #8ED081;
 }
 
 .rutes {
@@ -29,17 +29,24 @@
   list-style-type: none;
 }
 
+/* .rutes li a {
+  width: 150px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
 .rutes li :hover{
-  color: #fff;
+  border-bottom: 2px solid #2E355B;
 }
 
 .rutes > li > a {
-  margin-left: 15px;
   font-size: 1.2rem;
   font-weight: 600;
   text-decoration: none;
   text-transform: capitalize;
-  color: #373867;
+  color: #2E355B;
 }
 
 
