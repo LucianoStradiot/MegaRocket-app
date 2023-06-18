@@ -3,15 +3,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: 450px;
+  overflow-y: auto;
+}
+
+.tableContainer {
+  overflow-y: auto;
+  margin-top: 10px;
 }
 
 .contTable {
-  margin-top: 10px;
   border-collapse: collapse;
   color: #2E355B;
   margin-bottom: 40px;
-  max-height: 400px ;
-  overflow-y: auto;
 }
 
 .theadTable {
