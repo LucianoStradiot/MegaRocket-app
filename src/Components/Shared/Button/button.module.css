@@ -2,7 +2,7 @@
   border: none;
   border-radius: 5px;
   margin: 5px;
-  padding: 7px 12px;
+  padding: 8px 12px;
   cursor: pointer;
   font-size: 15px;
   color: #fff;
@@ -18,19 +18,19 @@
 
 .buttonEdit {
   background-color: #fff;
-  color: #4caf50;
-  border: 1px solid #4caf50;
+  color: #2C882D;
+  border: 1px solid #2C882D;
 }
 
 .buttonEdit:hover {
-  background-color: #4caf50;
+  background-color: #2C882D;
   color: #fff;
 }
 
 .buttonCreateAdd {
-  background-color: #3a3b7b;
+  background-color: #2E355B;
 }
 
 .buttonCreateAdd:hover {
-  background-color: #1b1b5d;
+  background-color: #23294c;
 }

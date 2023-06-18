@@ -35,7 +35,7 @@ const Table = ({ list, column, fields, link, action }) => {
   };
 
   return (
-    <section className={styles.container}>
+    <section className={`${styles.container} ${styles.contTable}`}>
       <table className={styles.contTable}>
         <thead className={styles.theadTable}>
           <tr>
@@ -72,7 +72,7 @@ const Table = ({ list, column, fields, link, action }) => {
           {list.map((item) => {
             return (
               <>
-                <tr key={item._id}>
+                <tr key={item._id} className={styles.rows}>
                   {fields.map((field, index) => {
                     const nestedFields = field.split('.');
                     const fieldData = nestedFields.reduce((obj, field) => obj && obj[field], item);
