@@ -89,7 +89,7 @@ const FormTrainers = () => {
         'string.empty': 'Salary can´t be empty',
         'string.min': 'salary must have at least 1 characters'
       }),
-    isActive: Joi.boolean()
+    isActive: Joi.string().valid('true', 'false')
   });
   const {
     register,

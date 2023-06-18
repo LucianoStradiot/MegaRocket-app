@@ -97,7 +97,7 @@ const FormMembers = () => {
         'any.required': 'Membership is required',
         'any.only': 'Invalid Membership'
       }),
-    isActive: Joi.boolean()
+    isActive: Joi.string().valid('true', 'false')
   });
   const {
     register,

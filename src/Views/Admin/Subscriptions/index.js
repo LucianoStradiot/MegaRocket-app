@@ -72,7 +72,7 @@ function Subscriptions() {
           </Link>
           <Table
             list={subscriptions}
-            column={['Date', 'Name', 'Class Hour', 'Activity Name', '']}
+            column={['Date', 'Member Name', 'Class Hour', 'Activity Name', '']}
             fields={['date', 'member.lastName', 'classes.hour', 'classes.activity.name']}
             link={'/admins/subscriptions/form/'}
             action={openModalConfirm}

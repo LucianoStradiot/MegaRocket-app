@@ -53,7 +53,7 @@ const FormActivities = () => {
         'string.max': 'The description cant be longer than 250 characters',
         'string.empty': 'The description cant be empty'
       }),
-    isActive: Joi.boolean()
+    isActive: Joi.string().valid('true', 'false')
   });
   const {
     register,
@@ -99,7 +99,6 @@ const FormActivities = () => {
         body: activityFormValue
       };
       const response = await dispatch(updateActivities(payload));
-
       if (response.error) {
         throw new Error(response.message);
       } else {
@@ -129,8 +128,6 @@ const FormActivities = () => {
         setAddVisible(false);
         setActiveVisible(true);
         setSaveVisible(true);
-      } else {
-        return false;
       }
     } else {
       setAddVisible(true);
