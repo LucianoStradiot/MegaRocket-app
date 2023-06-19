@@ -10,7 +10,10 @@ import {
   updateMembersError,
   deleteMembersPending,
   deleteMembersSuccess,
-  deleteMembersError
+  deleteMembersError,
+  loginMembersPending,
+  loginMembersSuccess,
+  loginMembersError
 } from './actions';
 
 export const getMembers = () => {
@@ -49,6 +52,29 @@ export const createMember = (payload) => {
         dispatch(createMembersSuccess(data.data));
       } else {
         dispatch(createMembersError(data.message));
+      }
+      return data;
+    } catch (error) {
+      return error;
+    }
+  };
+};
+export const loginMemberUser = (payload) => {
+  return async (dispatch) => {
+    try {
+      dispatch(loginMembersPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/userLogin`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(loginMembersSuccess(data.data));
+      } else {
+        dispatch(loginMembersError(data.message));
       }
       return data;
     } catch (error) {

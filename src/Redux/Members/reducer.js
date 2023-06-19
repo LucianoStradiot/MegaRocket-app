@@ -73,6 +73,28 @@ export const membersReducer = (state = INITIAL_STATE, action) => {
         error: action.payload
       };
     }
+    case actionCreator.POST_LOGIN_MEMBERS_PENDING: {
+      return {
+        ...state,
+        isPending: true,
+        error: null
+      };
+    }
+    case actionCreator.POST_LOGIN_MEMBERS_SUCCESS: {
+      return {
+        ...state,
+        isPending: false,
+        data: [...state.data, action.payload],
+        error: null
+      };
+    }
+    case actionCreator.POST_LOGIN_MEMBERS_ERROR: {
+      return {
+        ...state,
+        isPending: false,
+        error: action.payload
+      };
+    }
     case actionCreator.DELETE_MEMBERS_PENDING: {
       return {
         ...state,
