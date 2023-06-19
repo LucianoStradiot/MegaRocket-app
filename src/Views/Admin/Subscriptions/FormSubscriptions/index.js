@@ -14,6 +14,9 @@ import {
 import { getClasses } from 'Redux/Classes/thunks';
 import { getMembers } from 'Redux/Members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 
 const FormSubscriptions = () => {
   const dispatch = useDispatch();
@@ -23,11 +26,6 @@ const FormSubscriptions = () => {
   const members = useSelector((state) => state.members.data);
   const history = useHistory();
   const { id } = useParams();
-  const [create, setCreate] = useState({
-    classes: '',
-    member: '',
-    date: ''
-  });
   const [button, setButton] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({
@@ -35,6 +33,31 @@ const FormSubscriptions = () => {
     description: ''
   });
   const [isSubscriptionCreated, setSubscriptionCreated] = useState(false);
+
+  const schema = Joi.object({
+    classes: Joi.string().required().messages({
+      'string.empty': 'Class is required',
+      'any.only': 'Invalid class'
+    }),
+    member: Joi.string().required().messages({
+      'string.empty': 'Member is required',
+      'any.only': 'Invalid member'
+    }),
+    date: Joi.date().required().messages({
+      'date.base': 'Invalid birth date format'
+    })
+  });
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors }
+  } = useForm({
+    mode: 'onSubmit',
+    resolver: joiResolver(schema)
+  });
 
   useEffect(() => {
     dispatch(getSubscriptions());
@@ -50,11 +73,9 @@ const FormSubscriptions = () => {
     if (id) {
       const data = subscriptions.find((aux) => aux._id === id);
       if (data) {
-        setCreate({
-          classes: data.classes && data.classes._id ? data.classes._id : '',
-          member: data.member && data.member._id ? data.member._id : '',
-          date: data.date.substring(0, 10)
-        });
+        setValue('classes', data.classes && data.classes._id ? data.classes._id : '');
+        setValue('member', data.member && data.member._id ? data.member._id : '');
+        setValue('date', data.date.substring(0, 10));
         setButton('edit');
       }
     } else {
@@ -62,14 +83,7 @@ const FormSubscriptions = () => {
     }
   };
 
-  const onchangeInput = (e) => {
-    setCreate({
-      ...create,
-      [e.target.name]: e.target.value || ''
-    });
-  };
-
-  const handleCreationSub = async () => {
+  const handleCreationSub = async (create) => {
     const response = await dispatch(createSubscription(create));
     if (!response.error) {
       setResponseModal({
@@ -87,7 +101,7 @@ const FormSubscriptions = () => {
     setIsOpen(true);
   };
 
-  const handleUpdateSub = async () => {
+  const handleUpdateSub = async (create) => {
     const payload = {
       id: id,
       body: create
@@ -118,8 +132,12 @@ const FormSubscriptions = () => {
     setIsOpen(!isOpen);
   };
 
+  const onSubmit = (data) => {
+    id ? handleUpdateSub(data) : handleCreationSub(data);
+  };
+
   return (
-    <form className={style.form}>
+    <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
       <Modal
         title={responseModal.title}
         desc={responseModal.description}
@@ -132,12 +150,10 @@ const FormSubscriptions = () => {
         <Select
           name="classes"
           selectID="classes"
-          changeAction={onchangeInput}
-          selectValue={create.classes}
+          register={register}
+          error={errors.classes?.message}
         >
-          <option value="" disabled>
-            Choose a class
-          </option>
+          <option value="">Choose a class</option>
           {classes.map((oneClass) => {
             return (
               <option value={oneClass._id} key={oneClass._id}>
@@ -148,18 +164,11 @@ const FormSubscriptions = () => {
           })}
         </Select>
         <label htmlFor="">Member Email</label>
-        <Select
-          name="member"
-          selectID="member"
-          changeAction={onchangeInput}
-          selectValue={create.member}
-        >
-          <option value="" disabled>
-            Choose a Member
-          </option>
+        <Select name="member" selectID="member" register={register} error={errors.member?.message}>
+          <option value="">Choose a Member</option>
           {members.map((subs) => {
             return (
-              <option value={subs._id} key={subs._id} selected={subs._id === create.member}>
+              <option value={subs._id} key={subs._id}>
                 {subs.email}
               </option>
             );
@@ -170,16 +179,15 @@ const FormSubscriptions = () => {
           className={style.inputForm}
           type="date"
           name="date"
-          val={create.date}
-          changeAction={onchangeInput}
+          register={register}
+          error={errors.date?.message}
         />
         <div className={style.btnContainer}>
-          <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
-          <Button
-            text={button === 'Create' ? 'add' : 'Save'}
-            type={button === 'Create' ? 'add' : 'save'}
-            clickAction={button === 'Create' ? handleCreationSub : handleUpdateSub}
-          />
+          <div>
+            <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
+            <Button text="Reset" type="reset" clickAction={() => reset()} />
+          </div>
+          <Button text={button === 'Create' ? 'Add' : 'Save'} type="submit" />
         </div>
       </div>
     </form>
