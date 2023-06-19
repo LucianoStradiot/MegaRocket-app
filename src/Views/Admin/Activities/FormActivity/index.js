@@ -38,9 +38,9 @@ const FormActivities = () => {
       .required()
       .messages({
         'string.pattern.base': 'Activity name must contain letters only',
-        'string.min': 'Activity name cant be shorter than 3 characters',
-        'string.max': 'Activity  name cant be longer than 15 characters',
-        'string.empty': 'Activity name cant be empty'
+        'string.min': 'Activity name can´t be shorter than 3 characters',
+        'string.max': 'Activity  name can´t be longer than 15 characters',
+        'string.empty': 'Activity name can´t be empty'
       }),
     description: Joi.string()
       .min(40)
@@ -49,9 +49,9 @@ const FormActivities = () => {
       .required()
       .messages({
         'string.pattern.base': 'The description must contain letters only',
-        'string.min': 'The description cant be shorter than 40 characters',
-        'string.max': 'The description cant be longer than 250 characters',
-        'string.empty': 'The description cant be empty'
+        'string.min': 'The description can´t be shorter than 40 characters',
+        'string.max': 'The description can´t be longer than 250 characters',
+        'string.empty': 'The description can´t be empty'
       }),
     isActive: Joi.string().valid('true', 'false')
   });

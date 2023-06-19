@@ -35,21 +35,17 @@ const FormSubscriptions = () => {
   const [isSubscriptionCreated, setSubscriptionCreated] = useState(false);
 
   const schema = Joi.object({
-    classes: Joi.string()
-      .pattern(/^[0-9a-fA-F]{24}$/)
-      .required()
-      .messages({
-        'any.required': 'Class is required',
-        'any.only': 'Invalid class'
-      }),
-    member: Joi.string()
-      .pattern(/^[0-9a-fA-F]{24}$/)
-      .required()
-      .messages({
-        'any.required': 'Member is required',
-        'any.only': 'Invalid member'
-      }),
-    date: Joi.date().optional()
+    classes: Joi.string().required().messages({
+      'string.empty': 'Class is required',
+      'any.only': 'Invalid class'
+    }),
+    member: Joi.string().required().messages({
+      'string.empty': 'Member is required',
+      'any.only': 'Invalid member'
+    }),
+    date: Joi.date().required().messages({
+      'date.base': 'Invalid birth date format'
+    })
   });
 
   const {
