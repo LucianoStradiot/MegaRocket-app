@@ -1,4 +1,5 @@
+import SidebarMember from 'Components/Shared/SidebarMember';
 const loginMember = () => {
-  return <h1>login member</h1>;
+  return <SidebarMember />;
 };
 export default loginMember;

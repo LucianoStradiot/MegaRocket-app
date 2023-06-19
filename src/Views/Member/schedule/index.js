@@ -1,4 +1,6 @@
+import SidebarMember from 'Components/Shared/SidebarMember';
+
 const scheduleMember = () => {
-  return <h1>schedule member</h1>;
+  return <SidebarMember />;
 };
 export default scheduleMember;

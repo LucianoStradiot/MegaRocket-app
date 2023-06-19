@@ -1,4 +1,6 @@
+import SidebarMember from 'Components/Shared/SidebarMember';
+
 const signUpMember = () => {
-  return <h1>signUp member</h1>;
+  return <SidebarMember />;
 };
 export default signUpMember;
