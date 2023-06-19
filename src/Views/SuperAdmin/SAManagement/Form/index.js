@@ -33,11 +33,13 @@ const FormSuperAdmin = () => {
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
   const schema = Joi.object({
     email: Joi.string().regex(RGXEmail).required().messages({
-      'string.pattern.base': 'Email must be in a valid format'
+      'string.pattern.base': 'Email must be in a valid format',
+      'string.empty': 'Email can´t be empty'
     }),
     password: Joi.string().regex(RGXPassword).min(8).required().messages({
       'string.pattern.base':
-        'Password must contain at least one uppercase letter, one lowercase letter, and one digit'
+        'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
+      'string.empty': 'Password can´t be empty'
     })
   });
 

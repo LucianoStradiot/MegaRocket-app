@@ -53,7 +53,7 @@ const FormActivities = () => {
         'string.max': 'The description can´t be longer than 250 characters',
         'string.empty': 'The description can´t be empty'
       }),
-    isActive: Joi.string().valid('true', 'false')
+    isActive: Joi.string().valid('true', 'false').allow(true, false)
   });
   const {
     register,
@@ -124,10 +124,14 @@ const FormActivities = () => {
       if (data) {
         setValue('name', data.name);
         setValue('description', data.description);
-        setValue('isActive', data.isActive);
         setAddVisible(false);
         setActiveVisible(true);
         setSaveVisible(true);
+        if (data.isActive !== undefined) {
+          setValue('isActive', data.isActive);
+        } else {
+          setValue('isActive', true); // Establece un valor predeterminado si data.isActive no está definido
+        }
       }
     } else {
       setAddVisible(true);
