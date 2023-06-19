@@ -17,7 +17,7 @@ const ActivityInfo = () => {
       {loading && <Spinner />}
       <section className={styles.containerTotal}>
         <SidebarMember />
-        <main>
+        <main className={styles.main}>
           <h1 className={styles.title}>Activities</h1>
           <div className={styles.containerActivity}>
             {activities.map((dataItem, index) => (
