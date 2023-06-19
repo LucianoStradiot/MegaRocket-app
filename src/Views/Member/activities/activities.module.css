@@ -5,14 +5,14 @@
 .boxActivity {
   display: flex;
   flex-direction: column;
-  width: 200px;
-  height: 250px;
-  padding: 2%;
+  width: 235px;
+  padding: 20px;
   margin: 2%;
   background-color: #e6e6e6;
   color: #000000;
   border-radius: 2%;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .boxActivity:hover {
@@ -21,6 +21,7 @@
   transition: all 0.18s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   border: 2px solid #373867;
+  box-sizing: border-box;
 }
 
 .titleActivity {
@@ -38,6 +39,10 @@
   margin: 2%;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.main {
+  width: 100%;
 }
 
 .info {
