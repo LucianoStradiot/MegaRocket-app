@@ -1,17 +1,22 @@
-/* .container {
+.container {
   width: 200px;
-  height: 100vh;
   background-color: #e7e7e7;
   color: #fff;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  overflow: auto;
   align-items: center;
 }
 
 .title {
   color: #1b1b5d;
+
+}
+
+.titleContact {
+  color: #1b1b5d;
+  text-align: center;
+  border-bottom: 1px solid #1b1b5d;
 }
 
 .container div {
@@ -19,8 +24,6 @@
   flex-direction: column;
   height: 250px;
   padding: 12px;
-  justify-content: flex-start;
-  align-items: flex-start;
 }
 
 .btn {
@@ -33,11 +36,9 @@
   cursor: pointer;
   font-size: 15px;
   color: #fff;
+
 }
 
-.contact {
-  border: 2px solid #fff;
-}
 
 .contact li {
   color: #1b1b5d;
@@ -47,4 +48,4 @@
 
 .btn:hover {
   background-color: #1b1b5d;
-} */
+}
