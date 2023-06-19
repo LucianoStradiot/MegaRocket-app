@@ -1,4 +1,7 @@
+import SidebarMember from 'Components/Shared/SidebarMember';
+
 const activitiesMember = () => {
-  return <h1>Activities member</h1>;
+  return <SidebarMember />;
 };
+
 export default activitiesMember;
