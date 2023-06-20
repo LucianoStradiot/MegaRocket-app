@@ -47,11 +47,11 @@ const LoginMember = () => {
     try {
       const dataResponse = await dispatch(loginMemberUser(memberValues));
       const modalData = {
-        title: dataResponse.message === 'Invalid credentials' ? 'Error!' : 'Success!',
+        title: dataResponse.error ? 'Error!' : 'Success!',
         desc: dataResponse.message
       };
       setModalInfo(modalData);
-      if (dataResponse.message === 'Invalid credentials') {
+      if (dataResponse.error) {
         setIsOpen(true);
         setIsMemberLogged(false);
       } else {
@@ -98,8 +98,11 @@ const LoginMember = () => {
           name={'dni'}
         />
         <div className={styles.btnContainer}>
+          <div>
+            <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
+            <Button text="Reset" type="reset" clickAction={() => reset()} />
+          </div>
           <Button text={'Login'} type={'submit'} />
-          <Button text="Reset" type="reset" clickAction={() => reset()} />
         </div>
       </form>
       <h2>Register Now!</h2>
