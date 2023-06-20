@@ -1,14 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from 'Views/Member/schedule/schedule.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClasses } from 'Redux/Classes/thunks';
 import { getSubscriptions /* deleteSubscritpions  */ } from 'Redux/Subscriptions/thunks';
 import SidebarMember from 'Components/Shared/SidebarMember';
+import Modal from 'Components/Shared/Modal';
 
 const MemberSchedule = () => {
   const classes = useSelector((state) => state.classes.data);
   const subscriptions = useSelector((state) => state.subscriptions.data);
   const dispatch = useDispatch();
+
+  const [modal, setModal] = useState({
+    title: '',
+    description: '',
+    isConfirm: false
+  });
+
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getClasses());
@@ -32,8 +41,23 @@ const MemberSchedule = () => {
     '21:00'
   ];
 
+  const openModal = (title, description) => {
+    setModal({
+      title: title,
+      description: description
+    });
+    setIsOpen(true);
+  };
+
   return (
     <div className={styles.container}>
+      <Modal
+        title={modal.title}
+        desc={modal.description}
+        isOpen={isOpen}
+        confirmModal={modal.isConfirm}
+        handleClose={() => setIsOpen(!isOpen)}
+      />
       <div>
         <SidebarMember />
       </div>
@@ -58,26 +82,41 @@ const MemberSchedule = () => {
                     <td key={dayIndex}>
                       {classes
                         .filter((oneClass) => oneClass.day === day && oneClass.hour === hour)
-                        .map((oneClass, index) => (
-                          <div className={styles.card} key={index}>
-                            <button className={styles.classCard}>
-                              <p className={styles.inlineBlock}>
-                                <div>{`Activity: ${oneClass.activity.name}`}</div>
-                                <div>{`Trainer: ${oneClass.trainer.firstName}`}</div>
-                                <div>
-                                  {'Slots: '}
-                                  {
-                                    subscriptions.filter(
-                                      (subscription) => oneClass._id === subscription.classes._id
-                                    ).length
-                                  }
-                                  {'/'}
-                                  {oneClass.slots}
-                                </div>
-                              </p>
-                            </button>
-                          </div>
-                        ))}
+                        .map((oneClass, index) => {
+                          const filteredSubscriptions = subscriptions.filter(
+                            (subscription) => oneClass._id === subscription.classes._id
+                          );
+                          const subscriptionsLength = filteredSubscriptions.length;
+
+                          return (
+                            <div className={styles.card} key={index}>
+                              <button
+                                className={
+                                  subscriptionsLength !== oneClass.slots
+                                    ? styles.classCard
+                                    : styles.fullClassCard
+                                }
+                                onClick={() =>
+                                  openModal(
+                                    'Subscribe to',
+                                    `Activity: ${oneClass.activity.name}, Trainer: ${oneClass.trainer.firstName}, Slots: ${subscriptionsLength} / ${oneClass.slots}`
+                                  )
+                                }
+                              >
+                                <p className={styles.inlineBlock}>
+                                  <div>{`Activity: ${oneClass.activity.name}`}</div>
+                                  <div>{`Trainer: ${oneClass.trainer.firstName}`}</div>
+                                  <div>
+                                    {'Slots: '}
+                                    {subscriptionsLength}
+                                    {' / '}
+                                    {oneClass.slots}
+                                  </div>
+                                </p>
+                              </button>
+                            </div>
+                          );
+                        })}
                     </td>
                   ))}
                 </tr>

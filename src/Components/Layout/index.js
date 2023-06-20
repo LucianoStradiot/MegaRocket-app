@@ -36,6 +36,7 @@ function Layout() {
             <Route path="/member/login" exact component={LoginMember} />
             <Route path="/member/membership" exact component={membershipMember} />
             <Route path="/member/schedule" exact component={scheduleMember} />
+            <Route path="/member/schedule/:id" component={scheduleMember} />
             <Route path="/member/signUp" exact component={SignUpMember} />
             <Route path="/" exact component={Home} />
             <Route path="/admins/activities" exact component={Activities} />
@@ -43,7 +44,7 @@ function Layout() {
             <Route path="/admins/activities/form/:id" component={FormActivity} />
             <Route path="/superAdmins/admins" exact component={Admins} />
             <Route path="/superAdmins/admins/form" exact component={AdminForm} />
-            <Route path="/admins/form/:id" component={AdminForm} />{' '}
+            <Route path="/admins/form/:id" component={AdminForm} />
             <Route path="/admins/classes" exact component={Classes} />
             <Route path="/admins/classes/form" exact component={FormClasses} />
             <Route path="/admins/classes/form/:id" component={FormClasses} />
