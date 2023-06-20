@@ -10,7 +10,10 @@ import {
   postActivitiesError,
   putActivitiesLoading,
   putActivitiesSuccess,
-  putActivitiesError
+  putActivitiesError,
+  getActiveActivitiesError,
+  getActiveActivitiesLoading,
+  getActiveActivitiesSuccess
 } from './actions';
 
 export const getActivities = () => {
@@ -33,6 +36,30 @@ export const getActivities = () => {
   };
 };
 
+export const getActiveActivities = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(getActiveActivitiesLoading());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`, {
+        method: 'GET'
+      });
+      if (response.ok) {
+        const activities = await response.json();
+        const activeActivities = activities.data.filter((activity) => activity.isActive === true);
+        if (activeActivities.length > 0) {
+          dispatch(getActiveActivitiesSuccess(activeActivities));
+        } else {
+          throw new Error('No active activities found');
+        }
+        return activeActivities;
+      } else {
+        throw new Error('Failed to fetch activities');
+      }
+    } catch (error) {
+      dispatch(getActiveActivitiesError(error.message));
+    }
+  };
+};
 export const delActivities = (id) => {
   return async (dispatch) => {
     try {

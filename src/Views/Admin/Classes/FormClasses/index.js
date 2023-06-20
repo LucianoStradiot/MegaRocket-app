@@ -40,29 +40,34 @@ const FormClasses = () => {
       .required()
       .messages({
         'any.required': 'Day is required',
-        'any.only': 'Invalid day'
+        'any.only': 'Please choose an available day'
       }),
     hour: Joi.string()
       .regex(/^((0[9]|1[0-9]|2[01]):00)$/)
       .required()
       .messages({
-        'string.pattern.base': 'The classes always starts from 9:00 am to 21:00 pm sharp'
+        'string.pattern.base': 'Please choose an hour from 9:00 am to 21:00 pm'
       }),
     trainer: Joi.string()
       .pattern(/^[a-zA-Z0-9]{24}$/)
       .required()
       .messages({
-        'string.pattern.base': 'Trainer should refer to a valid ID',
+        'string.pattern.base': 'Please choose an available trainer',
         'any.required': 'Trainer is required'
       }),
     activity: Joi.string()
       .pattern(/^[a-zA-Z0-9]{24}$/)
       .required()
       .messages({
-        'string.pattern.base': 'Activity should refer to a valid ID',
+        'string.pattern.base': 'Please choose an activity',
         'any.required': 'Activity is required'
       }),
-    slots: Joi.number().positive().integer().min(2).max(15).optional()
+    slots: Joi.number().positive().integer().min(2).max(15).optional().messages({
+      'any.empty': 'Activity slots is required',
+      'number.base': 'Activity slots must be a number',
+      'number.min': 'Activity slots must be at least 2',
+      'number.max': 'Activity slots can´t exceed 15'
+    })
   });
 
   const {

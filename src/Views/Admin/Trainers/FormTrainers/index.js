@@ -48,11 +48,17 @@ const FormTrainers = () => {
         'string.max': 'Last name can´t be longer than 25 characters',
         'string.empty': 'Last name can´t be empty'
       }),
-    dni: Joi.string().min(7).max(9).required().messages({
-      'string.min': 'DNI must have 7-9 digits',
-      'string.max': 'DNI must have 7-9 digits',
-      'string.empty': 'DNI can´t be empty'
-    }),
+    dni: Joi.string()
+      .regex(/^[0-9]*$/)
+      .min(7)
+      .max(9)
+      .required()
+      .messages({
+        'string.min': 'DNI must have 7-9 digits',
+        'string.max': 'DNI must have 7-9 digits',
+        'string.empty': 'DNI can´t be empty',
+        'string.pattern.base': 'DNI must be only numbers'
+      }),
     phone: Joi.string()
       .regex(/^[0-9]*$/)
       .length(10)
@@ -85,11 +91,11 @@ const FormTrainers = () => {
       .min(1)
       .required()
       .messages({
-        'string.pattern.base': 'Salary must contain letters and spaces only',
+        'string.pattern.base': 'Salary must contain numbers',
         'string.empty': 'Salary can´t be empty',
-        'string.min': 'salary must have at least 1 characters'
+        'string.min': 'Salary must have at least 1 characters'
       }),
-    isActive: Joi.boolean()
+    isActive: Joi.string().valid('true', 'false').allow(true, false)
   });
   const {
     register,

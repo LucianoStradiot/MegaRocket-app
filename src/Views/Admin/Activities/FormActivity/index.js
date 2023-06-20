@@ -10,17 +10,15 @@ import Spinner from 'Components/Shared/Spinner';
 import { useHistory, useParams } from 'react-router-dom';
 import { getActivities, createActivities, updateActivities } from 'Redux/Activities/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 
 const FormActivities = () => {
   const history = useHistory();
   const { id } = useParams();
   const activities = useSelector((state) => state.activities.data);
   const dispatch = useDispatch();
-  const [activityFormValue, setActivityFormValue] = useState({
-    name: '',
-    description: '',
-    isActive: true
-  });
   const [modalInfo, setModalInfo] = useState({
     title: '',
     desc: ''
@@ -32,11 +30,47 @@ const FormActivities = () => {
   const [activeVisible, setActiveVisible] = useState(false);
   const loading = useSelector((state) => state.activities.isLoading);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const activitySchema = Joi.object({
+    name: Joi.string()
+      .min(3)
+      .max(15)
+      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'Activity name must contain letters only',
+        'string.min': 'Activity name can´t be shorter than 3 characters',
+        'string.max': 'Activity  name can´t be longer than 15 characters',
+        'string.empty': 'Activity name can´t be empty'
+      }),
+    description: Joi.string()
+      .min(40)
+      .max(250)
+      .regex(/^[a-zA-Z\s.,]+$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'The description must contain letters only',
+        'string.min': 'The description can´t be shorter than 40 characters',
+        'string.max': 'The description can´t be longer than 250 characters',
+        'string.empty': 'The description can´t be empty'
+      }),
+    isActive: Joi.string().valid('true', 'false').allow(true, false)
+  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors }
+  } = useForm({
+    mode: 'onSubmit',
+    resolver: joiResolver(activitySchema)
+  });
+
+  const onSubmit = (data) => {
+    id ? handleUpdateActivity(data) : handleCreateActivity(data);
   };
 
-  const handleCreateActivity = async () => {
+  const handleCreateActivity = async (activityFormValue) => {
     try {
       const response = await dispatch(createActivities(activityFormValue));
       if (response.error) {
@@ -58,14 +92,13 @@ const FormActivities = () => {
     switchIsOpen();
   };
 
-  const handleUpdateActivity = async () => {
+  const handleUpdateActivity = async (activityFormValue) => {
     try {
       const payload = {
         id: id,
         body: activityFormValue
       };
       const response = await dispatch(updateActivities(payload));
-
       if (response.error) {
         throw new Error(response.message);
       } else {
@@ -85,34 +118,18 @@ const FormActivities = () => {
     switchIsOpen();
   };
 
-  const onChangeInput = (e) => {
-    setActivityFormValue({
-      ...activityFormValue,
-      [e.target.name]: e.target.value
-    });
-  };
-
   const formEdit = () => {
     if (id) {
       const data = activities.find((activity) => activity._id === id);
       if (data) {
-        setActivityFormValue({
-          name: data.name,
-          description: data.description,
-          isActive: data.isActive
-        });
+        setValue('name', data.name);
+        setValue('description', data.description);
+        setValue('isActive', data.isActive);
         setAddVisible(false);
         setActiveVisible(true);
         setSaveVisible(true);
-      } else {
-        return false;
       }
     } else {
-      setActivityFormValue({
-        name: '',
-        description: '',
-        isActive: true
-      });
       setAddVisible(true);
       setActiveVisible(false);
       setSaveVisible(false);
@@ -149,41 +166,39 @@ const FormActivities = () => {
         handleClose={closeForm}
       />
       {loading && <Spinner />}
-      <form className={styles.form} onSubmit={onSubmit} id="form">
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)} id="form">
         <div className={styles.subContainer}>
           <div className={styles.inputContainer}>
             <label>name</label>
             <TextInput
-              inputName="name"
+              name="name"
               inputType="text"
-              changeAction={onChangeInput}
-              text={activityFormValue.name}
+              register={register}
+              error={errors.name?.message}
             />
           </div>
           <div className={styles.inputContainer}>
             <label>description</label>
-            <TextArea
-              name="description"
-              changeAction={onChangeInput}
-              val={activityFormValue.description}
-            />
+            <TextArea name="description" register={register} error={errors.description?.message} />
           </div>
           {activeVisible && (
-            <Select name="isActive" changeAction={onChangeInput}>
-              <option value={true} selected={!activityFormValue.isActive}>
-                Active
-              </option>
-              <option value={false} selected={!activityFormValue.isActive}>
-                Inactive
-              </option>
-            </Select>
+            <div>
+              <label>Status</label>
+              <Select name="isActive" register={register} error={errors.isActive?.message}>
+                <option value={true}>Active</option>
+                <option value={false}>Inactive</option>
+              </Select>
+            </div>
           )}
           <div className={styles.btnContainer}>
-            <Button text="Cancel" clickAction={() => history.goBack()} />
-            {buttonAddIsVisible && <Button text="Add" clickAction={handleCreateActivity} />}
+            <div>
+              <Button text="Cancel" clickAction={() => history.goBack()} />
+              <Button text="Reset" type="reset" clickAction={() => reset()} />
+            </div>
+            {buttonAddIsVisible && <Button text="Add" type="submit" />}
             {buttonSaveIsVisible && (
               <div>
-                <Button clickAction={handleUpdateActivity} text="Save" />
+                <Button type="submit" text="Save" />
               </div>
             )}
           </div>

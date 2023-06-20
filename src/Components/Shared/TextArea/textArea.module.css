@@ -5,10 +5,19 @@
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  margin-bottom: 5px;
 }
 
 .textarea:focus {
   outline: none;
   border-color: #4a90e2;
   box-shadow: 0 0 3px #4a90e280;
+}
+
+.errorMsg {
+  color: #EA3354;
+  font-size: 14px;
+  margin-top: -5px;
+  margin-bottom: 20px;
+  height: 5px;
 }
