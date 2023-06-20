@@ -34,6 +34,23 @@ export const createMembersError = (error) => {
     payload: error
   };
 };
+export const loginMembersPending = () => {
+  return {
+    type: actionsMembers.POST_LOGIN_MEMBERS_PENDING
+  };
+};
+export const loginMembersSuccess = (member) => {
+  return {
+    type: actionsMembers.POST_LOGIN_MEMBERS_SUCCESS,
+    payload: member
+  };
+};
+export const loginMembersError = (error) => {
+  return {
+    type: actionsMembers.POST_LOGIN_MEMBERS_ERROR,
+    payload: error
+  };
+};
 export const updateMembersPending = () => {
   return {
     type: actionsMembers.PUT_MEMBERS_PENDING
