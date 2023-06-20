@@ -37,6 +37,10 @@
   text-align: center;
 }
 
+.tbody {
+  background-color: #fff;
+}
+
 .rows {
   border-bottom: 2px solid #ddd;
 }
