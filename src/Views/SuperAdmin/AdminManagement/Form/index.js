@@ -48,11 +48,17 @@ const AdminForm = () => {
         'string.max': 'Last name can´t be longer than 25 characters',
         'string.empty': 'Last name can´t be empty'
       }),
-    dni: Joi.string().min(7).max(9).required().messages({
-      'string.min': 'DNI must have 7-9 digits',
-      'string.max': 'DNI must have 7-9 digits',
-      'string.empty': 'DNI can´t be empty'
-    }),
+    dni: Joi.string()
+      .regex(/^[0-9]*$/)
+      .min(7)
+      .max(9)
+      .required()
+      .messages({
+        'string.min': 'DNI must have 7-9 digits',
+        'string.max': 'DNI must have 7-9 digits',
+        'string.empty': 'DNI can´t be empty',
+        'string.pattern.base': 'DNI must be only numbers'
+      }),
     phone: Joi.string()
       .regex(/^[0-9]*$/)
       .length(10)
@@ -142,27 +148,23 @@ const AdminForm = () => {
       id: id,
       body: formChange
     };
-    try {
-      const response = await dispatch(putAdmins(payload));
 
-      if (response.error) {
-        throw new Error(response.message);
-      } else {
-        setIsAdminCreated(true);
-        setResponseModal({
-          title: 'Success!',
-          description: response.message
-        });
-      }
-      setIsOpen(true);
-    } catch (error) {
+    const response = await dispatch(putAdmins(payload));
+
+    if (!response.error) {
+      setResponseModal({
+        title: 'Success!',
+        description: response.message
+      });
+      setIsAdminCreated(true);
+    } else {
       setIsAdminCreated(false);
       setResponseModal({
         title: 'Error!',
-        description: error.message
+        description: response.message
       });
-      setIsOpen(true);
     }
+    setIsOpen(true);
   };
 
   const onSubmit = (data) => {

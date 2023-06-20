@@ -36,15 +36,15 @@ const FormSubscriptions = () => {
 
   const schema = Joi.object({
     classes: Joi.string().required().messages({
-      'string.empty': 'Class is required',
+      'string.empty': 'Please choose an available class',
       'any.only': 'Invalid class'
     }),
     member: Joi.string().required().messages({
-      'string.empty': 'Member is required',
+      'string.empty': 'Please choose a member',
       'any.only': 'Invalid member'
     }),
     date: Joi.date().required().messages({
-      'date.base': 'Invalid birth date format'
+      'date.base': 'Please choose a date'
     })
   });
 

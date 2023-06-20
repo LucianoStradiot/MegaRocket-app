@@ -53,7 +53,7 @@ const FormActivities = () => {
         'string.max': 'The description can´t be longer than 250 characters',
         'string.empty': 'The description can´t be empty'
       }),
-    isActive: Joi.string().valid('true', 'false')
+    isActive: Joi.string().valid('true', 'false').allow(true, false)
   });
   const {
     register,
