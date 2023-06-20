@@ -124,14 +124,10 @@ const FormActivities = () => {
       if (data) {
         setValue('name', data.name);
         setValue('description', data.description);
+        setValue('isActive', data.isActive);
         setAddVisible(false);
         setActiveVisible(true);
         setSaveVisible(true);
-        if (data.isActive !== undefined) {
-          setValue('isActive', data.isActive);
-        } else {
-          setValue('isActive', true); // Establece un valor predeterminado si data.isActive no está definido
-        }
       }
     } else {
       setAddVisible(true);
