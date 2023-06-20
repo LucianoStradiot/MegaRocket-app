@@ -303,8 +303,8 @@ const FormMembers = () => {
         </div>
         <div className={styles.contButton}>
           <div>
-            <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="reset" clickAction={() => reset()} />
+            <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
+            <Button text="Reset" type="submit" clickAction={() => reset()} />
           </div>
           <Button type="submit" text={id ? 'Save' : 'Add'} />
         </div>

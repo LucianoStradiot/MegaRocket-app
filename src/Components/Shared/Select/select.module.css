@@ -9,10 +9,11 @@
   border-radius: 5px;
   border: 1px solid #ccc;
   width: 100%;
+  box-shadow: 0 2px 4px #1b1b5d99;
 }
 
 .select:hover {
-  box-shadow: 5px 3px 3px #00000015;
+  box-shadow: 5px 3px 3px #0000007e;
 }
 
 .errorMsg {

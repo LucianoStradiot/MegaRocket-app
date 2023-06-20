@@ -34,3 +34,13 @@
 .buttonCreateAdd:hover {
   background-color: #23294c;
 }
+
+.buttonSubmit {
+  background-color: #2E355B;
+  color: #fff;
+}
+
+.buttonSubmit:hover {
+  background-color: #23294ce3;
+  color: #fff;
+}

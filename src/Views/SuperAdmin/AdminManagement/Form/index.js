@@ -268,8 +268,8 @@ const AdminForm = () => {
         </div>
         <div className={styles.btnContainer}>
           <div>
-            <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="reset" clickAction={() => reset()} />
+            <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
+            <Button text="Reset" type="submit" clickAction={() => reset()} />
           </div>
           {!id && <Button text="Add" type="submit" />}
           {id && <Button text="Save" type="submit" />}
