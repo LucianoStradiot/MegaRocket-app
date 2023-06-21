@@ -1,6 +1,6 @@
-import SidebarMember from 'Components/Shared/SidebarMember';
+import Aside from 'Components/Shared/Aside';
 
 const membershipMember = () => {
-  return <SidebarMember />;
+  return <Aside page={'member'} />;
 };
 export default membershipMember;

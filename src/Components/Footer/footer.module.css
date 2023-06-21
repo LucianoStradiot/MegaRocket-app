@@ -4,6 +4,8 @@
   align-items: center;
   background-color: #2E355B;
   color: #fff;
+  position: relative;
+  z-index: 99;
 }
 
 .main {

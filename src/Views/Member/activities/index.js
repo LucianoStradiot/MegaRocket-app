@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
 import styles from './activities.module.css';
 import { getActiveActivities } from 'Redux/Activities/thunks';
-import SidebarMember from 'Components/Shared/SidebarMember';
+import Aside from 'Components/Shared/Aside';
 const ActivityInfo = () => {
   const activities = useSelector((state) => state.activities.data);
   const loading = useSelector((state) => state.activities.isLoading);
@@ -16,7 +16,7 @@ const ActivityInfo = () => {
     <div>
       {loading && <Spinner />}
       <section className={styles.containerTotal}>
-        <SidebarMember />
+        <Aside page={'member'} />
         <main className={styles.main}>
           <h1 className={styles.title}>Activities</h1>
           <div className={styles.containerActivity}>
@@ -33,7 +33,7 @@ const ActivityInfo = () => {
   ) : (
     <section className={styles.containerSidebar}>
       {loading && <Spinner />}
-      <SidebarMember />
+      <Aside page={'member'} />
       <p className={styles.info}>There is no Activity yet.</p>
     </section>
   );

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSuperAdmins, deleteSuperAdmin } from 'Redux/SuperAdmins/thunks';
 import Spinner from 'Components/Shared/Spinner';
 import Table from 'Components/Shared/Table';
+import Aside from 'Components/Shared/Aside';
 
 function SuperAdmins() {
   const superAdmins = useSelector((state) => state.superAdmins.data);
@@ -54,6 +55,7 @@ function SuperAdmins() {
 
   return (
     <>
+      <Aside page={'superAdmin'} />
       {isLoading && <Spinner />}
       {superAdmins.length > 0 ? (
         <section className={styles.container}>

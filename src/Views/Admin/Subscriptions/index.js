@@ -7,6 +7,7 @@ import Button from 'Components/Shared/Button';
 import Spinner from 'Components/Shared/Spinner';
 import Table from 'Components/Shared/Table';
 import { Link } from 'react-router-dom';
+import Aside from 'Components/Shared/Aside';
 
 function Subscriptions() {
   const [idDelete, setIdDelete] = useState('');
@@ -55,51 +56,57 @@ function Subscriptions() {
   };
 
   return subscriptions.length > 0 ? (
-    <section className={style.container}>
-      <Modal
-        title={responseModal.title}
-        desc={responseModal.description}
-        isOpen={isOpen}
-        confirmModal={responseModal.isConfirm}
-        handleClose={() => setIsOpen(!isOpen)}
-        deleteFunction={() => handleDeleteSub(idDelete)}
-      />
-      {pending && <Spinner />}
-      {!pending && (
-        <div>
-          <Link to="/admins/subscriptions/form">
-            <Button type="add" text="Create" className={style.btnCreate} />
-          </Link>
-          <Table
-            list={subscriptions}
-            column={['Date', 'Member Name', 'Class Hour', 'Activity Name', '']}
-            fields={['date', 'member.lastName', 'classes.hour', 'classes.activity.name']}
-            link={'/admins/subscriptions/form/'}
-            action={openModalConfirm}
-          />
-        </div>
-      )}
-    </section>
+    <div>
+      <Aside page={'subscription'} />
+      <section className={style.container}>
+        <Modal
+          title={responseModal.title}
+          desc={responseModal.description}
+          isOpen={isOpen}
+          confirmModal={responseModal.isConfirm}
+          handleClose={() => setIsOpen(!isOpen)}
+          deleteFunction={() => handleDeleteSub(idDelete)}
+        />
+        {pending && <Spinner />}
+        {!pending && (
+          <div>
+            <Link to="/admins/subscriptions/form">
+              <Button type="add" text="Create" className={style.btnCreate} />
+            </Link>
+            <Table
+              list={subscriptions}
+              column={['Date', 'Member Name', 'Class Hour', 'Activity Name', '']}
+              fields={['date', 'member.lastName', 'classes.hour', 'classes.activity.name']}
+              link={'/admins/subscriptions/form/'}
+              action={openModalConfirm}
+            />
+          </div>
+        )}
+      </section>
+    </div>
   ) : (
-    <section className={style.container}>
-      <Modal
-        title={responseModal.title}
-        desc={responseModal.description}
-        isOpen={isOpen}
-        confirmModal={responseModal.isConfirm}
-        handleClose={() => setIsOpen(!isOpen)}
-        deleteFunction={() => handleDeleteSub(idDelete)}
-      />
-      {pending && <Spinner />}
-      {!pending && (
-        <section>
-          <Link to="/admins/subscriptions/form/">
-            <Button text="Create" type="create" />
-          </Link>
-          <p className={style.info}>There is no Subscription yet.</p>
-        </section>
-      )}
-    </section>
+    <div>
+      <Aside page={'subscription'} />
+      <section className={style.container}>
+        <Modal
+          title={responseModal.title}
+          desc={responseModal.description}
+          isOpen={isOpen}
+          confirmModal={responseModal.isConfirm}
+          handleClose={() => setIsOpen(!isOpen)}
+          deleteFunction={() => handleDeleteSub(idDelete)}
+        />
+        {pending && <Spinner />}
+        {!pending && (
+          <section>
+            <Link to="/admins/subscriptions/form/">
+              <Button text="Create" type="create" />
+            </Link>
+            <p className={style.info}>There is no Subscription yet.</p>
+          </section>
+        )}
+      </section>
+    </div>
   );
 }
 

@@ -1,60 +1,32 @@
 .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 0 5%;
-  height: 120px;
+  height: 70px;
   background-color: #2E355B;
   color: #fff;
+  position: fixed;
+  width: 92%;
 }
 
 .brand {
-  font-weight: bold;
-  font-size: 1.75rem;
+  display: none;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 70px;
-  background-color: #8ED081;
+@media only screen and (min-width: 1025px){
+
+  .container {
+    height: 120px;
+    justify-content: space-between;
+  }
+
+  .brand {
+    display: flex;
+    font-weight: bold;
+    font-size: 1.75rem;
+  }
 }
 
-.rutes {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  list-style-type: none;
-}
 
-.rutes li {
-  display: inline-block;
-  position: relative;
-}
 
-.rutes li::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 2px;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s ease;
-}
-
-.rutes li:hover::after {
-  border-bottom: 2px solid #2E355B;
-  transform: scaleX(1);
-}
-
-.rutes>li>a {
-  font-size: 1.2rem;
-  font-weight: 600;
-  text-decoration: none;
-  text-transform: capitalize;
-  color: #2E355B;
-}
