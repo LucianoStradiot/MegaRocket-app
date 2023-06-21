@@ -1,6 +1,65 @@
 .container {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   min-height: 61.8vh;
+}
+
+.screenContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.classCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 3px;
+  width: 150px;
+  height: 80px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #2E355B;
+  border-radius: 8px;
+  border: 1px solid;
+}
+
+.classCard:hover {
+  transition: 0.4s;
+  color: #2E355B;
+  background-color: #8ED081;
+  border-color: #2E355B;
+  cursor: pointer;
+}
+
+.fullClassCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 3px;
+  width: 150px;
+  height: 80px;
+  font-weight: 600;
+  color: #000;
+  background-color: #ccc;
+  border-radius: 8px;
+  border: 1px solid;
+}
+
+.inlineBlock {
+  display: inline-block;
+}
+
+.table {
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.th {
+  width: 150px;
+  height: 88px;
 }
