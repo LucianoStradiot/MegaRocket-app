@@ -62,10 +62,10 @@ const FormClasses = () => {
         'string.pattern.base': 'Please choose an activity',
         'any.required': 'Activity is required'
       }),
-    slots: Joi.number().positive().integer().min(2).max(15).optional().messages({
+    slots: Joi.number().positive().integer().min(3).max(15).optional().messages({
       'any.empty': 'Activity slots is required',
       'number.base': 'Activity slots must be a number',
-      'number.min': 'Activity slots must be at least 2',
+      'number.min': 'Activity slots must be at least 3',
       'number.max': 'Activity slots can´t exceed 15'
     })
   });
@@ -279,8 +279,8 @@ const FormClasses = () => {
         </div>
         <div className={styles.sendContainer}>
           <div>
-            <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="reset" clickAction={() => reset()} />
+            <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
+            <Button text="Reset" type="submit" clickAction={() => reset()} />
           </div>
           {btnAddIsVisible && <Button text="Add" type="submit" />}
           {btnSaveIsVisible && <Button text="Save" type="submit" />}

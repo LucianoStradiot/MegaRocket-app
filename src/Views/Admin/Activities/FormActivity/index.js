@@ -169,7 +169,7 @@ const FormActivities = () => {
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)} id="form">
         <div className={styles.subContainer}>
           <div className={styles.inputContainer}>
-            <label>name</label>
+            <label>Name</label>
             <TextInput
               name="name"
               inputType="text"
@@ -178,7 +178,7 @@ const FormActivities = () => {
             />
           </div>
           <div className={styles.inputContainer}>
-            <label>description</label>
+            <label>Description</label>
             <TextArea name="description" register={register} error={errors.description?.message} />
           </div>
           {activeVisible && (
@@ -192,8 +192,8 @@ const FormActivities = () => {
           )}
           <div className={styles.btnContainer}>
             <div>
-              <Button text="Cancel" clickAction={() => history.goBack()} />
-              <Button text="Reset" type="reset" clickAction={() => reset()} />
+              <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
+              <Button text="Reset" type="submit" clickAction={() => reset()} />
             </div>
             {buttonAddIsVisible && <Button text="Add" type="submit" />}
             {buttonSaveIsVisible && (

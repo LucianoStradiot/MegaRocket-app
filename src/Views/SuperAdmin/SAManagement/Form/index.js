@@ -168,8 +168,8 @@ const FormSuperAdmin = () => {
           </div>
           <div className={styles.btnContainer}>
             <div>
-              <Button text="Cancel" clickAction={() => history.goBack()} type="cancel" />
-              <Button text="Reset" clickAction={() => reset()} type="reset" />
+              <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
+              <Button text="Reset" type="submit" clickAction={() => reset()} />
             </div>
             {btnAddIsVisible && <Button text="Add" type="submit" />}
             {btnSaveIsVisible && <Button text="Save" type="submit" />}

@@ -1,15 +1,16 @@
 .form {
   color: #373867;
-  background-color: #eee;
+  background-color: #fff;
   padding: 25px;
   border-radius: 8px;
   width: 400px;
   margin: 0 auto;
   margin-top: 200px;
+  font-weight: 600;
+  box-shadow: 0 2px 4px #1b1b5d99;
 }
 
 .btnContainer {
   display: flex;
   justify-content: space-between;
 }
-

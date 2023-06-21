@@ -23,7 +23,7 @@ const ActivityInfo = () => {
             {activities.map((dataItem, index) => (
               <div key={index} className={styles.boxActivity}>
                 <h2 className={styles.titleActivity}>{dataItem.name}</h2>
-                <p>{dataItem.description}</p>
+                <p className={styles.p}>{dataItem.description}</p>
               </div>
             ))}
           </div>

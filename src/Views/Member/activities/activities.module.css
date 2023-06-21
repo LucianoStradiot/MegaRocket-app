@@ -13,6 +13,7 @@
   border-radius: 2%;
   align-items: center;
   box-sizing: border-box;
+  border: 1px solid #373867;
 }
 
 .boxActivity:hover {
@@ -26,6 +27,11 @@
 
 .titleActivity {
   text-transform: capitalize;
+  color: #373867;
+}
+
+.p {
+  color: #373867;
 }
 
 .title {
