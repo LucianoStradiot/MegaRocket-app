@@ -14,7 +14,7 @@
   width: 95%;
 }
 
-.rutesAdmin {
+.rutes {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

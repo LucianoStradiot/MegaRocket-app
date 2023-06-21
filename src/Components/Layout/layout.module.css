@@ -8,4 +8,5 @@
       rgba(89, 89, 112, 0.7)),
     url('../../../public/assets/images/background-gim.png');
   background-position: 75% 52%;
+  background-size: cover;
 }
