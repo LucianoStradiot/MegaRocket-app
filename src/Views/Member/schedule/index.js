@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from 'Views/Member/schedule/schedule.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClasses } from 'Redux/Classes/thunks';
-import { getSubscriptions /* deleteSubscritpions  */ } from 'Redux/Subscriptions/thunks';
+import { getSubscriptions } from 'Redux/Subscriptions/thunks';
 import SidebarMember from 'Components/Shared/SidebarMember';
 import Modal from 'Components/Shared/Modal';
 
