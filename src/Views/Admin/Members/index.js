@@ -57,54 +57,66 @@ const Members = () => {
   };
 
   return listMembers?.length > 0 ? (
-    <div>
+    <>
       <Aside page={'admin-member'} />
-      <section className={styles.container}>
-        <Modal
-          title={modalInfo.title}
-          desc={modalInfo.desc}
-          isOpen={isOpen}
-          handleClose={() => setIsOpen(!isOpen)}
-          confirmModal={modalInfo.isConfirm}
-          deleteFunction={() => handledeleteMember(idMember)}
-        />
-        {pending && <Spinner />}
-        {!pending && (
-          <div className={styles.subContainer}>
-            <Link className={styles.buttonCreate} to="/admins/members/form">
-              <Button text={'Create'} type={'add'} />
-            </Link>
-            <Table
-              list={listMembers}
-              column={['Name', 'Last Name', 'DNI', 'Phone', 'Email', 'Membership', 'Status', '']}
-              fields={['firstName', 'lastName', 'dni', 'phone', 'email', 'membership', 'isActive']}
-              link={'/admins/members/form/'}
-              action={confirmDelete}
-            />
-          </div>
-        )}
-      </section>
-    </div>
-  ) : (
-    <div>
-      <Aside page={'admin-member'} />
-      <section className={styles.container}>
-        <Modal
-          title={modalInfo.title}
-          desc={modalInfo.desc}
-          isOpen={isOpen}
-          handleClose={() => setIsOpen(!isOpen)}
-          confirmModal={modalInfo.isConfirm}
-          deleteFunction={() => handledeleteMember(idMember)}
-        />
+      <div className={styles.container}>
         <section>
-          <Link to="/admins/members/form">
-            <Button text="Create" type="create" />
-          </Link>
-          <p className={styles.info}>There is no Member yet.</p>
+          <Modal
+            title={modalInfo.title}
+            desc={modalInfo.desc}
+            isOpen={isOpen}
+            handleClose={() => setIsOpen(!isOpen)}
+            confirmModal={modalInfo.isConfirm}
+            deleteFunction={() => handledeleteMember(idMember)}
+          />
+          {pending && <Spinner />}
+          {!pending && (
+            <div className={styles.subContainer}>
+              <Link className={styles.buttonCreate} to="/admins/members/form">
+                <Button text={'Create'} type={'add'} />
+              </Link>
+              <Table
+                list={listMembers}
+                column={['Name', 'Last Name', 'DNI', 'Phone', 'Email', 'Membership', 'Status', '']}
+                fields={[
+                  'firstName',
+                  'lastName',
+                  'dni',
+                  'phone',
+                  'email',
+                  'membership',
+                  'isActive'
+                ]}
+                link={'/admins/members/form/'}
+                action={confirmDelete}
+              />
+            </div>
+          )}
         </section>
-      </section>
-    </div>
+      </div>
+    </>
+  ) : (
+    <>
+      <Aside page={'admin-member'} />
+      <div className={styles.container}>
+        <section>
+          <Modal
+            title={modalInfo.title}
+            desc={modalInfo.desc}
+            isOpen={isOpen}
+            handleClose={() => setIsOpen(!isOpen)}
+            confirmModal={modalInfo.isConfirm}
+            deleteFunction={() => handledeleteMember(idMember)}
+          />
+          <section>
+            <Link to="/admins/members/form">
+              <Button text="Create" type="create" />
+            </Link>
+            <p className={styles.info}>There is no Member yet.</p>
+          </section>
+        </section>
+      </div>
+    </>
   );
 };
 

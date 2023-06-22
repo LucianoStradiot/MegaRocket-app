@@ -60,54 +60,58 @@ function Classes() {
   };
 
   return classes.length > 0 ? (
-    <div>
+    <>
       <Aside page={'classes'} />
-      <section className={styles.container}>
-        <Modal
-          title={responseModal.title}
-          desc={responseModal.description}
-          isOpen={isOpen}
-          confirmModal={responseModal.isConfirm}
-          handleClose={() => setIsOpen(!isOpen)}
-          deleteFunction={() => handleDeleteClass()}
-        />
-        {loading && <Spinner />}
-        {!loading && (
+      <div className={styles.container}>
+        <section>
+          <Modal
+            title={responseModal.title}
+            desc={responseModal.description}
+            isOpen={isOpen}
+            confirmModal={responseModal.isConfirm}
+            handleClose={() => setIsOpen(!isOpen)}
+            deleteFunction={() => handleDeleteClass()}
+          />
+          {loading && <Spinner />}
+          {!loading && (
+            <section>
+              <Link to="/admins/classes/form">
+                <Button text="Create" type="create" />
+              </Link>
+              <Table
+                list={classes}
+                column={['Day', 'Hour', 'Trainer', 'Activity', 'Slots', '']}
+                fields={['day', 'hour', 'trainer.lastName', 'activity.name', 'slots']}
+                link={'/admins/classes/form/'}
+                action={openModalConfirm}
+              />
+            </section>
+          )}
+        </section>
+      </div>
+    </>
+  ) : (
+    <>
+      <Aside page={'classes'} />
+      <div className={styles.container}>
+        <section>
+          <Modal
+            title={responseModal.title}
+            desc={responseModal.description}
+            isOpen={isOpen}
+            confirmModal={responseModal.isConfirm}
+            handleClose={() => setIsOpen(!isOpen)}
+            deleteFunction={() => handleDeleteClass()}
+          />
           <section>
             <Link to="/admins/classes/form">
               <Button text="Create" type="create" />
             </Link>
-            <Table
-              list={classes}
-              column={['Day', 'Hour', 'Trainer', 'Activity', 'Slots', '']}
-              fields={['day', 'hour', 'trainer.lastName', 'activity.name', 'slots']}
-              link={'/admins/classes/form/'}
-              action={openModalConfirm}
-            />
+            <p className={styles.info}>There is no Class yet.</p>
           </section>
-        )}
-      </section>
-    </div>
-  ) : (
-    <div>
-      <Aside page={'classes'} />
-      <section className={styles.container}>
-        <Modal
-          title={responseModal.title}
-          desc={responseModal.description}
-          isOpen={isOpen}
-          confirmModal={responseModal.isConfirm}
-          handleClose={() => setIsOpen(!isOpen)}
-          deleteFunction={() => handleDeleteClass()}
-        />
-        <section>
-          <Link to="/admins/classes/form">
-            <Button text="Create" type="create" />
-          </Link>
-          <p className={styles.info}>There is no Class yet.</p>
         </section>
-      </section>
-    </div>
+      </div>
+    </>
   );
 }
 

@@ -1,9 +1,9 @@
-.container {
-  flex: 1;
+.mainContainer {
+  margin-top: 200px;
+  margin-left: 20vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  width: 100%;
 }
 
 .info {

@@ -1,9 +1,8 @@
-.container {
-  flex: 1;
+.mainContainer {
+  width: 100%;
+  margin-left: 20vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
   margin-top: 200px;
 }
 

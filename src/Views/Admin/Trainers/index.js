@@ -55,74 +55,78 @@ function Trainers() {
   };
 
   return trainers.length > 0 ? (
-    <div>
+    <>
       <Aside page={'trainer'} />
-      <section className={styles.container}>
-        <Modal
-          title={responseModal.title}
-          desc={responseModal.description}
-          isOpen={isOpen}
-          confirmModal={responseModal.isConfirm}
-          handleClose={() => setIsOpen(!isOpen)}
-          deleteFunction={() => handleDeleteTrainer(idDelete)}
-        />
-        {loading && <Spinner />}
-        {!loading && (
+      <div className={styles.container}>
+        <section>
+          <Modal
+            title={responseModal.title}
+            desc={responseModal.description}
+            isOpen={isOpen}
+            confirmModal={responseModal.isConfirm}
+            handleClose={() => setIsOpen(!isOpen)}
+            deleteFunction={() => handleDeleteTrainer(idDelete)}
+          />
+          {loading && <Spinner />}
+          {!loading && (
+            <section>
+              <Link to="/admins/trainers/formTrainers">
+                <Button text="Create" type="create" />
+              </Link>
+              <Table
+                list={trainers}
+                column={[
+                  'Name',
+                  'Last Name',
+                  'DNI',
+                  'Email',
+                  'Phone',
+                  'City',
+                  'Salary',
+                  'Status',
+                  ''
+                ]}
+                fields={[
+                  'firstName',
+                  'lastName',
+                  'dni',
+                  'email',
+                  'phone',
+                  'city',
+                  'salary',
+                  'isActive'
+                ]}
+                link={'/admins/trainers/formTrainers/'}
+                action={openModalConfirm}
+              />
+            </section>
+          )}
+          <section className={styles.sectionForm}></section>
+        </section>
+      </div>
+    </>
+  ) : (
+    <>
+      <Aside page={'trainer'} />
+      <div className={styles.container}>
+        <section>
+          <Modal
+            title={responseModal.title}
+            desc={responseModal.description}
+            isOpen={isOpen}
+            confirmModal={responseModal.isConfirm}
+            handleClose={() => setIsOpen(!isOpen)}
+            deleteFunction={() => deleteTrainer(idDelete)}
+          />
           <section>
             <Link to="/admins/trainers/formTrainers">
               <Button text="Create" type="create" />
             </Link>
-            <Table
-              list={trainers}
-              column={[
-                'Name',
-                'Last Name',
-                'DNI',
-                'Email',
-                'Phone',
-                'City',
-                'Salary',
-                'Status',
-                ''
-              ]}
-              fields={[
-                'firstName',
-                'lastName',
-                'dni',
-                'email',
-                'phone',
-                'city',
-                'salary',
-                'isActive'
-              ]}
-              link={'/admins/trainers/formTrainers/'}
-              action={openModalConfirm}
-            />
+            <p className={styles.info}>There is no Trainers yet.</p>
           </section>
-        )}
-        <section className={styles.sectionForm}></section>
-      </section>
-    </div>
-  ) : (
-    <div>
-      <Aside page={'trainer'} />
-      <section className={styles.container}>
-        <Modal
-          title={responseModal.title}
-          desc={responseModal.description}
-          isOpen={isOpen}
-          confirmModal={responseModal.isConfirm}
-          handleClose={() => setIsOpen(!isOpen)}
-          deleteFunction={() => deleteTrainer(idDelete)}
-        />
-        <section>
-          <Link to="/admins/trainers/formTrainers">
-            <Button text="Create" type="create" />
-          </Link>
-          <p className={styles.info}>There is no Trainers yet.</p>
         </section>
-      </section>
-    </div>
+      </div>
+    </>
   );
 }
 

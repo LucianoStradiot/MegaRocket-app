@@ -158,7 +158,7 @@ const FormActivities = () => {
   }, [activities]);
 
   return (
-    <>
+    <div className={styles.mainContainer}>
       <Modal
         title={modalInfo.title}
         desc={modalInfo.desc}
@@ -204,7 +204,7 @@ const FormActivities = () => {
           </div>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 

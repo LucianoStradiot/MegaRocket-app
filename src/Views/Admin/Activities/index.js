@@ -67,34 +67,36 @@ function Activities() {
   };
 
   return activities.length > 0 ? (
-    <div>
+    <>
       <Aside page={'activity'} />
-      <div className={styles.container}>
-        <Modal
-          title={modalInfo.title}
-          desc={modalInfo.desc}
-          isOpen={isOpen}
-          handleClose={switchIsOpen}
-          confirmModal={confirmModal}
-          deleteFunction={() => handleDelActivity()}
-        />
-        {loading && <Spinner />}
-        {!loading && (
-          <section>
-            <Link to="/admins/activities/form">
-              <Button text="Create" />
-            </Link>
-            <Table
-              list={activities}
-              column={['Activity name', 'Description', 'Status', '']}
-              fields={['name', 'description', 'isActive']}
-              link={'/admins/activities/form/'}
-              action={confirmDelete}
-            />
-          </section>
-        )}
+      <div className={styles.mainContainer}>
+        <div className={styles.container}>
+          <Modal
+            title={modalInfo.title}
+            desc={modalInfo.desc}
+            isOpen={isOpen}
+            handleClose={switchIsOpen}
+            confirmModal={confirmModal}
+            deleteFunction={() => handleDelActivity()}
+          />
+          {loading && <Spinner />}
+          {!loading && (
+            <section>
+              <Link to="/admins/activities/form">
+                <Button text="Create" />
+              </Link>
+              <Table
+                list={activities}
+                column={['Activity name', 'Description', 'Status', '']}
+                fields={['name', 'description', 'isActive']}
+                link={'/admins/activities/form/'}
+                action={confirmDelete}
+              />
+            </section>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   ) : (
     <div>
       <Aside page={'activity'} />

@@ -198,7 +198,7 @@ const FormTrainers = () => {
   };
 
   return (
-    <section>
+    <section className={styles.mainContainer}>
       <Modal
         title={responseModal.title}
         desc={responseModal.description}

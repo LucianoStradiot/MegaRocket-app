@@ -137,60 +137,67 @@ const FormSubscriptions = () => {
   };
 
   return (
-    <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
-      <Modal
-        title={responseModal.title}
-        desc={responseModal.description}
-        isOpen={isOpen}
-        handleClose={closeForm}
-      />
-      {pending && <Spinner />}
-      <div>
-        <label htmlFor="">Classes</label>
-        <Select
-          name="classes"
-          selectID="classes"
-          register={register}
-          error={errors.classes?.message}
-        >
-          <option value="">Choose a class</option>
-          {classes.map((oneClass) => {
-            return (
-              <option value={oneClass._id} key={oneClass._id}>
-                {oneClass.hour} {oneClass?.activity?.name}, Trainer:{' '}
-                {oneClass.trainer && oneClass.trainer.firstName}
-              </option>
-            );
-          })}
-        </Select>
-        <label htmlFor="">Member Email</label>
-        <Select name="member" selectID="member" register={register} error={errors.member?.message}>
-          <option value="">Choose a Member</option>
-          {members.map((subs) => {
-            return (
-              <option value={subs._id} key={subs._id}>
-                {subs.email}
-              </option>
-            );
-          })}
-        </Select>
-        <DatePicker
-          title="Date"
-          className={style.inputForm}
-          type="date"
-          name="date"
-          register={register}
-          error={errors.date?.message}
+    <div className={style.mainContainer}>
+      <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+        <Modal
+          title={responseModal.title}
+          desc={responseModal.description}
+          isOpen={isOpen}
+          handleClose={closeForm}
         />
-        <div className={style.btnContainer}>
-          <div>
-            <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="submit" clickAction={() => reset()} />
+        {pending && <Spinner />}
+        <div>
+          <label htmlFor="">Classes</label>
+          <Select
+            name="classes"
+            selectID="classes"
+            register={register}
+            error={errors.classes?.message}
+          >
+            <option value="">Choose a class</option>
+            {classes.map((oneClass) => {
+              return (
+                <option value={oneClass._id} key={oneClass._id}>
+                  {oneClass.hour} {oneClass?.activity?.name}, Trainer:{' '}
+                  {oneClass.trainer && oneClass.trainer.firstName}
+                </option>
+              );
+            })}
+          </Select>
+          <label htmlFor="">Member Email</label>
+          <Select
+            name="member"
+            selectID="member"
+            register={register}
+            error={errors.member?.message}
+          >
+            <option value="">Choose a Member</option>
+            {members.map((subs) => {
+              return (
+                <option value={subs._id} key={subs._id}>
+                  {subs.email}
+                </option>
+              );
+            })}
+          </Select>
+          <DatePicker
+            title="Date"
+            className={style.inputForm}
+            type="date"
+            name="date"
+            register={register}
+            error={errors.date?.message}
+          />
+          <div className={style.btnContainer}>
+            <div>
+              <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
+              <Button text="Reset" type="submit" clickAction={() => reset()} />
+            </div>
+            <Button text={button === 'Create' ? 'Add' : 'Save'} type="submit" />
           </div>
-          <Button text={button === 'Create' ? 'Add' : 'Save'} type="submit" />
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 
