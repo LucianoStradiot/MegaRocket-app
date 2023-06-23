@@ -7,6 +7,7 @@ import { getActivities, delActivities } from 'Redux/Activities/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
 import Table from 'Components/Shared/Table';
+import Aside from 'Components/Shared/Aside';
 
 function Activities() {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,48 +67,56 @@ function Activities() {
   };
 
   return activities.length > 0 ? (
-    <div className={styles.container}>
-      <Modal
-        title={modalInfo.title}
-        desc={modalInfo.desc}
-        isOpen={isOpen}
-        handleClose={switchIsOpen}
-        confirmModal={confirmModal}
-        deleteFunction={() => handleDelActivity()}
-      />
-      {loading && <Spinner />}
-      {!loading && (
+    <>
+      <Aside page={'activity'} />
+      <div className={styles.mainContainer}>
+        <div className={styles.container}>
+          <Modal
+            title={modalInfo.title}
+            desc={modalInfo.desc}
+            isOpen={isOpen}
+            handleClose={switchIsOpen}
+            confirmModal={confirmModal}
+            deleteFunction={() => handleDelActivity()}
+          />
+          {loading && <Spinner />}
+          {!loading && (
+            <section>
+              <Link to="/admins/activities/form">
+                <Button text="Create" />
+              </Link>
+              <Table
+                list={activities}
+                column={['Activity name', 'Description', 'Status', '']}
+                fields={['name', 'description', 'isActive']}
+                link={'/admins/activities/form/'}
+                action={confirmDelete}
+              />
+            </section>
+          )}
+        </div>
+      </div>
+    </>
+  ) : (
+    <div>
+      <Aside page={'activity'} />
+      <section className={styles.container}>
+        <Modal
+          title={modalInfo.title}
+          desc={modalInfo.desc}
+          isOpen={isOpen}
+          handleClose={switchIsOpen}
+          confirmModal={confirmModal}
+          deleteFunction={() => handleDelActivity()}
+        />
         <section>
           <Link to="/admins/activities/form">
-            <Button text="Create" />
+            <Button text="Create" type="create" />
           </Link>
-          <Table
-            list={activities}
-            column={['Activity name', 'Description', 'Status', '']}
-            fields={['name', 'description', 'isActive']}
-            link={'/admins/activities/form/'}
-            action={confirmDelete}
-          />
+          <p className={styles.info}>There is no Activity yet.</p>
         </section>
-      )}
-    </div>
-  ) : (
-    <section className={styles.container}>
-      <Modal
-        title={modalInfo.title}
-        desc={modalInfo.desc}
-        isOpen={isOpen}
-        handleClose={switchIsOpen}
-        confirmModal={confirmModal}
-        deleteFunction={() => handleDelActivity()}
-      />
-      <section>
-        <Link to="/admins/activities/form">
-          <Button text="Create" type="create" />
-        </Link>
-        <p className={styles.info}>There is no Activity yet.</p>
       </section>
-    </section>
+    </div>
   );
 }
 

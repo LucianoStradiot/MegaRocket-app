@@ -1,14 +1,39 @@
-.container {
+.mainContainer {
+  margin-left: 20vh;
   display: flex;
-  justify-content: space-between;
-  min-height: 61.8vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background-color: #cbebf3cc;
+  padding-right: 5px;
+  border-radius: 8px;
+  margin-top: 100px;
 }
 
 .screenContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.screenContainer::-webkit-scrollbar {
+  width: 10px;
+  background-color: none;
+}
+
+.screenContainer::-webkit-scrollbar-thumb {
+  background-color: #2E355B;
+  border-radius: 5px;
+}
+
+.screenContainer::-webkit-scrollbar-thumb:hover {
+  background-color: #465089;
+}
+
+.screenContainer::-webkit-scrollbar-track {
+  background-color: none;
 }
 
 .classCard {
@@ -54,9 +79,10 @@
 }
 
 .table {
-  padding: 20px;
+  padding-right: 50px;
   box-sizing: border-box;
   text-align: center;
+  border-collapse: collapse;
 }
 
 .th {

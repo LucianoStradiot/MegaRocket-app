@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { deleteClass, getClasses } from 'Redux/Classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Table from 'Components/Shared/Table';
+import Aside from 'Components/Shared/Aside';
 
 function Classes() {
   const dispatch = useDispatch();
@@ -59,48 +60,58 @@ function Classes() {
   };
 
   return classes.length > 0 ? (
-    <section className={styles.container}>
-      <Modal
-        title={responseModal.title}
-        desc={responseModal.description}
-        isOpen={isOpen}
-        confirmModal={responseModal.isConfirm}
-        handleClose={() => setIsOpen(!isOpen)}
-        deleteFunction={() => handleDeleteClass()}
-      />
-      {loading && <Spinner />}
-      {!loading && (
-        <section>
-          <Link to="/admins/classes/form">
-            <Button text="Create" type="create" />
-          </Link>
-          <Table
-            list={classes}
-            column={['Day', 'Hour', 'Trainer', 'Activity', 'Slots', '']}
-            fields={['day', 'hour', 'trainer.lastName', 'activity.name', 'slots']}
-            link={'/admins/classes/form/'}
-            action={openModalConfirm}
+    <>
+      <Aside page={'classes'} />
+      <div className={styles.container}>
+        <section className={styles.subContainer}>
+          <Modal
+            title={responseModal.title}
+            desc={responseModal.description}
+            isOpen={isOpen}
+            confirmModal={responseModal.isConfirm}
+            handleClose={() => setIsOpen(!isOpen)}
+            deleteFunction={() => handleDeleteClass()}
           />
+          {loading && <Spinner />}
+          {!loading && (
+            <section>
+              <Link to="/admins/classes/form">
+                <Button text="Create" type="create" />
+              </Link>
+              <Table
+                list={classes}
+                column={['Day', 'Hour', 'Trainer', 'Activity', 'Slots', '']}
+                fields={['day', 'hour', 'trainer.lastName', 'activity.name', 'slots']}
+                link={'/admins/classes/form/'}
+                action={openModalConfirm}
+              />
+            </section>
+          )}
         </section>
-      )}
-    </section>
+      </div>
+    </>
   ) : (
-    <section className={styles.container}>
-      <Modal
-        title={responseModal.title}
-        desc={responseModal.description}
-        isOpen={isOpen}
-        confirmModal={responseModal.isConfirm}
-        handleClose={() => setIsOpen(!isOpen)}
-        deleteFunction={() => handleDeleteClass()}
-      />
-      <section>
-        <Link to="/admins/classes/form">
-          <Button text="Create" type="create" />
-        </Link>
-        <p className={styles.info}>There is no Class yet.</p>
-      </section>
-    </section>
+    <>
+      <Aside page={'classes'} />
+      <div className={styles.container}>
+        <section>
+          <Modal
+            title={responseModal.title}
+            desc={responseModal.description}
+            isOpen={isOpen}
+            confirmModal={responseModal.isConfirm}
+            handleClose={() => setIsOpen(!isOpen)}
+            deleteFunction={() => handleDeleteClass()}
+          />
+          <section>
+            <Link to="/admins/classes/form">
+              <Button text="Create" type="create" />
+            </Link>
+            <p className={styles.info}>There is no Class yet.</p>
+          </section>
+        </section>
+      </div>
+    </>
   );
 }
 

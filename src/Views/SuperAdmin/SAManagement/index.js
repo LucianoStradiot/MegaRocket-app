@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSuperAdmins, deleteSuperAdmin } from 'Redux/SuperAdmins/thunks';
 import Spinner from 'Components/Shared/Spinner';
 import Table from 'Components/Shared/Table';
+import Aside from 'Components/Shared/Aside';
 
 function SuperAdmins() {
   const superAdmins = useSelector((state) => state.superAdmins.data);
@@ -54,47 +55,52 @@ function SuperAdmins() {
 
   return (
     <>
+      <Aside page={'superAdmin'} />
       {isLoading && <Spinner />}
       {superAdmins.length > 0 ? (
-        <section className={styles.container}>
-          <Modal
-            title={responseModal.title}
-            desc={responseModal.description}
-            isOpen={isOpen}
-            confirmModal={responseModal.isConfirm}
-            handleClose={() => setIsOpen(!isOpen)}
-            deleteFunction={() => handleDelete(idDelete)}
-          />
-          <section>
-            <Link to="/superAdmins/form">
-              <Button text="Create" type="create" />
-            </Link>
-            <Table
-              list={superAdmins}
-              column={['Email', '']}
-              fields={['email']}
-              link={'/superAdmins/form/'}
-              action={openModalConfirm}
+        <div className={styles.mainContainer}>
+          <section className={styles.container}>
+            <Modal
+              title={responseModal.title}
+              desc={responseModal.description}
+              isOpen={isOpen}
+              confirmModal={responseModal.isConfirm}
+              handleClose={() => setIsOpen(!isOpen)}
+              deleteFunction={() => handleDelete(idDelete)}
             />
+            <section>
+              <Link to="/superAdmins/form">
+                <Button text="Create" type="create" />
+              </Link>
+              <Table
+                list={superAdmins}
+                column={['Email', '']}
+                fields={['email']}
+                link={'/superAdmins/form/'}
+                action={openModalConfirm}
+              />
+            </section>
           </section>
-        </section>
+        </div>
       ) : (
-        <section className={styles.container}>
-          <Modal
-            title={responseModal.title}
-            desc={responseModal.description}
-            isOpen={isOpen}
-            confirmModal={responseModal.isConfirm}
-            handleClose={() => setIsOpen(!isOpen)}
-            deleteFunction={() => handleDelete(idDelete)}
-          />
-          <section>
-            <Link to="/superAdmins/form">
-              <Button text="Create" type="create" />
-            </Link>
-            <p className={styles.info}>There is no SuperAdmins yet.</p>
+        <div className={styles.mainContainer}>
+          <section className={styles.container}>
+            <Modal
+              title={responseModal.title}
+              desc={responseModal.description}
+              isOpen={isOpen}
+              confirmModal={responseModal.isConfirm}
+              handleClose={() => setIsOpen(!isOpen)}
+              deleteFunction={() => handleDelete(idDelete)}
+            />
+            <section>
+              <Link to="/superAdmins/form">
+                <Button text="Create" type="create" />
+              </Link>
+              <p className={styles.info}>There is no SuperAdmins yet.</p>
+            </section>
           </section>
-        </section>
+        </div>
       )}
       ;
     </>

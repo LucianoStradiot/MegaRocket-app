@@ -1,10 +1,10 @@
-import styles from './home.module.css';
+import Aside from 'Components/Shared/Aside';
 
 function Home() {
   return (
-    <section className={styles.container}>
-      <h2>Home</h2>
-    </section>
+    <div>
+      <Aside page={'home'} />
+    </div>
   );
 }
 

@@ -3,8 +3,8 @@ import styles from 'Views/Member/schedule/schedule.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClasses } from 'Redux/Classes/thunks';
 import { getSubscriptions } from 'Redux/Subscriptions/thunks';
-import SidebarMember from 'Components/Shared/SidebarMember';
 import Modal from 'Components/Shared/Modal';
+import Aside from 'Components/Shared/Aside';
 
 const MemberSchedule = () => {
   const classes = useSelector((state) => state.classes.data);
@@ -50,87 +50,89 @@ const MemberSchedule = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <Modal
-        title={modal.title}
-        desc={modal.description}
-        isOpen={isOpen}
-        confirmModal={modal.isConfirm}
-        handleClose={() => setIsOpen(!isOpen)}
-      />
-      <div>
-        <SidebarMember />
-      </div>
-      <div className={styles.screenContainer}>
-        <table className={styles.table}>
-          <thead>
-            <tr className={styles.tr}>
-              <th></th>
-              {weekDays.map((day) => (
-                <th key={day} className={styles.th}>
-                  {day}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {timeSlots.map((hour) => (
-              <>
+    <>
+      <Aside page={'member'} />
+      <div className={styles.mainContainer}>
+        <div className={styles.container}>
+          <Modal
+            title={modal.title}
+            desc={modal.description}
+            isOpen={isOpen}
+            confirmModal={modal.isConfirm}
+            handleClose={() => setIsOpen(!isOpen)}
+          />
+          <div className={styles.screenContainer}>
+            <table className={styles.table}>
+              <thead>
                 <tr className={styles.tr}>
-                  <th className={styles.th}>{hour}</th>
-                  {weekDays.map((day, dayIndex) => (
-                    <td key={dayIndex}>
-                      {classes
-                        .filter((oneClass) => oneClass.day === day && oneClass.hour === hour)
-                        .map((oneClass, index) => {
-                          const filteredSubscriptions = subscriptions.filter(
-                            (subscription) => oneClass._id === subscription.classes._id
-                          );
-                          const subscriptionsLength = filteredSubscriptions.length;
-
-                          return (
-                            <div className={styles.card} key={index}>
-                              <button
-                                className={
-                                  subscriptionsLength !== oneClass.slots
-                                    ? styles.classCard
-                                    : styles.fullClassCard
-                                }
-                                onClick={() =>
-                                  openModal(
-                                    'Subscribe to',
-                                    `Activity: ${oneClass.activity.name}, Trainer: ${oneClass.trainer.firstName}, Slots: ${subscriptionsLength} / ${oneClass.slots}`
-                                  )
-                                }
-                              >
-                                <p className={styles.inlineBlock}>
-                                  <div>{`Activity: ${oneClass.activity.name}`}</div>
-                                  <div>{`Trainer: ${oneClass.trainer.firstName}`}</div>
-                                  <div>
-                                    {'Slots: '}
-                                    {subscriptionsLength}
-                                    {' / '}
-                                    {oneClass.slots}
-                                  </div>
-                                </p>
-                              </button>
-                            </div>
-                          );
-                        })}
-                    </td>
+                  <th></th>
+                  {weekDays.map((day) => (
+                    <th key={day} className={styles.th}>
+                      {day}
+                    </th>
                   ))}
                 </tr>
-              </>
-            ))}
-            <tr className={styles.tr}>
-              <td colSpan={weekDays.length + 1}>
-                {classes.length === 0 && <p>There are no classes yet.</p>}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {timeSlots.map((hour) => (
+                  <>
+                    <tr className={styles.tr}>
+                      <th className={styles.th}>{hour}</th>
+                      {weekDays.map((day, dayIndex) => (
+                        <td key={dayIndex}>
+                          {classes
+                            .filter((oneClass) => oneClass.day === day && oneClass.hour === hour)
+                            .map((oneClass, index) => {
+                              const filteredSubscriptions = subscriptions.filter(
+                                (subscription) => oneClass._id === subscription.classes._id
+                              );
+                              const subscriptionsLength = filteredSubscriptions.length;
+
+                              return (
+                                <div className={styles.card} key={index}>
+                                  <button
+                                    className={
+                                      subscriptionsLength !== oneClass.slots
+                                        ? styles.classCard
+                                        : styles.fullClassCard
+                                    }
+                                    onClick={() =>
+                                      openModal(
+                                        'Subscribe to',
+                                        `Activity: ${oneClass.activity.name}, Trainer: ${oneClass.trainer.firstName}, Slots: ${subscriptionsLength} / ${oneClass.slots}`
+                                      )
+                                    }
+                                  >
+                                    <p className={styles.inlineBlock}>
+                                      <div>{`Activity: ${oneClass.activity.name}`}</div>
+                                      <div>{`Trainer: ${oneClass.trainer.firstName}`}</div>
+                                      <div>
+                                        {'Slots: '}
+                                        {subscriptionsLength}
+                                        {' / '}
+                                        {oneClass.slots}
+                                      </div>
+                                    </p>
+                                  </button>
+                                </div>
+                              );
+                            })}
+                        </td>
+                      ))}
+                    </tr>
+                  </>
+                ))}
+                <tr className={styles.tr}>
+                  <td colSpan={weekDays.length + 1}>
+                    {classes.length === 0 && <p>There are no classes yet.</p>}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

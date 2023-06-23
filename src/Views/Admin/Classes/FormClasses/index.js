@@ -189,7 +189,7 @@ const FormClasses = () => {
   ];
 
   return (
-    <div>
+    <div className={styles.mainContainer}>
       <Modal
         title={responseModal.title}
         desc={responseModal.description}

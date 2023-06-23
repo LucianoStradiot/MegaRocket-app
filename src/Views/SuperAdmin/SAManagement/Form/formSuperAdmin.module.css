@@ -1,15 +1,14 @@
-.container {
-  flex: 1;
+.sectionForm {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5px;
+  width: 100%;
 }
 
 .form {
   color: #373867;
-  background-color: #fff;
+  background-color: #ffffffde;
   padding: 25px;
   border-radius: 8px;
   width: 350px;

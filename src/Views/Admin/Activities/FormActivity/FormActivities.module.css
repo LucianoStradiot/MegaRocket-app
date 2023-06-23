@@ -1,12 +1,15 @@
+.mainContainer {
+  margin: 0 auto;
+}
+
 .form {
   color: #2E355B;
-  background-color: #fff;
+  background-color: #ffffffde;
   padding: 25px;
   border-radius: 8px;
-  width: 400px;
-  margin: 10vh auto;
   box-shadow: 0 2px 4px #1b1b5d99;
   font-weight: 600;
+  margin-top: 250px;
 }
 
 .btnContainer {

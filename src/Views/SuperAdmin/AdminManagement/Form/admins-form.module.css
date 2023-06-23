@@ -1,10 +1,13 @@
 .sectionForm {
-  margin: 40px 0;
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .form {
   color: #373867;
-  background-color: #fff;
+  background-color: #ffffffde;
   padding: 25px;
   border-radius: 8px;
   width: 600px;

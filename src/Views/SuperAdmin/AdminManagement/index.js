@@ -7,6 +7,7 @@ import { deleteAdmin, getAdmins } from 'Redux/Admins/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
 import Table from 'Components/Shared/Table';
+import Aside from 'Components/Shared/Aside';
 
 function Admins() {
   const [idDelete, setIdDelete] = useState('');
@@ -58,50 +59,60 @@ function Admins() {
   };
 
   return admins.length > 0 ? (
-    <div className={styles.container}>
-      <section>
-        <Modal
-          title={responseModal.title}
-          desc={responseModal.description}
-          isOpen={isOpen}
-          confirmModal={responseModal.isConfirm}
-          handleClose={() => setIsOpen(!isOpen)}
-          deleteFunction={() => handleDeleteAdmin()}
-        />
-        {loading && <Spinner />}
-        {!loading && (
-          <div>
+    <>
+      <Aside page={'admin'} />
+      <div className={styles.mainContainer}>
+        <div className={styles.container}>
+          <section>
+            <Modal
+              title={responseModal.title}
+              desc={responseModal.description}
+              isOpen={isOpen}
+              confirmModal={responseModal.isConfirm}
+              handleClose={() => setIsOpen(!isOpen)}
+              deleteFunction={() => handleDeleteAdmin()}
+            />
+            {loading && <Spinner />}
+            {!loading && (
+              <div>
+                <Link to="/superAdmins/admins/form">
+                  <Button text="Create" type="create" />
+                </Link>
+                <Table
+                  list={admins}
+                  column={['Name', 'Last Name', 'DNI', 'Phone', 'Email', 'City', '']}
+                  fields={['firstName', 'lastName', 'dni', 'phone', 'email', 'city']}
+                  link={'/admins/form/'}
+                  action={openModalConfirm}
+                />
+              </div>
+            )}
+          </section>
+        </div>
+      </div>
+    </>
+  ) : (
+    <>
+      <div>
+        <Aside page={'admin'} />
+        <section className={styles.container}>
+          <Modal
+            title={responseModal.title}
+            desc={responseModal.description}
+            isOpen={isOpen}
+            confirmModal={responseModal.isConfirm}
+            handleClose={() => setIsOpen(!isOpen)}
+            deleteFunction={() => handleDeleteAdmin()}
+          />
+          <section>
             <Link to="/superAdmins/admins/form">
               <Button text="Create" type="create" />
             </Link>
-            <Table
-              list={admins}
-              column={['Name', 'Last Name', 'DNI', 'Phone', 'Email', 'City', '']}
-              fields={['firstName', 'lastName', 'dni', 'phone', 'email', 'city']}
-              link={'/admins/form/'}
-              action={openModalConfirm}
-            />
-          </div>
-        )}
-      </section>
-    </div>
-  ) : (
-    <section className={styles.container}>
-      <Modal
-        title={responseModal.title}
-        desc={responseModal.description}
-        isOpen={isOpen}
-        confirmModal={responseModal.isConfirm}
-        handleClose={() => setIsOpen(!isOpen)}
-        deleteFunction={() => handleDeleteAdmin()}
-      />
-      <section>
-        <Link to="/superAdmins/admins/form">
-          <Button text="Create" type="create" />
-        </Link>
-        <p className={styles.info}>There is no Admin yet.</p>
-      </section>
-    </section>
+            <p className={styles.info}>There is no Admin yet.</p>
+          </section>
+        </section>
+      </div>
+    </>
   );
 }
 

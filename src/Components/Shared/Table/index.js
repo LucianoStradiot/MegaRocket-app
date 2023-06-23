@@ -69,6 +69,7 @@ const Table = ({ list, column, fields, link, action }) => {
               })}
             </tr>
           </thead>
+
           <tbody className={styles.tbody}>
             {list.map((item) => {
               return (
