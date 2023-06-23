@@ -99,13 +99,29 @@ const MemberSchedule = () => {
                                     onClick={() =>
                                       openModal(
                                         'Subscribe to',
-                                        `Activity: ${oneClass.activity.name}, Trainer: ${oneClass.trainer.firstName}, Slots: ${subscriptionsLength} / ${oneClass.slots}`
+                                        `Activity: ${
+                                          oneClass && oneClass.activity
+                                            ? oneClass.activity.name
+                                            : 'not available'
+                                        }, Trainer: ${
+                                          oneClass && oneClass.trainer
+                                            ? oneClass.trainer.firstName
+                                            : 'not available'
+                                        }, Slots: ${subscriptionsLength} / ${oneClass.slots}`
                                       )
                                     }
                                   >
                                     <p className={styles.inlineBlock}>
-                                      <div>{`Activity: ${oneClass.activity.name}`}</div>
-                                      <div>{`Trainer: ${oneClass.trainer.firstName}`}</div>
+                                      <div>{`Activity: ${
+                                        oneClass && oneClass.activity
+                                          ? oneClass.activity.name
+                                          : 'not available'
+                                      }`}</div>
+                                      <div>{`Trainer: ${
+                                        oneClass && oneClass.trainer
+                                          ? oneClass.trainer.firstName
+                                          : 'not available'
+                                      }`}</div>
                                       <div>
                                         {'Slots: '}
                                         {subscriptionsLength}
