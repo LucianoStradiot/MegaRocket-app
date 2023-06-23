@@ -145,7 +145,7 @@ const SignUpMember = () => {
     setIsOpen(!isOpen);
   };
   return (
-    <>
+    <div className={styles.container}>
       <Modal
         desc={modalInfo.desc}
         handleClose={closeForm}
@@ -250,7 +250,7 @@ const SignUpMember = () => {
           <Button type="submit" text={'Add'} />
         </div>
       </form>
-    </>
+    </div>
   );
 };
 export default SignUpMember;

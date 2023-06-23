@@ -60,7 +60,7 @@ const Members = () => {
     <>
       <Aside page={'admin-member'} />
       <div className={styles.container}>
-        <section className={styles.wrapper}>
+        <section className={styles.wrap}>
           <Modal
             title={modalInfo.title}
             desc={modalInfo.desc}

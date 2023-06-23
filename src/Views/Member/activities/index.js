@@ -13,29 +13,34 @@ const ActivityInfo = () => {
   }, []);
 
   return activities.length > 0 ? (
-    <div>
-      {loading && <Spinner />}
-      <section className={styles.containerTotal}>
-        <Aside page={'member'} />
-        <main className={styles.main}>
-          <h1 className={styles.title}>Activities</h1>
-          <div className={styles.containerActivity}>
-            {activities.map((dataItem, index) => (
-              <div key={index} className={styles.boxActivity}>
-                <h2 className={styles.titleActivity}>{dataItem.name}</h2>
-                <p className={styles.p}>{dataItem.description}</p>
-              </div>
-            ))}
-          </div>
-        </main>
-      </section>
-    </div>
-  ) : (
-    <section className={styles.containerSidebar}>
-      {loading && <Spinner />}
+    <>
       <Aside page={'member'} />
-      <p className={styles.info}>There is no Activity yet.</p>
-    </section>
+      <div className={styles.mainContainer}>
+        {loading && <Spinner />}
+
+        <section className={styles.containerTotal}>
+          <main className={styles.main}>
+            <h2 className={styles.title}>Activities</h2>
+            <div className={styles.containerActivity}>
+              {activities.map((dataItem, index) => (
+                <div key={index} className={styles.boxActivity}>
+                  <h2 className={styles.titleActivity}>{dataItem.name}</h2>
+                  <p className={styles.p}>{dataItem.description}</p>
+                </div>
+              ))}
+            </div>
+          </main>
+        </section>
+      </div>
+    </>
+  ) : (
+    <>
+      <Aside page={'member'} />
+      <section className={styles.containerSidebar}>
+        {loading && <Spinner />}
+        <p className={styles.info}>There is no Activity yet.</p>
+      </section>
+    </>
   );
 };
 export default ActivityInfo;

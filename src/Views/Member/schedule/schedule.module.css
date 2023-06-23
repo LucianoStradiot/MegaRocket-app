@@ -6,13 +6,34 @@
   align-items: center;
 }
 
+.container {
+  background-color: #cbebf3cc;
+  padding-right: 5px;
+  border-radius: 8px;
+  margin-top: 100px;
+}
+
 .screenContainer {
-  margin-top: 150px;
-  background-color: rgba(255,255,255, 0.5);
-  border-radius: 15px;
-  margin-bottom: 50px;
   max-height: 600px;
   overflow-y: auto;
+}
+
+.screenContainer::-webkit-scrollbar {
+  width: 10px;
+  background-color: none;
+}
+
+.screenContainer::-webkit-scrollbar-thumb {
+  background-color: #2E355B;
+  border-radius: 5px;
+}
+
+.screenContainer::-webkit-scrollbar-thumb:hover {
+  background-color: #465089;
+}
+
+.screenContainer::-webkit-scrollbar-track {
+  background-color: none;
 }
 
 .classCard {
@@ -58,9 +79,10 @@
 }
 
 .table {
-  padding: 20px;
+  padding-right: 50px;
   box-sizing: border-box;
   text-align: center;
+  border-collapse: collapse;
 }
 
 .th {

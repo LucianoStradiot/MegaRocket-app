@@ -27,6 +27,7 @@
 
 .rutes li a{
   text-decoration: none;
+  color: #2E355B;
 }
 
 .rutes li a:hover{
@@ -88,7 +89,7 @@
   .rutes {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     list-style-type: none;
     transform-origin: left;
     transition: transform 0.5s ease;
@@ -99,7 +100,6 @@
    flex-direction: column;
    align-items: center;
    justify-content: space-between;
-   
   }
 
   .rutesMember a {

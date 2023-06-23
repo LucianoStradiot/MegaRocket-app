@@ -58,7 +58,7 @@ function Trainers() {
     <>
       <Aside page={'trainer'} />
       <div className={styles.container}>
-        <section>
+        <section className={styles.subContainer}>
           <Modal
             title={responseModal.title}
             desc={responseModal.description}

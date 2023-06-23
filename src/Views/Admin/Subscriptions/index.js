@@ -59,7 +59,7 @@ function Subscriptions() {
     <>
       <Aside page={'subscription'} />
       <div className={style.container}>
-        <section>
+        <section className={style.subContainer}>
           <Modal
             title={responseModal.title}
             desc={responseModal.description}
