@@ -19,7 +19,7 @@ const MembershipMember = () => {
           <section className={styles.cardsCont}>
             <Link
               className={`${styles.cardContainer} ${styles.only}`}
-              to="/member/signUp?membership=Only Classes Membership"
+              to="/signUp?membership=Only Classes Membership"
             >
               <div>
                 <h3>ONLY CLASSES</h3>
@@ -30,7 +30,7 @@ const MembershipMember = () => {
               </div>
             </Link>
             <Link
-              to="/member/signUp?membership=Classic Membership"
+              to="/signUp?membership=Classic Membership"
               className={`${styles.cardContainer} ${styles.classic}`}
             >
               <div>
@@ -43,7 +43,7 @@ const MembershipMember = () => {
               </div>
             </Link>
             <Link
-              to="/member/signUp?membership=Black Membership"
+              to="/signUp?membership=Black Membership"
               className={`${styles.cardContainer} ${styles.black}`}
             >
               <div>
