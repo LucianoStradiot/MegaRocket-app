@@ -60,7 +60,7 @@ function Admins() {
 
   return admins.length > 0 ? (
     <>
-      <Aside page={'admin'} />
+      <Aside page={'superAdmins'} />
       <div className={styles.mainContainer}>
         <div className={styles.container}>
           <section>
@@ -94,7 +94,7 @@ function Admins() {
   ) : (
     <>
       <div>
-        <Aside page={'admin'} />
+        <Aside page={'superAdmins'} />
         <section className={styles.container}>
           <Modal
             title={responseModal.title}

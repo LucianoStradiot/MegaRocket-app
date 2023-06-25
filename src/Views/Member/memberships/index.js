@@ -2,10 +2,10 @@ import Aside from 'Components/Shared/Aside';
 import styles from './memberships.module.css';
 import { Link } from 'react-router-dom';
 
-const membershipMember = () => {
+const MembershipMember = () => {
   return (
     <>
-      <Aside page={'member'} />
+      <Aside page={'home'} />
       <div className={styles.mainContainer}>
         <div className={styles.container}>
           <div className={styles.header}>
@@ -62,4 +62,4 @@ const membershipMember = () => {
     </>
   );
 };
-export default membershipMember;
+export default MembershipMember;

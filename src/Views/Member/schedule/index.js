@@ -51,7 +51,7 @@ const MemberSchedule = () => {
 
   return (
     <>
-      <Aside page={'member'} />
+      <Aside page={'home'} />
       <div className={styles.mainContainer}>
         <div className={styles.container}>
           <Modal

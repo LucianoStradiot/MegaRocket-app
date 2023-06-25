@@ -56,7 +56,7 @@ function Trainers() {
 
   return trainers.length > 0 ? (
     <>
-      <Aside page={'trainer'} />
+      <Aside page={'admins'} />
       <div className={styles.container}>
         <section className={styles.subContainer}>
           <Modal
@@ -107,7 +107,7 @@ function Trainers() {
     </>
   ) : (
     <>
-      <Aside page={'trainer'} />
+      <Aside page={'admins'} />
       <div className={styles.container}>
         <section>
           <Modal
