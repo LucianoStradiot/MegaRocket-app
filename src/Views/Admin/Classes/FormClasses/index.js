@@ -197,7 +197,7 @@ const FormClasses = () => {
         handleClose={closeForm}
       />
       {loading && <Spinner />}
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)} data-testid="form-classes">
         <div className={styles.formContainer}>
           <label className={styles.label} htmlFor="day">
             Day
@@ -282,8 +282,8 @@ const FormClasses = () => {
             <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
             <Button text="Reset" type="submit" clickAction={() => reset()} />
           </div>
-          {btnAddIsVisible && <Button text="Add" type="submit" />}
-          {btnSaveIsVisible && <Button text="Save" type="submit" />}
+          {btnAddIsVisible && <Button text="Add" type="submit" testId="classes-add-button" />}
+          {btnSaveIsVisible && <Button text="Save" type="submit" testId="classes-save-button" />}
         </div>
       </form>
     </div>

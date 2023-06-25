@@ -168,7 +168,7 @@ const FormActivities = () => {
       {loading && <Spinner />}
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)} id="form">
         <div className={styles.subContainer}>
-          <div className={styles.inputContainer}>
+          <div className={styles.inputContainer} data-testid="activities-input-name">
             <label>Name</label>
             <TextInput
               name="name"
@@ -177,12 +177,12 @@ const FormActivities = () => {
               error={errors.name?.message}
             />
           </div>
-          <div className={styles.inputContainer}>
+          <div className={styles.inputContainer} data-testid="activities-input-description">
             <label>Description</label>
             <TextArea name="description" register={register} error={errors.description?.message} />
           </div>
           {activeVisible && (
-            <div>
+            <div data-testid="activities-status">
               <label>Status</label>
               <Select name="isActive" register={register} error={errors.isActive?.message}>
                 <option value={true}>Active</option>
@@ -195,10 +195,12 @@ const FormActivities = () => {
               <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
               <Button text="Reset" type="submit" clickAction={() => reset()} />
             </div>
-            {buttonAddIsVisible && <Button text="Add" type="submit" />}
+            {buttonAddIsVisible && (
+              <Button text="Add" type="submit" testId="activities-add-button" />
+            )}
             {buttonSaveIsVisible && (
               <div>
-                <Button type="submit" text="Save" />
+                <Button type="submit" text="Save" testId="activities-save-button" />
               </div>
             )}
           </div>

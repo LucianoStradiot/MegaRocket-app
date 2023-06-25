@@ -153,7 +153,7 @@ const SignUpMember = () => {
         title={modalInfo.title}
       />
       {loading && <Spinner />}
-      <form className={styles.form} onSubmit={handleSubmit(addMember)}>
+      <form className={styles.form} onSubmit={handleSubmit(addMember)} data-testid="sign-up-form">
         <div className={styles.subContainer}>
           <div>
             <TextInput
@@ -161,6 +161,7 @@ const SignUpMember = () => {
               name={'firstName'}
               inputType={'text'}
               register={register}
+              testId="first-name-sign-up"
               error={errors.firstName?.message}
             />
           </div>
@@ -170,6 +171,7 @@ const SignUpMember = () => {
               name={'lastName'}
               inputType={'text'}
               register={register}
+              testId="last-name-sign-up"
               error={errors.lastName?.message}
             />
           </div>
@@ -179,6 +181,7 @@ const SignUpMember = () => {
               name={'email'}
               inputType={'text'}
               register={register}
+              testId="email-sign-up"
               error={errors.email?.message}
             />
           </div>
@@ -188,6 +191,7 @@ const SignUpMember = () => {
               name={'dni'}
               inputType={'text'}
               register={register}
+              testId="dni-sign-up"
               error={errors.dni?.message}
             />
           </div>
@@ -197,6 +201,7 @@ const SignUpMember = () => {
               name={'phone'}
               inputType={'text'}
               register={register}
+              testId="phone-sign-up"
               error={errors.phone?.message}
             />
           </div>
@@ -206,6 +211,7 @@ const SignUpMember = () => {
               name={'city'}
               inputType={'text'}
               register={register}
+              testId="city-sign-up"
               error={errors.city?.message}
             />
           </div>
@@ -215,6 +221,7 @@ const SignUpMember = () => {
               name={'postalCode'}
               inputType={'text'}
               register={register}
+              testId="postal-code-sign-up"
               error={errors.postalCode?.message}
             />
           </div>
@@ -247,7 +254,7 @@ const SignUpMember = () => {
             <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
             <Button text="Reset" type="reset" clickAction={() => reset()} />
           </div>
-          <Button type="submit" text={'Add'} />
+          <Button type="submit" text={'Add'} testId="sign-up-confirm-button" />
         </div>
       </form>
     </div>

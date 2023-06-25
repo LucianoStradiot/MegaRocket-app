@@ -138,7 +138,11 @@ const FormSubscriptions = () => {
 
   return (
     <div className={style.mainContainer}>
-      <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={style.form}
+        onSubmit={handleSubmit(onSubmit)}
+        data-testid="form-subscriptions"
+      >
         <Modal
           title={responseModal.title}
           desc={responseModal.description}
@@ -147,7 +151,9 @@ const FormSubscriptions = () => {
         />
         {pending && <Spinner />}
         <div>
-          <label htmlFor="">Classes</label>
+          <label htmlFor="" data-testid="subs-label-classes">
+            Classes
+          </label>
           <Select
             name="classes"
             selectID="classes"
@@ -164,7 +170,9 @@ const FormSubscriptions = () => {
               );
             })}
           </Select>
-          <label htmlFor="">Member Email</label>
+          <label htmlFor="" data-testid="subs-member-email">
+            Member Email
+          </label>
           <Select
             name="member"
             selectID="member"
@@ -186,6 +194,7 @@ const FormSubscriptions = () => {
             type="date"
             name="date"
             register={register}
+            testId="subs-date"
             error={errors.date?.message}
           />
           <div className={style.btnContainer}>
@@ -193,7 +202,11 @@ const FormSubscriptions = () => {
               <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
               <Button text="Reset" type="submit" clickAction={() => reset()} />
             </div>
-            <Button text={button === 'Create' ? 'Add' : 'Save'} type="submit" />
+            <Button
+              text={button === 'Create' ? 'Add' : 'Save'}
+              type="submit"
+              testId="subs-confirm-button"
+            />
           </div>
         </div>
       </form>

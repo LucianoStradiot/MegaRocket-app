@@ -36,7 +36,7 @@ function Header() {
   }
   return (
     <header>
-      <div className={styles.container}>
+      <div className={styles.container} data-testid="container-header">
         <h1 className={styles.brand}>{name}</h1>
         <div>
           <Link to="/">

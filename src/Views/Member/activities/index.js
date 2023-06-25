@@ -18,7 +18,7 @@ const ActivityInfo = () => {
       <div className={styles.mainContainer}>
         {loading && <Spinner />}
 
-        <section className={styles.containerTotal}>
+        <section className={styles.containerTotal} data-testid="member-activities-container">
           <main className={styles.main}>
             <h2 className={styles.title}>Activities</h2>
             <div className={styles.containerActivity}>
