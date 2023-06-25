@@ -14,7 +14,7 @@ const ActivityInfo = () => {
 
   return activities.length > 0 ? (
     <>
-      <Aside page={'member'} />
+      <Aside page={'home'} />
       <div className={styles.mainContainer}>
         {loading && <Spinner />}
 
@@ -35,7 +35,7 @@ const ActivityInfo = () => {
     </>
   ) : (
     <>
-      <Aside page={'member'} />
+      <Aside page={'home'} />
       <section className={styles.containerSidebar}>
         {loading && <Spinner />}
         <p className={styles.info}>There is no Activity yet.</p>

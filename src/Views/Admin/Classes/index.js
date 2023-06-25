@@ -61,7 +61,7 @@ function Classes() {
 
   return classes.length > 0 ? (
     <>
-      <Aside page={'classes'} />
+      <Aside page={'admins'} />
       <div className={styles.container}>
         <section className={styles.subContainer}>
           <Modal
@@ -92,7 +92,7 @@ function Classes() {
     </>
   ) : (
     <>
-      <Aside page={'classes'} />
+      <Aside page={'admins'} />
       <div className={styles.container}>
         <section>
           <Modal

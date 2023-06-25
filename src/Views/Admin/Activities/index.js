@@ -68,7 +68,7 @@ function Activities() {
 
   return activities.length > 0 ? (
     <>
-      <Aside page={'activity'} />
+      <Aside page={'admins'} />
       <div className={styles.mainContainer}>
         <div className={styles.container}>
           <Modal
@@ -99,7 +99,7 @@ function Activities() {
     </>
   ) : (
     <div>
-      <Aside page={'activity'} />
+      <Aside page={'admins'} />
       <section className={styles.container}>
         <Modal
           title={modalInfo.title}

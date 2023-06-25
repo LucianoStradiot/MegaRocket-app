@@ -3,7 +3,7 @@ import styles from './indexMember.module.css';
 const MemberUser = () => {
   return (
     <div className={styles.supremeContainer}>
-      <Aside page={'member'} />
+      <Aside page={'home'} />
       <div className={styles.mainContainer}>
         <main data-testid="home-page">
           <section className={styles.home}>
