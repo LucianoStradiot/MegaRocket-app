@@ -57,7 +57,7 @@ function Subscriptions() {
 
   return subscriptions.length > 0 ? (
     <>
-      <Aside page={'subscription'} />
+      <Aside page={'admins'} />
       <div className={style.container}>
         <section className={style.subContainer}>
           <Modal
@@ -88,7 +88,7 @@ function Subscriptions() {
     </>
   ) : (
     <>
-      <Aside page={'subscription'} />
+      <Aside page={'admins'} />
       <div className={style.container}>
         <section>
           <Modal

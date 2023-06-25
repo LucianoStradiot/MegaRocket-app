@@ -56,7 +56,7 @@ function SuperAdmins() {
 
   return (
     <>
-      <Aside page={'superAdmin'} />
+      <Aside page={'superAdmins'} />
       {isLoading && <Spinner />}
       {superAdmins.length > 0 ? (
         <div className={styles.mainContainer}>
