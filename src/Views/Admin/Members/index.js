@@ -72,7 +72,11 @@ const Members = () => {
           {pending && <Spinner />}
           {!pending && (
             <div className={styles.subContainer}>
-              <Link className={styles.buttonCreate} to="/admins/members/form">
+              <Link
+                className={styles.buttonCreate}
+                to="/admins/members/form"
+                testId="create-button-members"
+              >
                 <Button text={'Create'} type={'add'} />
               </Link>
               <Table

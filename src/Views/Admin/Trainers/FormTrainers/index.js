@@ -207,7 +207,7 @@ const FormTrainers = () => {
         handleClose={closeForm}
       />
       {loading && <Spinner />}
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)} id="form">
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)} id="form-trainers">
         <div className={styles.subContainer}>
           <div className={styles.inputContainer}>
             <TextInput
@@ -215,7 +215,7 @@ const FormTrainers = () => {
               inputType="text"
               name="firstName"
               register={register}
-              id="firstName"
+              selectID="firstName"
               error={errors.firstName?.message}
             />
           </div>
@@ -225,7 +225,7 @@ const FormTrainers = () => {
               inputType="text"
               name="lastName"
               register={register}
-              id="lastName"
+              selectID="lastName"
               error={errors.lastName?.message}
             />
           </div>
@@ -235,7 +235,7 @@ const FormTrainers = () => {
               inputType="text"
               name="dni"
               register={register}
-              id="dni"
+              selectID="dni"
               error={errors.dni?.message}
             />
           </div>
@@ -245,7 +245,7 @@ const FormTrainers = () => {
               inputType="text"
               name="phone"
               register={register}
-              id="phone"
+              selectID="phone"
               error={errors.phone?.message}
             />
           </div>
@@ -255,7 +255,7 @@ const FormTrainers = () => {
               inputType="text"
               name="email"
               register={register}
-              id="email"
+              selectID="email"
               error={errors.email?.message}
             />
           </div>
@@ -265,7 +265,7 @@ const FormTrainers = () => {
               inputType="text"
               name="city"
               register={register}
-              id="city"
+              selectID="city"
               error={errors.city?.message}
             />
           </div>
@@ -275,7 +275,7 @@ const FormTrainers = () => {
               inputType="password"
               name="password"
               register={register}
-              id="password"
+              selectID="password"
               error={errors.password?.message}
             />
           </div>
@@ -285,7 +285,7 @@ const FormTrainers = () => {
               inputType="text"
               name="salary"
               register={register}
-              id="salary"
+              selectID="salary"
               error={errors.salary?.message}
             />
           </div>
@@ -304,8 +304,8 @@ const FormTrainers = () => {
             <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
             <Button text="Reset" type="submit" clickAction={() => reset()} />
           </div>
-          {buttonAddIsVisible && <Button text="Add" type="submit" />}
-          {buttonSaveIsVisible && <Button text="Save" type="submit" />}
+          {buttonAddIsVisible && <Button text="Add" type="submit" testId="trainer-add-button" />}
+          {buttonSaveIsVisible && <Button text="Save" type="submit" testId="trainer-save-button" />}
         </div>
       </form>
     </section>

@@ -5,7 +5,7 @@ const MemberUser = () => {
     <div className={styles.supremeContainer}>
       <Aside page={'member'} />
       <div className={styles.mainContainer}>
-        <main>
+        <main data-testid="home-page">
           <section className={styles.home}>
             <article>
               <h1>MEGA ROCKET WEB</h1>

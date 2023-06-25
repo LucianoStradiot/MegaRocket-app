@@ -72,7 +72,12 @@ function Subscriptions() {
           {!pending && (
             <div>
               <Link to="/admins/subscriptions/form">
-                <Button type="add" text="Create" className={style.btnCreate} />
+                <Button
+                  type="add"
+                  text="Create"
+                  className={style.btnCreate}
+                  testId="create-button-subscriptions"
+                />
               </Link>
               <Table
                 list={subscriptions}

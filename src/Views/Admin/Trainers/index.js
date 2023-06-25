@@ -70,7 +70,7 @@ function Trainers() {
           {loading && <Spinner />}
           {!loading && (
             <section>
-              <Link to="/admins/trainers/formTrainers">
+              <Link to="/admins/trainers/formTrainers" data-testid="create-button-trainers">
                 <Button text="Create" type="create" />
               </Link>
               <Table

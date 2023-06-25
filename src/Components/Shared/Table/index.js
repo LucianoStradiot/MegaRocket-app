@@ -36,7 +36,7 @@ const Table = ({ list, column, fields, link, action }) => {
 
   return (
     <section className={styles.container}>
-      <div className={styles.tableContainer}>
+      <div className={styles.tableContainer} data-testid="container-table">
         <table className={styles.contTable}>
           <thead className={styles.theadTable}>
             <tr>
@@ -107,7 +107,7 @@ const Table = ({ list, column, fields, link, action }) => {
                         </td>
                       );
                     })}
-                    <td className={styles.thTable}>
+                    <td className={styles.thTable} data-testid="buttons-table">
                       <Link to={link + item._id}>
                         <Button type="edit" text="Edit" />
                       </Link>

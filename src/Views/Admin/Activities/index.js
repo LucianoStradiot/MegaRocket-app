@@ -83,7 +83,7 @@ function Activities() {
           {!loading && (
             <section>
               <Link to="/admins/activities/form">
-                <Button text="Create" />
+                <Button text="Create" testId="create-button-activities" />
               </Link>
               <Table
                 list={activities}

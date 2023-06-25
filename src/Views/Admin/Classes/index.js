@@ -76,7 +76,7 @@ function Classes() {
           {!loading && (
             <section>
               <Link to="/admins/classes/form">
-                <Button text="Create" type="create" />
+                <Button text="Create" type="create" testId="create-button-classes" />
               </Link>
               <Table
                 list={classes}
