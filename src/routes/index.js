@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, Redirect } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Home from 'Components/Home';
 import Spinner from 'Components/Shared/Spinner';
@@ -74,10 +74,7 @@ const Layout = () => {
           <Route exact path="/admins/trainers" component={Trainers} />
           <Route exact path="/admins/trainers/formTrainers" component={FormTrainers} />
           <Route path="/admins/trainers/formTrainers/:id" component={FormTrainers} />
-          <Route path exact="/" component={Home} />
-          <Route exact path="/">
-            <Redirect to="/" />
-          </Route>
+          <Route exact path="/" component={Home} />
         </Switch>
       </Suspense>
     </div>
