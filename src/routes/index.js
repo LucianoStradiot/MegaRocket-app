@@ -74,7 +74,7 @@ const Layout = () => {
           <Route exact path="/admins/trainers" component={Trainers} />
           <Route exact path="/admins/trainers/formTrainers" component={FormTrainers} />
           <Route path="/admins/trainers/formTrainers/:id" component={FormTrainers} />
-          <Route path extact="/" component={Home} />
+          <Route path exact="/" component={Home} />
           <Route exact path="/">
             <Redirect to="/" />
           </Route>
