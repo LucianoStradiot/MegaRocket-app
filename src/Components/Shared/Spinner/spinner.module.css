@@ -16,7 +16,7 @@
   height: 70px;
   border-radius: 50%;
   animation: spin 1.2s infinite linear;
-  background-color: #8ED081;
+  background-color: #cbebf3e3;
 }
 
 @keyframes spin {

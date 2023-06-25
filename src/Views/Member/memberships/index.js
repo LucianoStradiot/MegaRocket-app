@@ -2,10 +2,10 @@ import Aside from 'Components/Shared/Aside';
 import styles from './memberships.module.css';
 import { Link } from 'react-router-dom';
 
-const membershipMember = () => {
+const MembershipMember = () => {
   return (
     <>
-      <Aside page={'member'} />
+      <Aside page={'home'} />
       <div className={styles.mainContainer}>
         <div className={styles.container}>
           <div className={styles.header}>
@@ -19,7 +19,7 @@ const membershipMember = () => {
           <section className={styles.cardsCont}>
             <Link
               className={`${styles.cardContainer} ${styles.only}`}
-              to="/member/signUp?membership=Only Classes Membership"
+              to="/signUp?membership=Only Classes Membership"
             >
               <div>
                 <h3>ONLY CLASSES</h3>
@@ -30,7 +30,7 @@ const membershipMember = () => {
               </div>
             </Link>
             <Link
-              to="/member/signUp?membership=Classic Membership"
+              to="/signUp?membership=Classic Membership"
               className={`${styles.cardContainer} ${styles.classic}`}
             >
               <div>
@@ -43,7 +43,7 @@ const membershipMember = () => {
               </div>
             </Link>
             <Link
-              to="/member/signUp?membership=Black Membership"
+              to="/signUp?membership=Black Membership"
               className={`${styles.cardContainer} ${styles.black}`}
             >
               <div>
@@ -62,4 +62,4 @@ const membershipMember = () => {
     </>
   );
 };
-export default membershipMember;
+export default MembershipMember;

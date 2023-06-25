@@ -58,7 +58,7 @@ const Members = () => {
 
   return listMembers?.length > 0 ? (
     <>
-      <Aside page={'admin-member'} />
+      <Aside page={'admins'} />
       <div className={styles.container}>
         <section className={styles.wrap}>
           <Modal
@@ -97,7 +97,7 @@ const Members = () => {
     </>
   ) : (
     <>
-      <Aside page={'admin-member'} />
+      <Aside page={'admins'} />
       <div className={styles.container}>
         <section>
           <Modal

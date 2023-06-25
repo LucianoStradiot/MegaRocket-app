@@ -25,12 +25,12 @@
 }
 
 
-.rutes li a{
+.rutes li a {
   text-decoration: none;
   color: #2E355B;
 }
 
-.rutes li a:hover{
+.rutes li a:hover {
   border-bottom: 1px solid #2E355B;
 }
 
@@ -38,7 +38,7 @@
   display: none;
 }
 
-@media only screen and (min-width: 1025px){
+@media only screen and (min-width: 1025px) {
 
   .aside {
     top: 120px;
@@ -96,10 +96,10 @@
   }
 
   .rutesMember {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .rutesMember a {
@@ -152,12 +152,16 @@
     color: #2E355B;
   }
 
-  .rutes li a:hover{
+  .rutes li a:hover {
     border: none;
   }
 
   .titleContact {
     text-align: center;
+  }
+
+  .contact {
+    margin-top: 35px;
   }
 
   .contact ul {

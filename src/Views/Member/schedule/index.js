@@ -5,11 +5,13 @@ import { getClasses } from 'Redux/Classes/thunks';
 import { getSubscriptions } from 'Redux/Subscriptions/thunks';
 import Modal from 'Components/Shared/Modal';
 import Aside from 'Components/Shared/Aside';
+import Spinner from 'Components/Shared/Spinner';
 
 const MemberSchedule = () => {
   const classes = useSelector((state) => state.classes.data);
   const subscriptions = useSelector((state) => state.subscriptions.data);
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.classes.isLoading);
 
   const [modal, setModal] = useState({
     title: '',
@@ -51,7 +53,8 @@ const MemberSchedule = () => {
 
   return (
     <>
-      <Aside page={'member'} />
+      {loading && <Spinner />}
+      <Aside page={'home'} />
       <div className={styles.mainContainer}>
         <div className={styles.container}>
           <Modal
