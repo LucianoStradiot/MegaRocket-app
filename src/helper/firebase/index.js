@@ -14,6 +14,17 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 
-export default app;
+export const tokenListener = () => {
+  initializeApp.auth().onIdTokenChanged(async (user) => {
+    if (user) {
+      const token = await user.getIdToken();
+      const {
+        claims: { role }
+      } = await user.getIdTokenResult();
+      sessionStorage.setItem('role', role);
+      sessionStorage.setItem('token', token);
+    }
+  });
+};
