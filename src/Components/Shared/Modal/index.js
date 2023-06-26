@@ -12,7 +12,7 @@ const Modal = ({ title, desc, isOpen, handleClose, confirmModal, deleteFunction 
   return isOpen ? (
     confirmModal ? (
       <div className={styles.modal}>
-        <div className={styles.modalContainer}>
+        <div className={styles.modalContainer} data-testid="modal-confirm">
           <h3>{title}</h3>
           <p>{desc}</p>
           <Button clickAction={deleteFunction} text="Confirm" type="btn" />
@@ -21,7 +21,7 @@ const Modal = ({ title, desc, isOpen, handleClose, confirmModal, deleteFunction 
       </div>
     ) : (
       <div className={styles.modal}>
-        <div className={styles.modalContainer}>
+        <div className={styles.modalContainer} data-testid="modal-success">
           <h3>{title}</h3>
           <p>{desc}</p>
           <Button clickAction={handleClose} text="Accept" type="btn" />

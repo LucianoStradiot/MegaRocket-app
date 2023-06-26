@@ -7,7 +7,7 @@ const MembershipMember = () => {
     <>
       <Aside page={'home'} />
       <div className={styles.mainContainer}>
-        <div className={styles.container}>
+        <div className={styles.container} data-testid="memberships-container-page">
           <div className={styles.header}>
             <h1 className={styles.h1}>Memberships</h1>
             <div className={styles.line}></div>

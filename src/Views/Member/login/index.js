@@ -74,7 +74,7 @@ const LoginMember = () => {
     setIsOpen(!isOpen);
   };
   return (
-    <section className={styles.container}>
+    <section className={styles.container} data-testid="container-login">
       <Modal
         desc={modalInfo.desc}
         handleClose={closeForm}
@@ -89,6 +89,7 @@ const LoginMember = () => {
           inputType={'email'}
           labelName={'Email'}
           name={'email'}
+          testId="input-email-login"
         />
         <TextInput
           error={errors.dni?.message}
@@ -96,13 +97,14 @@ const LoginMember = () => {
           inputType={'text'}
           labelName={'DNI'}
           name={'dni'}
+          testId="input-dni-login"
         />
         <div className={styles.btnContainer}>
           <div>
             <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
             <Button text="Reset" type="reset" clickAction={() => reset()} />
           </div>
-          <Button text={'Login'} type={'submit'} />
+          <Button text={'Login'} type={'submit'} testId="confirm-button-login" />
         </div>
       </form>
       <h2>Register Now!</h2>

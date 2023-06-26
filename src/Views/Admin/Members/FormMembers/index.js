@@ -202,9 +202,9 @@ const FormMembers = () => {
         handleClose={closeForm}
       />
       {loading && <Spinner />}
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)} data-testid="form-members">
         <div className={styles.subContainer}>
-          <div>
+          <div data-testid="member-first-name">
             <TextInput
               labelName={'First Name'}
               name={'firstName'}
@@ -213,7 +213,7 @@ const FormMembers = () => {
               error={errors.firstName?.message}
             />
           </div>
-          <div>
+          <div data-testid="member-last-name">
             <TextInput
               labelName={'Last Name'}
               name={'lastName'}
@@ -222,7 +222,7 @@ const FormMembers = () => {
               error={errors.lastName?.message}
             />
           </div>
-          <div>
+          <div data-testid="member-email">
             <TextInput
               labelName={'Email'}
               name={'email'}
@@ -231,7 +231,7 @@ const FormMembers = () => {
               error={errors.email?.message}
             />
           </div>
-          <div>
+          <div data-testid="member-dni">
             <TextInput
               labelName={'DNI'}
               name={'dni'}
@@ -240,7 +240,7 @@ const FormMembers = () => {
               error={errors.dni?.message}
             />
           </div>
-          <div>
+          <div data-testid="member-phone">
             <TextInput
               labelName={'Phone'}
               name={'phone'}
@@ -249,7 +249,7 @@ const FormMembers = () => {
               error={errors.phone?.message}
             />
           </div>
-          <div>
+          <div data-testid="member-city">
             <TextInput
               labelName={'City'}
               name={'city'}
@@ -258,7 +258,7 @@ const FormMembers = () => {
               error={errors.city?.message}
             />
           </div>
-          <div>
+          <div data-testid="member-postal-code">
             <TextInput
               labelName={'PostalCode'}
               name={'postalCode'}
@@ -267,7 +267,7 @@ const FormMembers = () => {
               error={errors.postalCode?.message}
             />
           </div>
-          <div className={styles.contDate}>
+          <div className={styles.contDate} data-testid="member-birthday">
             <DatePicker
               name={'birthday'}
               title={'Birthday'}
@@ -275,7 +275,7 @@ const FormMembers = () => {
               error={errors.birthday?.message}
             />
           </div>
-          <div className={styles.inputContainer}>
+          <div className={styles.inputContainer} data-testid="member-membership">
             <label>Membership</label>
             <Select
               name={'membership'}
@@ -289,7 +289,7 @@ const FormMembers = () => {
               <option value="Only Classes Membership">Only Classes Membership</option>
             </Select>
           </div>
-          <div className={styles.inputContainer}>
+          <div className={styles.inputContainer} data-testid="member-active">
             {id && (
               <>
                 <label className={styles.label}>Status</label>
@@ -306,7 +306,7 @@ const FormMembers = () => {
             <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
             <Button text="Reset" type="submit" clickAction={() => reset()} />
           </div>
-          <Button type="submit" text={id ? 'Save' : 'Add'} />
+          <Button type="submit" text={id ? 'Save' : 'Add'} testId="member-confirm-button" />
         </div>
       </form>
     </section>

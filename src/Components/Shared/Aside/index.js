@@ -4,7 +4,7 @@ import styles from './aside.module.css';
 const Aside = ({ page }) => {
   if (page === 'home') {
     return (
-      <aside className={styles.asideMember}>
+      <aside className={styles.asideMember} data-testid="container-aside-members">
         <div className={styles.asideSubContainer}>
           <h2 className={styles.title}>Menu</h2>
           <nav className={styles.navbarMember}>
@@ -48,7 +48,7 @@ const Aside = ({ page }) => {
     );
   } else if (page === 'admins') {
     return (
-      <aside className={styles.aside}>
+      <aside className={styles.aside} data-testid="container-aside-general">
         <nav className={styles.navbar}>
           <ul className={styles.rutes}>
             <li>

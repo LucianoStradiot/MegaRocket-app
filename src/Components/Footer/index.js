@@ -2,7 +2,7 @@ import styles from './footer.module.css';
 
 function Footer() {
   return (
-    <footer className={styles.container}>
+    <footer className={styles.container} data-testid="container-footer">
       <div className={styles.main}>
         <img
           src={`${process.env.PUBLIC_URL}/assets/images/logo-footer.png`}

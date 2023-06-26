@@ -1,6 +1,6 @@
 import styles from './button.module.css';
 
-function Button({ text, type, clickAction }) {
+function Button({ text, type, clickAction, testId }) {
   if (type !== 'submit') {
     return (
       <button
@@ -13,6 +13,7 @@ function Button({ text, type, clickAction }) {
         }
         onClick={clickAction}
         type="button"
+        data-testid={testId}
       >
         {text}
       </button>
@@ -23,6 +24,7 @@ function Button({ text, type, clickAction }) {
         className={`${styles.buttonSubmit} ${styles.button}`}
         onClick={clickAction}
         type="submit"
+        data-testid={testId}
       >
         {text}
       </button>
