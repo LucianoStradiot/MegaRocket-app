@@ -3,7 +3,6 @@ import Button from 'Components/Shared/Button';
 import Modal from 'Components/Shared/Modal';
 import Spinner from 'Components/Shared/Spinner';
 import TextInput from 'Components/Shared/TextInput';
-import { loginMemberUser } from 'Redux/Members/thunks';
 import Joi from 'joi';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -11,8 +10,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './login.module.css';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+/* import { loginMemberUser } from 'Redux/Members/thunks'; */
+import { loginSuperAdmin } from 'Redux/SuperAdmins/thunks';
 
-const LoginMember = () => {
+const LoginSuperAdmin = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.members.isPending);
@@ -22,16 +23,18 @@ const LoginMember = () => {
     title: '',
     desc: ''
   });
+  const RGXPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
+
   const schema = Joi.object({
     email: Joi.string().regex(RGXEmail).required().messages({
       'string.empty': 'Email can´t be empty',
       'string.pattern.base': 'Email must be in a valid format'
     }),
-    dni: Joi.string().min(7).max(9).required().messages({
-      'string.min': 'DNI must have 7-9 digits',
-      'string.max': 'DNI must have 7-9 digits',
-      'string.empty': 'DNI can´t be empty'
+    password: Joi.string().regex(RGXPassword).min(8).required().messages({
+      'string.pattern.base':
+        'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
+      'string.empty': 'Password can´t be empty'
     })
   });
   const {
@@ -43,9 +46,9 @@ const LoginMember = () => {
     mode: 'onSubmit',
     resolver: joiResolver(schema)
   });
-  const logMember = async (memberValues) => {
+  const logSuperAdmin = async (superAdminValue) => {
     try {
-      const dataResponse = await dispatch(loginMemberUser(memberValues));
+      const dataResponse = await dispatch(loginSuperAdmin(superAdminValue));
       const modalData = {
         title: dataResponse.error ? 'Error!' : 'Success!',
         desc: dataResponse.message
@@ -82,7 +85,7 @@ const LoginMember = () => {
         title={modalInfo.title}
       />
       {loading && <Spinner />}
-      <form className={styles.form} onSubmit={handleSubmit(logMember)}>
+      <form className={styles.form} onSubmit={handleSubmit(logSuperAdmin)}>
         <TextInput
           error={errors.email?.message}
           register={register}
@@ -92,12 +95,12 @@ const LoginMember = () => {
           testId="input-email-login"
         />
         <TextInput
-          error={errors.dni?.message}
+          error={errors.password?.message}
           register={register}
           inputType={'text'}
-          labelName={'DNI'}
-          name={'dni'}
-          testId="input-dni-login"
+          labelName={'Password'}
+          name={'password'}
+          testId="input-password-login"
         />
         <div className={styles.btnContainer}>
           <div>
@@ -152,4 +155,5 @@ const LoginMember = () => {
     </section>
   );
 };
-export default LoginMember;
+
+export default LoginSuperAdmin;

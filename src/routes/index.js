@@ -57,7 +57,7 @@ const Layout = () => {
 
           <Route path="/" exact component={MemberUser} />
           <Route path="/activities" exact component={ActivityInfo} />
-          <Route path="/login" exact component={LoginMember} />
+          <Route path="/auth/login" exact component={LoginMember} />
           <Route path="/membership" exact component={MembershipMember} />
           <Route path="/schedule" exact component={MemberSchedule} />
           <Route path="/schedule/:id" component={MemberSchedule} />

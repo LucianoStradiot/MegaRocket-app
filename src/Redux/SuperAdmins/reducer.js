@@ -13,7 +13,10 @@ import {
   EDIT_SUPERADMIN_ERROR,
   CREATE_SUPERADMINS_ERROR,
   CREATE_SUPERADMINS_SUCCESS,
-  EDIT_SUPERADMIN_SUCCESS
+  EDIT_SUPERADMIN_SUCCESS,
+  LOGIN_SUPERADMINS_PENDING,
+  LOGIN_SUPERADMINS_SUCCESS,
+  LOGIN_SUPERADMINS_ERROR
 } from './constants';
 
 const INITIAL_STATE = {
@@ -81,6 +84,28 @@ export const superAdminsReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: null
       };
+    case LOGIN_SUPERADMINS_PENDING: {
+      return {
+        ...state,
+        isPending: true,
+        error: null
+      };
+    }
+    case LOGIN_SUPERADMINS_SUCCESS: {
+      return {
+        ...state,
+        isPending: false,
+        data: state.data,
+        error: null
+      };
+    }
+    case LOGIN_SUPERADMINS_ERROR: {
+      return {
+        ...state,
+        isPending: false,
+        error: state.error
+      };
+    }
     default:
       return state;
   }

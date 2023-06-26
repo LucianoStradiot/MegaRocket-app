@@ -13,7 +13,10 @@ import {
   CREATE_SUPERADMINS_ERROR,
   EDIT_SUPERADMIN_PENDING,
   EDIT_SUPERADMIN_SUCCESS,
-  EDIT_SUPERADMIN_ERROR
+  EDIT_SUPERADMIN_ERROR,
+  LOGIN_SUPERADMINS_ERROR,
+  LOGIN_SUPERADMINS_SUCCESS,
+  LOGIN_SUPERADMINS_PENDING
 } from './constants';
 
 export const getSuperAdminsPending = () => {
@@ -114,5 +117,21 @@ export const deleteSuperAdminsError = (error) => {
   return {
     type: DELETE_SUPERADMINS_ERROR,
     payload: error
+  };
+};
+
+export const loginSuperAdminsPending = () => {
+  return {
+    type: LOGIN_SUPERADMINS_PENDING
+  };
+};
+export const loginSuperAdminsSuccess = () => {
+  return {
+    type: LOGIN_SUPERADMINS_SUCCESS
+  };
+};
+export const loginSuperAdminsError = () => {
+  return {
+    type: LOGIN_SUPERADMINS_ERROR
   };
 };
