@@ -32,12 +32,27 @@ class ActivitiesAdmin {
  get addButtonAct(){
      return $('[data-testid="activities-add-button"]');
  }
+ get editButtonAct(){
+  return $('[data-testid="buttons-table"] > a > button')
+ }
+ get deleteButtonAct(){
+  return $('[data-testid="buttons-table"] > button')
+ }
+ get modalSuccess(){
+  return $('[data-testid="modal-success"]')
+ }
+ get modalSuccessTitle(){
+  return $('[data-testid="modal-success"] > h3')
+ }
+ get acceptButtonAct(){
+  return $('[data-testid="modal-success"] > button')
+ }
  get errorMsgName(){
      return $('[data-testid="activities-input-name"] p');
- } /**Activity name can´t be shorter than 3 characters */
+ }
  get errorMsgDescription(){
      return $('[data-testid="activities-input-description"] p');
- }/**The description can´t be shorter than 40 characters */
+ }
 
  async createActClick() {
      await this.buttonCreateActivities.click();
@@ -54,6 +69,15 @@ class ActivitiesAdmin {
  async addActClick() {
      await this.addButtonAct.click();
  }
+ async acceptActClick() {
+  await this.acceptButtonAct.click();
+}
+async editActClick() {
+  await this.editButtonAct.click();
+}
+async deleteActClick() {
+  await this.deleteButtonAct.click();
+}
  async fillContainerInputName() {
   await this.containerInputName.setValue()
 }
