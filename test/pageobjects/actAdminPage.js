@@ -54,5 +54,11 @@ class ActivitiesAdmin {
  async addActClick() {
      await this.addButtonAct.click();
  }
+ async fillContainerInputName() {
+  await this.containerInputName.setValue()
+}
+async fillContainerInputDescription() {
+  await this.containerInputDescription.setValue()
+}
 }
 export default new ActivitiesAdmin();

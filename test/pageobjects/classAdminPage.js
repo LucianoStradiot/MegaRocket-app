@@ -50,5 +50,8 @@ class ClassesAdmin {
  async addClassClick() {
      await this.addButtonClass.click();
  }
+ async fillSelectSlots() {
+  await this.selectSlots.setValue()
+}
 }
 export default new ClassesAdmin();
