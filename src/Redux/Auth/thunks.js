@@ -15,7 +15,7 @@ import { firebaseApp } from 'helper/firebase';
 export const login = (credentials) => {
   return async (dispatch) => {
     dispatch(loginLoading());
-    console.log('entro a login');
+    console.log('entro a login', credentials);
     try {
       const firebaseResponse = await firebaseApp
         .auth()
@@ -28,6 +28,7 @@ export const login = (credentials) => {
       } = await firebaseResponse.user.getIdTokenResult();
       return dispatch(loginSuccess({ role, token }));
     } catch (error) {
+      console.log('entro al catch');
       return dispatch(loginError(error.toString()));
     }
   };
