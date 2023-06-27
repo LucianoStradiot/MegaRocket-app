@@ -1,4 +1,5 @@
 const SignUpPage = require ('../pageobjects/signUp.js');
+const LoginPage = require ('../pageobjects/loginPage.js');
 
 describe('Sign up negative test cases', () => {
   it('should not let sign up with wmpty fields', async () => {
@@ -40,9 +41,6 @@ describe('Sign up negative test cases', () => {
   });
 });
 
-
-
-
 describe("Sign up positive test cases", () => {
   it("It should add a member", async () => {
     await SignUpPage.openSignUpPage();
@@ -55,6 +53,48 @@ describe("Sign up positive test cases", () => {
   });
 });
 
+describe("Negative members login cases", () => {
+  it("Should display error message when login fields are empty", async () => {
+    await LoginPage.open();
+    await LoginPage.login("", "");
+    await expect(LoginPage.errorMail).toBeDisplayed();
+    await expect(LoginPage.errorDni).toBeDisplayed();
+  });
+  it("Should display error message when email field is empty", async () => {
+    await LoginPage.open();
+    await LoginPage.login("", "12345678");
+    await expect(LoginPage.errorMail).toBeDisplayed();
+  });
+  it("Should display error message when dni field is empty", async () => {
+    await LoginPage.open();
+    await LoginPage.login("a@a.com", "");
+    await expect(LoginPage.errorDni).toBeDisplayed();
+  });
+  it("Should display error message with invalid credentials", async () => {
+    await LoginPage.open();
+    await LoginPage.login("invalid", "1234567");
+    await expect(LoginPage.errorMail).toBeDisplayed();
+    await expect(LoginPage.errorDni).toBeDisplayed();
+  });
+  it("Should display error message with inexistent credentials", async () => {
+    await LoginPage.open();
+    await LoginPage.login("invalid@gmail.com", "12345678");
+    await expect(LoginPage.modal).toBeDisplayed();
+    await LoginPage.acceptBtn.click();
+  });
+});
+
+describe("Positive members login cases", () => {
+  it("Login should be successful", async () => {
+    await LoginPage.open();
+    await LoginPage.login('kat@gmail.com', '4947558');
+    await expect(LoginPage.modal).toBeDisplayed();
+    await LoginPage.acceptBtn.click();
+    await expect(browser).toHaveUrl(
+      "https://joaco-megarocket-app.vercel.app/member/schedule"
+    );
+  });
+});
 
 
 
