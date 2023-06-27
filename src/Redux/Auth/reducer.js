@@ -2,10 +2,10 @@ import {
   LOGIN_LOADING,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
-  LOGOUT_REQUEST,
+  LOGOUT_LOADING,
   LOGOUT_SUCCESS,
   LOGOUT_ERROR,
-  GET_AUTH_PENDING,
+  GET_AUTH_LOADING,
   GET_AUTH_SUCCESS,
   GET_AUTH_ERROR
 } from './constants';
@@ -14,13 +14,13 @@ const initialState = {
   user: null,
   isLoading: false,
   error: null,
-  isAuthPending: true
+  isAuthLoading: true
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_LOADING:
-    case LOGOUT_REQUEST:
+    case LOGOUT_LOADING:
       return {
         ...state,
         isLoading: true,
@@ -47,10 +47,10 @@ const authReducer = (state = initialState, action) => {
         isLoading: false,
         error: null
       };
-    case GET_AUTH_PENDING:
+    case GET_AUTH_LOADING:
       return {
         ...state,
-        isAuthPending: true
+        isAuthLoading: true
       };
     case GET_AUTH_SUCCESS:
       return {
@@ -58,14 +58,14 @@ const authReducer = (state = initialState, action) => {
         user: action.payload,
         isLoading: false,
         error: null,
-        isAuthPending: false
+        isAuthLoading: false
       };
     case GET_AUTH_ERROR:
       return {
         ...state,
         isLoading: false,
         error: action.payload,
-        isAuthPending: false
+        isAuthLoading: false
       };
     default:
       return state;

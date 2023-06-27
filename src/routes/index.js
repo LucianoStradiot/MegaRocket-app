@@ -1,8 +1,11 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Home from 'Components/Home';
 import Spinner from 'Components/Shared/Spinner';
 import styles from './layout.module.css';
+import { useDispatch } from 'react-redux';
+import { tokenListener } from 'helper/firebase';
+import { getAuth } from 'Redux/Auth/thunks';
 
 const Admins = lazy(() => import('./admins/admins'));
 const AdminForm = lazy(() => import('./admins/formAdmins'));
@@ -33,6 +36,20 @@ const Trainers = lazy(() => import('./trainers/trainer'));
 const FormTrainers = lazy(() => import('./trainers/formTrainer'));
 
 const Layout = () => {
+  const dispatch = useDispatch();
+
+  const token = sessionStorage.getItem('token');
+
+  useEffect(() => {
+    tokenListener();
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getAuth(token));
+    }
+  }, [token]);
+
   return (
     <div className={styles.container}>
       <Suspense fallback={<Spinner />}>
@@ -80,4 +97,5 @@ const Layout = () => {
     </div>
   );
 };
+
 export default Layout;

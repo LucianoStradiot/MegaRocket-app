@@ -1,11 +1,15 @@
 export const GET_AUTH_LOADING = 'GET_AUTH_LOADING';
-export const GET_AUTH_ERROR = 'GET_AUTH_ERROR';
 export const GET_AUTH_SUCCESS = 'GET_AUTH_SUCCESS';
+export const GET_AUTH_ERROR = 'GET_AUTH_ERROR';
 
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_LOADING = 'LOGIN_LOADING';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 
-export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
-export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
-export const LOG_OUT_ERROR = 'LOG_OUT_ERROR';
+export const LOGOUT_LOADING = 'LOGOUT_LOADING';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_ERROR = 'LOGOUT_ERROR';
+
+export const SIGN_UP_LOADING = 'SIGN_UP_LOADING';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_UP_ERROR = 'SIGN_UP_ERROR';

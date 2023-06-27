@@ -13,10 +13,7 @@ import {
   createSuperAdminError,
   editSuperAdminPending,
   editSuperAdminError,
-  editSuperAdminSuccess,
-  loginSuperAdminsPending,
-  loginSuperAdminsSuccess,
-  loginSuperAdminsError
+  editSuperAdminSuccess
 } from './actions';
 
 export const getSuperAdmins = () => {
@@ -119,26 +116,6 @@ export const deleteSuperAdmin = (id) => {
       }
     } catch (error) {
       dispatch(deleteSuperAdminsError(error));
-    }
-  };
-};
-
-export const loginSuperAdmin = () => {
-  return async (dispatch) => {
-    try {
-      dispatch(loginSuperAdminsPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
-        method: 'GET'
-      });
-      const data = await response.json();
-      if (response.ok) {
-        dispatch(loginSuperAdminsSuccess(data.data));
-      } else {
-        dispatch(loginSuperAdminsError(data.message));
-      }
-      return data;
-    } catch (error) {
-      return error;
     }
   };
 };

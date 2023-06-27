@@ -9,11 +9,10 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './login.module.css';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-/* import { loginMemberUser } from 'Redux/Members/thunks'; */
-import { loginSuperAdmin } from 'Redux/SuperAdmins/thunks';
+import { useHistory } from 'react-router-dom';
+import { login } from 'Redux/Auth/thunks';
 
-const LoginSuperAdmin = () => {
+const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.members.isPending);
@@ -46,9 +45,9 @@ const LoginSuperAdmin = () => {
     mode: 'onSubmit',
     resolver: joiResolver(schema)
   });
-  const logSuperAdmin = async (superAdminValue) => {
+  const logUser = async (userValue) => {
     try {
-      const dataResponse = await dispatch(loginSuperAdmin(superAdminValue));
+      const dataResponse = await dispatch(login(userValue));
       const modalData = {
         title: dataResponse.error ? 'Error!' : 'Success!',
         desc: dataResponse.message
@@ -85,7 +84,7 @@ const LoginSuperAdmin = () => {
         title={modalInfo.title}
       />
       {loading && <Spinner />}
-      <form className={styles.form} onSubmit={handleSubmit(logSuperAdmin)}>
+      <form className={styles.form} onSubmit={handleSubmit(logUser)}>
         <TextInput
           error={errors.email?.message}
           register={register}
@@ -156,4 +155,4 @@ const LoginSuperAdmin = () => {
   );
 };
 
-export default LoginSuperAdmin;
+export default Login;

@@ -1,21 +1,21 @@
 import {
-  GET_AUTH_PENDING,
+  GET_AUTH_LOADING,
   GET_AUTH_SUCCESS,
   GET_AUTH_ERROR,
-  LOGIN_ERROR,
-  LOGIN_PENDING,
+  LOGIN_LOADING,
   LOGIN_SUCCESS,
-  LOGOUT_ERROR,
-  LOGOUT_PENDING,
+  LOGIN_ERROR,
+  LOGOUT_LOADING,
   LOGOUT_SUCCESS,
-  SIGN_UP_ERROR,
-  SIGN_UP_PENDING,
-  SIGN_UP_SUCCESS
+  LOGOUT_ERROR,
+  SIGN_UP_LOADING,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_ERROR
 } from './constants';
 
-export const getAuthPending = () => {
+export const getAuthLoading = () => {
   return {
-    type: GET_AUTH_PENDING
+    type: GET_AUTH_LOADING
   };
 };
 
@@ -32,9 +32,9 @@ export const getAuthError = (error) => {
     payload: error
   };
 };
-export const loginPending = () => {
+export const loginLoading = () => {
   return {
-    type: LOGIN_PENDING
+    type: LOGIN_LOADING
   };
 };
 
@@ -52,9 +52,9 @@ export const loginError = (error) => {
   };
 };
 
-export const logoutPending = () => {
+export const logoutLoading = () => {
   return {
-    type: LOGOUT_PENDING
+    type: LOGOUT_LOADING
   };
 };
 
@@ -71,9 +71,9 @@ export const logoutError = (error) => {
   };
 };
 
-export const signUpPending = () => {
+export const signUpLoading = () => {
   return {
-    type: SIGN_UP_PENDING
+    type: SIGN_UP_LOADING
   };
 };
 

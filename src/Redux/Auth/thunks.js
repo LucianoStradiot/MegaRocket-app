@@ -1,11 +1,11 @@
 import {
-  getAuthPending,
+  getAuthLoading,
   getAuthSuccess,
   getAuthError,
-  loginPending,
+  loginLoading,
   loginSuccess,
   loginError,
-  logoutPending,
+  logoutLoading,
   logoutSuccess,
   logoutError
 } from './actions';
@@ -14,12 +14,15 @@ import { firebaseApp } from 'helper/firebase';
 
 export const login = (credentials) => {
   return async (dispatch) => {
-    dispatch(loginPending());
+    dispatch(loginLoading());
+    console.log('entro a login');
     try {
       const firebaseResponse = await firebaseApp
         .auth()
         .signInWithEmailAndPassword(credentials.email, credentials.password);
+      console.log('firebaseResponse', firebaseResponse);
       const token = await firebaseResponse.user.getIdToken();
+      console.log('token', token);
       const {
         claims: { role }
       } = await firebaseResponse.user.getIdTokenResult();
@@ -32,9 +35,13 @@ export const login = (credentials) => {
 
 export const getAuth = (token) => {
   return async (dispatch) => {
-    dispatch(getAuthPending());
+    dispatch(getAuthLoading());
     try {
-      const response = fetch(`${process.env.REACT_APP_API_URL}/api/auth/`, { headers: { token } });
+      console.log(`${process.env.REACT_APP_API_URL}/api/auth/login`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+        headers: { token }
+      });
+      console.log(response);
       const res = await response.json();
       return dispatch(getAuthSuccess(res.data));
     } catch (error) {
@@ -45,7 +52,7 @@ export const getAuth = (token) => {
 
 export const logout = () => {
   return async (dispatch) => {
-    dispatch(logoutPending());
+    dispatch(logoutLoading());
     try {
       await firebaseApp.auth().signOut();
       return dispatch(logoutSuccess());
