@@ -5,59 +5,67 @@ class HomePage {
   }
 
   get headerLogo() {
-    return $('[data-testid="container-header"] > img');
+    return $('[data-testid="container-header"] img');
+  }
+
+  get sidebarHome() {
+    return $('[data-testid="container-aside-members"]');
+  }
+
+  get sidebarTitle() {
+    return $('[data-testid="container-aside-members"] h2');
   }
 
   get loginButton() {
-    return $('[data-testid="container-aside-members"] > a:nth-child(2)');
+    return $('[data-testid="container-aside-members"] a:nth-child(2)');
   }
 
   get signUpButton() {
-    return $('[data-testid="container-aside-members"] > a:nth-child(3)');
+    return $('[data-testid="container-aside-members"] a:nth-child(3)');
   }
 
   get activitiesButton() {
-    return $('[data-testid="container-aside-members"] > a:nth-child(4)');
+    return $('[data-testid="container-aside-members"] a:nth-child(4)');
   }
 
   get scheduleButton() {
-    return $('[data-testid="container-aside-members"] > a:nth-child(5)');
+    return $('[data-testid="container-aside-members"] a:nth-child(5)');
   }
 
   get membershipsButton() {
-    return $('[data-testid="container-aside-members"] > a:nth-child(6)');
+    return $('[data-testid="container-aside-members"] a:nth-child(6)');
   }
 
   get contactUs() {
-    return $('[data-testid="container-aside-members"] > h3');
+    return $('[data-testid="container-aside-members"] h3');
   }
 
   get contactUsEmail() {
-    return $('[data-testid="container-aside-members"] > li:nth-child(1)');
+    return $('[data-testid="container-aside-members"] li:nth-child(1)');
   }
 
   get contactUsPhone() {
-    return $('[data-testid="container-aside-members"] > li:nth-child(2)');
+    return $('[data-testid="container-aside-members"] li:nth-child(2)');
   }
 
   get contactUsAdress() {
-    return $('[data-testid="container-aside-members"] > li:nth-child(3)');
+    return $('[data-testid="container-aside-members"] li:nth-child(3)');
   }
 
   get sectionOneTitle() {
-    return $('[data-testid="home-page] > section:nth-child(1) > h1');
+    return $('[data-testid="home-page"] h1');
   }
 
   get sectionOneSubTitle() {
-    return $('[data-testid="home-page] > section:nth-child(1) > p:nh-child(2)');
+    return $('[data-testid="home-page"] section:nth-child(1) article p:nth-child(2)');
   }
 
   get sectionOnePharaf() {
-    return $('[data-testid="home-page] > section:nth-child(1) > p:nh-child(3)');
+    return $('[data-testid="home-page"] section:nth-child(1) article p:nth-child(3)');
   }
 
   get sectionOneImage() {
-    return $('[data-testid="home-page"] section:nth-child(1) > img');
+    return $('[data-testid="home-page"] section:nth-child(1) img');
   }
 
   get sectitonTwoTitle() {

@@ -7,7 +7,12 @@ describe('Check elements in header', () => {
     browser.url('https://joaco-megarocket-app.vercel.app/');
   });
 
-  it('Check Time Navigation from Login to Main Page', async () => {
-    await expect(HomePage.headerTitle).toBeDisplayed();
+  it('Check elements in second section', async () => {
+    await HomePage.sectitonTwoTitle.scrollIntoView();
+    await expect(HomePage.sectitonTwoTitle).toBeDisplayed();
+    await expect(HomePage.sectitonTwoTitle).toHaveTextContaining('Features');
+
+    await expect(HomePage.shiftReservations).toBeDisplayed();
   });
 });
+//footer.scrollIntoView()
