@@ -31,4 +31,4 @@ class NavBarAdmin {
   }
 }
 
-export default new NavBarAdmin();
+module.exports = new NavBarAdmin();

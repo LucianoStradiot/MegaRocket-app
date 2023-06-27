@@ -6,10 +6,10 @@ class ActivitiesAdmin {
      return $('#form');
  }
  get containerInputName() {
-     return $('[data-testid="activities-input-name"]');
+     return $('[data-testid="activities-input-name"] input');
  }
  get containerInputDescription() {
-     return $('[data-testid="activities-input-description"]');
+     return $('textarea');
  }
  get statusActivities() {
      return $('[data-testid="activities-status"]');
@@ -33,16 +33,22 @@ class ActivitiesAdmin {
      return $('[data-testid="activities-add-button"]');
  }
  get editButtonAct(){
-  return $('[data-testid="buttons-table"] > a > button')
+  return $('[data-testid="container-table"] tr:last-child > button:nth-child(1)');
  }
  get deleteButtonAct(){
-  return $('[data-testid="buttons-table"] > button')
+  return $('[data-testid="container-table"] tr:last-child > button:nth-child(2)')
  }
  get modalSuccess(){
   return $('[data-testid="modal-success"]')
  }
  get modalSuccessTitle(){
   return $('[data-testid="modal-success"] > h3')
+ }
+ get modalConfirm(){
+  return $('[data-testid="modal-confirm"]');
+ }
+ get confirmButtonAct(){
+  return $('[data-testid="modal-confirm"] > button')
  }
  get acceptButtonAct(){
   return $('[data-testid="modal-success"] > button')
@@ -78,11 +84,15 @@ async editActClick() {
 async deleteActClick() {
   await this.deleteButtonAct.click();
 }
- async fillContainerInputName() {
-  await this.containerInputName.setValue()
+async confirmModalClick() {
+  await this.modalConfirm.click();
 }
-async fillContainerInputDescription() {
-  await this.containerInputDescription.setValue()
+ async fillContainerInputName(name) {
+  await this.containerInputName.setValue(name)
+}
+async fillContainerInputDescription(description) {
+  await this.containerInputDescription.setValue(description)
 }
 }
-export default new ActivitiesAdmin();
+
+module.exports = new ActivitiesAdmin();
