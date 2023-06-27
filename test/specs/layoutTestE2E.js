@@ -7,6 +7,79 @@ describe('Check elements in header', () => {
     browser.url('https://joaco-megarocket-app.vercel.app/');
   });
 
+  it('check elements in header', async () => {
+    await expect(HomePage.headerLogo).toBeDisplayed();
+    await expect(HomePage.headerTitle).toBeDisplayed();
+
+    await expect(HomePage.headerLogo).toHaveAttribute('src', '/assets/images/logo-header.png');
+    await expect(HomePage.headerTitle).toHaveText('Home');
+  });
+
+  it('check elements and functionalities in sidebar', async () => {
+    await expect(HomePage.sidebarHome).toBeDisplayed();
+    await expect(HomePage.sidebarTitle).toHaveText('Menu');
+
+    await expect(HomePage.loginButton).toBeDisplayed();
+    await expect(HomePage.loginButton).toBeClickable();
+    await expect(HomePage.loginButton).toHaveAttribute('href', '/login');
+    const loginBtn = await HomePage.loginButton.getText();
+    expect(loginBtn).toEqual('Login');
+
+    await expect(HomePage.signUpButton).toBeDisplayed();
+    await expect(HomePage.signUpButton).toBeClickable();
+    await expect(HomePage.signUpButton).toHaveAttribute('href', '/signUp');
+    const signUpBtn = await HomePage.signUpButton.getText();
+    expect(signUpBtn).toEqual('SignUp');
+
+    await expect(HomePage.activitiesButton).toBeDisplayed();
+    await expect(HomePage.activitiesButton).toBeClickable();
+    await expect(HomePage.activitiesButton).toHaveAttribute('href', '/activities');
+    const actBtn = await HomePage.activitiesButton.getText();
+    expect(actBtn).toEqual('Activities');
+
+    await expect(HomePage.scheduleButton).toBeDisplayed();
+    await expect(HomePage.scheduleButton).toBeClickable();
+    await expect(HomePage.scheduleButton).toHaveAttribute('href', '/schedule');
+    const schBtn = await HomePage.scheduleButton.getText();
+    expect(schBtn).toEqual('Schedule');
+
+    await expect(HomePage.membershipsButton).toBeDisplayed();
+    await expect(HomePage.membershipsButton).toBeClickable();
+    await expect(HomePage.membershipsButton).toHaveAttribute('href', '/membership');
+    const membBtn = await HomePage.membershipsButton.getText();
+    expect(membBtn).toEqual('Memberships');
+  });
+
+  it('Check text information in sidebar', async () => {
+    await expect(HomePage.contactUs).toBeDisplayed();
+    const contactText = await HomePage.contactUs.getText();
+    expect(contactText).toEqual('Contact us');
+
+    await expect(HomePage.contactUsEmail).toBeDisplayed();
+    const infoEmail = await HomePage.contactUsEmail.getText();
+    expect(infoEmail).toEqual('info@megarocket.com');
+
+    await expect(HomePage.contactUsPhone).toBeDisplayed();
+    const infoPhone = await HomePage.contactUsPhone.getText();
+    expect(infoPhone).toEqual('(000)0000000');
+
+    await expect(HomePage.contactUsAdress).toBeDisplayed();
+    const infoAdress = await HomePage.contactUsAdress.getText();
+    expect(infoAdress).toEqual('1234 somewhere road');
+  });
+
+  it('Check elements in first section', async () => {
+    await expect(HomePage.sectionOneTitle).toBeDisplayed();
+    await expect(HomePage.sectionOneTitle).toHaveTextContaining('MEGA ROCKET WEB');
+
+    await expect(HomePage.sectionOneSubTitle).toBeDisplayed();
+    await expect(HomePage.sectionOneSubTitle).toHaveTextContaining('WELCOME');
+
+    await expect(HomePage.sectionOnePharaf).toBeDisplayed();
+    await expect(HomePage.sectionOneImage).toBeDisplayed();
+    await expect(HomePage.sectionOneImage).toHaveAttribute('src', '/assets/images/gym-home.png');
+  });
+
   it('Check elements in second section', async () => {
     await HomePage.sectitonTwoTitle.scrollIntoView();
     await expect(HomePage.sectitonTwoTitle).toBeDisplayed();
