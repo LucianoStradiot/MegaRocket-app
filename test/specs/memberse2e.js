@@ -117,3 +117,16 @@ describe('Go to home page', () => {
   });
 });
 
+describe('Schedule a class', () => {
+  it('should go to the schedule page', async () => {
+     await HomePage.openHomePage();
+     await HomePage.scheduleButton.click();
+     await expect(browser).toHaveUrl('https://joaco-megarocket-app.vercel.app/schedule');
+   });
+   it('should select the spinning class', async () => {
+     await SchedulePage.spinningClass.click();
+     await expect(SchedulePage.modal).toBeDisplayed();
+     await SchedulePage.acceptBtn.click();
+    });
+ });
+ 
