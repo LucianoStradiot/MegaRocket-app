@@ -178,6 +178,14 @@ class HomePage {
   get copyRigth() {
     return $('[data-testid="container-footer"] p');
   }
+
+  get cancelButtonLogin() {
+    return $('[data-testid="container-login"] button:nth-child(1)');
+  }
+
+  get cancelButonSignUp() {
+    return $('[data-testid="sign-up-form"]  button:nth-child(1)');
+  }
 }
 
 module.exports = new HomePage();

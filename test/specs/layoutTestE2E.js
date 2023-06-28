@@ -68,6 +68,52 @@ describe('Check elements in header', () => {
     expect(infoAdress).toEqual('1234 somewhere road');
   });
 
+  it('Check navigation from Home page to Login', async () => {
+    await HomePage.loginButton.scrollIntoView();
+    await HomePage.loginButton.click();
+
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/login');
+
+    await HomePage.cancelButtonLogin.click();
+  });
+
+  it('Check navigation from Home page to Sign Up', async () => {
+    await HomePage.signUpButton.click();
+
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/signUp');
+
+    await HomePage.cancelButonSignUp.click();
+  });
+
+  it('Check navigation from Home page to activities', async () => {
+    await HomePage.activitiesButton.click();
+
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/activities');
+
+    await HomePage.homeButton.click();
+  });
+
+  it('Check navigation from Home page to schedule', async () => {
+    await HomePage.scheduleButton.click();
+
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/schedule');
+
+    await HomePage.homeButton.click();
+  });
+
+  it('Check navigation from Home page to memberships', async () => {
+    await HomePage.membershipsButton.click();
+
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/membership');
+
+    await HomePage.homeButton.click();
+  });
+
   it('Check elements in first section', async () => {
     await expect(HomePage.sectionOneTitle).toBeDisplayed();
     await expect(HomePage.sectionOneTitle).toHaveTextContaining('MEGA ROCKET WEB');
@@ -168,8 +214,8 @@ describe('Check elements in header', () => {
     await expect(HomePage.instagramIcon).toBeDisplayed();
     await expect(HomePage.instagramIcon).toBeClickable();
 
-    await expect(HomePage.linkedinIcon).toBeDisplayed();
-    await expect(HomePage.linkedinIcon).toBeClickable();
+    await expect(HomePage.twitterIcon).toBeDisplayed();
+    await expect(HomePage.twitterIcon).toBeClickable();
 
     await expect(HomePage.copyRigth).toBeDisplayed();
     await expect(HomePage.copyRigth).toHaveTextContaining(
@@ -177,77 +223,7 @@ describe('Check elements in header', () => {
     );
   });
 
-  it('Check navigation from Home page to Login', async () => {
-    await HomePage.loginButton.click();
-    const windowHandles = await browser.getWindowHandles();
-
-    const loginPage = windowHandles[windowHandles.length - 1];
-    await browser.switchToWindow(loginPage);
-
-    const currentUrl = await browser.getUrl();
-    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/login');
-
-    await browser.closeWindow();
-
-    const originalWindowHandle = windowHandles[0];
-    await browser.switchToWindow(originalWindowHandle);
-  });
-
-  it('Check navigation from Home page to Sign Up', async () => {
-    await HomePage.signUpButton.click();
-    const windowHandles = await browser.getWindowHandles();
-
-    const signUpPage = windowHandles[windowHandles.length - 1];
-    await browser.switchToWindow(signUpPage);
-
-    const currentUrl = await browser.getUrl();
-    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/signUp');
-
-    await browser.closeWindow();
-
-    const originalWindowHandle = windowHandles[0];
-    await browser.switchToWindow(originalWindowHandle);
-  });
-
-  it('Check navigation from Home page to activities', async () => {
-    await HomePage.activitiesButton.click();
-    const windowHandles = await browser.getWindowHandles();
-
-    const activitiesPage = windowHandles[windowHandles.length - 1];
-    await browser.switchToWindow(activitiesPage);
-
-    const currentUrl = await browser.getUrl();
-    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/activities');
-
-    await browser.closeWindow();
-
-    const originalWindowHandle = windowHandles[0];
-    await browser.switchToWindow(originalWindowHandle);
-  });
-
-  it('Check navigation from Home page to schedule', async () => {
-    await HomePage.scheduleButton.click();
-    const windowHandles = await browser.getWindowHandles();
-
-    const schedulePage = windowHandles[windowHandles.length - 1];
-    await browser.switchToWindow(schedulePage);
-
-    const currentUrl = await browser.getUrl();
-    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/schedule');
-
-    await browser.closeWindow();
-
-    const originalWindowHandle = windowHandles[0];
-    await browser.switchToWindow(originalWindowHandle);
-  });
-
-  it('Check navigation from Home page to memberships', async () => {
-    await HomePage.membershipsButton.click();
-    const currentUrl = await browser.getUrl();
-    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/membership');
-  });
-
-  it('Check navigation in social media icon Faceebok', async () => {
+  it('Check navigation in social media icon "Faceebok"', async () => {
     await HomePage.facebookIcon.click();
     const windowHandles = await browser.getWindowHandles();
 
@@ -262,7 +238,7 @@ describe('Check elements in header', () => {
     await browser.switchToWindow(originalWindowHandle);
   });
 
-  it('Check navigation in social media icons Instagram', async () => {
+  it('Check navigation in social media icon "Instagram"', async () => {
     await HomePage.instagramIcon.click();
     const windowHandles = await browser.getWindowHandles();
 
@@ -276,7 +252,7 @@ describe('Check elements in header', () => {
     await browser.switchToWindow(originalWindowHandle);
   });
 
-  it('Check navigation in social media icons Twitter', async () => {
+  it('Check navigation in social media icons "Twitter"', async () => {
     await HomePage.twitterIcon.click();
     const windowHandles = await browser.getWindowHandles();
 
