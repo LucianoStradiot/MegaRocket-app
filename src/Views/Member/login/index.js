@@ -46,10 +46,8 @@ const Login = () => {
     resolver: joiResolver(schema)
   });
   const logUser = async (userValue) => {
-    console.log('userValue =', userValue);
     try {
       const dataResponse = await dispatch(login(userValue));
-      console.log('dataResponse =', dataResponse);
       const modalData = {
         title: dataResponse.error ? 'Error!' : 'Success!',
         desc: dataResponse.message
