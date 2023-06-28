@@ -1,5 +1,9 @@
 const SignUpPage = require ('../pageobjects/signUp.js');
 const LoginPage = require ('../pageobjects/loginPage.js');
+const MemberPage = require ('../pageobjects/memberPage.js');
+const HomePage = require ('../pageobjects/homePage.js');
+const SchedulePage = require ('../pageobjects/schedulePage.js');
+const MembershipPage = require ('../pageobjects/membershipPage.js');
 
 describe('Sign up negative test cases', () => {
   it('should not let sign up with wmpty fields', async () => {
@@ -96,14 +100,20 @@ describe("Positive members login cases", () => {
   });
 });
 
+describe("Social media buttons", () => {
+  it("should click on social media icons", async () => {
+    await MemberPage.openMembersPage();
+    await MemberPage.fbIcon.click();
+    await MemberPage.igIcon.click();
+    await MemberPage.twIcon.click();
+  });
+});
 
-
-
-
-
-
-
-
-
-
+describe('Go to home page', () => {
+  it('should go to the home page', async () => {
+    await MemberPage.openMembersPage();
+    await MemberPage.imgBtn.click();
+    await expect(browser).toHaveUrl('https://joaco-megarocket-app.vercel.app/');
+  });
+});
 
