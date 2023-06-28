@@ -80,12 +80,215 @@ describe('Check elements in header', () => {
     await expect(HomePage.sectionOneImage).toHaveAttribute('src', '/assets/images/gym-home.png');
   });
 
-  it('Check elements in second section', async () => {
+  it('Check first title and description in second section', async () => {
     await HomePage.sectitonTwoTitle.scrollIntoView();
     await expect(HomePage.sectitonTwoTitle).toBeDisplayed();
     await expect(HomePage.sectitonTwoTitle).toHaveTextContaining('Features');
 
     await expect(HomePage.shiftReservations).toBeDisplayed();
+    await expect(HomePage.shiftReservations).toHaveText('Shift Reservations');
+
+    await expect(HomePage.shiftReservationsDesc).toBeDisplayed();
+  });
+
+  it('Check second title and description in second section', async () => {
+    await expect(HomePage.scheduling).toBeDisplayed();
+    await expect(HomePage.scheduling).toHaveTextContaining('Scheduling y Opening Hours');
+    await expect(HomePage.schedulingDesc).toBeDisplayed();
+  });
+
+  it('Check third title and description in second section', async () => {
+    await expect(HomePage.membershipManag).toBeDisplayed();
+    await expect(HomePage.membershipManag).toHaveTextContaining('Membership Management');
+    await expect(HomePage.membershipManagDesc).toBeDisplayed();
+  });
+
+  it('Check fourth title and description ind second section', async () => {
+    await expect(HomePage.contactSuggestions).toBeDisplayed();
+    await expect(HomePage.contactSuggestions).toHaveTextContaining('Contact Form y Suggestions');
+    await expect(HomePage.contactSuggestionsDesc).toBeDisplayed();
+  });
+
+  it('Check title section three', async () => {
+    await HomePage.sectionThreeTitle.scrollIntoView();
+    await expect(HomePage.sectionThreeTitle).toBeDisplayed();
+    await expect(HomePage.sectionThreeTitle).toHaveTextContaining('About Mega Rocket');
+  });
+
+  it('Check first image and description in section three', async () => {
+    await expect(HomePage.aboutFirstImg).toBeDisplayed();
+    await expect(HomePage.aboutFirstImg).toHaveAttribute('src', '/assets/images/gym-about.png');
+    await expect(HomePage.aboutFirstDesc).toBeDisplayed();
+  });
+
+  it('Check second image and description in section three', async () => {
+    await HomePage.aboutSecondImg.scrollIntoView();
+    await expect(HomePage.aboutSecondImg).toBeDisplayed();
+    await expect(HomePage.aboutSecondImg).toHaveAttribute('src', '/assets/images/gym-about2.png');
+    await expect(HomePage.aboutSecondDesc).toBeDisplayed();
+  });
+
+  it('Check elements in section four', async () => {
+    await HomePage.sectionFourTitle.scrollIntoView();
+    await expect(HomePage.sectionFourTitle).toBeDisplayed();
+    await expect(HomePage.sectionFourTitle).toHaveTextContaining('Gym activities');
+
+    await expect(HomePage.sectionFourImg).toBeDisplayed();
+    await expect(HomePage.sectionFourImg).toHaveAttribute(
+      'src',
+      '/assets/images/gym-activities.png'
+    );
+
+    await expect(HomePage.listActivities).toBeDisplayed();
+    await expect(HomePage.listActivities[0]).toHaveTextContaining('Crossfit');
+    await expect(HomePage.listActivities[1]).toHaveTextContaining('Spinning');
+    await expect(HomePage.listActivities[2]).toHaveTextContaining('Functional');
+    await expect(HomePage.listActivities[3]).toHaveTextContaining('Fitness');
+    await expect(HomePage.listActivities[4]).toHaveTextContaining('Boxing');
+  });
+
+  it('Check elements in section five', async () => {
+    await HomePage.sectionFiveTitle.scrollIntoView();
+    await expect(HomePage.sectionFiveTitle).toBeDisplayed();
+    await expect(HomePage.sectionFiveTitle).toHaveTextContaining('Memberships');
+    await expect(HomePage.sectionFiveTable).toBeDisplayed();
+    await expect(HomePage.onlyClassesTable).toHaveTextContaining('Only classes');
+    await expect(HomePage.classicTable).toHaveTextContaining('Classic');
+    await expect(HomePage.blackTable).toHaveTextContaining('Black');
+  });
+
+  it('Check elements and functionalities in footer', async () => {
+    await HomePage.footerLogo.scrollIntoView();
+    await expect(HomePage.footerLogo).toBeDisplayed();
+    await expect(HomePage.footerLogo).toHaveAttribute('src', '/assets/images/logo-footer.png');
+
+    await expect(HomePage.facebookIcon).toBeDisplayed();
+    await expect(HomePage.facebookIcon).toBeClickable();
+
+    await expect(HomePage.instagramIcon).toBeDisplayed();
+    await expect(HomePage.instagramIcon).toBeClickable();
+
+    await expect(HomePage.linkedinIcon).toBeDisplayed();
+    await expect(HomePage.linkedinIcon).toBeClickable();
+
+    await expect(HomePage.copyRigth).toBeDisplayed();
+    await expect(HomePage.copyRigth).toHaveTextContaining(
+      'Copyright © 2023 MegaRocket SA. All rights reserved.'
+    );
+  });
+
+  it('Check navigation from Home page to Login', async () => {
+    await HomePage.loginButton.click();
+    const windowHandles = await browser.getWindowHandles();
+
+    const loginPage = windowHandles[windowHandles.length - 1];
+    await browser.switchToWindow(loginPage);
+
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/login');
+
+    await browser.closeWindow();
+
+    const originalWindowHandle = windowHandles[0];
+    await browser.switchToWindow(originalWindowHandle);
+  });
+
+  it('Check navigation from Home page to Sign Up', async () => {
+    await HomePage.signUpButton.click();
+    const windowHandles = await browser.getWindowHandles();
+
+    const signUpPage = windowHandles[windowHandles.length - 1];
+    await browser.switchToWindow(signUpPage);
+
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/signUp');
+
+    await browser.closeWindow();
+
+    const originalWindowHandle = windowHandles[0];
+    await browser.switchToWindow(originalWindowHandle);
+  });
+
+  it('Check navigation from Home page to activities', async () => {
+    await HomePage.activitiesButton.click();
+    const windowHandles = await browser.getWindowHandles();
+
+    const activitiesPage = windowHandles[windowHandles.length - 1];
+    await browser.switchToWindow(activitiesPage);
+
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/activities');
+
+    await browser.closeWindow();
+
+    const originalWindowHandle = windowHandles[0];
+    await browser.switchToWindow(originalWindowHandle);
+  });
+
+  it('Check navigation from Home page to schedule', async () => {
+    await HomePage.scheduleButton.click();
+    const windowHandles = await browser.getWindowHandles();
+
+    const schedulePage = windowHandles[windowHandles.length - 1];
+    await browser.switchToWindow(schedulePage);
+
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/schedule');
+
+    await browser.closeWindow();
+
+    const originalWindowHandle = windowHandles[0];
+    await browser.switchToWindow(originalWindowHandle);
+  });
+
+  it('Check navigation from Home page to memberships', async () => {
+    await HomePage.membershipsButton.click();
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/membership');
+  });
+
+  it('Check navigation in social media icon Faceebok', async () => {
+    await HomePage.facebookIcon.click();
+    const windowHandles = await browser.getWindowHandles();
+
+    const faceebok = windowHandles[windowHandles.length - 1];
+    await browser.switchToWindow(faceebok);
+
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://www.facebook.com/radiumrocket');
+
+    await browser.closeWindow();
+    const originalWindowHandle = windowHandles[0];
+    await browser.switchToWindow(originalWindowHandle);
+  });
+
+  it('Check navigation in social media icons Instagram', async () => {
+    await HomePage.instagramIcon.click();
+    const windowHandles = await browser.getWindowHandles();
+
+    const instagram = windowHandles[windowHandles.length - 1];
+    await browser.switchToWindow(instagram);
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://www.instagram.com/radium.rocket/');
+
+    await browser.closeWindow();
+    const originalWindowHandle = windowHandles[0];
+    await browser.switchToWindow(originalWindowHandle);
+  });
+
+  it('Check navigation in social media icons Twitter', async () => {
+    await HomePage.twitterIcon.click();
+    const windowHandles = await browser.getWindowHandles();
+
+    const twitter = windowHandles[windowHandles.length - 1];
+    await browser.switchToWindow(twitter);
+
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://twitter.com/radiumrocket');
+
+    await browser.closeWindow();
+
+    const originalWindowHandle = windowHandles[0];
+    await browser.switchToWindow(originalWindowHandle);
   });
 });
-//footer.scrollIntoView()
