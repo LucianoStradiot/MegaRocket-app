@@ -102,3 +102,24 @@ export const deleteSubscription = (id) => {
     }
   };
 };
+
+export const deleteOldSubscription = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(deleteSubscriptionsPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
+        method: 'DELETE'
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(deleteSubscriptionsSuccess(data.data));
+        console.log(data.data);
+      } else {
+        dispatch(deleteSubscriptionsError(data.data));
+      }
+      return data;
+    } catch (error) {
+      return error;
+    }
+  };
+};
