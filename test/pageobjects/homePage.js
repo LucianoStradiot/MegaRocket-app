@@ -1,13 +1,5 @@
 /* eslint-disable no-undef */
 class HomePage {
-  get headerTitle() {
-    return $('[data-testid="container-header"] > h1');
-  }
-
-  get headerLogo() {
-    return $('[data-testid="container-header"] img');
-  }
-
   get sidebarHome() {
     return $('[data-testid="container-aside-members"]');
   }
@@ -15,6 +7,7 @@ class HomePage {
   get sidebarTitle() {
     return $('[data-testid="container-aside-members"] h2');
   }
+
   get homeButton() {
     return $('[data-testid="container-aside-members"] a:nth-child(1)');
   }
@@ -157,26 +150,6 @@ class HomePage {
 
   get blackTable() {
     return $('[data-testid="home-page"] section:nth-child(5) table th:nth-child(4)');
-  }
-
-  get footerLogo() {
-    return $('[data-testid="container-footer"] img');
-  }
-
-  get facebookIcon() {
-    return $('[data-testid="container-footer"] ul li:nth-child(1) img');
-  }
-
-  get instagramIcon() {
-    return $('[data-testid="container-footer"] ul li:nth-child(2) img');
-  }
-
-  get twitterIcon() {
-    return $('[data-testid="container-footer"] ul li:nth-child(3) img');
-  }
-
-  get copyRigth() {
-    return $('[data-testid="container-footer"] p');
   }
 
   get cancelButtonLogin() {
