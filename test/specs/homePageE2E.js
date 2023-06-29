@@ -1,18 +1,20 @@
 /* eslint-disable no-undef */
 const HomePage = require('../pageobjects/homePage.js');
+const Header = require('../pageobjects/headerTest.js');
+const Footer = require('../pageobjects/footerTest.js');
 
-describe('Check elements in header', () => {
+describe('Check elements in Home Page', () => {
   beforeAll('open browser', () => {
     browser.setWindowSize(1209, 827);
     browser.url('https://joaco-megarocket-app.vercel.app/');
   });
 
   it('check elements in header', async () => {
-    await expect(HomePage.headerLogo).toBeDisplayed();
-    await expect(HomePage.headerTitle).toBeDisplayed();
+    await expect(Header.logo).toBeDisplayed();
+    await expect(Header.title).toBeDisplayed();
 
-    await expect(HomePage.headerLogo).toHaveAttribute('src', '/assets/images/logo-header.png');
-    await expect(HomePage.headerTitle).toHaveText('Home');
+    await expect(Header.logo).toHaveAttribute('src', '/assets/images/logo-header.png');
+    await expect(HomePage.title).toHaveText('Home');
   });
 
   it('check elements and functionalities in sidebar', async () => {
@@ -204,27 +206,27 @@ describe('Check elements in header', () => {
   });
 
   it('Check elements and functionalities in footer', async () => {
-    await HomePage.footerLogo.scrollIntoView();
-    await expect(HomePage.footerLogo).toBeDisplayed();
-    await expect(HomePage.footerLogo).toHaveAttribute('src', '/assets/images/logo-footer.png');
+    await Footer.logo.scrollIntoView();
+    await expect(Footer.logo).toBeDisplayed();
+    await expect(Footer.logo).toHaveAttribute('src', '/assets/images/logo-footer.png');
 
-    await expect(HomePage.facebookIcon).toBeDisplayed();
-    await expect(HomePage.facebookIcon).toBeClickable();
+    await expect(Footer.facebookIcon).toBeDisplayed();
+    await expect(Footer.facebookIcon).toBeClickable();
 
-    await expect(HomePage.instagramIcon).toBeDisplayed();
-    await expect(HomePage.instagramIcon).toBeClickable();
+    await expect(Footer.instagramIcon).toBeDisplayed();
+    await expect(Footer.instagramIcon).toBeClickable();
 
-    await expect(HomePage.twitterIcon).toBeDisplayed();
-    await expect(HomePage.twitterIcon).toBeClickable();
+    await expect(Footer.twitterIcon).toBeDisplayed();
+    await expect(Footer.twitterIcon).toBeClickable();
 
-    await expect(HomePage.copyRigth).toBeDisplayed();
-    await expect(HomePage.copyRigth).toHaveTextContaining(
+    await expect(Footer.copyRigth).toBeDisplayed();
+    await expect(Footer.copyRigth).toHaveTextContaining(
       'Copyright © 2023 MegaRocket SA. All rights reserved.'
     );
   });
 
   it('Check navigation in social media icon "Faceebok"', async () => {
-    await HomePage.facebookIcon.click();
+    await Footer.facebookIcon.click();
     const windowHandles = await browser.getWindowHandles();
 
     const faceebok = windowHandles[windowHandles.length - 1];
@@ -239,7 +241,7 @@ describe('Check elements in header', () => {
   });
 
   it('Check navigation in social media icon "Instagram"', async () => {
-    await HomePage.instagramIcon.click();
+    await Footer.instagramIcon.click();
     const windowHandles = await browser.getWindowHandles();
 
     const instagram = windowHandles[windowHandles.length - 1];
@@ -253,7 +255,7 @@ describe('Check elements in header', () => {
   });
 
   it('Check navigation in social media icons "Twitter"', async () => {
-    await HomePage.twitterIcon.click();
+    await Footer.twitterIcon.click();
     const windowHandles = await browser.getWindowHandles();
 
     const twitter = windowHandles[windowHandles.length - 1];
