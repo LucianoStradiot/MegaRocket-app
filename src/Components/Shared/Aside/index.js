@@ -9,24 +9,36 @@ const Aside = ({ page }) => {
           <h2 className={styles.title}>Menu</h2>
           <nav className={styles.navbarMember}>
             <ul className={styles.rutesMember}>
-              <Link to="/">
-                <a className={styles.btn}>Home</a>
-              </Link>
-              <Link to="/login">
-                <a className={styles.btn}>Login</a>
-              </Link>
-              <Link to="/signUp">
-                <a className={styles.btn}>SignUp</a>
-              </Link>
-              <Link to="/activities">
-                <a className={styles.btn}>Activities</a>
-              </Link>
-              <Link to="/schedule">
-                <a className={styles.btn}>Schedule</a>
-              </Link>
-              <Link to="/membership">
-                <a className={styles.btn}>Memberships</a>
-              </Link>
+              <li>
+                <Link to="/" className={styles.btn}>
+                  <a>Home</a>
+                </Link>
+              </li>
+              <li>
+                <Link to="/login" className={styles.btn}>
+                  <a>Login</a>
+                </Link>
+              </li>
+              <li>
+                <Link to="/signUp" className={styles.btn}>
+                  <a>SignUp</a>
+                </Link>
+              </li>
+              <li>
+                <Link to="/activities" className={styles.btn}>
+                  <a>Activities</a>
+                </Link>
+              </li>
+              <li>
+                <Link to="/schedule" className={styles.btn}>
+                  <a>Schedule</a>
+                </Link>
+              </li>
+              <li>
+                <Link to="/membership" className={styles.btn}>
+                  <a>Memberships</a>
+                </Link>
+              </li>
             </ul>
           </nav>
           <div className={styles.contact}>
