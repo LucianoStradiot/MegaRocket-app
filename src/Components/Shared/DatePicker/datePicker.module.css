@@ -26,3 +26,7 @@
   margin-bottom: 20px;
   height: 5px;
 }
+
+.error {
+  border: 2px solid #EA3354;
+}
