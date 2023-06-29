@@ -113,7 +113,6 @@ export const deleteOldSubscription = () => {
       const data = await response.json();
       if (response.ok) {
         dispatch(deleteSubscriptionsSuccess(data.data));
-        console.log(data.data);
       } else {
         dispatch(deleteSubscriptionsError(data.data));
       }
