@@ -37,9 +37,13 @@ const Layout = () => {
     <div className={styles.container}>
       <Suspense fallback={<Spinner />}>
         <Switch>
-          <Route exact path="/superAdmin/admin" component={Admins} />
-          <Route exact path="/superAdmin/admin/form" component={AdminForm} />
-          <Route path="/superAdmin/admin/form/:id" component={AdminForm} />
+          <Route path="/superAdmins" exact component={SuperAdmins} />
+          <Route path="/superAdmins/form" exact component={FormSuperAdmin} />
+          <Route path="/superAdmins/form/:id" component={FormSuperAdmin} />
+
+          <Route exact path="/superAdmins/admins" component={Admins} />
+          <Route exact path="/superAdmins/admins/form" component={AdminForm} />
+          <Route path="/superAdmins/admins/form/:id" component={AdminForm} />
 
           <Route exact path="/admins/activities" component={Activities} />
           <Route exact path="/admins/activities/form" component={FormActivities} />
@@ -66,10 +70,6 @@ const Layout = () => {
           <Route path="/admins/subscriptions" exact component={Subscriptions} />
           <Route path="/admins/subscriptions/form" exact component={FormSubscriptions} />
           <Route path="/admins/subscriptions/form/:id" component={FormSubscriptions} />
-
-          <Route path="/superAdmins" exact component={SuperAdmins} />
-          <Route path="/superAdmins/form" exact component={FormSuperAdmin} />
-          <Route path="/superAdmins/form/:id" component={FormSuperAdmin} />
 
           <Route exact path="/admins/trainers" component={Trainers} />
           <Route exact path="/admins/trainers/formTrainers" component={FormTrainers} />
