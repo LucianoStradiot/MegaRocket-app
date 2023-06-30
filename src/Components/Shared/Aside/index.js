@@ -22,7 +22,10 @@ const Aside = ({ page }) => {
                   <a>Home</a>
                 </li>
               </Link>
-              <Link to="/login" className={`${styles.btn} ${isActiveRouteMember('/login')}`}>
+              <Link
+                to="/auth/login"
+                className={`${styles.btn} ${isActiveRouteMember('/auth/login')}`}
+              >
                 <li>
                   <a>Login</a>
                 </li>

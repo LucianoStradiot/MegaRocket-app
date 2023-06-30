@@ -17,7 +17,12 @@ export const getAdmins = () => {
   return async (dispatch) => {
     try {
       dispatch(getAdminsLoading());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
+      });
       const data = await response.json();
       if (response.ok) {
         dispatch(getAdminsSuccess(data.data));
