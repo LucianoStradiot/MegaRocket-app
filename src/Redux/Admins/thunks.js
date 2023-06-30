@@ -35,7 +35,10 @@ export const deleteAdmin = (id) => {
     try {
       dispatch(delAdminsLoading());
       const responseAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       });
       const data = await responseAdmin.json();
       if (responseAdmin.ok) {
@@ -57,7 +60,8 @@ export const createAdmin = (payload) => {
       const createdAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify(payload)
       });
@@ -83,7 +87,8 @@ export const putAdmins = (payload) => {
         {
           method: 'PUT',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
           },
           body: JSON.stringify(payload.body)
         }
