@@ -8,7 +8,7 @@ const DatePicker = ({ title, name, val, register, error, testId }) => {
         {title}
       </label>
       <input
-        className={styles.datePicker}
+        className={`${styles.datePicker} ${error ? styles.error : ''}`}
         defaultValue={val ? val.substring(0, 10) : ''}
         type="date"
         name={name}
