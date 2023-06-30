@@ -23,15 +23,13 @@
   align-items: center;
   box-sizing: border-box;
   border: 1px solid #373867;
+  transition: all 0.5s ease;
 }
 
 .boxActivity:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+  transform: scale(1.03);
   background-color: #f9fff6;
-  transform: translateY(-5px);
-  transition: all 0.18s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  border: 2px solid #373867;
-  box-sizing: border-box;
 }
 
 .titleActivity {

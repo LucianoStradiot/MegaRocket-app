@@ -6,9 +6,6 @@ function Header() {
   let name = '';
 
   switch (location.pathname) {
-    case '/':
-      name = 'Home';
-      break;
     case '/admins/activities':
       name = 'Activities';
       break;
@@ -31,7 +28,7 @@ function Header() {
       name = 'Trainers';
       break;
     default:
-      name = 'Form';
+      name = '';
       break;
   }
   return (

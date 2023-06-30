@@ -103,7 +103,7 @@
     list-style-type: none;
   }
 
-  .rutesMember li {
+  .btn {
     background-color: #2E355B;
     padding: 7px;
     border-radius: 7px;
@@ -111,12 +111,12 @@
     text-align: center;
   }
 
-  .rutesMember .btn {
+  .btn {
     color: #fff;
     text-decoration: none;
   }
 
-  .rutesMember li:hover {
+  .btn:hover {
     background-color: #1e2341;
     cursor: pointer;
   }
@@ -130,24 +130,14 @@
   .rutes li:hover::before {
     content: "";
     position: absolute;
-    left: -16px;
+    left: -10px;
     top: 50%;
     transform: translateY(-50%);
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
-    border-right: 6px solid #2E355B;
+    border-left: 6px solid #2E355B;
   }
 
-  .rutes li:hover::after {
-    content: "";
-    position: absolute;
-    left: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
-    border-right: 4px solid #2E355B;
-  }
 
   .rutes>li>a {
     font-size: 1.2rem;
@@ -174,4 +164,20 @@
     flex-direction: column;
     list-style-type: none;
   }
+
+  .activeRoute::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 6px solid #2E355B;
+  }
+
+  .activeRouteMember {
+    background-color: #1e2341;
+  }
+
 }
