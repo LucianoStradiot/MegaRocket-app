@@ -20,7 +20,11 @@ export const getSuperAdmins = () => {
   return async (dispatch) => {
     dispatch(getSuperAdminsPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
+      });
       const data = await response.json();
       if (response.ok) {
         dispatch(getSuperAdminsSuccess(data.data));

@@ -71,7 +71,7 @@ const Login = () => {
   const closeForm = () => {
     if (isMemberLogged) {
       setIsOpen(true);
-      history.push('/member/schedule');
+      history.push('/superAdmins');
     }
     setIsOpen(!isOpen);
   };
