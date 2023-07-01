@@ -15,9 +15,7 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Header />
-
         <Layout />
-
         <Footer />
       </BrowserRouter>
     </Provider>

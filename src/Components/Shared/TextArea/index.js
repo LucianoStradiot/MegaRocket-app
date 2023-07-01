@@ -6,7 +6,7 @@ const TextArea = ({ placeholder, name, register, error }) => {
     <div className={styles.textareaContainer}>
       <textarea
         type="text"
-        className={styles.textarea}
+        className={`${styles.textarea} ${error ? styles.error : ''}`}
         placeholder={placeholder}
         name={name}
         {...register(name)}

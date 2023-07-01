@@ -6,7 +6,7 @@ const Select = ({ name, selectID, register, children, error, testId }) => {
     <div>
       <select
         {...register(name)}
-        className={styles.select}
+        className={`${styles.select} ${error ? styles.error : ''}`}
         id={selectID}
         name={name}
         data-testid={testId}

@@ -1,7 +1,15 @@
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import styles from './aside.module.css';
 
 const Aside = ({ page }) => {
+  const location = useLocation();
+
+  const isActiveRoute = (path) => {
+    return location.pathname === path ? styles.activeRoute : '';
+  };
+  const isActiveRouteMember = (path) => {
+    return location.pathname === path ? styles.activeRouteMember : '';
+  };
   if (page === 'home') {
     return (
       <aside className={styles.asideMember} data-testid="container-aside-members">
@@ -9,23 +17,44 @@ const Aside = ({ page }) => {
           <h2 className={styles.title}>Menu</h2>
           <nav className={styles.navbarMember}>
             <ul className={styles.rutesMember}>
-              <Link to="/">
-                <a className={styles.btn}>Home</a>
+              <Link to="/" className={`${styles.btn} ${isActiveRouteMember('/')}`}>
+                <li>
+                  <a>Home</a>
+                </li>
               </Link>
-              <Link to="/login">
-                <a className={styles.btn}>Login</a>
+              <Link
+                to="/auth/login"
+                className={`${styles.btn} ${isActiveRouteMember('/auth/login')}`}
+              >
+                <li>
+                  <a>Login</a>
+                </li>
               </Link>
-              <Link to="/signUp">
-                <a className={styles.btn}>SignUp</a>
+              <Link to="/signUp" className={`${styles.btn} ${isActiveRouteMember('/signUp')}`}>
+                <li>
+                  <a>SignUp</a>
+                </li>
               </Link>
-              <Link to="/activities">
-                <a className={styles.btn}>Activities</a>
+              <Link
+                to="/activities"
+                className={`${styles.btn} ${isActiveRouteMember('/activities')}`}
+              >
+                <li>
+                  <a>Activities</a>
+                </li>
               </Link>
-              <Link to="/schedule">
-                <a className={styles.btn}>Schedule</a>
+              <Link to="/schedule" className={`${styles.btn} ${isActiveRouteMember('/schedule')}`}>
+                <li>
+                  <a>Schedule</a>
+                </li>
               </Link>
-              <Link to="/membership">
-                <a className={styles.btn}>Memberships</a>
+              <Link
+                to="/membership"
+                className={`${styles.btn} ${isActiveRouteMember('/membership')}`}
+              >
+                <li>
+                  <a>Memberships</a>
+                </li>
               </Link>
             </ul>
           </nav>
@@ -52,19 +81,29 @@ const Aside = ({ page }) => {
         <nav className={styles.navbar}>
           <ul className={styles.rutes}>
             <li>
-              <Link to="/admins/activities">Activities</Link>
+              <Link to="/admins/activities" className={isActiveRoute('/admins/activities')}>
+                Activities
+              </Link>
             </li>
             <li>
-              <Link to="/admins/classes">Classes</Link>
+              <Link to="/admins/classes" className={isActiveRoute('/admins/classes')}>
+                Classes
+              </Link>
             </li>
             <li>
-              <Link to="/admins/members">Members</Link>
+              <Link to="/admins/members" className={isActiveRoute('/admins/members')}>
+                Members
+              </Link>
             </li>
             <li>
-              <Link to="/admins/subscriptions">Subscriptions</Link>
+              <Link to="/admins/subscriptions" className={isActiveRoute('/admins/subscriptions')}>
+                Subscriptions
+              </Link>
             </li>
             <li>
-              <Link to="/admins/trainers">Trainers</Link>
+              <Link to="/admins/trainers" className={isActiveRoute('/admins/trainers')}>
+                Trainers
+              </Link>
             </li>
           </ul>
         </nav>
@@ -76,7 +115,9 @@ const Aside = ({ page }) => {
         <nav className={styles.navbar}>
           <ul className={styles.rutes}>
             <li>
-              <Link to="/admins">Admins</Link>
+              <Link to="/superAdmins/admins" className={isActiveRoute('/superAdmins/admins')}>
+                Admins
+              </Link>
             </li>
           </ul>
         </nav>
