@@ -20,7 +20,12 @@ export const getSuperAdmins = () => {
   return async (dispatch) => {
     dispatch(getSuperAdminsPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
+      });
       const data = await response.json();
       if (response.ok) {
         dispatch(getSuperAdminsSuccess(data.data));
@@ -39,7 +44,10 @@ export const getSuperAdminById = (id) => {
     dispatch(getSuperAdminsIdPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       });
       const { data } = await response.json();
       dispatch(getSuperAdminsIdSuccess(data));
@@ -57,7 +65,8 @@ export const createSuperAdmin = (superAdmin) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify(superAdmin)
       });
@@ -82,7 +91,8 @@ export const editSuperAdmin = (id, superAdmin) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify(superAdmin)
       });
@@ -105,7 +115,10 @@ export const deleteSuperAdmin = (id) => {
     dispatch(deleteSuperAdminsPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admin/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       });
       const data = await response.json();
       if (response.ok) {

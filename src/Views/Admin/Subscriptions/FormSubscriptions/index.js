@@ -164,7 +164,7 @@ const FormSubscriptions = () => {
             {classes.map((oneClass) => {
               return (
                 <option value={oneClass._id} key={oneClass._id}>
-                  {oneClass.hour} {oneClass?.activity?.name}, Trainer:{' '}
+                  {oneClass.day} {oneClass.hour}hs, Activity: {oneClass?.activity?.name}, Trainer:{' '}
                   {oneClass.trainer && oneClass.trainer.firstName}
                 </option>
               );

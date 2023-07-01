@@ -1,8 +1,11 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Home from 'Components/Home';
 import Spinner from 'Components/Shared/Spinner';
 import styles from './layout.module.css';
+import { useDispatch } from 'react-redux';
+import { tokenListener } from 'helper/firebase';
+import { getAuth } from 'Redux/Auth/thunks';
 
 const Admins = lazy(() => import('./admins/admins'));
 const AdminForm = lazy(() => import('./admins/formAdmins'));
@@ -33,13 +36,31 @@ const Trainers = lazy(() => import('./trainers/trainer'));
 const FormTrainers = lazy(() => import('./trainers/formTrainer'));
 
 const Layout = () => {
+  const dispatch = useDispatch();
+
+  const token = sessionStorage.getItem('token');
+
+  useEffect(() => {
+    tokenListener();
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getAuth(token));
+    }
+  }, [token]);
+
   return (
     <div className={styles.container}>
       <Suspense fallback={<Spinner />}>
         <Switch>
-          <Route exact path="/superAdmin/admin" component={Admins} />
-          <Route exact path="/superAdmin/admin/form" component={AdminForm} />
-          <Route path="/superAdmin/admin/form/:id" component={AdminForm} />
+          <Route path="/superAdmins" exact component={SuperAdmins} />
+          <Route path="/superAdmins/form" exact component={FormSuperAdmin} />
+          <Route path="/superAdmins/form/:id" component={FormSuperAdmin} />
+
+          <Route exact path="/superAdmins/admins" component={Admins} />
+          <Route exact path="/superAdmins/admins/form" component={AdminForm} />
+          <Route path="/superAdmins/admins/form/:id" component={AdminForm} />
 
           <Route exact path="/admins/activities" component={Activities} />
           <Route exact path="/admins/activities/form" component={FormActivities} />
@@ -57,7 +78,7 @@ const Layout = () => {
 
           <Route path="/" exact component={MemberUser} />
           <Route path="/activities" exact component={ActivityInfo} />
-          <Route path="/login" exact component={LoginMember} />
+          <Route path="/auth/login" exact component={LoginMember} />
           <Route path="/membership" exact component={MembershipMember} />
           <Route path="/schedule" exact component={MemberSchedule} />
           <Route path="/schedule/:id" component={MemberSchedule} />
@@ -66,10 +87,6 @@ const Layout = () => {
           <Route path="/admins/subscriptions" exact component={Subscriptions} />
           <Route path="/admins/subscriptions/form" exact component={FormSubscriptions} />
           <Route path="/admins/subscriptions/form/:id" component={FormSubscriptions} />
-
-          <Route path="/superAdmins" exact component={SuperAdmins} />
-          <Route path="/superAdmins/form" exact component={FormSuperAdmin} />
-          <Route path="/superAdmins/form/:id" component={FormSuperAdmin} />
 
           <Route exact path="/admins/trainers" component={Trainers} />
           <Route exact path="/admins/trainers/formTrainers" component={FormTrainers} />
@@ -80,4 +97,5 @@ const Layout = () => {
     </div>
   );
 };
+
 export default Layout;
