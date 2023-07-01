@@ -54,7 +54,7 @@
 .classCard:hover {
   transition: 0.4s;
   color: #2E355B;
-  background-color: #8ED081;
+  background-color: #fff;
   border-color: #2E355B;
   cursor: pointer;
 }
