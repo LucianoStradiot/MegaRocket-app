@@ -1,21 +1,21 @@
 import { lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-const AdminsHome = lazy(() => import('./SuperAdmin/adminsHome'));
-const Activities = lazy(() => import('./Admin/activities'));
-const FormActivities = lazy(() => import('./Admin/formActivities'));
+const AdminsHome = lazy(() => import('Views/Admin'));
+const Activities = lazy(() => import('Views/Admin/Activities'));
+const FormActivities = lazy(() => import('Views/Admin/Activities/FormActivity'));
 
-const Classes = lazy(() => import('./Admin/classes'));
-const FormClasses = lazy(() => import('./Admin/formClasses'));
+const Classes = lazy(() => import('Views/Admin/Classes'));
+const FormClasses = lazy(() => import('Views/Admin/Classes/FormClasses'));
 
-const Member = lazy(() => import('./Admin/members'));
-const FormMembers = lazy(() => import('./Admin/formMembers'));
+const Member = lazy(() => import('Views/Admin/Members'));
+const FormMembers = lazy(() => import('Views/Admin/Members/FormMembers'));
 
-const Subscriptions = lazy(() => import('./Admin/subscriptions'));
-const FormSubscriptions = lazy(() => import('./Admin/formSubscriptions'));
+const Subscriptions = lazy(() => import('Views/Admin/Subscriptions'));
+const FormSubscriptions = lazy(() => import('Views/Admin/Subscriptions/FormSubscriptions'));
 
-const Trainers = lazy(() => import('./Admin/trainer'));
-const FormTrainers = lazy(() => import('./trainers/formTrainer'));
+const Trainers = lazy(() => import('Views/Admin/Trainers'));
+const FormTrainers = lazy(() => import('Views/Admin/Trainers/FormTrainers'));
 const AdminsRoutes = () => {
   return (
     <Switch>

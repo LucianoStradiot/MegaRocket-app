@@ -1,8 +1,8 @@
 import { lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-const SuperAdmins = lazy(() => import('./superAdmins/superAdmins'));
-const FormSuperAdmin = lazy(() => import('./superAdmins/formSuperAdmins'));
+const SuperAdmins = lazy(() => import('Views/SuperAdmin/SAManagement'));
+const FormSuperAdmin = lazy(() => import('Views/SuperAdmin/SAManagement/Form'));
 const Admins = lazy(() => import('Views/SuperAdmin/AdminManagement'));
 const AdminForm = lazy(() => import('Views/SuperAdmin/AdminManagement/Form'));
 
