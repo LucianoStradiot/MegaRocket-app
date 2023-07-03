@@ -1,7 +1,7 @@
 class ClassesAdmin {
   get buttonCreateClasses() {
     return $('section a[href="/admins/classes/form"]');
- }
+  }
  get formClasses () {
      return $('[data-testid="form-classes"]');
   }
@@ -9,25 +9,25 @@ class ClassesAdmin {
      return $('#day')
   }
   get selectionDay(){
-    return $('#day option:nth-child(3)')
+    return $('#day option:last-child')
   }
   get selectHour() {
      return $('#hour');
   }
   get selectionHour() {
-    return $('#hour option:nth-child(3)');
+    return $('#hour option:nth-child(12)');
  }
   get selectTrainer() {
      return $('#trainer');
   }
   get selectionTrainer() {
-    return $('#trainer option:nth-child(3)');
+    return $('#trainer option:last-child');
  }
   get selectActivity() {
      return $('#activity');
   }
   get selectionActivity() {
-    return $('#activity option:nth-child(3)');
+    return $('#activity option:last-child');
  }
   get selectSlots() {
      return $('[data-testid="form-classes"] input');
@@ -42,25 +42,10 @@ class ClassesAdmin {
      return $('[data-testid="form-classes"] button:nth-child(2)');
   }
   get saveButtonClass() {
-     return $('[data-test-id="classes-save-button"]');
+     return $('[data-testid="classes-save-button"]');
   }
   get addButtonClass() {
      return $('[data-testid="classes-add-button"]');
-  }
-  get modalSuccess(){
-    return $('[data-testid="modal-success"]');
-   }
-  get modalSuccessTitle(){
-    return $('[data-testid="modal-success"] h3');
-  }
-  get confirmButtonClass(){
-    return $('[data-testid="modal-success"] button');
-  }
-  get modalConfirm(){
-    return $('[data-testid="modal-confirm"]');
-  }
-  get acceptButtonClass(){
-    return $('[data-testid="modal-confirm"] button');
   }
   get editButtonClass(){
   return $('[data-testid="container-table"] tbody tr:last-child button');
@@ -68,17 +53,9 @@ class ClassesAdmin {
   get deleteButtonClass(){
   return $('[data-testid="container-table"] tbody tr:last-child button:nth-child(2)');
   }
+
   async acceptClassClick() {
   await this.acceptButtonClass.click();
-  }
-  async editClassClick() {
-    await this.editButtonClass.click();
-  }
-  async deleteClassClick() {
-    await this.deleteButtonClass.click();
-  }
-  async confirmModalClick() {
-    await this.modalConfirm.click();
   }
   async editClassClick() {
     await this.editButtonClass.click();

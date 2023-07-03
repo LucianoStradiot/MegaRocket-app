@@ -3,7 +3,7 @@ class NavBarAdmin {
       return $('[data-testid="container-aside-general"] nav ul li:nth-child(1) a');
   }
   get classesButton() {
-      return $('[data-testid="container-aside-general"] li:nth-child(2) a');
+      return $('[data-testid="container-aside-general"] nav ul li:nth-child(2) a');
   }
   get membersButton() {
       return $('[data-testid="container-aside-general"] nav ul li:nth-child(3) a');
