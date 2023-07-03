@@ -1,7 +1,10 @@
 import { Link, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import styles from './aside.module.css';
+import { logout } from 'Redux/Auth/thunks';
+import { useDispatch } from 'react-redux';
 
 const Aside = ({ page }) => {
+  const dispatch = useDispatch();
   const location = useLocation();
 
   const isActiveRoute = (path) => {
@@ -10,29 +13,59 @@ const Aside = ({ page }) => {
   const isActiveRouteMember = (path) => {
     return location.pathname === path ? styles.activeRouteMember : '';
   };
+
+  const onSubmit = () => {
+    sessionStorage.clear();
+    dispatch(logout());
+  };
+
   if (page === 'home') {
     return (
       <aside className={styles.asideMember} data-testid="container-aside-members">
         <div className={styles.asideSubContainer}>
-          <h2 className={styles.title}>Menu</h2>
           <nav className={styles.navbarMember}>
             <ul className={styles.rutesMember}>
+              <div className={styles.loginContainer}>
+                {sessionStorage.getItem('role') ? (
+                  <>
+                    <Link
+                      to="/profile"
+                      className={`${styles.btn} ${isActiveRouteMember('/profile')}`}
+                    >
+                      <li>
+                        <a>Profile</a>
+                      </li>
+                    </Link>
+                    <Link to="/" className={`${styles.btn} ${styles.btn2}`}>
+                      <li>
+                        <a onClick={() => onSubmit()}>Log Out</a>
+                      </li>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      to="/auth/login"
+                      className={`${styles.btn} ${isActiveRouteMember('/auth/login')}`}
+                    >
+                      <li>
+                        <a>Login</a>
+                      </li>
+                    </Link>
+                    <Link
+                      to="/signUp"
+                      className={`${styles.btn} ${isActiveRouteMember('/signUp')}`}
+                    >
+                      <li>
+                        <a>SignUp</a>
+                      </li>
+                    </Link>
+                  </>
+                )}
+              </div>
               <Link to="/" className={`${styles.btn} ${isActiveRouteMember('/')}`}>
                 <li>
                   <a>Home</a>
-                </li>
-              </Link>
-              <Link
-                to="/auth/login"
-                className={`${styles.btn} ${isActiveRouteMember('/auth/login')}`}
-              >
-                <li>
-                  <a>Login</a>
-                </li>
-              </Link>
-              <Link to="/signUp" className={`${styles.btn} ${isActiveRouteMember('/signUp')}`}>
-                <li>
-                  <a>SignUp</a>
                 </li>
               </Link>
               <Link
@@ -60,17 +93,19 @@ const Aside = ({ page }) => {
           </nav>
           <div className={styles.contact}>
             <h3 className={styles.titleContact}>Contact us</h3>
-            <ul>
-              <li>
-                <p>info@megarocket.com</p>
-              </li>
-              <li>
-                <p>(000)0000000</p>
-              </li>
-              <li>
-                <p>1234 somewhere road</p>
-              </li>
-            </ul>
+            <div className={styles.minorDiv}>
+              <ul>
+                <li>
+                  <p>info@megarocket.com</p>
+                </li>
+                <li>
+                  <p>(000)0000000</p>
+                </li>
+                <li>
+                  <p>1234 somewhere road</p>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </aside>
