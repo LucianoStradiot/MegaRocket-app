@@ -36,9 +36,13 @@ const Aside = ({ page }) => {
                         <a>Profile</a>
                       </li>
                     </Link>
-                    <Link to="/" className={`${styles.btn} ${styles.btn2}`}>
+                    <Link
+                      to="/"
+                      className={`${styles.btn} ${styles.btn2}`}
+                      onClick={() => onSubmit()}
+                    >
                       <li>
-                        <a onClick={() => onSubmit()}>Log Out</a>
+                        <a>Log Out</a>
                       </li>
                     </Link>
                   </>
