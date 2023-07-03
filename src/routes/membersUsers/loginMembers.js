@@ -1,2 +1,2 @@
-import LoginMember from 'Views/Member/login';
+import LoginMember from 'Views/login';
 export default LoginMember;

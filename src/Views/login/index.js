@@ -48,6 +48,7 @@ const Login = () => {
   const logUser = async (userValue) => {
     try {
       const dataResponse = await dispatch(login(userValue));
+      console.log(dataResponse);
       const modalData = {
         title: dataResponse.error ? 'Error!' : 'Success!',
         desc: dataResponse.message
@@ -70,8 +71,19 @@ const Login = () => {
   };
   const closeForm = () => {
     if (isMemberLogged) {
+      if (sessionStorage.getItem('role') === 'SUPER_ADMIN') {
+        history.push('/superAdmins/admins');
+      }
+      if (sessionStorage.getItem('role') === 'ADMIN') {
+        history.push('/admins');
+      }
+      if (sessionStorage.getItem('role') === 'TRAINER') {
+        history.push('/schedule');
+      }
+      if (sessionStorage.getItem('role') === 'MEMBER') {
+        history.push('/');
+      }
       setIsOpen(true);
-      history.push('/superAdmins');
     }
     setIsOpen(!isOpen);
   };
