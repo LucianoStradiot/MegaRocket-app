@@ -9,7 +9,7 @@ const TextInput = ({ inputType, selectID, labelName, name, register, error, test
       </label>
       <input
         {...register(name)}
-        className={styles['form-input']}
+        className={`${styles['form-input']} ${error ? styles.error : ''}`}
         name={name}
         type={inputType}
         id={selectID}

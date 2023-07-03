@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from 'Views/Member/schedule/schedule.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClasses } from 'Redux/Classes/thunks';
-import { getSubscriptions } from 'Redux/Subscriptions/thunks';
+import { deleteOldSubscription, getSubscriptions } from 'Redux/Subscriptions/thunks';
 import Modal from 'Components/Shared/Modal';
 import Aside from 'Components/Shared/Aside';
 import Spinner from 'Components/Shared/Spinner';
@@ -24,6 +24,7 @@ const MemberSchedule = () => {
   useEffect(() => {
     dispatch(getClasses());
     dispatch(getSubscriptions());
+    dispatch(deleteOldSubscription());
   }, []);
 
   const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
