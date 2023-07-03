@@ -40,6 +40,14 @@
 
 @media only screen and (min-width: 1025px) {
 
+  .loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 60px;
+  }
+
   .aside {
     top: 120px;
     height: 88vh;
@@ -54,7 +62,8 @@
     position: fixed;
     top: 120px;
     height: 88vh;
-    width: 20vh;
+    width: 13%;
+    min-width: 200px;
     z-index: 0;
     background-color: #cbebf3e3;
   }
@@ -64,13 +73,14 @@
     flex-direction: column;
     justify-content: space-between;
     height: 70vh;
-    margin-left: -50px;
+    width: 100%;
   }
 
   .navbar {
     display: flex;
     justify-content: center;
     height: 70vh;
+    width: 100%;
     margin-top: 10px;
   }
 
@@ -80,10 +90,8 @@
   }
 
   .navbarMember {
-    display: flex;
     justify-content: center;
     margin-top: 10px;
-    height: 27vh;
   }
 
   .rutes {
@@ -100,25 +108,36 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    padding: 0;
     list-style-type: none;
   }
 
   .btn {
     background-color: #2E355B;
+    margin: 5px 0;
     padding: 7px;
     border-radius: 7px;
     width: 120px;
     text-align: center;
-  }
-
-  .btn {
     color: #fff;
     text-decoration: none;
   }
 
+  .btn2 {
+    background-color: #fff;
+    color: #2E355B;
+    border: 2px solid #2E355B;
+    font-weight: 600;
+  }
+
+
   .btn:hover {
     background-color: #1e2341;
     cursor: pointer;
+  }
+
+  .btn2:hover {
+    background-color: #eee;
   }
 
   .rutes li {
@@ -130,7 +149,6 @@
   .rutes li:hover::before {
     content: "";
     position: absolute;
-    left: -10px;
     top: 50%;
     transform: translateY(-50%);
     border-top: 6px solid transparent;
@@ -156,13 +174,15 @@
   }
 
   .contact {
-    margin-top: 35px;
+    margin: auto;
   }
 
   .contact ul {
     display: flex;
     flex-direction: column;
+    width: 100%;
     list-style-type: none;
+    padding: 0;
   }
 
   .activeRoute::before {
@@ -179,5 +199,4 @@
   .activeRouteMember {
     background-color: #1e2341;
   }
-
 }
