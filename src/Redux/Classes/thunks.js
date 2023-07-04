@@ -35,7 +35,10 @@ export const deleteClass = (id) => {
     try {
       dispatch(deleteClassLoading());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       });
       const data = await response.json();
 
@@ -60,7 +63,8 @@ export const createClass = (payload) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify(payload)
       });
@@ -85,7 +89,8 @@ export const updateClass = (payload) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${payload.id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify(payload.body)
       });
