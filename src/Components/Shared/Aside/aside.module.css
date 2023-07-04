@@ -44,7 +44,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
   }
 
   .aside {
@@ -172,6 +172,7 @@
 
   .titleContact {
     text-align: center;
+    margin: 0;
   }
 
   .contact {
@@ -199,5 +200,8 @@
 
   .activeRouteMember {
     background-color: #1e2341;
+  }
+  .minorDiv p {
+    margin: 10px;
   }
 }
