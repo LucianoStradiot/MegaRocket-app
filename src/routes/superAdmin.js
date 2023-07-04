@@ -9,7 +9,7 @@ const AdminForm = lazy(() => import('Views/SuperAdmin/AdminManagement/Form'));
 const SuperAdminsRoutes = () => {
   return (
     <Switch>
-      <Route exact path="/superAdmin/admin" component={Admins} />
+      <Route exact path="/superAdmins/admins" component={Admins} />
       <Route exact path="/superAdmin/admin/form" component={AdminForm} />
       <Route path="/superAdmin/admin/form/:id" component={AdminForm} />
       <Route path="/superAdmins" exact component={SuperAdmins} />

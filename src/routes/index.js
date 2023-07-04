@@ -11,7 +11,7 @@ const MemberRoute = lazy(() => import('./member'));
 const SuperAdminsRoutes = lazy(() => import('./superAdmin'));
 const MemberUser = lazy(() => import('Views/Member'));
 const SignUpMember = lazy(() => import('Views/Member/signUp'));
-const Login = lazy(() => import('Views/Login'));
+const Login = lazy(() => import('Views/Member/login'));
 const Memberships = lazy(() => import('Views/Member/memberships'));
 const MemberSchedule = lazy(() => import('Views/Member/schedule'));
 const ActivityInfo = lazy(() => import('Views/Member/activities'));
