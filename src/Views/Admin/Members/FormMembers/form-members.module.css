@@ -24,7 +24,7 @@
   border-radius: 8px;
   margin: 0 auto;
   box-shadow: 0 2px 4px #1b1b5d99;
-  margin-top: 170px;
+  margin-top: 140px;
 }
 
 .inputContainer {
@@ -35,4 +35,5 @@
 .contButton {
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }

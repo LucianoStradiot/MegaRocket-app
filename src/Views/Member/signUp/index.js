@@ -23,7 +23,9 @@ const SignUpMember = () => {
     title: '',
     desc: ''
   });
+
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
+  const RGXPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const schema = Joi.object({
     firstName: Joi.string()
       .min(3)
@@ -94,7 +96,12 @@ const SignUpMember = () => {
         'any.required': 'Membership is required',
         'any.only': 'Invalid Membership'
       }),
-    isActive: Joi.boolean()
+    isActive: Joi.boolean(),
+    password: Joi.string().regex(RGXPassword).min(8).required().messages({
+      'string.pattern.base':
+        'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
+      'string.empty': 'Password can´t be empty'
+    })
   });
   const {
     register,
@@ -246,6 +253,16 @@ const SignUpMember = () => {
               <option value="Classic Membership">Classic Membership</option>
               <option value="Only Classes Membership">Only Classes Membership</option>
             </Select>
+          </div>
+          <div>
+            <TextInput
+              labelName={'Password'}
+              name={'password'}
+              inputType={'text'}
+              register={register}
+              testId="password-sign-up"
+              error={errors.password?.message}
+            />
           </div>
           <div className={styles.inputContainer}></div>
         </div>
