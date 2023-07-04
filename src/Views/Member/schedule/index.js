@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styles from 'Views/Member/schedule/schedule.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClasses } from 'Redux/Classes/thunks';
-import { deleteOldSubscription, getSubscriptions } from 'Redux/Subscriptions/thunks';
+import {
+  deleteOldSubscription,
+  deleteSubscription,
+  getSubscriptions
+} from 'Redux/Subscriptions/thunks';
 import Modal from 'Components/Shared/Modal';
 import Aside from 'Components/Shared/Aside';
 import Spinner from 'Components/Shared/Spinner';
@@ -43,11 +47,33 @@ const MemberSchedule = () => {
     '20:00',
     '21:00'
   ];
+  const [idDelete, setIdDelete] = useState('');
 
-  const openModal = (title, description) => {
+  const handleDeleteSub = async () => {
+    const response = await dispatch(deleteSubscription(idDelete));
+    if (!response.error) {
+      setModal({
+        title: 'Success!',
+        description: response.message,
+        isConfirm: false
+      });
+      dispatch(getSubscriptions());
+    } else {
+      setModal({
+        title: 'Error!',
+        description: response.message,
+        isConfirm: false
+      });
+    }
+    setIsOpen(true);
+  };
+
+  const openModal = (title, description, id) => {
+    setIdDelete(id);
     setModal({
       title: title,
-      description: description
+      description: description,
+      isConfirm: true
     });
     setIsOpen(true);
   };
@@ -64,6 +90,7 @@ const MemberSchedule = () => {
             isOpen={isOpen}
             confirmModal={modal.isConfirm}
             handleClose={() => setIsOpen(!isOpen)}
+            deleteFunction={() => handleDeleteSub()}
           />
           <div className={styles.screenContainer}>
             <table className={styles.table}>
@@ -90,6 +117,7 @@ const MemberSchedule = () => {
                               const filteredSubscriptions = subscriptions.filter(
                                 (subscription) => oneClass._id === subscription.classes._id
                               );
+                              // console.log('hola', filteredSubscriptions);
                               const subscriptionsLength = filteredSubscriptions.length;
 
                               return (
@@ -102,16 +130,10 @@ const MemberSchedule = () => {
                                     }
                                     onClick={() =>
                                       openModal(
-                                        'Subscribe to',
-                                        `Activity: ${
-                                          oneClass && oneClass.activity
-                                            ? oneClass.activity.name
-                                            : 'not available'
-                                        }, Trainer: ${
-                                          oneClass && oneClass.trainer
-                                            ? oneClass.trainer.firstName
-                                            : 'not available'
-                                        }, Slots: ${subscriptionsLength} / ${oneClass.slots}`
+                                        ``,
+                                        ``
+                                        //{idMember}? 'Are you sure to delete your sub?' : 'Confirm your sub',
+                                        //idMember
                                       )
                                     }
                                   >
