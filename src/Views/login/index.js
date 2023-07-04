@@ -70,8 +70,19 @@ const Login = () => {
   };
   const closeForm = () => {
     if (isMemberLogged) {
+      if (sessionStorage.getItem('role') === 'SUPER_ADMIN') {
+        history.push('/superAdmins/admins');
+      }
+      if (sessionStorage.getItem('role') === 'ADMIN') {
+        history.push('/admins');
+      }
+      if (sessionStorage.getItem('role') === 'TRAINER') {
+        history.push('/schedule');
+      }
+      if (sessionStorage.getItem('role') === 'MEMBER') {
+        history.push('/');
+      }
       setIsOpen(true);
-      history.push('/superAdmins');
     }
     setIsOpen(!isOpen);
   };
