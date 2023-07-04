@@ -1,8 +1,10 @@
 import { Link, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import styles from './aside.module.css';
+import { useState } from 'react';
 
 const Aside = ({ page }) => {
   const location = useLocation();
+  const [isLogin, setIslogin] = useState(false);
 
   const isActiveRoute = (path) => {
     return location.pathname === path ? styles.activeRoute : '';
@@ -22,14 +24,61 @@ const Aside = ({ page }) => {
                   <a>Home</a>
                 </li>
               </Link>
-              <Link
-                to="/auth/login"
+              <li
+                onClick={() => setIslogin(!isLogin)}
                 className={`${styles.btn} ${isActiveRouteMember('/auth/login')}`}
               >
-                <li>
-                  <a>Login</a>
-                </li>
-              </Link>
+                <a>Login</a>
+              </li>
+              {isLogin && (
+                <Link
+                  to={{
+                    pathname: '/auth/login',
+                    state: { myState: false },
+                    routes: { route: '/member' }
+                  }}
+                  className={`${styles.btn} ${isActiveRouteMember('/auth/login')} ${
+                    styles.acording
+                  }`}
+                >
+                  <li>
+                    <a>Member</a>
+                  </li>
+                </Link>
+              )}
+              {isLogin && (
+                <Link
+                  to={{
+                    pathname: '/auth/login',
+                    state: { myState: true },
+                    routes: { route: '/superAdmins' }
+                  }}
+                  className={`${styles.btn} ${isActiveRouteMember('/auth/login')} ${
+                    styles.acording
+                  }`}
+                >
+                  <li>
+                    <a>Super Admin</a>
+                  </li>
+                </Link>
+              )}
+              {isLogin && (
+                <Link
+                  to={{
+                    pathname: '/auth/login',
+                    state: { myState: true },
+                    routes: { route: '/admin' }
+                  }}
+                  className={`${styles.btn} ${isActiveRouteMember('/auth/login')} ${
+                    styles.acording
+                  }`}
+                >
+                  <li>
+                    <a>Admin</a>
+                  </li>
+                </Link>
+              )}
+
               <Link to="/signUp" className={`${styles.btn} ${isActiveRouteMember('/signUp')}`}>
                 <li>
                   <a>SignUp</a>

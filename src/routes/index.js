@@ -12,6 +12,9 @@ const SuperAdminsRoutes = lazy(() => import('./superAdmin'));
 const MemberUser = lazy(() => import('Views/Member'));
 const SignUpMember = lazy(() => import('Views/Member/signUp'));
 const Login = lazy(() => import('Views/Login'));
+const Memberships = lazy(() => import('Views/Member/memberships'));
+const MemberSchedule = lazy(() => import('Views/Member/schedule'));
+const ActivityInfo = lazy(() => import('Views/Member/activities'));
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -35,9 +38,12 @@ const Layout = () => {
           <Route path="/" exact component={MemberUser} />
           <Route path="/auth/login" exact component={Login} />
           <Route path="/signUp" exact component={SignUpMember} />
+          <Route path="/membership" exact component={Memberships} />
+          <Route path="/schedule" exact component={MemberSchedule} />
+          <Route path="/activities" exact component={ActivityInfo} />
           <PrivateRoute path="/admin" role="ADMIN" component={AdminsRoutes} />
           <PrivateRoute path="/member" role="MEMBER" component={MemberRoute} />
-          <PrivateRoute path="/super-admin" role="SUPER_ADMIN" component={SuperAdminsRoutes} />
+          <PrivateRoute path="/superAdmins" role="SUPER_ADMIN" component={SuperAdminsRoutes} />
         </Switch>
       </Suspense>
     </div>

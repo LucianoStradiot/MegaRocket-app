@@ -4,15 +4,17 @@ import Modal from 'Components/Shared/Modal';
 import Spinner from 'Components/Shared/Spinner';
 import TextInput from 'Components/Shared/TextInput';
 import Joi from 'joi';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './login.module.css';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { login } from 'Redux/Auth/thunks';
+import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
 
 const Login = () => {
+  const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.members.isPending);
@@ -22,6 +24,8 @@ const Login = () => {
     title: '',
     desc: ''
   });
+  const myState = location.state.myState;
+  const route = location.routes.route;
   const RGXPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
 
@@ -48,12 +52,13 @@ const Login = () => {
   const logUser = async (userValue) => {
     try {
       const dataResponse = await dispatch(login(userValue));
+      console.log(dataResponse);
       const modalData = {
-        title: dataResponse.error ? 'Error!' : 'Success!',
+        title: dataResponse.type === 'LOGIN_ERROR' ? 'Error!' : 'Success!',
         desc: dataResponse.message
       };
       setModalInfo(modalData);
-      if (dataResponse.error) {
+      if (dataResponse.type === 'LOGIN_ERROR') {
         setIsOpen(true);
         setIsMemberLogged(false);
       } else {
@@ -70,8 +75,9 @@ const Login = () => {
   };
   const closeForm = () => {
     if (isMemberLogged) {
+      console.log(route);
       setIsOpen(true);
-      history.push('/superAdmins');
+      history.push(route);
     }
     setIsOpen(!isOpen);
   };
@@ -109,48 +115,50 @@ const Login = () => {
           <Button text={'Login'} type={'submit'} testId="confirm-button-login" />
         </div>
       </form>
-      <h2>Register Now!</h2>
-      <section className={styles.cardsCont}>
-        <Link
-          className={`${styles.cardContainer} ${styles.only}`}
-          to="/signUp?membership=Only Classes Membership"
-        >
-          <div>
-            <h3>ONLY CLASSES</h3>
-            <p>$2500</p>
-            <hr></hr>
-            <p>Subscribe to classes.</p>
-            <p>Access to the grid class.</p>
-          </div>
-        </Link>
-        <Link
-          to="/signUp?membership=Classic Membership"
-          className={`${styles.cardContainer} ${styles.classic}`}
-        >
-          <div>
-            <h3>CLASSIC</h3>
-            <p>$4000</p>
-            <hr></hr>
-            <p>Free access to the weight room.</p>
-            <p>Personalized follow-up by a trainer.</p>
-            <p>Grid visualization.</p>
-          </div>
-        </Link>
-        <Link
-          to="/signUp?membership=Black Membership"
-          className={`${styles.cardContainer} ${styles.black}`}
-        >
-          <div>
-            <h3>BLACK</h3>
-            <p>$6000</p>
-            <hr></hr>
-            <p>Free access to the weight room.</p>
-            <p>Free access to classes with prior registration.</p>
-            <p>Personalized follow-up by a trainer.</p>
-            <p>Visualization of the grid.</p>
-          </div>
-        </Link>
-      </section>
+      {!myState && <h2>Register Now!</h2>}
+      {!myState && (
+        <section className={styles.cardsCont}>
+          <Link
+            className={`${styles.cardContainer} ${styles.only}`}
+            to="/signUp?membership=Only Classes Membership"
+          >
+            <div>
+              <h3>ONLY CLASSES</h3>
+              <p>$2500</p>
+              <hr></hr>
+              <p>Subscribe to classes.</p>
+              <p>Access to the grid class.</p>
+            </div>
+          </Link>
+          <Link
+            to="/signUp?membership=Classic Membership"
+            className={`${styles.cardContainer} ${styles.classic}`}
+          >
+            <div>
+              <h3>CLASSIC</h3>
+              <p>$4000</p>
+              <hr></hr>
+              <p>Free access to the weight room.</p>
+              <p>Personalized follow-up by a trainer.</p>
+              <p>Grid visualization.</p>
+            </div>
+          </Link>
+          <Link
+            to="/signUp?membership=Black Membership"
+            className={`${styles.cardContainer} ${styles.black}`}
+          >
+            <div>
+              <h3>BLACK</h3>
+              <p>$6000</p>
+              <hr></hr>
+              <p>Free access to the weight room.</p>
+              <p>Free access to classes with prior registration.</p>
+              <p>Personalized follow-up by a trainer.</p>
+              <p>Visualization of the grid.</p>
+            </div>
+          </Link>
+        </section>
+      )}
     </section>
   );
 };
