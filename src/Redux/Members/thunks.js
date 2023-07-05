@@ -10,10 +10,7 @@ import {
   updateMembersError,
   deleteMembersPending,
   deleteMembersSuccess,
-  deleteMembersError,
-  loginMembersPending,
-  loginMembersSuccess,
-  loginMembersError
+  deleteMembersError
 } from './actions';
 
 export const getMembers = () => {
@@ -22,7 +19,10 @@ export const getMembers = () => {
       dispatch(getMembersPending());
 
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       });
       if (response.ok) {
         const data = await response.json();
@@ -40,10 +40,11 @@ export const createMember = (payload) => {
   return async (dispatch) => {
     try {
       dispatch(createMembersPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register/members`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify(payload)
       });
@@ -59,29 +60,6 @@ export const createMember = (payload) => {
     }
   };
 };
-export const loginMemberUser = (payload) => {
-  return async (dispatch) => {
-    try {
-      dispatch(loginMembersPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/userLogin`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
-      const data = await response.json();
-      if (response.ok) {
-        dispatch(loginMembersSuccess(data.data));
-      } else {
-        dispatch(loginMembersError(data.message));
-      }
-      return data;
-    } catch (error) {
-      return error;
-    }
-  };
-};
 
 export const updateMember = (payload) => {
   return async (dispatch) => {
@@ -90,7 +68,8 @@ export const updateMember = (payload) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${payload.id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify(payload.body)
       });
@@ -112,7 +91,10 @@ export const deleteMember = (payload) => {
     try {
       dispatch(deleteMembersPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${payload}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       });
       const data = await response.json();
       if (response.ok) {
