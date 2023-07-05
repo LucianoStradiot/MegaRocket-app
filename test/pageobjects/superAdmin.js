@@ -5,7 +5,7 @@ class SuperAdmin {
   }
 
   get createAdminButton() {
-    return $('section button:nth-child(1)');
+    return $('button=Create');
   }
 
   get superAdminTable() {
@@ -37,27 +37,27 @@ class SuperAdmin {
   }
 
   get superAdminForm() {
-    return $('[data-testid="admins-form"]');
+    return $('form');
   }
 
   get labelsFormAdmins() {
-    return $$('[data-testid="admins-form"] label');
+    return $$('form label');
   }
 
   get inputsFormAdmins() {
-    return $$('[data-testid="admins-form"] input');
+    return $$('form input');
   }
 
   get errorMsgFormAdmins() {
-    return $$('[data-testid="admins-form"] p');
+    return $$('form p');
   }
 
   get cancelButtonForm() {
-    return $$('[data-testid="admins-form"] button:nth-child(1)');
+    return $$('form button:nth-child(1)');
   }
 
   get resetButtonForm() {
-    return $('[data-testid="admins-form"] button:nth-child(2)');
+    return $('form button:nth-child(2)');
   }
 
   get addButtonForm() {

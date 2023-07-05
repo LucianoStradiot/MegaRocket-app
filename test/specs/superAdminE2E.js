@@ -20,7 +20,7 @@ describe('Check elements in Home Page', () => {
   it('Check elements in Super Admin management menu', async () => {
     await expect(Header.title).toBeDisplayed();
     await expect(Header.logo).toBeDisplayed();
-    await expect(Header.title).toHaveText('Super Admins');
+    await expect(Header.title).toHaveText('Admins');
     expect(Header.logo).toHaveAttribute('src', '/assets/images/logo-header.png');
     await expect(SuperAdmin.asideAdminButton).toBeDisplayed();
     await expect(SuperAdmin.asideAdminButton).toBeClickable();
@@ -40,6 +40,41 @@ describe('Check elements in Home Page', () => {
     await expect(SuperAdmin.allButtonsTable).toBeClickable();
 
     await expect(SuperAdmin.editButton).toHaveTextContaining('Edit');
-    await expect(SuperAdmin.editButton).toHaveTextContaining('X');
+    await expect(SuperAdmin.deleteButton).toHaveTextContaining('X');
+
+    await SuperAdmin.createAdminButton.click();
+  });
+
+  it('Check elements in form', async () => {
+    await expect(SuperAdmin.superAdminForm).toBeDisplayed();
+    await expect(SuperAdmin.labelsFormAdmins[0]).toHaveTextContaining('First Name');
+    await expect(SuperAdmin.labelsFormAdmins[1]).toHaveTextContaining('Last Name');
+    await expect(SuperAdmin.labelsFormAdmins[2]).toHaveTextContaining('DNI');
+    await expect(SuperAdmin.labelsFormAdmins[3]).toHaveTextContaining('Phone');
+    await expect(SuperAdmin.labelsFormAdmins[4]).toHaveTextContaining('Email');
+    await expect(SuperAdmin.labelsFormAdmins[5]).toHaveTextContaining('City');
+    await expect(SuperAdmin.labelsFormAdmins[6]).toHaveTextContaining('Password');
+
+    await expect(SuperAdmin.inputsFormAdmins[0]).toBeDisplayed();
+    await expect(SuperAdmin.inputsFormAdmins[0]).toBeClickable();
+    await expect(SuperAdmin.inputsFormAdmins[1]).toBeDisplayed();
+    await expect(SuperAdmin.inputsFormAdmins[1]).toBeClickable();
+    await expect(SuperAdmin.inputsFormAdmins[2]).toBeDisplayed();
+    await expect(SuperAdmin.inputsFormAdmins[2]).toBeClickable();
+    await expect(SuperAdmin.inputsFormAdmins[3]).toBeDisplayed();
+    await expect(SuperAdmin.inputsFormAdmins[3]).toBeClickable();
+    await expect(SuperAdmin.inputsFormAdmins[4]).toBeDisplayed();
+    await expect(SuperAdmin.inputsFormAdmins[4]).toBeClickable();
+    await expect(SuperAdmin.inputsFormAdmins[5]).toBeDisplayed();
+    await expect(SuperAdmin.inputsFormAdmins[5]).toBeClickable();
+    await expect(SuperAdmin.inputsFormAdmins[6]).toBeDisplayed();
+    await expect(SuperAdmin.inputsFormAdmins[6]).toBeClickable();
+
+    await expect(SuperAdmin.cancelButtonForm).toBeDisplayed();
+    await expect(SuperAdmin.cancelButtonForm).toBeClickable();
+    await expect(SuperAdmin.resetButtonForm).toBeDisplayed();
+    await expect(SuperAdmin.resetButtonForm).toBeClickable();
+    await expect(SuperAdmin.addButtonForm).toBeDisplayed();
+    await expect(SuperAdmin.addButtonForm).toBeClickable();
   });
 });
