@@ -4,32 +4,28 @@ class HomePage {
     return $('[data-testid="container-aside-members"]');
   }
 
-  get sidebarTitle() {
-    return $('[data-testid="container-aside-members"] h2');
-  }
-
-  get homeButton() {
-    return $('[data-testid="container-aside-members"] a:nth-child(1)');
-  }
-
   get loginButton() {
-    return $('[data-testid="container-aside-members"] a:nth-child(2)');
+    return $('[data-testid="container-aside-members"] a[href="/auth/login"]');
   }
 
   get signUpButton() {
-    return $('[data-testid="container-aside-members"] a:nth-child(3)');
+    return $('[data-testid="container-aside-members"] a[href="/signUp"]');
+  }
+
+  get homeButton() {
+    return $('[data-testid="container-aside-members"] a[href="/"]');
   }
 
   get activitiesButton() {
-    return $('[data-testid="container-aside-members"] a:nth-child(4)');
+    return $('[data-testid="container-aside-members"] a[href="/activities"]');
   }
 
   get scheduleButton() {
-    return $('[data-testid="container-aside-members"] a:nth-child(5)');
+    return $('[data-testid="container-aside-members"] a[href="/schedule"]');
   }
 
   get membershipsButton() {
-    return $('[data-testid="container-aside-members"] a:nth-child(6)');
+    return $('[data-testid="container-aside-members"] a[href="/membership"]');
   }
 
   get contactUs() {
@@ -37,15 +33,15 @@ class HomePage {
   }
 
   get contactUsEmail() {
-    return $('[data-testid="container-aside-members"] li:nth-child(1)');
+    return $('[data-testid="container-aside-members"] div:nth-child(2) li:nth-child(1)');
   }
 
   get contactUsPhone() {
-    return $('[data-testid="container-aside-members"] li:nth-child(2)');
+    return $('[data-testid="container-aside-members"] div:nth-child(2) li:nth-child(2)');
   }
 
   get contactUsAdress() {
-    return $('[data-testid="container-aside-members"] li:nth-child(3)');
+    return $('[data-testid="container-aside-members"] div:nth-child(2) li:nth-child(3)');
   }
 
   get sectionOneTitle() {

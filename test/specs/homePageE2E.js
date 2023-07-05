@@ -5,25 +5,23 @@ const Footer = require('../pageobjects/footerTest.js');
 
 describe('Check elements in Home Page', () => {
   beforeAll('open browser', () => {
-    browser.setWindowSize(1209, 827);
+    browser.setWindowSize(1900, 1100);
     browser.url('https://joaco-megarocket-app.vercel.app/');
   });
 
   it('check elements in header', async () => {
     await expect(Header.logo).toBeDisplayed();
-    await expect(Header.title).toBeDisplayed();
-
+    await expect(Header.logo).toBeClickable();
     await expect(Header.logo).toHaveAttribute('src', '/assets/images/logo-header.png');
-    await expect(HomePage.title).toHaveText('Home');
+    await expect(Header.backHomeButton).toBeClickable();
   });
 
   it('check elements and functionalities in sidebar', async () => {
     await expect(HomePage.sidebarHome).toBeDisplayed();
-    await expect(HomePage.sidebarTitle).toHaveText('Menu');
 
     await expect(HomePage.loginButton).toBeDisplayed();
     await expect(HomePage.loginButton).toBeClickable();
-    await expect(HomePage.loginButton).toHaveAttribute('href', '/login');
+    await expect(HomePage.loginButton).toHaveAttribute('href', '/auth/login');
     const loginBtn = await HomePage.loginButton.getText();
     expect(loginBtn).toEqual('Login');
 
@@ -75,7 +73,7 @@ describe('Check elements in Home Page', () => {
     await HomePage.loginButton.click();
 
     const currentUrl = await browser.getUrl();
-    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/login');
+    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/auth/login');
 
     await HomePage.cancelButtonLogin.click();
   });

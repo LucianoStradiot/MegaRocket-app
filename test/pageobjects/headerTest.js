@@ -11,6 +11,10 @@ class HeaderTest {
   get logo() {
     return $('[data-testid="container-header"] img');
   }
+
+  get backHomeButton() {
+    return $('[data-testid="container-header"] a');
+  }
 }
 
 module.exports = new HeaderTest();

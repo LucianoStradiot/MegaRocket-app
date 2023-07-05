@@ -1,19 +1,31 @@
 /* eslint-disable no-undef */
 class SuperAdmin {
+  get asideAdminButton() {
+    return $('aside a');
+  }
+
   get createAdminButton() {
-    return $('section a[href="/superAdmins/form"]');
+    return $('section button:nth-child(1)');
   }
 
   get superAdminTable() {
     return $('[data-testid="container-table"]');
   }
 
-  get headerTable() {
-    return $('[data-testid="container-table"] th');
+  get headersTable() {
+    return $$('[data-testid="container-table"] th');
   }
 
-  get lastRowTable() {
-    return $('[data-testid="container-table"] tbody tr:last-child');
+  get rowsTable() {
+    return $$('[data-testid="container-table"] tbody');
+  }
+
+  get lastFieldsTable() {
+    return $$('[data-testid="container-table"] tbody tr:last-child td');
+  }
+
+  get allButtonsTable() {
+    return $$('[data-testid="buttons-table"] button');
   }
 
   get editButton() {
@@ -25,27 +37,31 @@ class SuperAdmin {
   }
 
   get superAdminForm() {
-    return $('#form');
+    return $('[data-testid="admins-form"]');
   }
 
-  get labelsForm() {
-    return $$('#form label');
+  get labelsFormAdmins() {
+    return $$('[data-testid="admins-form"] label');
   }
 
-  get inputEmail() {
-    return $('#form input[name="email"]');
+  get inputsFormAdmins() {
+    return $$('[data-testid="admins-form"] input');
   }
 
-  get inputPassword() {
-    return $('#form input[name="password"]');
+  get errorMsgFormAdmins() {
+    return $$('[data-testid="admins-form"] p');
   }
 
-  get errorMsgs() {
-    return $$('#form p');
+  get cancelButtonForm() {
+    return $$('[data-testid="admins-form"] button:nth-child(1)');
   }
 
-  get buttonsForm() {
-    return $$('#form button');
+  get resetButtonForm() {
+    return $('[data-testid="admins-form"] button:nth-child(2)');
+  }
+
+  get addButtonForm() {
+    return $('[data-testid="add-button-admins"');
   }
 
   get modalSuccess() {
@@ -82,6 +98,16 @@ class SuperAdmin {
 
   get cancelButtonModal() {
     return $('[data-testid="modal-confirm"] button:nth-child(3)');
+  }
+
+  async completeForm(fName, lName, dni, phone, email, city, password) {
+    await this.inputsFormAdmins[0].setValue(fName);
+    await this.inputsFormAdmins[1].setValue(lName);
+    await this.inputsFormAdmins[2].setValue(dni);
+    await this.inputsFormAdmins[3].setValue(phone);
+    await this.inputsFormAdmins[4].setValue(email);
+    await this.inputsFormAdmins[5].setValue(city);
+    await this.inputsFormAdmins[6].setValue(password);
   }
 }
 
