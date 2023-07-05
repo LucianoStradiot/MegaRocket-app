@@ -102,10 +102,11 @@ const SignUpMember = () => {
         'any.only': 'Invalid Membership'
       }),
     isActive: Joi.boolean(),
-    password: Joi.string().regex(RGXPassword).min(8).required().messages({
+    password: Joi.string().min(8).regex(RGXPassword).required().messages({
       'string.pattern.base':
         'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
-      'string.empty': 'Password can´t be empty'
+      'string.empty': 'Password can´t be empty',
+      'string.min': 'Password must be at least 8 characters long'
     })
   });
   const {
@@ -152,7 +153,7 @@ const SignUpMember = () => {
   const closeForm = () => {
     if (isMemberCreated) {
       setIsOpen(false);
-      history.push('/member/schedule');
+      history.push('/schedule');
     }
     setIsOpen(!isOpen);
   };
