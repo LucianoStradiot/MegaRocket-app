@@ -24,6 +24,10 @@ const SignUpMember = () => {
     desc: ''
   });
 
+  const currentDate = new Date();
+  const minDate = new Date();
+  minDate.setFullYear(currentDate.getFullYear() - 15);
+
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
   const RGXPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const schema = Joi.object({
@@ -76,8 +80,9 @@ const SignUpMember = () => {
         'string.empty': 'City can´t be empty',
         'string.min': 'City must have at least 4 characters'
       }),
-    birthday: Joi.date().required().messages({
-      'date.base': 'Invalid birth date format'
+    birthday: Joi.date().iso().max(minDate.toISOString()).required().messages({
+      'date.format': 'Invalid birth date format',
+      'date.max': 'You must be at least 15 years old'
     }),
     postalCode: Joi.string()
       .regex(/^[0-9]*$/)
@@ -97,10 +102,11 @@ const SignUpMember = () => {
         'any.only': 'Invalid Membership'
       }),
     isActive: Joi.boolean(),
-    password: Joi.string().regex(RGXPassword).min(8).required().messages({
+    password: Joi.string().min(8).regex(RGXPassword).required().messages({
       'string.pattern.base':
         'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
-      'string.empty': 'Password can´t be empty'
+      'string.empty': 'Password can´t be empty',
+      'string.min': 'Password must be at least 8 characters long'
     })
   });
   const {
@@ -147,7 +153,7 @@ const SignUpMember = () => {
   const closeForm = () => {
     if (isMemberCreated) {
       setIsOpen(false);
-      history.push('/member/schedule');
+      history.push('/schedule');
     }
     setIsOpen(!isOpen);
   };
