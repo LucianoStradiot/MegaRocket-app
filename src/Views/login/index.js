@@ -75,7 +75,7 @@ const Login = () => {
         history.push('/superAdmins/admins');
       }
       if (sessionStorage.getItem('role') === 'ADMIN') {
-        history.push('/admins');
+        history.push('/admins/activities');
       }
       if (sessionStorage.getItem('role') === 'TRAINER') {
         history.push('/schedule');

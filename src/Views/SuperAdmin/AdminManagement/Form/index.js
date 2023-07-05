@@ -81,10 +81,11 @@ const AdminForm = () => {
         'string.empty': 'City can´t be empty',
         'string.min': 'City must have at least 4 characters'
       }),
-    password: Joi.string().regex(RGXPass).required().messages({
+    password: Joi.string().min(8).regex(RGXPass).required().messages({
       'string.pattern.base':
         'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
-      'string.empty': 'Password can´t be empty'
+      'string.empty': 'Password can´t be empty',
+      'string.min': 'Password must contain at least 8 characthers'
     })
   });
   const {
