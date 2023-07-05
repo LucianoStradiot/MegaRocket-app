@@ -26,6 +26,7 @@ const MemberSchedule = () => {
   });
 
   const [isOpen, setIsOpen] = useState(false);
+  let findSubToDelete;
 
   useEffect(() => {
     dispatch(getClasses());
@@ -49,6 +50,7 @@ const MemberSchedule = () => {
     '20:00',
     '21:00'
   ];
+
   const [idDelete, setIdDelete] = useState('');
 
   const handleDeleteSub = async () => {
@@ -70,8 +72,8 @@ const MemberSchedule = () => {
     setIsOpen(true);
   };
 
-  const openModal = (title, description, id) => {
-    setIdDelete(id);
+  const openModal = (title, description) => {
+    setIdDelete(findSubToDelete);
     setModal({
       title: title,
       description: description,
@@ -122,8 +124,6 @@ const MemberSchedule = () => {
                               const filteredSubscriptions = subscriptions.filter(
                                 (subscription) => oneClass._id === subscription.classes._id
                               );
-                              const token = sessionStorage.getItem('token');
-                              console.log('', token);
                               const subscriptionsLength = filteredSubscriptions.length;
 
                               return (
@@ -136,11 +136,19 @@ const MemberSchedule = () => {
                                     }
                                     onClick={() => {
                                       if (sessionStorage.getItem('role') === 'MEMBER') {
+                                        findSubToDelete = null;
+                                        subscriptions.forEach((sub) => {
+                                          if (
+                                            sessionStorage.getItem('email') === sub.member?.email &&
+                                            sub.classes._id === oneClass._id
+                                          ) {
+                                            findSubToDelete = sub._id;
+                                          }
+                                        });
                                         openModal(
-                                          ``,
-                                          ``
+                                          `hola`,
+                                          `xd`
                                           //{isMemberSubcribe}? 'Are you sure to delete your sub?' : 'Confirm your sub',
-                                          //idMember
                                         );
                                       } else {
                                         history.push('/auth/login');
