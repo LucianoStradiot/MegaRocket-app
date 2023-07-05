@@ -143,7 +143,12 @@ const FormSuperAdmin = () => {
           confirmModal={responseModal.isConfirm}
           handleClose={() => closeForm()}
         />
-        <form className={styles.form} id="form" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className={styles.form}
+          id="form"
+          onSubmit={handleSubmit(onSubmit)}
+          data-testid="form-admins"
+        >
           <div>
             <div className={styles.inputContainer}>
               <TextInput
@@ -171,8 +176,10 @@ const FormSuperAdmin = () => {
               <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
               <Button text="Reset" type="submit" clickAction={() => reset()} />
             </div>
-            {btnAddIsVisible && <Button text="Add" type="submit" />}
-            {btnSaveIsVisible && <Button text="Save" type="submit" />}
+            {btnAddIsVisible && <Button text="Add" type="submit" data-testid="add-button-admins" />}
+            {btnSaveIsVisible && (
+              <Button text="Save" type="submit" data-testid="save-button-admins" />
+            )}
           </div>
         </form>
       </section>

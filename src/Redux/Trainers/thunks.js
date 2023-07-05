@@ -18,7 +18,10 @@ export const getTrainers = () => {
     try {
       dispatch(getTrainersPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       });
       const data = await response.json();
       if (response.ok) {
@@ -36,10 +39,11 @@ export const createTrainer = (payload) => {
   return async (dispatch) => {
     try {
       dispatch(postTrainersPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register/trainers/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify(payload)
       });
@@ -63,7 +67,8 @@ export const updateTrainer = (payload) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${payload.id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify(payload.body)
       });
@@ -85,7 +90,10 @@ export const deleteTrainer = (id) => {
     try {
       dispatch(deleteTrainersPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       });
       const data = await response.json();
       if (response.ok) {
