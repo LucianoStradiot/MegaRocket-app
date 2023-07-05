@@ -10,8 +10,8 @@ const SuperAdminsRoutes = () => {
   return (
     <Switch>
       <Route exact path="/superAdmins/admins" component={Admins} />
-      <Route exact path="/superAdmin/admin/form" component={AdminForm} />
-      <Route path="/superAdmin/admin/form/:id" component={AdminForm} />
+      <Route exact path="/superAdmins/admins/form" component={AdminForm} />
+      <Route path="/superAdmins/admins/form/:id" component={AdminForm} />
       <Route path="/superAdmins" exact component={SuperAdmins} />
       <Route path="/superAdmins/form" exact component={FormSuperAdmin} />
       <Route path="/superAdmins/form/:id" component={FormSuperAdmin} />
