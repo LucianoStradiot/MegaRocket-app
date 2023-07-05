@@ -10,8 +10,10 @@ import {
 import Modal from 'Components/Shared/Modal';
 import Aside from 'Components/Shared/Aside';
 import Spinner from 'Components/Shared/Spinner';
+import { useHistory } from 'react-router-dom';
 
 const MemberSchedule = () => {
+  const history = useHistory();
   const classes = useSelector((state) => state.classes.data);
   const subscriptions = useSelector((state) => state.subscriptions.data);
   const dispatch = useDispatch();
@@ -90,7 +92,10 @@ const MemberSchedule = () => {
             isOpen={isOpen}
             confirmModal={modal.isConfirm}
             handleClose={() => setIsOpen(!isOpen)}
-            deleteFunction={() => handleDeleteSub()}
+            deleteFunction={() => {
+              //{isMemberSubcribe} ? handleDeleteSub() : handleCreateSub()
+              handleDeleteSub();
+            }}
           />
           <div className={styles.screenContainer}>
             <table className={styles.table}>
@@ -117,7 +122,8 @@ const MemberSchedule = () => {
                               const filteredSubscriptions = subscriptions.filter(
                                 (subscription) => oneClass._id === subscription.classes._id
                               );
-                              // console.log('hola', filteredSubscriptions);
+                              const token = sessionStorage.getItem('token');
+                              console.log('', token);
                               const subscriptionsLength = filteredSubscriptions.length;
 
                               return (
@@ -128,14 +134,18 @@ const MemberSchedule = () => {
                                         ? styles.classCard
                                         : styles.fullClassCard
                                     }
-                                    onClick={() =>
-                                      openModal(
-                                        ``,
-                                        ``
-                                        //{idMember}? 'Are you sure to delete your sub?' : 'Confirm your sub',
-                                        //idMember
-                                      )
-                                    }
+                                    onClick={() => {
+                                      if (sessionStorage.getItem('role') === 'MEMBER') {
+                                        openModal(
+                                          ``,
+                                          ``
+                                          //{isMemberSubcribe}? 'Are you sure to delete your sub?' : 'Confirm your sub',
+                                          //idMember
+                                        );
+                                      } else {
+                                        history.push('/auth/login');
+                                      }
+                                    }}
                                   >
                                     <p className={styles.inlineBlock}>
                                       <div>{`Activity: ${

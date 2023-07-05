@@ -46,6 +46,7 @@ const Login = () => {
     resolver: joiResolver(schema)
   });
   const logUser = async (userValue) => {
+    sessionStorage.setItem('email', userValue.email);
     try {
       const dataResponse = await dispatch(login(userValue));
       const modalData = {
