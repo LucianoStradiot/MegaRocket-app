@@ -143,6 +143,20 @@ const MemberSchedule = () => {
     };
   };
 
+  const cardColor = (subscriptionsLength, oneClass) => {
+    for (const sub of subscriptions) {
+      if (memberID.current === sub.member?._id && sub.classes._id === oneClass._id) {
+        return styles.subscribedClass;
+      }
+    }
+
+    if (subscriptionsLength !== oneClass.slots) {
+      return styles.classCard;
+    } else {
+      return styles.fullClassCard;
+    }
+  };
+
   return (
     <>
       {loading && <Spinner />}
@@ -184,14 +198,12 @@ const MemberSchedule = () => {
                               );
                               const subscriptionsLength = filteredSubscriptions.length;
 
+                              const cardClass = cardColor(subscriptionsLength, oneClass);
+
                               return (
                                 <div className={styles.card} key={index}>
                                   <button
-                                    className={
-                                      subscriptionsLength !== oneClass.slots
-                                        ? styles.classCard
-                                        : styles.fullClassCard
-                                    }
+                                    className={cardClass}
                                     onClick={() => {
                                       if (sessionStorage.getItem('role') === 'MEMBER') {
                                         if (subscriptions.length > 0) {
