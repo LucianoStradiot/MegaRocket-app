@@ -104,7 +104,6 @@ const MemberSchedule = () => {
 
   const openModal = (title, description) => {
     setIdDelete(findSubToDelete.current);
-    console.log('holis open modal', findSubToDelete.current);
     setModal({
       title: title,
       description: description,
@@ -143,6 +142,20 @@ const MemberSchedule = () => {
     };
   };
 
+  const cardColor = (subscriptionsLength, oneClass) => {
+    for (const sub of subscriptions) {
+      if (memberID.current === sub.member?._id && sub.classes._id === oneClass._id) {
+        return styles.subscribedClass;
+      }
+    }
+
+    if (subscriptionsLength !== oneClass.slots) {
+      return styles.classCard;
+    } else {
+      return styles.fullClassCard;
+    }
+  };
+
   return (
     <>
       {loading && <Spinner />}
@@ -161,7 +174,20 @@ const MemberSchedule = () => {
             <table className={styles.table}>
               <thead>
                 <tr className={styles.tr}>
-                  <th></th>
+                  <th className={styles.background}>
+                    <div className={styles.info}>
+                      <div className={styles.blueCard}></div>
+                      <p>available</p>
+                    </div>
+                    <div className={styles.info}>
+                      <div className={styles.redCard}></div>
+                      <p>subscribed</p>
+                    </div>
+                    <div className={styles.info}>
+                      <div className={styles.greyCard}></div>
+                      <p>not available</p>
+                    </div>
+                  </th>
                   {weekDays.map((day) => (
                     <th key={day} className={styles.th}>
                       {day}
@@ -184,14 +210,11 @@ const MemberSchedule = () => {
                               );
                               const subscriptionsLength = filteredSubscriptions.length;
 
+                              const cardClass = cardColor(subscriptionsLength, oneClass);
                               return (
                                 <div className={styles.card} key={index}>
                                   <button
-                                    className={
-                                      subscriptionsLength !== oneClass.slots
-                                        ? styles.classCard
-                                        : styles.fullClassCard
-                                    }
+                                    className={cardClass}
                                     onClick={() => {
                                       if (sessionStorage.getItem('role') === 'MEMBER') {
                                         if (subscriptions.length > 0) {
