@@ -71,7 +71,7 @@ function SuperAdmins() {
             />
             <section>
               <Link to="/superAdmins/form">
-                <Button text="Create" type="create" />
+                <Button text="Create" type="create" data-testid="create-button-admins" />
               </Link>
               <Table
                 list={superAdmins}

@@ -18,7 +18,10 @@ export const getSubscriptions = () => {
     try {
       dispatch(getSubscriptionsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       });
       const data = await response.json();
       if (response.ok) {
@@ -39,7 +42,8 @@ export const createSubscription = (payload) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify(payload)
       });
@@ -65,7 +69,8 @@ export const updateSubscription = (payload) => {
         {
           method: 'PUT',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
           },
           body: JSON.stringify(payload.body)
         }
@@ -88,7 +93,10 @@ export const deleteSubscription = (id) => {
     try {
       dispatch(deleteSubscriptionsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       });
       const data = await response.json();
       if (response.ok) {

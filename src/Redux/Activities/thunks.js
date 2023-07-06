@@ -65,7 +65,10 @@ export const delActivities = (id) => {
     try {
       dispatch(delActivitiesLoading());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        }
       });
       const data = await response.json();
       if (response.ok) {
@@ -89,7 +92,8 @@ export const updateActivities = (payload) => {
         {
           method: 'PUT',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
           },
           body: JSON.stringify(payload.body)
         }
@@ -114,7 +118,8 @@ export const createActivities = (payload) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify(payload)
       });
