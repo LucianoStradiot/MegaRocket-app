@@ -26,11 +26,8 @@ class SignUpPage {
   get inputMemberShip() {
     return $('[data-testid="sign-up-form"] select');
   }
-  get cancelBtn() {
-    return $('#root > div > div > form > div.form-members_contButton__rsYB2 > div > button:nth-child(1)');
-  }
-  get resetBtn() {
-    return $('#root > div > div > form > div.form-members_contButton__rsYB2 > div > button:nth-child(2)');
+  get inputPassword() {
+    return $('[data-testid="password-sign-up"]:nth-child(2)');
   }
   get addBtn() {
     return $('[data-testid="sign-up-confirm-button"]');
@@ -80,6 +77,11 @@ get errorMembership() {
     '[data-testid="sign-up-form"] select + p'
   );
 }
+get errorPassword() {
+  return $(
+    '[data-testid="password-sign-up"]+ p'
+  );
+}
 get modal() {
   return $('[data-testid="modal-success"]');
 }
@@ -113,7 +115,10 @@ async setDate(date) {
 async setMembership(membership) {
   await this.inputMemberShip.selectByVisibleText(membership);
 }
-async addMember(firstName, lastName, email, dni, phone, city, zip, date, membership) {
+async setPassword(password) {
+  await this.inputPassword.setValue(password);
+}
+async addMember(firstName, lastName, email, dni, phone, city, zip, date, membership, password) {
   await this.setFirstName(firstName);
   await this.setLastName(lastName);
   await this.setEmail(email);
@@ -123,6 +128,7 @@ async addMember(firstName, lastName, email, dni, phone, city, zip, date, members
   await this.setZip(zip);
   await this.setDate(date);
   await this.setMembership(membership);
+  await this.setPassword(password);
   await this.addBtn.click();
 }
 openSignUpPage() {
