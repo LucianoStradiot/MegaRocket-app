@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styles from 'Views/Member/schedule/schedule.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClasses } from 'Redux/Classes/thunks';
 import {
   deleteOldSubscription,
   deleteSubscription,
-  getSubscriptions
+  getSubscriptions,
+  createSubscription
 } from 'Redux/Subscriptions/thunks';
 import Modal from 'Components/Shared/Modal';
 import Aside from 'Components/Shared/Aside';
 import Spinner from 'Components/Shared/Spinner';
 import { useHistory } from 'react-router-dom';
+import { getMembers } from 'Redux/Members/thunks';
 
 const MemberSchedule = () => {
   const history = useHistory();
   const classes = useSelector((state) => state.classes.data);
   const subscriptions = useSelector((state) => state.subscriptions.data);
+  const members = useSelector((state) => state.members.data);
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.classes.isLoading);
 
@@ -25,12 +28,15 @@ const MemberSchedule = () => {
     isConfirm: false
   });
 
+  const memberID = useRef('');
   const [isOpen, setIsOpen] = useState(false);
-  let findSubToDelete;
+  const findSubToDelete = useRef(null);
+  const payload = useRef(null);
 
   useEffect(() => {
     dispatch(getClasses());
     dispatch(getSubscriptions());
+    dispatch(getMembers());
     dispatch(deleteOldSubscription());
   }, []);
 
@@ -52,6 +58,30 @@ const MemberSchedule = () => {
   ];
 
   const [idDelete, setIdDelete] = useState('');
+  members.forEach((member) => {
+    if (sessionStorage.getItem('email') === member?.email) {
+      memberID.current = member._id;
+    }
+  });
+
+  const handleCreateSub = async () => {
+    const response = await dispatch(createSubscription(payload.current));
+    if (!response.error) {
+      setModal({
+        title: 'Success!',
+        description: response.message,
+        isConfirm: false
+      });
+      dispatch(getSubscriptions());
+    } else {
+      setModal({
+        title: 'Error!',
+        description: response.message,
+        isConfirm: false
+      });
+    }
+    setIsOpen(true);
+  };
 
   const handleDeleteSub = async () => {
     const response = await dispatch(deleteSubscription(idDelete));
@@ -73,13 +103,43 @@ const MemberSchedule = () => {
   };
 
   const openModal = (title, description) => {
-    setIdDelete(findSubToDelete);
+    setIdDelete(findSubToDelete.current);
     setModal({
       title: title,
       description: description,
       isConfirm: true
     });
     setIsOpen(true);
+  };
+
+  const handleDataForCreate = (oneClass) => {
+    const currentDate = new Date();
+    const currentDay = currentDate.getDate();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentYear = currentDate.getFullYear();
+
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const classDayOfWeek = days.indexOf(oneClass.day);
+
+    const currentDayOfWeek = currentDate.getDay();
+
+    let dayDifference = classDayOfWeek - currentDayOfWeek;
+    if (dayDifference < 0) {
+      dayDifference += 7;
+    }
+
+    const limitDate = new Date(currentYear, currentMonth - 1, currentDay + dayDifference);
+
+    const limitYear = limitDate.getFullYear();
+    const limitMonth = String(limitDate.getMonth() + 1).padStart(2, '0');
+    const limitDay = String(limitDate.getDate()).padStart(2, '0');
+
+    const formattedLimitDate = `${limitYear}-${limitMonth}-${limitDay}`;
+    payload.current = {
+      classes: oneClass._id,
+      member: memberID.current,
+      date: formattedLimitDate
+    };
   };
 
   return (
@@ -94,10 +154,7 @@ const MemberSchedule = () => {
             isOpen={isOpen}
             confirmModal={modal.isConfirm}
             handleClose={() => setIsOpen(!isOpen)}
-            deleteFunction={() => {
-              //{isMemberSubcribe} ? handleDeleteSub() : handleCreateSub()
-              handleDeleteSub();
-            }}
+            deleteFunction={findSubToDelete.current ? handleDeleteSub : handleCreateSub}
           />
           <div className={styles.screenContainer}>
             <table className={styles.table}>
@@ -136,19 +193,28 @@ const MemberSchedule = () => {
                                     }
                                     onClick={() => {
                                       if (sessionStorage.getItem('role') === 'MEMBER') {
-                                        findSubToDelete = null;
-                                        subscriptions.forEach((sub) => {
-                                          if (
-                                            sessionStorage.getItem('email') === sub.member?.email &&
-                                            sub.classes._id === oneClass._id
-                                          ) {
-                                            findSubToDelete = sub._id;
-                                          }
-                                        });
+                                        if (subscriptions.length > 0) {
+                                          subscriptions.forEach((sub) => {
+                                            if (
+                                              memberID.current === sub.member?._id &&
+                                              sub.classes._id === oneClass._id
+                                            ) {
+                                              findSubToDelete.current = sub._id;
+                                            } else {
+                                              findSubToDelete.current = null;
+                                              handleDataForCreate(oneClass);
+                                            }
+                                          });
+                                        } else {
+                                          findSubToDelete.current = null;
+                                          handleDataForCreate(oneClass);
+                                        }
+
                                         openModal(
-                                          `hola`,
-                                          `xd`
-                                          //{isMemberSubcribe}? 'Are you sure to delete your sub?' : 'Confirm your sub',
+                                          ``,
+                                          findSubToDelete.current
+                                            ? 'Are you sure you want to delete your subscription?'
+                                            : 'Confirm your subscription'
                                         );
                                       } else {
                                         history.push('/auth/login');
