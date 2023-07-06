@@ -69,27 +69,27 @@ describe("Negative members login cases", () => {
     await LoginPage.open();
     await LoginPage.login("", "");
     await expect(LoginPage.errorMail).toBeDisplayed();
-    await expect(LoginPage.errorDni).toBeDisplayed();
+    await expect(LoginPage.errorPassword).toBeDisplayed();
   });
   it("Should display error message when email field is empty", async () => {
     await LoginPage.open();
-    await LoginPage.login("", "12345678");
+    await LoginPage.login("", "Password123");
     await expect(LoginPage.errorMail).toBeDisplayed();
   });
   it("Should display error message when dni field is empty", async () => {
     await LoginPage.open();
     await LoginPage.login("a@a.com", "");
-    await expect(LoginPage.errorDni).toBeDisplayed();
+    await expect(LoginPage.errorPassword).toBeDisplayed();
   });
   it("Should display error message with invalid credentials", async () => {
     await LoginPage.open();
     await LoginPage.login("invalid", "1234567");
     await expect(LoginPage.errorMail).toBeDisplayed();
-    await expect(LoginPage.errorDni).toBeDisplayed();
+    await expect(LoginPage.errorPassword).toBeDisplayed();
   });
   it("Should display error message with inexistent credentials", async () => {
     await LoginPage.open();
-    await LoginPage.login("invalid@gmail.com", "12345678");
+    await LoginPage.login("invalid@gmail.com", "Password111");
     await expect(LoginPage.modal).toBeDisplayed();
     await LoginPage.acceptBtn.click();
   });
@@ -98,11 +98,11 @@ describe("Negative members login cases", () => {
 describe("Positive members login cases", () => {
   it("Login should be successful", async () => {
     await LoginPage.open();
-    await LoginPage.login('kat@gmail.com', '4947558');
+    await LoginPage.login('kat@gmail.com', 'Password123');
     await expect(LoginPage.modal).toBeDisplayed();
     await LoginPage.acceptBtn.click();
     await expect(browser).toHaveUrl(
-      "https://joaco-megarocket-app.vercel.app/member/schedule"
+      "https://joaco-megarocket-app.vercel.app/"
     );
   });
 });
@@ -150,3 +150,4 @@ describe('Select a membership', () => {
     await expect(browser).toHaveUrl('https://joaco-megarocket-app.vercel.app/signUp?membership=Classic%20Membership');
     });
 });
+

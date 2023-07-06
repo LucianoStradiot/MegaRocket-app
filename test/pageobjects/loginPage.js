@@ -2,8 +2,8 @@ class LoginPage {
   get inputEmail() {
     return $('[data-testId="input-email-login"]:nth-child(2)');
   }
-  get inputDni() {
-    return $('[data-testId="input-dni-login"]:nth-child(2');
+  get inputPassword() {
+    return $('[data-testId="input-password-login"]:nth-child(2)');
   }
   get btnLogin() {
     return $('[data-testid="confirm-button-login"]');
@@ -19,9 +19,9 @@ class LoginPage {
       '[data-testId="input-email-login"] + p'
     );
   }
-  get errorDni() {
+  get errorPassword() {
     return $(
-      '[data-testId="input-dni-login"] + p'
+      '[data-testId="input-password-login"] + p'
     );
   }
   get modal() {
@@ -35,13 +35,13 @@ class LoginPage {
   async setEmail(email) {
     await this.inputEmail.setValue(email);
   }
-  async setDni(dni) {
-    await this.inputDni.setValue(dni);
+  async setPassword(password) {
+    await this.inputPassword.setValue(password);
   }
 
-  async login(email, dni) {
+  async login(email, password) {
     await this.inputEmail.setValue(email);
-    await this.inputDni.setValue(dni);
+    await this.inputPassword.setValue(password);
     await this.btnLogin.click();
   }
 
@@ -51,7 +51,7 @@ class LoginPage {
   }
 
   open() {
-    return browser.url("https://joaco-megarocket-app.vercel.app/login");
+    return browser.url("https://joaco-megarocket-app.vercel.app/auth/login");
   }
 }
 
