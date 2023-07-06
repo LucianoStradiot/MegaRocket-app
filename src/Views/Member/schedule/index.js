@@ -104,6 +104,7 @@ const MemberSchedule = () => {
 
   const openModal = (title, description) => {
     setIdDelete(findSubToDelete.current);
+    console.log('holis open modal', findSubToDelete.current);
     setModal({
       title: title,
       description: description,
@@ -194,22 +195,22 @@ const MemberSchedule = () => {
                                     onClick={() => {
                                       if (sessionStorage.getItem('role') === 'MEMBER') {
                                         if (subscriptions.length > 0) {
-                                          subscriptions.forEach((sub) => {
+                                          for (const sub of subscriptions) {
                                             if (
                                               memberID.current === sub.member?._id &&
                                               sub.classes._id === oneClass._id
                                             ) {
                                               findSubToDelete.current = sub._id;
+                                              break;
                                             } else {
                                               findSubToDelete.current = null;
                                               handleDataForCreate(oneClass);
                                             }
-                                          });
+                                          }
                                         } else {
                                           findSubToDelete.current = null;
                                           handleDataForCreate(oneClass);
                                         }
-
                                         openModal(
                                           ``,
                                           findSubToDelete.current
