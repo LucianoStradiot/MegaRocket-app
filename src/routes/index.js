@@ -37,14 +37,10 @@ const FormTrainers = lazy(() => import('./trainers/formTrainer'));
 
 const Layout = () => {
   const dispatch = useDispatch();
-
   const token = sessionStorage.getItem('token');
 
   useEffect(() => {
     tokenListener();
-  }, []);
-
-  useEffect(() => {
     if (token) {
       dispatch(getAuth(token));
     }

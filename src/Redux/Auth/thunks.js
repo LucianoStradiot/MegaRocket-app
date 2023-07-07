@@ -20,11 +20,10 @@ export const login = (credentials) => {
         .auth()
         .signInWithEmailAndPassword(credentials.email, credentials.password);
       const token = await firebaseResponse.user.getIdToken();
-      const email = credentials.email;
       const {
         claims: { role }
       } = await firebaseResponse.user.getIdTokenResult();
-      return dispatch(loginSuccess({ role, token, email }));
+      return dispatch(loginSuccess({ role, token }));
     } catch (error) {
       return dispatch(loginError(error.toString()));
     }
@@ -35,9 +34,16 @@ export const getAuth = (token) => {
   return async (dispatch) => {
     dispatch(getAuthLoading());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
-        headers: { token }
-      });
+      const firebaseUid = sessionStorage.getItem('firebaseUid');
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/auth/login/${firebaseUid}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            token: token
+          }
+        }
+      );
       const res = await response.json();
       return dispatch(getAuthSuccess(res.data));
     } catch (error) {

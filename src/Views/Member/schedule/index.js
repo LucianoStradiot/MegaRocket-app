@@ -12,14 +12,13 @@ import Modal from 'Components/Shared/Modal';
 import Aside from 'Components/Shared/Aside';
 import Spinner from 'Components/Shared/Spinner';
 import { useHistory } from 'react-router-dom';
-import { getMembers } from 'Redux/Members/thunks';
+import { getAuth } from 'Redux/Auth/thunks';
 
 const MemberSchedule = () => {
   const history = useHistory();
   const userLoged = useSelector((state) => state.user.user);
   const classes = useSelector((state) => state.classes.data);
   const subscriptions = useSelector((state) => state.subscriptions.data);
-  const members = useSelector((state) => state.members.data);
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.classes.isLoading);
 
@@ -29,7 +28,6 @@ const MemberSchedule = () => {
     isConfirm: false
   });
 
-  const memberID = useRef('');
   const [isOpen, setIsOpen] = useState(false);
   const findSubToDelete = useRef(null);
   const payload = useRef(null);
@@ -37,7 +35,7 @@ const MemberSchedule = () => {
   useEffect(() => {
     dispatch(getClasses());
     dispatch(getSubscriptions());
-    dispatch(getMembers());
+    dispatch(getAuth());
     dispatch(deleteOldSubscription());
   }, []);
 
@@ -59,12 +57,6 @@ const MemberSchedule = () => {
   ];
 
   const [idDelete, setIdDelete] = useState('');
-  console.log(userLoged);
-  members.forEach((member) => {
-    if (userLoged?.email === member?.email) {
-      memberID.current = member._id;
-    }
-  });
 
   const handleCreateSub = async () => {
     const response = await dispatch(createSubscription(payload.current));
@@ -105,7 +97,7 @@ const MemberSchedule = () => {
   };
 
   const openModal = (title, description) => {
-    console.log(userLoged);
+    console.log('open', userLoged);
     setIdDelete(findSubToDelete.current);
     setModal({
       title: title,
@@ -140,14 +132,14 @@ const MemberSchedule = () => {
     const formattedLimitDate = `${limitYear}-${limitMonth}-${limitDay}`;
     payload.current = {
       classes: oneClass._id,
-      member: memberID.current,
+      member: userLoged?._id,
       date: formattedLimitDate
     };
   };
 
   const cardColor = (subscriptionsLength, oneClass) => {
     for (const sub of subscriptions) {
-      if (memberID.current === sub.member?._id && sub.classes._id === oneClass._id) {
+      if (userLoged?._id === sub.member?._id && sub.classes._id === oneClass._id) {
         return styles.subscribedClass;
       }
     }
@@ -219,11 +211,11 @@ const MemberSchedule = () => {
                                   <button
                                     className={cardClass}
                                     onClick={() => {
-                                      if (userLoged?.role === 'MEMBER') {
+                                      if (sessionStorage.getItem('role') === 'MEMBER') {
                                         if (subscriptions.length > 0) {
                                           for (const sub of subscriptions) {
                                             if (
-                                              memberID.current === sub.member?._id &&
+                                              userLoged?._id === sub.member?._id &&
                                               sub.classes._id === oneClass._id
                                             ) {
                                               findSubToDelete.current = sub._id;
