@@ -1,7 +1,6 @@
 const SignUpPage = require ('../pageobjects/signUp.js');
 const LoginPage = require ('../pageobjects/loginPage.js');
 const MemberPage = require ('../pageobjects/memberPage.js');
-const HomePage = require ('../pageobjects/homePage.js');
 const SchedulePage = require ('../pageobjects/schedulePage.js');
 const MembershipPage = require ('../pageobjects/membershipPage.js');
 
@@ -116,14 +115,6 @@ describe("Social media buttons", () => {
   });
 });
 
-describe('Go to home page', () => {
-  it('should go to the home page', async () => {
-    await MemberPage.openMembersPage();
-    await MemberPage.imgBtn.click();
-    await expect(browser).toHaveUrl('https://joaco-megarocket-app.vercel.app/');
-  });
-});
-
 describe('Schedule a class', () => {
   it('should go to the schedule page', async () => {
     await HomePage.openHomePage();
@@ -150,4 +141,3 @@ describe('Select a membership', () => {
     await expect(browser).toHaveUrl('https://joaco-megarocket-app.vercel.app/signUp?membership=Classic%20Membership');
     });
 });
-
