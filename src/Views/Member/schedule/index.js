@@ -16,6 +16,7 @@ import { getMembers } from 'Redux/Members/thunks';
 
 const MemberSchedule = () => {
   const history = useHistory();
+  const userLoged = useSelector((state) => state.user.user);
   const classes = useSelector((state) => state.classes.data);
   const subscriptions = useSelector((state) => state.subscriptions.data);
   const members = useSelector((state) => state.members.data);
@@ -58,8 +59,9 @@ const MemberSchedule = () => {
   ];
 
   const [idDelete, setIdDelete] = useState('');
+  console.log(userLoged);
   members.forEach((member) => {
-    if (sessionStorage.getItem('email') === member?.email) {
+    if (userLoged?.email === member?.email) {
       memberID.current = member._id;
     }
   });
@@ -103,6 +105,7 @@ const MemberSchedule = () => {
   };
 
   const openModal = (title, description) => {
+    console.log(userLoged);
     setIdDelete(findSubToDelete.current);
     setModal({
       title: title,
@@ -216,7 +219,7 @@ const MemberSchedule = () => {
                                   <button
                                     className={cardClass}
                                     onClick={() => {
-                                      if (sessionStorage.getItem('role') === 'MEMBER') {
+                                      if (userLoged?.role === 'MEMBER') {
                                         if (subscriptions.length > 0) {
                                           for (const sub of subscriptions) {
                                             if (

@@ -20,10 +20,11 @@ export const login = (credentials) => {
         .auth()
         .signInWithEmailAndPassword(credentials.email, credentials.password);
       const token = await firebaseResponse.user.getIdToken();
+      const email = credentials.email;
       const {
         claims: { role }
       } = await firebaseResponse.user.getIdTokenResult();
-      return dispatch(loginSuccess({ role, token }));
+      return dispatch(loginSuccess({ role, token, email }));
     } catch (error) {
       return dispatch(loginError(error.toString()));
     }
