@@ -9,6 +9,7 @@ import { subscriptionsReducer } from './Subscriptions/reducer';
 import { classesReducer } from './Classes/reducer';
 import { activitiesReducer } from './Activities/reducer';
 import { membersReducer } from './Members/reducer';
+import authReducer from './Auth/reducer';
 
 const rootReducer = combineReducers({
   admins: adminsReducer,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   members: membersReducer,
   subscriptions: subscriptionsReducer,
   classes: classesReducer,
-  activities: activitiesReducer
+  activities: activitiesReducer,
+  user: authReducer
 });
 
 const configureStore = () => {
