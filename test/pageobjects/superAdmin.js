@@ -5,7 +5,7 @@ class SuperAdmin {
   }
 
   get createAdminButton() {
-    return $('button=Create');
+    return $('[data-testid="create-button-admins"]');
   }
 
   get superAdminTable() {
@@ -20,8 +20,8 @@ class SuperAdmin {
     return $$('[data-testid="container-table"] tbody');
   }
 
-  get lastFieldsTable() {
-    return $$('[data-testid="container-table"] tbody tr:last-child td');
+  get lastRowTable() {
+    return $('[data-testid="container-table"] tbody tr:last-child');
   }
 
   get allButtonsTable() {
@@ -37,31 +37,35 @@ class SuperAdmin {
   }
 
   get superAdminForm() {
-    return $('form');
+    return $('[data-testid="admins-form"]');
   }
 
   get labelsFormAdmins() {
-    return $$('form label');
+    return $$('[data-testid="admins-form"] label');
   }
 
   get inputsFormAdmins() {
-    return $$('form input');
+    return $$('[data-testid="admins-form"] input');
   }
 
   get errorMsgFormAdmins() {
-    return $$('form p');
+    return $$('[data-testid="admins-form"] p');
   }
 
   get cancelButtonForm() {
-    return $$('form button:nth-child(1)');
+    return $$('[data-testid="admins-form"] button:nth-child(1)');
   }
 
   get resetButtonForm() {
-    return $('form button:nth-child(2)');
+    return $('[data-testid="admins-form"] button:nth-child(2)');
+  }
+
+  get saveButtonForm() {
+    return $('[data-testid="save-button-admins"]');
   }
 
   get addButtonForm() {
-    return $('[data-testid="add-button-admins"');
+    return $('[data-testid="add-button-admins"]');
   }
 
   get modalSuccess() {
@@ -69,27 +73,27 @@ class SuperAdmin {
   }
 
   get modalSuccessTitle() {
-    return $('[data-testid="modal-success] h3');
-  }
-
-  get modalSuccessDescp() {
-    return $('[data-testid="modal-success] p');
-  }
-
-  get modalSuccessButton() {
-    return $('[data-testid="modal-success] button');
-  }
-
-  get modalConfirm() {
-    return $('[data-testid="modal-success"]');
-  }
-
-  get modalConfirmTitle() {
     return $('[data-testid="modal-success"] h3');
   }
 
-  get modalConfirmDesc() {
+  get modalSuccessDescp() {
     return $('[data-testid="modal-success"] p');
+  }
+
+  get modalSuccessButton() {
+    return $('[data-testid="modal-success"] button');
+  }
+
+  get modalConfirm() {
+    return $('[data-testid="modal-confirm"]');
+  }
+
+  get modalConfirmTitle() {
+    return $('[data-testid="modal-confirm"] h3');
+  }
+
+  get modalConfirmDesc() {
+    return $('[data-testid="modal-confirm"] p');
   }
 
   get acceptButtonModal() {
@@ -97,7 +101,7 @@ class SuperAdmin {
   }
 
   get cancelButtonModal() {
-    return $('[data-testid="modal-confirm"] button:nth-child(3)');
+    return $('[data-testid="modal-confirm"] button:nth-child(4)');
   }
 
   async completeForm(fName, lName, dni, phone, email, city, password) {
