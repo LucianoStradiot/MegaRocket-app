@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-const AdminsHome = lazy(() => import('Views/Admin'));
+const AdminsHome = lazy(() => import('Views/Admin/index'));
 const Activities = lazy(() => import('Views/Admin/Activities'));
 const FormActivities = lazy(() => import('Views/Admin/Activities/FormActivity'));
 
@@ -19,11 +19,10 @@ const FormTrainers = lazy(() => import('Views/Admin/Trainers/FormTrainers'));
 const AdminsRoutes = () => {
   return (
     <Switch>
+      <Route exact path="/admins" component={AdminsHome} />
       <Route exact path="/admins/activities" component={Activities} />
       <Route exact path="/admins/activities/form" component={FormActivities} />
       <Route path="/admins/activities/form/:id" component={FormActivities} />
-
-      <Route exact path="/admins" component={AdminsHome} />
 
       <Route exact path="/admins/classes" component={Classes} />
       <Route exact path="/admins/classes/form" component={FormClasses} />

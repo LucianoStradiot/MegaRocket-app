@@ -8,7 +8,7 @@ const MemberRoute = () => {
   return (
     <Switch>
       <Route path="/membership" exact component={MembershipMember} />
-      <Route path="/schedule/:id" component={MemberSchedule} />
+      <Route path="/schedule/" component={MemberSchedule} />
     </Switch>
   );
 };

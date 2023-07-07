@@ -99,6 +99,7 @@ const AdminForm = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    console.log(id);
     formEdit(id);
   }, []);
 
