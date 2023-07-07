@@ -136,7 +136,6 @@ const FormClasses = () => {
   }, []);
 
   useEffect(() => {
-    console.log(id);
     formEdit(id);
   }, []);
 
