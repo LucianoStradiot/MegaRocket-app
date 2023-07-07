@@ -119,6 +119,9 @@ const Login = () => {
           </div>
           <Button text={'Login'} type={'submit'} testId="confirm-button-login" />
         </div>
+        <Link to="/recoverPassword">
+          <a className={styles.password}>Forgot password?</a>
+        </Link>
       </form>
       <h2>Register Now!</h2>
       <section className={styles.cardsCont}>

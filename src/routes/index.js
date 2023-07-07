@@ -6,6 +6,7 @@ import styles from './layout.module.css';
 import { useDispatch } from 'react-redux';
 import { tokenListener } from 'helper/firebase';
 import { getAuth } from 'Redux/Auth/thunks';
+const RecoverPassword = lazy(() => import('../Views/login/recoverPassword'));
 
 const Admins = lazy(() => import('./admins/admins'));
 const AdminForm = lazy(() => import('./admins/formAdmins'));
@@ -57,7 +58,7 @@ const Layout = () => {
           <Route path="/superAdmins" exact component={SuperAdmins} />
           <Route path="/superAdmins/form" exact component={FormSuperAdmin} />
           <Route path="/superAdmins/form/:id" component={FormSuperAdmin} />
-
+          <Route path="/recoverPassword" component={RecoverPassword} />
           <Route exact path="/superAdmins/admins" component={Admins} />
           <Route exact path="/superAdmins/admins/form" component={AdminForm} />
           <Route path="/superAdmins/admins/form/:id" component={AdminForm} />

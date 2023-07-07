@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import { adminsReducer } from './Admins/reducer';
 import { trainersReducer } from './Trainers/reducer';
 import { superAdminsReducer } from './SuperAdmins/reducer';
-
+import { recoverPasswordReducer } from './RecoverPassword/reducer';
 import { subscriptionsReducer } from './Subscriptions/reducer';
 import { classesReducer } from './Classes/reducer';
 import { activitiesReducer } from './Activities/reducer';
@@ -17,7 +17,8 @@ const rootReducer = combineReducers({
   members: membersReducer,
   subscriptions: subscriptionsReducer,
   classes: classesReducer,
-  activities: activitiesReducer
+  activities: activitiesReducer,
+  recoverPassword: recoverPasswordReducer
 });
 
 const configureStore = () => {
