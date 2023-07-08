@@ -24,14 +24,13 @@
   transition: transform 0.5s ease;
 }
 
-
 .rutes li a {
   text-decoration: none;
-  color: #2E355B;
+  color: #2e355b;
 }
 
 .rutes li a:hover {
-  border-bottom: 1px solid #2E355B;
+  border-bottom: 1px solid #2e355b;
 }
 
 .brand {
@@ -45,7 +44,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
   }
 
   .aside {
@@ -135,6 +134,9 @@
     background-color: #1e2341;
     cursor: pointer;
   }
+  .acording {
+    color: #49a37b;
+  }
 
   .btn2:hover {
     background-color: #eee;
@@ -147,22 +149,21 @@
   }
 
   .rutes li:hover::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
-    border-left: 6px solid #2E355B;
+    border-left: 6px solid #2e355b;
   }
 
-
-  .rutes>li>a {
+  .rutes > li > a {
     font-size: 1.2rem;
     font-weight: 600;
     text-decoration: none;
     text-transform: capitalize;
-    color: #2E355B;
+    color: #2e355b;
   }
 
   .rutes li a:hover {
@@ -171,6 +172,7 @@
 
   .titleContact {
     text-align: center;
+    margin: 0;
   }
 
   .contact {
@@ -186,17 +188,20 @@
   }
 
   .activeRoute::before {
-    content: "";
+    content: '';
     position: absolute;
     left: -10px;
     top: 50%;
     transform: translateY(-50%);
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
-    border-left: 6px solid #2E355B;
+    border-left: 6px solid #2e355b;
   }
 
   .activeRouteMember {
     background-color: #1e2341;
+  }
+  .minorDiv p {
+    margin: 10px;
   }
 }
