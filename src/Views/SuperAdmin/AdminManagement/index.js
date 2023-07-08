@@ -82,7 +82,7 @@ function Admins() {
                   list={admins}
                   column={['Name', 'Last Name', 'DNI', 'Phone', 'Email', 'City', '']}
                   fields={['firstName', 'lastName', 'dni', 'phone', 'email', 'city']}
-                  link={'/admins/form/'}
+                  link={'/superAdmins/admins/form/'}
                   action={openModalConfirm}
                 />
               </div>

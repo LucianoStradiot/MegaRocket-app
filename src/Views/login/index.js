@@ -48,12 +48,13 @@ const Login = () => {
   const logUser = async (userValue) => {
     try {
       const dataResponse = await dispatch(login(userValue));
+
       const modalData = {
-        title: dataResponse.error ? 'Error!' : 'Success!',
-        desc: dataResponse.message
+        title: dataResponse.type === 'LOGIN_ERROR' ? 'Error!' : 'Success!',
+        desc: dataResponse.type === 'LOGIN_ERROR' ? 'Invalid credentials' : ''
       };
       setModalInfo(modalData);
-      if (dataResponse.error) {
+      if (dataResponse.type === 'LOGIN_ERROR') {
         setIsOpen(true);
         setIsMemberLogged(false);
       } else {
@@ -74,10 +75,10 @@ const Login = () => {
         history.push('/superAdmins/admins');
       }
       if (sessionStorage.getItem('role') === 'ADMIN') {
-        history.push('/admins/activities');
+        history.push('/admins');
       }
       if (sessionStorage.getItem('role') === 'TRAINER') {
-        history.push('/schedule');
+        history.push('/trainers');
       }
       if (sessionStorage.getItem('role') === 'MEMBER') {
         history.push('/');
