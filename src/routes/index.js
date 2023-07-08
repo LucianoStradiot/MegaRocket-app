@@ -16,7 +16,7 @@ const Login = lazy(() => import('Views/login'));
 const Memberships = lazy(() => import('Views/Member/memberships'));
 const MemberSchedule = lazy(() => import('Views/Member/schedule'));
 const ActivityInfo = lazy(() => import('Views/Member/activities'));
-
+const RecoverPassword = lazy(() => import('../Views/login/recoverPassword'));
 const Layout = () => {
   const dispatch = useDispatch();
   const token = sessionStorage.getItem('token');
@@ -33,6 +33,7 @@ const Layout = () => {
       <Suspense fallback={<Spinner />}>
         <Switch>
           <Route path="/" exact component={MemberUser} />
+          <Route path="/recoverPassword" component={RecoverPassword} />
           <Route path="/auth/login" exact component={Login} />
           <Route path="/signUp" exact component={SignUpMember} />
           <Route path="/membership" exact component={Memberships} />
