@@ -75,8 +75,9 @@
   margin: 5px 0
 }
 
-a:link,
-a:visited {
+.password:link,
+.password:visited {
+  color: #2e355b;
   text-decoration: none;
   margin-top: 20px;
   text-align: center;

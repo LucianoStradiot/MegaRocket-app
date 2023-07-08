@@ -113,8 +113,8 @@ const Login = () => {
           name={'password'}
           testId="input-password-login"
         />
-        <Link to="/recoverPassword">
-          <a className={styles.password}>Forgot password?</a>
+        <Link to="/recoverPassword" className={styles.password}>
+          <a>Forgot password?</a>
         </Link>
         <div className={styles.btnContainer}>
           <div>
