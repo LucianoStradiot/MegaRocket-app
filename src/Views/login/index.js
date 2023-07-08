@@ -30,16 +30,16 @@ const Login = () => {
       'string.empty': 'Email can´t be empty',
       'string.pattern.base': 'Email must be in a valid format'
     }),
-    password: Joi.string().regex(RGXPassword).min(8).required().messages({
+    password: Joi.string().min(8).regex(RGXPassword).required().messages({
       'string.pattern.base':
-        'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
-      'string.empty': 'Password can´t be empty'
+        'Password must contain at least one uppercase and one lowercase letter, and one number',
+      'string.empty': 'Password can´t be empty',
+      'string.min': 'Password must be at least 8 characters'
     })
   });
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors }
   } = useForm({
     mode: 'onSubmit',
@@ -112,16 +112,15 @@ const Login = () => {
           name={'password'}
           testId="input-password-login"
         />
-        <div className={styles.btnContainer}>
-          <div>
-            <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="reset" clickAction={() => reset()} />
-          </div>
-          <Button text={'Login'} type={'submit'} testId="confirm-button-login" />
-        </div>
         <Link to="/recoverPassword">
           <a className={styles.password}>Forgot password?</a>
         </Link>
+        <div className={styles.btnContainer}>
+          <div>
+            <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
+          </div>
+          <Button text={'Login'} type={'submit'} testId="confirm-button-login" />
+        </div>
       </form>
       <h2>Register Now!</h2>
       <section className={styles.cardsCont}>

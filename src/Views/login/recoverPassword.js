@@ -22,6 +22,7 @@ const recoveryPassword = () => {
     title: '',
     desc: ''
   });
+  const [email, setEmail] = useState(false);
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
 
   const schema = Joi.object({
@@ -43,22 +44,32 @@ const recoveryPassword = () => {
   const onSubmit = async (email) => {
     try {
       await dispatch(recoverPassword(email.email));
-      console.log('email', email);
-      console.log('email.email', email.email);
-      console.log(email.email.toString(), 'dataResponse');
       if (error !== null) {
-        console.log('aca entro el mail');
-        setModalInfo({ title: 'hay mail' });
+        setIsOpen(true);
+        await setModalInfo({
+          title: 'Recovering password...',
+          desc: 'Please check your email inbox'
+        });
+        setEmail(true);
       } else {
-        console.log('no hay email');
+        throw new Error();
       }
     } catch (error) {
-      console.log(error.message);
+      setEmail(false);
+      await setModalInfo({
+        title: 'Error!',
+        desc: 'There is no user with this email address'
+      });
+      setIsOpen(true);
+      setEmail(false);
     }
   };
 
   const closeForm = () => {
-    history.push('/auth-login');
+    if (email) {
+      history.push('/');
+      setIsOpen(!isOpen);
+    }
     setIsOpen(!isOpen);
   };
 
