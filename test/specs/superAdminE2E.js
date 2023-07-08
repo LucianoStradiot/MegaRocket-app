@@ -14,7 +14,7 @@ describe('Check elements in Home Page', () => {
   it('Super Admin Login', async () => {
     await HomePage.loginButton.click();
     await Login.loginButton.waitForDisplayed();
-    await Login.logIn('superadminmega@gmail.com', 'SuperAdminMega1');
+    await Login.logIn('superadmin@gmail.com', 'SuperAdmin1');
     await Login.acceptButton.click();
   });
 
@@ -121,8 +121,8 @@ describe('Check elements in Home Page', () => {
     await expect(SuperAdmin.inputsFormAdmins[6]).toHaveValue('');
   });
 
-  it('Creating an admin successfully', async () => {
-    await SuperAdmin.completeForm('testla', 'testla', '38790960', '1128448711', 'testlautiis@test.com', 'testla', 'Testla2023');
+  it('Create an admin successfully', async () => {
+    await SuperAdmin.completeForm('testla', 'testla', '38790960', '1128448711', 'testSA@test.com', 'testla', 'Testla2023');
     await SuperAdmin.addButtonForm.click();
 
     await expect(SuperAdmin.modalSuccess).toBeDisplayed();
@@ -142,8 +142,48 @@ describe('Check elements in Home Page', () => {
     expect(await lastFieldsTable[1]).toEqual('testla');
     expect(await lastFieldsTable[2]).toEqual('38790960');
     expect(await lastFieldsTable[3]).toEqual('1128448711');
-    expect(await lastFieldsTable[4]).toEqual('testlautiis@test.com');
+    expect(await lastFieldsTable[4]).toEqual('testSA@test.com');
     expect(await lastFieldsTable[5]).toEqual('testla');
+  });
+
+  it('Edit admin flow', async() => {
+    await SuperAdmin.editButton.click();
+    await expect(SuperAdmin.superAdminForm).toBeDisplayed();
+
+    await expect(SuperAdmin.inputsFormAdmins[0]).toHaveValue('testla');
+    await expect(SuperAdmin.inputsFormAdmins[1]).toHaveValue('testla');
+    await expect(SuperAdmin.inputsFormAdmins[2]).toHaveValue('38790960');
+    await expect(SuperAdmin.inputsFormAdmins[3]).toHaveValue('1128448711');
+    await expect(SuperAdmin.inputsFormAdmins[4]).toHaveValue('testSA@test.com');
+    await expect(SuperAdmin.inputsFormAdmins[5]).toHaveValue('testla');
+
+    await SuperAdmin.resetButtonForm.click();
+    const inputsForm = await SuperAdmin.inputsFormAdmins.map(element => element.getValue());
+    const verifyInputs = await SuperAdmin.verifyEmptyInputs(inputsForm);
+    expect(verifyInputs).toBe(true);
+
+    await SuperAdmin.completeForm('testsa', 'testsa', '38790962', '1128448712', 'testSA@test.com', 'testsa', 'Test2023');
+    await SuperAdmin.saveButtonForm.click();
+
+    await expect(SuperAdmin.modalSuccess).toBeDisplayed();
+    await expect(SuperAdmin.modalSuccessTitle).toHaveTextContaining('Success');
+    await expect(SuperAdmin.modalSuccessDescp).toBeDisplayed();
+    await expect(SuperAdmin.modalSuccessDescp).toHaveTextContaining('Admin was updated successfully!');
+    await expect(SuperAdmin.modalSuccessButton).toBeDisplayed();
+    await expect(SuperAdmin.modalSuccessButton).toBeClickable();
+
+    await SuperAdmin.modalSuccessButton.click();
+  });
+
+  it('Data integrity on table', async () => {
+    await SuperAdmin.lastRowTable.waitForDisplayed();
+    const lastFieldsTable = await $$('[data-testid="container-table"] tbody tr:last-child td').map(element => element.getText());
+    expect(await lastFieldsTable[0]).toEqual('testsa');
+    expect(await lastFieldsTable[1]).toEqual('testsa');
+    expect(await lastFieldsTable[2]).toEqual('38790962');
+    expect(await lastFieldsTable[3]).toEqual('1128448712');
+    expect(await lastFieldsTable[4]).toEqual('testSA@test.com');
+    expect(await lastFieldsTable[5]).toEqual('testsa');
   });
 
   it('Delete an admin flow', async () => {
