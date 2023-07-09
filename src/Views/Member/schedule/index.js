@@ -97,13 +97,21 @@ const MemberSchedule = () => {
   };
 
   const openModal = (title, description) => {
-    console.log('open', userLoged);
-    setIdDelete(findSubToDelete.current);
-    setModal({
-      title: title,
-      description: description,
-      isConfirm: true
-    });
+    if (sessionStorage.getItem('role') === 'MEMBER') {
+      setIdDelete(findSubToDelete.current);
+      setModal({
+        title: title,
+        description: description,
+        isConfirm: true
+      });
+    } else {
+      setModal({
+        title: title,
+        description: description,
+        isConfirm: false
+      });
+    }
+
     setIsOpen(true);
   };
 
@@ -230,10 +238,19 @@ const MemberSchedule = () => {
                                           handleDataForCreate(oneClass);
                                         }
                                         openModal(
-                                          ``,
+                                          findSubToDelete.current ? 'Delete' : 'Subscribe',
                                           findSubToDelete.current
                                             ? 'Are you sure you want to delete your subscription?'
                                             : 'Confirm your subscription'
+                                        );
+                                      } else if (
+                                        sessionStorage.getItem('role') === 'ADMIN' ||
+                                        sessionStorage.getItem('role') === 'SUPER_ADMIN' ||
+                                        sessionStorage.getItem('role') === 'TRAINER'
+                                      ) {
+                                        openModal(
+                                          'Error',
+                                          'Only members can subscribe for a class'
                                         );
                                       } else {
                                         history.push('/auth/login');
@@ -253,9 +270,9 @@ const MemberSchedule = () => {
                                       }`}</div>
                                       <div>
                                         {'Slots: '}
-                                        {subscriptionsLength}
-                                        {' / '}
-                                        {oneClass.slots}
+                                        {userLoged ? subscriptionsLength : ''}
+                                        {userLoged ? ' / ' : 'login'}
+                                        {userLoged ? oneClass.slots : ' first'}
                                       </div>
                                     </p>
                                   </button>
