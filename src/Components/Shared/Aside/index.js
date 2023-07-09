@@ -1,7 +1,8 @@
-import { Link, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import styles from './aside.module.css';
-import { logout } from 'Redux/Auth/thunks';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { logout } from 'Redux/Auth/thunks';
+import styles from './aside.module.css';
 
 const Aside = ({ page }) => {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ const Aside = ({ page }) => {
   const isActiveRoute = (path) => {
     return location.pathname === path ? styles.activeRoute : '';
   };
+
   const isActiveRouteMember = (path) => {
     return location.pathname === path ? styles.activeRouteMember : '';
   };
@@ -26,7 +28,8 @@ const Aside = ({ page }) => {
           <nav className={styles.navbarMember}>
             <ul className={styles.rutesMember}>
               <div className={styles.loginContainer}>
-                {sessionStorage.getItem('role') ? (
+                {sessionStorage.getItem('role') === 'MEMBER' ||
+                sessionStorage.getItem('role') === 'TRAINER' ? (
                   <>
                     <Link
                       to="/profile"
@@ -34,6 +37,46 @@ const Aside = ({ page }) => {
                     >
                       <li>
                         <a>Profile</a>
+                      </li>
+                    </Link>
+                    <Link
+                      to="/"
+                      className={`${styles.btn} ${styles.btn2}`}
+                      onClick={() => onSubmit()}
+                    >
+                      <li>
+                        <a>Log Out</a>
+                      </li>
+                    </Link>
+                  </>
+                ) : sessionStorage.getItem('role') === 'SUPER_ADMIN' ? (
+                  <>
+                    <Link
+                      to="/superAdmins/admins"
+                      className={`${styles.btn} ${isActiveRouteMember('/superAdmins/admins')}`}
+                    >
+                      <li>
+                        <a>Management</a>
+                      </li>
+                    </Link>
+                    <Link
+                      to="/"
+                      className={`${styles.btn} ${styles.btn2}`}
+                      onClick={() => onSubmit()}
+                    >
+                      <li>
+                        <a>Log Out</a>
+                      </li>
+                    </Link>
+                  </>
+                ) : sessionStorage.getItem('role') === 'ADMIN' ? (
+                  <>
+                    <Link
+                      to="/admins/activities"
+                      className={`${styles.btn} ${isActiveRouteMember('/admins/activities')}`}
+                    >
+                      <li>
+                        <a>Management</a>
                       </li>
                     </Link>
                     <Link
@@ -118,32 +161,75 @@ const Aside = ({ page }) => {
     return (
       <aside className={styles.aside} data-testid="container-aside-general">
         <nav className={styles.navbar}>
-          <ul className={styles.rutes}>
-            <li>
-              <Link to="/admins/activities" className={isActiveRoute('/admins/activities')}>
-                Activities
+          <ul className={styles.logout}>
+            <div className={styles.containerBtns}>
+              <Link to="/" className={` ${isActiveRouteMember('/')}`}>
+                <div className={`${styles.btn} ${styles.btnHome}`}>
+                  <li>
+                    <a>Home</a>
+                  </li>
+                </div>
               </Link>
-            </li>
-            <li>
-              <Link to="/admins/classes" className={isActiveRoute('/admins/classes')}>
-                Classes
+              <Link to="/" className={styles.linkBtn} onClick={() => onSubmit()}>
+                <div className={`${styles.btn} ${styles.btn2}`}>
+                  <li>
+                    <a>Log Out</a>
+                  </li>
+                </div>
               </Link>
-            </li>
-            <li>
-              <Link to="/admins/members" className={isActiveRoute('/admins/members')}>
-                Members
+            </div>
+            <div className={styles.containerBtns}>
+              <li>
+                <Link
+                  to="/admins/activities"
+                  className={`${styles.linkBtn} ${isActiveRoute('/admins/activities')}`}
+                >
+                  <div className={`${styles.btn} ${styles.btnHome}`}>
+                    <a>Activities</a>
+                  </div>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/admins/classes"
+                  className={`${styles.linkBtn} ${isActiveRoute('/admins/classes')}`}
+                >
+                  <div className={`${styles.btn} ${styles.btnHome}`}>
+                    <a>Classes</a>
+                  </div>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/admins/members"
+                  className={`${styles.linkBtn} ${isActiveRoute('/admins/members')}`}
+                >
+                  <div className={`${styles.btn} ${styles.btnHome}`}>
+                    <a>Members</a>
+                  </div>
+                </Link>
+              </li>
+              <Link
+                to="/admins/subscriptions"
+                className={`${styles.linkBtn} ${isActiveRoute('/admins/subscriptions')}`}
+              >
+                <div className={`${styles.btn} ${styles.btnHome}`}>
+                  <li>
+                    <a>Subscriptions</a>
+                  </li>
+                </div>
               </Link>
-            </li>
-            <li>
-              <Link to="/admins/subscriptions" className={isActiveRoute('/admins/subscriptions')}>
-                Subscriptions
+              <Link
+                to="/admins/trainers"
+                className={`${styles.linkBtn} ${isActiveRoute('/admins/trainers')}`}
+              >
+                <div className={`${styles.btn} ${styles.btnHome}`}>
+                  <li>
+                    <a>Trainers</a>
+                  </li>
+                </div>
               </Link>
-            </li>
-            <li>
-              <Link to="/admins/trainers" className={isActiveRoute('/admins/trainers')}>
-                Trainers
-              </Link>
-            </li>
+            </div>
           </ul>
         </nav>
       </aside>
@@ -152,16 +238,30 @@ const Aside = ({ page }) => {
     return (
       <aside className={styles.aside}>
         <nav className={styles.navbar}>
-          <ul className={styles.rutes}>
-            <li>
-              <Link to="/superAdmins/admins" className={isActiveRoute('/superAdmins/admins')}>
-                Admins
+          <ul className={styles.logout}>
+            <div className={styles.containerBtns}>
+              <Link to="/" className={` ${isActiveRouteMember('/')}`}>
+                <div className={`${styles.btn} ${styles.btnHome}`}>
+                  <li>
+                    <a>Home</a>
+                  </li>
+                </div>
               </Link>
-            </li>
+            </div>
+            <div className={styles.containerBtns}>
+              <Link to="/" className={styles.linkBtn} onClick={() => onSubmit()}>
+                <div className={`${styles.btn} ${styles.btn2}`}>
+                  <li>
+                    <a>Log Out</a>
+                  </li>
+                </div>
+              </Link>
+            </div>
           </ul>
         </nav>
       </aside>
     );
   }
 };
+
 export default Aside;
