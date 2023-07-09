@@ -48,9 +48,9 @@
   }
 
   .aside {
-    top: 120px;
+    top: 14%;
     height: 88vh;
-    width: 20vh;
+    width: 200px;
     z-index: 0;
   }
 
@@ -59,7 +59,7 @@
     flex-direction: column;
     align-items: center;
     position: fixed;
-    top: 120px;
+    top: 14%;
     height: 88vh;
     width: 20vh;
     min-width: 200px;
@@ -100,13 +100,26 @@
     padding: 0;
   }
 
-  .logout {
+  .logoutSuperAdmins {
     display: flex;
+    justify-content: flex-start;
     flex-direction: column;
+    align-items: center;
     height: 90%;
     padding: 0;
-    justify-content: space-around;
     list-style-type: none;
+    padding-top: 10px;
+  }
+
+  .logoutAdmins {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 90%;
+    padding: 0;
+    padding-top: 10px;
+    list-style-type: none;
+    align-items: center;
   }
 
   .linkBtn {
@@ -141,6 +154,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
   }
 
   .containerBtns>a {

@@ -161,7 +161,7 @@ const Aside = ({ page }) => {
     return (
       <aside className={styles.aside} data-testid="container-aside-general">
         <nav className={styles.navbar}>
-          <ul className={styles.logout}>
+          <ul className={styles.logoutAdmins}>
             <div className={styles.containerBtns}>
               <Link to="/" className={` ${isActiveRouteMember('/')}`}>
                 <div className={`${styles.btn} ${styles.btnHome}`}>
@@ -238,7 +238,7 @@ const Aside = ({ page }) => {
     return (
       <aside className={styles.aside}>
         <nav className={styles.navbar}>
-          <ul className={styles.logout}>
+          <ul className={styles.logoutSuperAdmins}>
             <div className={styles.containerBtns}>
               <Link to="/" className={` ${isActiveRouteMember('/')}`}>
                 <div className={`${styles.btn} ${styles.btnHome}`}>
