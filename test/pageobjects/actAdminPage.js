@@ -11,15 +11,6 @@ class ActivitiesAdmin {
  get containerInputDescription() {
      return $('textarea');
  }
- get statusActivities() {
-     return $('[data-testid="activities-status"]');
- }
- get statusOption1() {
-     return $('[data-testid="activities-status"] select option:nth-child(1)');
- }
- get statusOption2() {
-     return $('[data-testid="activities-status"] select option:nth-child(2)');
- }
  get  cancelButtonAct(){
      return $('div button:nth-child(1)');
  }//'#form div > div.FormActivities_btnContainer__1hnR3 > div > button:nth-child(1)'
@@ -69,11 +60,14 @@ async editActClick() {
 async deleteActClick() {
   await this.deleteButtonAct.click();
 }
- async fillContainerInputName(name) {
-  await this.containerInputName.setValue(name)
+ async fillInputName(name) {
+  await this.containerInputName.setValue(name);
 }
-async fillContainerInputDescription(description) {
-  await this.containerInputDescription.setValue(description)
+async fillInputDescription(description) {
+  await this.containerInputDescription.setValue(description);
+}
+async clearInputName(name){
+  await this.containerInputName.clearValue(name);
 }
 }
 

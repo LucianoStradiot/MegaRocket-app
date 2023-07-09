@@ -8,9 +8,6 @@ class NavBarAdmin {
   get membersButton() {
       return $('[data-testid="container-aside-general"] nav ul li:nth-child(3) a');
   }
-  get subscriptionsButton() {
-      return $('[data-testid="container-aside-general"] nav ul li:nth-child(4) a');
-  }
   get trainersButton() {
       return $('[data-testid="container-aside-general"] nav ul li:nth-child(5) a');
   }

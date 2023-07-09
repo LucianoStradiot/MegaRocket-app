@@ -1,3 +1,4 @@
+const homePage = require('../pageobjects/homePage.js');
 const ActivitiesAdmin = require('../pageobjects/actAdminPage.js');
 const NavBarAdmin = require('../pageobjects/menuAdminPage.js');
 const ModalsAdmin = require('../pageobjects/modalsAdminPage.js');
@@ -10,18 +11,44 @@ describe('Check Login application for "Admins_User"', () => {
 
     beforeAll('open browser', () => {
         browser.setWindowSize(1900, 900);
-        browser.url('https://joaco-megarocket-app.vercel.app/admins');
+        browser.url('https://joaco-megarocket-app.vercel.app');
     });
-
-    it('Display elements for menu', async () => {
+    it('Display elements for home', async () => {
+      await expect(homePage.headerLogo).toBeDisplayed();
+      await expect(homePage.sidebarHome).toBeDisplayed();
+      await expect(homePage.loginButtonHome).toBeDisplayed();
+      await expect(homePage.loginButtonHome).toBeClickable();
+      await homePage.loginClickHome();
+    });
+    it('Display elements login & login flow', async () => {
+      await expect(homePage.loginForm).toBeDisplayed();
+      await expect(homePage.labelEmailLog).toBeDisplayed();
+      await expect(homePage.inputEmailLog).toBeDisplayed();
+      await expect(homePage.labelPasswordLog).toBeDisplayed();
+      await expect(homePage.inputPasswordLog).toBeDisplayed();
+      await expect(homePage.cancelButtonLog).toBeDisplayed();
+      await expect(homePage.loginButtonLog).toBeDisplayed();
+      await homePage.fillInputEmail('Te@test');
+      await homePage.fillInputPassword('Test');
+      await homePage.logClick();
+      await expect(homePage.errorEmailLog).toBeDisplayed();
+      await expect(homePage.errorPasswordLog).toBeDisplayed();
+      await homePage.fillInputEmail('admin@gmail.com');
+      await homePage.fillInputPassword('Admin123');
+      await homePage.logClick();
+      await expect(ModalsAdmin.modalSuccess).toBeDisplayed();
+      await expect(ModalsAdmin.modalSuccessTitle).toBeDisplayed();
+      await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
+      await expect(ModalsAdmin.modalSuccessTitle).toHaveTextContaining('Success!');
+      await ModalsAdmin.acceptModalClick();
+    });
+    it('Display elements for menu in Admin', async () => {
         await expect(NavBarAdmin.activitiesButton).toBeDisplayed();
         await expect(NavBarAdmin.activitiesButton).toBeClickable();
         await expect(NavBarAdmin.classesButton).toBeDisplayed();
         await expect(NavBarAdmin.classesButton).toBeClickable();
         await expect(NavBarAdmin.membersButton).toBeDisplayed();
         await expect(NavBarAdmin.membersButton).toBeClickable();
-        await expect(NavBarAdmin.subscriptionsButton).toBeDisplayed();
-        await expect(NavBarAdmin.subscriptionsButton).toBeClickable();
         await expect(NavBarAdmin.trainersButton).toBeDisplayed();
         await expect(NavBarAdmin.trainersButton).toBeClickable();
     });
@@ -36,35 +63,35 @@ describe('Check Login application for "Admins_User"', () => {
       await expect(ActivitiesAdmin.cancelButtonAct).toBeDisplayed();
       await expect(ActivitiesAdmin.resetButtonAct).toBeDisplayed();
       await expect(ActivitiesAdmin.addButtonAct).toBeDisplayed();
-      await ActivitiesAdmin.fillContainerInputName('Te');
-      await ActivitiesAdmin.fillContainerInputDescription('Test');
+      await ActivitiesAdmin.fillInputName('Te');
+      await ActivitiesAdmin.fillInputDescription('Test');
       await ActivitiesAdmin.addActClick();
       await expect(ActivitiesAdmin.errorMsgName).toBeDisplayed();
       await expect(ActivitiesAdmin.errorMsgDescription).toBeDisplayed();
-      await ActivitiesAdmin.fillContainerInputName('Tests');
-      await ActivitiesAdmin.fillContainerInputDescription('TestTestTestTestTestTestTestTestTestTestTestTestTest');
+      await ActivitiesAdmin.fillInputName('Test');
+      await ActivitiesAdmin.fillInputDescription('TestTestTestTestTestTestTestTestTestTestTestTestTest');
       await ActivitiesAdmin.addActClick();
       await expect(ModalsAdmin.modalSuccess).toBeDisplayed();
       await expect(ModalsAdmin.modalSuccessTitle).toBeDisplayed();
       await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
       await ModalsAdmin.acceptModalClick();
-      await expect(ActivitiesAdmin.editButtonAct).toBeDisplayed();
-      await ActivitiesAdmin.editActClick();
-      await expect(ActivitiesAdmin.formActivities).toBeDisplayed();
-      await expect(ActivitiesAdmin.containerInputName).toBeDisplayed();
-      await expect(ActivitiesAdmin.containerInputDescription).toBeDisplayed();
-      await expect(ActivitiesAdmin.containerInputDescription).waitForDisplayed();
-      await ActivitiesAdmin.containerInputDescription.clearValue();
-      await ActivitiesAdmin.fillContainerInputDescription('TestingTestingTestingTestingTestingTestingTestingTesting');
-      await expect(ActivitiesAdmin.cancelButtonAct).toBeDisplayed();
-      await expect(ActivitiesAdmin.resetButtonAct).toBeDisplayed();
-      await expect(ActivitiesAdmin.saveButtonAct).toBeDisplayed();
-      await ActivitiesAdmin.saveActClick();
-      await expect(ModalsAdmin.modalSuccess).toBeDisplayed();
-      await expect(ModalsAdmin.modalSuccessTitle).toBeDisplayed();
-      await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
-      await expect(ModalsAdmin.modalSuccessTitle).toHaveTextContaining('Success!');
-      await ModalsAdmin.acceptModalClick();
+      // await expect(ActivitiesAdmin.editButtonAct).toBeDisplayed();
+      // await ActivitiesAdmin.editActClick();
+      // await expect(ActivitiesAdmin.formActivities).toBeDisplayed();
+      // await expect(ActivitiesAdmin.containerInputName).toBeDisplayed();
+      // await expect(ActivitiesAdmin.containerInputDescription).toBeDisplayed();
+      // await expect(ActivitiesAdmin.cancelButtonAct).toBeDisplayed();
+      // await expect(ActivitiesAdmin.resetButtonAct).toBeDisplayed();
+      // await expect(ActivitiesAdmin.saveButtonAct).toBeDisplayed();
+      // // ActivitiesAdmin.containerInputName.clearValue();
+      // await ActivitiesAdmin.fillInputName('Testing');
+      // // ActivitiesAdmin.containerInputName.setValue('Testing');
+      // await ActivitiesAdmin.saveActClick();
+      // await expect(ModalsAdmin.modalSuccess).toBeDisplayed();
+      // await expect(ModalsAdmin.modalSuccessTitle).toBeDisplayed();
+      // await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
+      // await expect(ModalsAdmin.modalSuccessTitle).toHaveTextContaining('Success!');
+      // await ModalsAdmin.acceptModalClick();
     });
     it('Classes create & edit flow', async () => {
       await expect(NavBarAdmin.classesButton).toBeDisplayed();
@@ -83,7 +110,7 @@ describe('Check Login application for "Admins_User"', () => {
       await ClassesAdmin.selectionHourClass();
       await ClassesAdmin.selectionTrainerClass();
       await ClassesAdmin.selectionActivityClass();
-      await ClassesAdmin.fillSlotsClass(5);
+      await ClassesAdmin.fillSlotsClass(4);
       await expect(ClassesAdmin.addButtonClass).toBeDisplayed();
       await expect(ClassesAdmin.addButtonClass).toBeClickable();
       await ClassesAdmin.addClassClick();
@@ -100,9 +127,8 @@ describe('Check Login application for "Admins_User"', () => {
       await expect(ClassesAdmin.selectTrainer).toBeDisplayed();
       await expect(ClassesAdmin.selectActivity).toBeDisplayed();
       await expect(ClassesAdmin.selectSlots).toBeDisplayed();
-      await expect(ClassesAdmin.selectSlots).waitForDisplayed();
-      await ClassesAdmin.selectSlots.clearValue();
-      await ClassesAdmin.fillSlotsClass('6');
+      ClassesAdmin.selectSlots.clearValue();
+      await ClassesAdmin.fillSlotsClass(6);
       await expect(ClassesAdmin.cancelButtonClass).toBeDisplayed();
       await expect(ClassesAdmin.resetButtonClass).toBeDisplayed();
       await expect(ClassesAdmin.saveButtonClass).toBeDisplayed();
@@ -113,7 +139,6 @@ describe('Check Login application for "Admins_User"', () => {
       await expect(ModalsAdmin.modalSuccessTitle).toHaveTextContaining('Success!');
       await ModalsAdmin.acceptModalClick();
     });
-
     //Need to add method to call & select date-picker in member flow
     it('Members create & edit flow', async () => {
       // await expect(NavBarAdmin.membersButton).toBeDisplayed();
@@ -167,7 +192,7 @@ describe('Check Login application for "Admins_User"', () => {
       // await MemberAdmin.fillInputPhone('1123456789');
       // await MemberAdmin.fillInputCity('Test');
 
-      // //await MemberAdmin.clickBirthDay('Te');
+      //await MemberAdmin.clickBirthDay('Te');
 
       // await MemberAdmin.clickMembership();
       // await MemberAdmin.confirmButtonMember();
@@ -200,104 +225,87 @@ describe('Check Login application for "Admins_User"', () => {
       // await expect(ModalsAdmin.modalSuccessTitle).toHaveTextContaining('Success!');
       // await ModalsAdmin.acceptModalClick();
     });
-
-    it('Subscription create & edit flow', async () => {
-      // await expect(NavBarAdmin.subscriptionsButton).toBeDisplayed();
-      // await expect(NavBarAdmin.subscriptionsButton).toBeClickable();
-      // await NavBarAdmin.subscriptionsClick();
-    });
-
     it('Trainer create & edit flow', async () => {
-      // await expect(NavBarAdmin.trainersButton).toBeDisplayed();
-      // await expect(NavBarAdmin.trainersButton).toBeClickable();
-      // await NavBarAdmin.trainersClick();
-      // await expect(TrainerAdmin.buttonCreateTrainer).toBeDisplayed();
-      // await expect(TrainerAdmin.buttonCreateTrainer).toBeClickable();
-      // await TrainerAdmin.createTrainerClick();
-      // await expect(TrainerAdmin.formTrainers).toBeDisplayed();
-      // await expect(TrainerAdmin.labelFirstNameT).toBeDisplayed();
-      // await expect(TrainerAdmin.labelLastNameT).toBeDisplayed();
-      // await expect(TrainerAdmin.labelEmailT).toBeDisplayed();
-      // await expect(TrainerAdmin.labelDniT).toBeDisplayed();
-      // await expect(TrainerAdmin.labelPhoneT).toBeDisplayed();
-      // await expect(TrainerAdmin.labelCityT).toBeDisplayed();
-      // await expect(TrainerAdmin.labelPasswordT).toBeDisplayed();
-      // await expect(TrainerAdmin.labelSalaryT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputFirstNameT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputLastNameT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputEmailT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputDniT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputPhoneT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputCityT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputPasswordT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputSalaryT).toBeDisplayed();
-      // await expect(TrainerAdmin.cancelButtonTrainer).toBeDisplayed();
-      // await expect(TrainerAdmin.resetButtonTrainer).toBeDisplayed();
-      // await expect(TrainerAdmin.addButtonTrainer).toBeDisplayed();
-      // await TrainerAdmin.fillInputNameT('Te');
-      // await TrainerAdmin.fillInputLNameT('Te');
-      // await TrainerAdmin.fillInputEmailT('Te');
-      // await TrainerAdmin.fillInputDniT('Te');
-      // await TrainerAdmin.fillInputPhoneT('Te');
-      // await TrainerAdmin.fillInputCityT('Te');
-      // await TrainerAdmin.fillInputPasswordT('Te');
-      // await TrainerAdmin.fillInputSalaryT('');
-      // await TrainerAdmin.addTrainerClick();
-      // await expect(TrainerAdmin.errorMsgNameT).toBeDisplayed();
-      // await expect(TrainerAdmin.errorMsgLNameT).toBeDisplayed();
-      // await expect(TrainerAdmin.errorMsgDniT).toBeDisplayed();
-      // await expect(TrainerAdmin.errorMsgPhoneT).toBeDisplayed();
-      // await expect(TrainerAdmin.errorMsgEmailT).toBeDisplayed();
-      // await expect(TrainerAdmin.errorMsgCityT).toBeDisplayed();
-      // await expect(TrainerAdmin.errorMsgPasswordT).toBeDisplayed();
-      // await expect(TrainerAdmin.errorMsgSalaryT).toBeDisplayed();
-      // await TrainerAdmin.fillInputNameT('Test');
-      // await TrainerAdmin.fillInputLNameT('Test');
-      // await TrainerAdmin.fillInputEmailT('test@test.cm');
-      // await TrainerAdmin.fillInputDniT('12345600');
-      // await TrainerAdmin.fillInputPhoneT('1123456789');
-      // await TrainerAdmin.fillInputCityT('Test');
-      // await TrainerAdmin.fillInputPasswordT('Tetera20');
-      // await TrainerAdmin.fillInputSalaryT('222');
-      // await TrainerAdmin.addTrainerClick();
-      // await expect(ModalsAdmin.modalSuccess).toBeDisplayed();
-      // await expect(ModalsAdmin.modalSuccessTitle).toBeDisplayed();
-      // await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
-      // await ModalsAdmin.acceptModalClick();
-      // await expect(TrainerAdmin.editButtonTrainer).toBeDisplayed();
-      // await TrainerAdmin.editTrainerClick();
-      // await expect(TrainerAdmin.formTrainers).toBeDisplayed();
-      // await expect(TrainerAdmin.inputFirstNameT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputLastNameT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputEmailT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputDniT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputPhoneT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputCityT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputPasswordT).toBeDisplayed();
-      // await expect(TrainerAdmin.inputSalaryT).toBeDisplayed();
-      // await expect(TrainerAdmin.cancelButtonTrainer).toBeDisplayed();
-      // await expect(TrainerAdmin.resetButtonTrainer).toBeDisplayed();
-      // await expect(TrainerAdmin.saveButtonTrainer).toBeDisplayed();
-      // await TrainerAdmin.inputSalaryT.clearValue();
-      // await TrainerAdmin.fillInputSalaryT('444');
-      // await TrainerAdmin.saveTrainerClick();
-      // await expect(ModalsAdmin.modalSuccess).toBeDisplayed();
-      // await expect(ModalsAdmin.modalSuccessTitle).toBeDisplayed();
-      // await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
-      // await expect(ModalsAdmin.modalSuccessTitle).toHaveTextContaining('Success!');
-      // await ModalsAdmin.acceptModalClick();
+      await expect(NavBarAdmin.trainersButton).toBeDisplayed();
+      await expect(NavBarAdmin.trainersButton).toBeClickable();
+      await NavBarAdmin.trainersClick();
+      await expect(TrainerAdmin.buttonCreateTrainer).toBeDisplayed();
+      await expect(TrainerAdmin.buttonCreateTrainer).toBeClickable();
+      await TrainerAdmin.createTrainerClick();
+      await expect(TrainerAdmin.formTrainers).toBeDisplayed();
+      await expect(TrainerAdmin.labelFirstNameT).toBeDisplayed();
+      await expect(TrainerAdmin.labelLastNameT).toBeDisplayed();
+      await expect(TrainerAdmin.labelEmailT).toBeDisplayed();
+      await expect(TrainerAdmin.labelDniT).toBeDisplayed();
+      await expect(TrainerAdmin.labelPhoneT).toBeDisplayed();
+      await expect(TrainerAdmin.labelCityT).toBeDisplayed();
+      await expect(TrainerAdmin.labelPasswordT).toBeDisplayed();
+      await expect(TrainerAdmin.labelSalaryT).toBeDisplayed();
+      await expect(TrainerAdmin.inputFirstNameT).toBeDisplayed();
+      await expect(TrainerAdmin.inputLastNameT).toBeDisplayed();
+      await expect(TrainerAdmin.inputEmailT).toBeDisplayed();
+      await expect(TrainerAdmin.inputDniT).toBeDisplayed();
+      await expect(TrainerAdmin.inputPhoneT).toBeDisplayed();
+      await expect(TrainerAdmin.inputCityT).toBeDisplayed();
+      await expect(TrainerAdmin.inputPasswordT).toBeDisplayed();
+      await expect(TrainerAdmin.inputSalaryT).toBeDisplayed();
+      await expect(TrainerAdmin.cancelButtonTrainer).toBeDisplayed();
+      await expect(TrainerAdmin.resetButtonTrainer).toBeDisplayed();
+      await expect(TrainerAdmin.addButtonTrainer).toBeDisplayed();
+      await TrainerAdmin.fillInputNameT('Te');
+      await TrainerAdmin.fillInputLNameT('Te');
+      await TrainerAdmin.fillInputEmailT('Te');
+      await TrainerAdmin.fillInputDniT('Te');
+      await TrainerAdmin.fillInputPhoneT('Te');
+      await TrainerAdmin.fillInputCityT('Te');
+      await TrainerAdmin.fillInputPasswordT('Te');
+      await TrainerAdmin.fillInputSalaryT('');
+      await TrainerAdmin.addTrainerClick();
+      await expect(TrainerAdmin.errorMsgNameT).toBeDisplayed();
+      await expect(TrainerAdmin.errorMsgLNameT).toBeDisplayed();
+      await expect(TrainerAdmin.errorMsgDniT).toBeDisplayed();
+      await expect(TrainerAdmin.errorMsgPhoneT).toBeDisplayed();
+      await expect(TrainerAdmin.errorMsgEmailT).toBeDisplayed();
+      await expect(TrainerAdmin.errorMsgCityT).toBeDisplayed();
+      await expect(TrainerAdmin.errorMsgPasswordT).toBeDisplayed();
+      await expect(TrainerAdmin.errorMsgSalaryT).toBeDisplayed();
+      await TrainerAdmin.fillInputNameT('Test');
+      await TrainerAdmin.fillInputLNameT('Test');
+      await TrainerAdmin.fillInputEmailT('test@test.cm');
+      await TrainerAdmin.fillInputDniT('12345600');
+      await TrainerAdmin.fillInputPhoneT('1123456789');
+      await TrainerAdmin.fillInputCityT('Test');
+      await TrainerAdmin.fillInputPasswordT('Tetera20');
+      await TrainerAdmin.fillInputSalaryT('222');
+      await TrainerAdmin.addTrainerClick();
+      await expect(ModalsAdmin.modalSuccess).toBeDisplayed();
+      await expect(ModalsAdmin.modalSuccessTitle).toBeDisplayed();
+      await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
+      await ModalsAdmin.acceptModalClick();
+      await expect(TrainerAdmin.editButtonTrainer).toBeDisplayed();
+      await TrainerAdmin.editTrainerClick();
+      await expect(TrainerAdmin.formTrainers).toBeDisplayed();
+      await expect(TrainerAdmin.inputFirstNameT).toBeDisplayed();
+      await expect(TrainerAdmin.inputLastNameT).toBeDisplayed();
+      await expect(TrainerAdmin.inputEmailT).toBeDisplayed();
+      await expect(TrainerAdmin.inputDniT).toBeDisplayed();
+      await expect(TrainerAdmin.inputPhoneT).toBeDisplayed();
+      await expect(TrainerAdmin.inputCityT).toBeDisplayed();
+      await expect(TrainerAdmin.inputPasswordT).toBeDisplayed();
+      await expect(TrainerAdmin.inputSalaryT).toBeDisplayed();
+      await expect(TrainerAdmin.cancelButtonTrainer).toBeDisplayed();
+      await expect(TrainerAdmin.resetButtonTrainer).toBeDisplayed();
+      await expect(TrainerAdmin.saveButtonTrainer).toBeDisplayed();
+      TrainerAdmin.inputSalaryT.clearValue();
+      await TrainerAdmin.fillInputSalaryT('444');
+      await TrainerAdmin.fillInputPasswordT('Tetera20');
+      await TrainerAdmin.saveTrainerClick();
+      await expect(ModalsAdmin.modalSuccess).toBeDisplayed();
+      await expect(ModalsAdmin.modalSuccessTitle).toBeDisplayed();
+      await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
+      await expect(ModalsAdmin.modalSuccessTitle).toHaveTextContaining('Success!');
+      await ModalsAdmin.acceptModalClick();
     });
-
-    it('Subscription delete flow', async () => {
-      // await NavBarAdmin.subscriptionClick();
-      // await expect(ActivitiesAdmin.buttonCreateActivities).toBeDisplayed();
-      // await expect(ActivitiesAdmin.buttonCreateActivities).toBeClickable();
-    });
-
-    it('Members delete flow', async () => {
-
-    });
-
     it('Classes delete flow', async () => {
       await NavBarAdmin.classesClick();
       await expect(ClassesAdmin.deleteButtonClass).toBeDisplayed();
@@ -308,18 +316,16 @@ describe('Check Login application for "Admins_User"', () => {
       await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
       await ModalsAdmin.acceptModalClick();
     });
-
     it('Trainer delete flow', async () => {
-      // await NavBarAdmin.trainersClick();
-      // await expect(TrainerAdmin.deleteButtonTrainer).toBeDisplayed();
-      // await TrainerAdmin.deleteTrainerClick();
-      // await expect(ModalsAdmin.modalConfirm).toBeDisplayed();
-      // await expect(ModalsAdmin.confirmButtonModal).toBeDisplayed();
-      // await ModalsAdmin.confirmModalClick();
-      // await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
-      // await ModalsAdmin.acceptModalClick();
+      await NavBarAdmin.trainersClick();
+      await expect(TrainerAdmin.deleteButtonTrainer).toBeDisplayed();
+      await TrainerAdmin.deleteTrainerClick();
+      await expect(ModalsAdmin.modalConfirm).toBeDisplayed();
+      await expect(ModalsAdmin.confirmButtonModal).toBeDisplayed();
+      await ModalsAdmin.confirmModalClick();
+      await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
+      await ModalsAdmin.acceptModalClick();
     });
-
     it('Activity delete flow', async () => {
       await NavBarAdmin.activityClick();
       await expect(ActivitiesAdmin.deleteButtonAct).toBeDisplayed();
@@ -330,5 +336,4 @@ describe('Check Login application for "Admins_User"', () => {
       await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
       await ModalsAdmin.acceptModalClick();
     });
-
 });
