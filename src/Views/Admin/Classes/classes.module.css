@@ -68,12 +68,13 @@
   left: 0;
   width: 50%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0);
-  color: #ffffff;
+  background-color: #ffffff00;
+  color: #ffffff00;
   z-index: 0;
   cursor: pointer;
   border-radius: 8px;
   box-sizing: border-box;
+  border: none;
 }
 
 .edit:hover {
@@ -93,12 +94,13 @@
   width: 50%;
   height: 100%;
   background-color: #ffffff00;
-  color: #fff;
+  color: #ffffff00;
   border: none;
   z-index: 0;
   cursor: pointer;
   border-radius: 8px;
   box-sizing: border-box;
+  padding-top: 10px;
 }
 
 .delete:hover {
@@ -109,7 +111,6 @@
 }
 
 .classCard:hover {
-  transition: 0.4s ease-in;
   color: #2E355B;
   background-color: #2E355B;
   border: none;
@@ -147,5 +148,11 @@
   width: 30px;
   height: 30px;
   margin: 0;
+  padding: 0;
   color: #fff;
+  opacity: 0;
+}
+
+.classCard:hover .editIcon {
+  opacity: 1;
 }

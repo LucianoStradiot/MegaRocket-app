@@ -148,7 +148,7 @@ function Classes() {
                                           className={styles.delete}
                                           onClick={() => openModalConfirm(oneClass._id)}
                                         >
-                                          X
+                                          <p className={styles.editIcon}>X</p>
                                         </button>
                                       </div>
                                     </div>
