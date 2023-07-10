@@ -37,3 +37,16 @@
   justify-content: space-between;
   margin-top: 20px;
 }
+
+.passwordContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.editIcon {
+  cursor: pointer;
+  margin-left: 10px;
+  width: 30px;
+  height: 30px;
+}
