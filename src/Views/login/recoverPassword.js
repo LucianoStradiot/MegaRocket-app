@@ -15,7 +15,7 @@ const recoveryPassword = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.recoverPassword.isLoading);
-  const error = useSelector((state) => state.recoverPassword.error);
+  // const error = useSelector((state) => state.recoverPassword.error);
 
   const [isOpen, setIsOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState({
@@ -43,19 +43,19 @@ const recoveryPassword = () => {
 
   const onSubmit = async (email) => {
     try {
-      await dispatch(recoverPassword(email.email));
-      if (error !== null) {
-        setIsOpen(true);
+      const response = await dispatch(recoverPassword(email.email));
+
+      if (!response) {
+        throw new Error();
+      } else {
         setModalInfo({
           title: 'Recovering password...',
           desc: 'Please check your email inbox'
         });
+        setIsOpen(true);
         setEmail(true);
-      } else {
-        throw new Error();
       }
     } catch (error) {
-      setEmail(false);
       setModalInfo({
         title: 'Error!',
         desc: 'There is no user with this email address'
@@ -68,9 +68,8 @@ const recoveryPassword = () => {
   const closeForm = () => {
     if (email) {
       history.push('/auth/login');
-      setIsOpen(!isOpen);
     }
-    setIsOpen(!isOpen);
+    setIsOpen(false);
   };
 
   return (
@@ -80,6 +79,7 @@ const recoveryPassword = () => {
         handleClose={closeForm}
         isOpen={isOpen}
         title={modalInfo.title}
+        confirmModal={false}
       />
       {loading && <Spinner />}
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
