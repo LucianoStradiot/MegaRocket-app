@@ -6,12 +6,14 @@ import Spinner from '../../Components/Shared/Spinner';
 import Button from '../../Components/Shared/Button';
 import Aside from '../../Components/Shared/Aside';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const idLogged = sessionStorage.getItem('firebaseUid');
   const loading = useSelector((state) => state.user.isLoading);
   const dataLog = useSelector((state) => state.user.user);
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getAuth(idLogged));
@@ -76,7 +78,7 @@ const Profile = () => {
   if (sessionStorage.getItem('role') === 'TRAINER') {
     return <h1>Hello</h1>;
   }
-  return alert('Profile not found');
+  return history.push('/');
 };
 
 export default Profile;
