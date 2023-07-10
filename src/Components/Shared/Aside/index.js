@@ -27,7 +27,6 @@ const Aside = ({ page }) => {
   const handleLogout = async () => {
     try {
       const response = await dispatch(logout());
-      console.log(response);
       if (response.error) {
         throw new Error(response.message);
       } else {
