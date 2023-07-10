@@ -82,7 +82,7 @@ function Admins() {
                   list={admins}
                   column={['Name', 'Last Name', 'DNI', 'Phone', 'Email', 'City', '']}
                   fields={['firstName', 'lastName', 'dni', 'phone', 'email', 'city']}
-                  link={'/admins/form/'}
+                  link={'/superAdmins/admins/form/'}
                   action={openModalConfirm}
                 />
               </div>
@@ -93,8 +93,8 @@ function Admins() {
     </>
   ) : (
     <>
-      <div>
-        <Aside page={'superAdmins'} />
+      <Aside page={'superAdmins'} />
+      <div className={styles.mainContainer}>
         <section className={styles.container}>
           <Modal
             title={responseModal.title}

@@ -30,16 +30,16 @@ const Login = () => {
       'string.empty': 'Email can´t be empty',
       'string.pattern.base': 'Email must be in a valid format'
     }),
-    password: Joi.string().regex(RGXPassword).min(8).required().messages({
+    password: Joi.string().min(8).regex(RGXPassword).required().messages({
       'string.pattern.base':
-        'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
-      'string.empty': 'Password can´t be empty'
+        'Password must contain at least one uppercase and one lowercase letter, and one number',
+      'string.empty': 'Password can´t be empty',
+      'string.min': 'Password must be at least 8 characters'
     })
   });
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors }
   } = useForm({
     mode: 'onSubmit',
@@ -48,12 +48,13 @@ const Login = () => {
   const logUser = async (userValue) => {
     try {
       const dataResponse = await dispatch(login(userValue));
+
       const modalData = {
-        title: dataResponse.error ? 'Error!' : 'Success!',
-        desc: dataResponse.message
+        title: dataResponse.type === 'LOGIN_ERROR' ? 'Error!' : 'Success!',
+        desc: dataResponse.type === 'LOGIN_ERROR' ? 'Invalid credentials' : ''
       };
       setModalInfo(modalData);
-      if (dataResponse.error) {
+      if (dataResponse.type === 'LOGIN_ERROR') {
         setIsOpen(true);
         setIsMemberLogged(false);
       } else {
@@ -74,10 +75,10 @@ const Login = () => {
         history.push('/superAdmins/admins');
       }
       if (sessionStorage.getItem('role') === 'ADMIN') {
-        history.push('/admins');
+        history.push('/admins/activities');
       }
       if (sessionStorage.getItem('role') === 'TRAINER') {
-        history.push('/schedule');
+        history.push('/trainers');
       }
       if (sessionStorage.getItem('role') === 'MEMBER') {
         history.push('/');
@@ -112,10 +113,12 @@ const Login = () => {
           name={'password'}
           testId="input-password-login"
         />
+        <Link to="/recoverPassword" className={styles.password}>
+          <a>Forgot password?</a>
+        </Link>
         <div className={styles.btnContainer}>
           <div>
             <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="reset" clickAction={() => reset()} />
           </div>
           <Button text={'Login'} type={'submit'} testId="confirm-button-login" />
         </div>

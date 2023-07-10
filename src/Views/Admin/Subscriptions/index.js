@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSubscriptions, deleteSubscription } from 'Redux/Subscriptions/thunks';
-import style from './subscriptions.module.css';
+import styles from './subscriptions.module.css';
 import Modal from 'Components/Shared/Modal';
-import Button from 'Components/Shared/Button';
 import Spinner from 'Components/Shared/Spinner';
-import Table from 'Components/Shared/Table';
-import { Link } from 'react-router-dom';
 import Aside from 'Components/Shared/Aside';
+import Button from 'Components/Shared/Button';
 
 function Subscriptions() {
   const [idDelete, setIdDelete] = useState('');
@@ -55,46 +53,103 @@ function Subscriptions() {
     setIsOpen(true);
   };
 
+  const fields = ['date', 'member.lastName', 'classes.hour', 'classes.activity.name'];
+  const column = ['Date', 'Member Name', 'Class Hour', 'Activity Name', ''];
+
   return subscriptions.length > 0 ? (
     <>
       <Aside page={'admins'} />
-      <div className={style.container}>
-        <section className={style.subContainer}>
-          <Modal
-            title={responseModal.title}
-            desc={responseModal.description}
-            isOpen={isOpen}
-            confirmModal={responseModal.isConfirm}
-            handleClose={() => setIsOpen(!isOpen)}
-            deleteFunction={() => handleDeleteSub(idDelete)}
-          />
-          {pending && <Spinner />}
-          {!pending && (
-            <div>
-              <Link to="/admins/subscriptions/form">
-                <Button
-                  type="add"
-                  text="Create"
-                  className={style.btnCreate}
-                  testId="create-button-subscriptions"
-                />
-              </Link>
-              <Table
-                list={subscriptions}
-                column={['Date', 'Member Name', 'Class Hour', 'Activity Name', '']}
-                fields={['date', 'member.lastName', 'classes.hour', 'classes.activity.name']}
-                link={'/admins/subscriptions/form/'}
-                action={openModalConfirm}
-              />
-            </div>
-          )}
-        </section>
+      <div className={styles.mainContainer}>
+        <div className={styles.container}>
+          <section className={styles.subContainer}>
+            <Modal
+              title={responseModal.title}
+              desc={responseModal.description}
+              isOpen={isOpen}
+              confirmModal={responseModal.isConfirm}
+              handleClose={() => setIsOpen(!isOpen)}
+              deleteFunction={() => handleDeleteSub(idDelete)}
+            />
+            {pending && <Spinner />}
+            {!pending && (
+              <div className={styles.tableContainer}>
+                <table className={styles.contTable}>
+                  <thead className={styles.theadTable}>
+                    <tr>
+                      {column.map((aux, index) => {
+                        if (index === column.length - 1) {
+                          return (
+                            <th
+                              key={index}
+                              className={`${styles.thTable} ${styles.headers} ${styles.borderRight}`}
+                            >
+                              {aux}
+                            </th>
+                          );
+                        } else if (index === 0) {
+                          return (
+                            <th
+                              key={index}
+                              className={`${styles.thTable} ${styles.headers} ${styles.borderLeft}`}
+                            >
+                              {aux}
+                            </th>
+                          );
+                        } else {
+                          return (
+                            <th key={index} className={`${styles.thTable} ${styles.headers}`}>
+                              {aux}
+                            </th>
+                          );
+                        }
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody className={styles.tbody}>
+                    {subscriptions.map((subscription) => {
+                      return (
+                        <>
+                          <tr key={subscription._id} className={styles.rows}>
+                            {fields.map((field, index) => {
+                              const nestedFields = field.split('.');
+                              const fieldData = nestedFields.reduce(
+                                (obj, field) => obj && obj[field],
+                                subscription
+                              );
+                              let transformedFieldData =
+                                field === 'date' ? fieldData.substring(0, 10) : fieldData;
+                              if (fieldData === (undefined || null)) {
+                                if (!fieldData) transformedFieldData = 'empty';
+                              }
+                              return (
+                                <td key={index} className={styles.thTable}>
+                                  {transformedFieldData}
+                                </td>
+                              );
+                            })}
+                            <td className={styles.thTable} data-testid="buttons-table">
+                              <Button
+                                text="X"
+                                type="deleteCancel"
+                                clickAction={() => openModalConfirm(subscription._id)}
+                              />
+                            </td>
+                          </tr>
+                        </>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
+        </div>
       </div>
     </>
   ) : (
     <>
       <Aside page={'admins'} />
-      <div className={style.container}>
+      <div className={styles.container}>
         <section>
           <Modal
             title={responseModal.title}
@@ -107,10 +162,7 @@ function Subscriptions() {
           {pending && <Spinner />}
           {!pending && (
             <section>
-              <Link to="/admins/subscriptions/form/">
-                <Button text="Create" type="create" />
-              </Link>
-              <p className={style.info}>There is no Subscription yet.</p>
+              <p className={styles.info}>There is no Subscription yet.</p>
             </section>
           )}
         </section>
