@@ -6,7 +6,6 @@ import Spinner from 'Components/Shared/Spinner';
 import { Link } from 'react-router-dom';
 import { deleteClass, getClasses } from 'Redux/Classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-/* import Table from 'Components/Shared/Table'; */
 import Aside from 'Components/Shared/Aside';
 
 function Classes() {
@@ -14,7 +13,7 @@ function Classes() {
   const classes = useSelector((state) => state.classes.data);
   const loading = useSelector((state) => state.classes.isLoading);
 
-  const [idDelete /* , setIdDelete */] = useState('');
+  const [idDelete, setIdDelete] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({
     title: '',
@@ -49,7 +48,7 @@ function Classes() {
     dispatch(getClasses());
   }, []);
 
-  /* const openModalConfirm = (id) => {
+  const openModalConfirm = (id) => {
     setIdDelete(id);
     setResponseModal({
       title: 'Confirm',
@@ -57,7 +56,7 @@ function Classes() {
       isConfirm: true
     });
     setIsOpen(true);
-  }; */
+  };
 
   const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const timeSlots = [
@@ -131,7 +130,10 @@ function Classes() {
                                 .map((oneClass, index) => {
                                   return (
                                     <div className={styles.card} key={index}>
-                                      <button className={styles.classCard}>
+                                      <Link
+                                        to={'/admins/classes/form/' + oneClass._id}
+                                        className={styles.classCard}
+                                      >
                                         <p className={styles.inlineBlock}>
                                           <div>{`Activity: ${
                                             oneClass && oneClass.activity
@@ -145,6 +147,12 @@ function Classes() {
                                           }`}</div>
                                           <div>{`Slots: ${oneClass.slots}`}</div>
                                         </p>
+                                      </Link>
+                                      <button
+                                        className={styles.deleteButton}
+                                        onClick={() => openModalConfirm(oneClass._id)}
+                                      >
+                                        X
                                       </button>
                                     </div>
                                   );
