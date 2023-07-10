@@ -48,10 +48,9 @@ const Login = () => {
   const logUser = async (userValue) => {
     try {
       const dataResponse = await dispatch(login(userValue));
-
       const modalData = {
         title: dataResponse.type === 'LOGIN_ERROR' ? 'Error!' : 'Success!',
-        desc: dataResponse.type === 'LOGIN_ERROR' ? 'Invalid credentials' : ''
+        desc: dataResponse.type === 'LOGIN_ERROR' ? 'Invalid credentials' : 'Logged successfully'
       };
       setModalInfo(modalData);
       if (dataResponse.type === 'LOGIN_ERROR') {
