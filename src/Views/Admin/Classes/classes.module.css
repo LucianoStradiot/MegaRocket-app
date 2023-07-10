@@ -43,48 +43,76 @@
 }
 
 .classCard {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: 115px;
+  width: 150px;
   height: 80px;
   font-weight: 600;
   color: #fff;
   background-color: #2E355B;
   font-size: 14px;
   text-decoration: none;
-  border-radius: 8px 0 0 8px;
+  border-radius: 8px;
+  border: 1px solid #2E355B;
+  z-index: 4;
 }
 
-.deleteButton {
-  width: 35px;
-  height: 80px;
-  background-color: #9849e7;
-  color: white;
-  border-radius: 0 8px 8px 0;
-  border: none;
-  font-size: 16px;
-  margin: 0;
-  padding: 0;
-}
-
-.deleteButton:hover {
-  font-weight: 600;
-  background-color: white;
-  font-size: 20px;
-  color: #9849e7;
+.edit {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  color: #ffffff;
+  z-index: 0;
   cursor: pointer;
-  border: 1px solid #9849e7;
-  transition: 0.4s ease-in;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.edit:hover {
+  border: 2px solid #2E355B;
+  background-color: rgb(70, 163, 124);
+  z-index: 6;
+}
+
+.delete {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 20px;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #ffffff00;
+  color: #fff;
+  border: none;
+  z-index: 0;
+  cursor: pointer;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.delete:hover {
+  border: 2px solid #2E355B;
+  background-color: #f55348;
+  color: #fff;
+  z-index: 6;
 }
 
 .classCard:hover {
   transition: 0.4s ease-in;
   color: #2E355B;
-  background-color: #fff;
-  border-color: #2E355B;
-  cursor: pointer;
+  background-color: #2E355B;
+  border: none;
 }
 
 .inlineBlock {
@@ -113,4 +141,11 @@
 
 .info p {
   margin: 0 auto;
+}
+
+.editIcon {
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  color: #fff;
 }

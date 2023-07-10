@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { deleteClass, getClasses } from 'Redux/Classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Aside from 'Components/Shared/Aside';
+import { FiEdit } from 'react-icons/fi';
 
 function Classes() {
   const dispatch = useDispatch();
@@ -92,13 +93,6 @@ function Classes() {
             {loading && <Spinner />}
             {!loading && (
               <section>
-                {/* <Table
-                list={classes}
-                column={['Day', 'Hour', 'Trainer', 'Activity', 'Slots', '']}
-                fields={['day', 'hour', 'trainer.lastName', 'activity.name', 'slots']}
-                link={'/admins/classes/form/'}
-                action={openModalConfirm}
-              /> */}
                 <table>
                   <thead>
                     <tr className={styles.tr}>
@@ -130,10 +124,7 @@ function Classes() {
                                 .map((oneClass, index) => {
                                   return (
                                     <div className={styles.card} key={index}>
-                                      <Link
-                                        to={'/admins/classes/form/' + oneClass._id}
-                                        className={styles.classCard}
-                                      >
+                                      <div className={styles.classCard}>
                                         <p className={styles.inlineBlock}>
                                           <div>{`Activity: ${
                                             oneClass && oneClass.activity
@@ -147,13 +138,19 @@ function Classes() {
                                           }`}</div>
                                           <div>{`Slots: ${oneClass.slots}`}</div>
                                         </p>
-                                      </Link>
-                                      <button
-                                        className={styles.deleteButton}
-                                        onClick={() => openModalConfirm(oneClass._id)}
-                                      >
-                                        X
-                                      </button>
+                                        <Link
+                                          to={'/admins/classes/form/' + oneClass._id}
+                                          className={styles.edit}
+                                        >
+                                          <FiEdit className={styles.editIcon} />
+                                        </Link>
+                                        <button
+                                          className={styles.delete}
+                                          onClick={() => openModalConfirm(oneClass._id)}
+                                        >
+                                          X
+                                        </button>
+                                      </div>
                                     </div>
                                   );
                                 })}
