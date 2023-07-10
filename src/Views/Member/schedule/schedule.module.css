@@ -28,7 +28,7 @@
 }
 
 .searchBar input:focus {
-  outline-color: #2E355B; /* Esto elimina el contorno predeterminado en algunos navegadores */
+  outline-color: #2E355B;
 }
 
 .container {
@@ -170,9 +170,4 @@
 .info p {
   margin: 0 auto;
 }
-
-/* .background {
-  border-radius: 10px;
-  background-color: #aaa;
-} */
 
