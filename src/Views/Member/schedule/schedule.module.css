@@ -1,16 +1,41 @@
 .mainContainer {
   margin-left: 20vh;
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: center;
   align-items: center;
+  margin-top: 100px;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.searchBar {
+  display: flex;
+  align-self: flex-end;
+}
+
+.searchBar input{
+  border: none;
+  border-radius: 8px;
+  width: 195px;
+  padding: 8px;
+  font-size: 16px;
+  background-color: white;
+}
+
+.searchBar input:focus {
+  outline-color: #2E355B; /* Esto elimina el contorno predeterminado en algunos navegadores */
 }
 
 .container {
   background-color: #cbebf3cc;
   padding-right: 5px;
   border-radius: 8px;
-  margin-top: 100px;
+  margin-top: 10px;
 }
 
 .screenContainer {
