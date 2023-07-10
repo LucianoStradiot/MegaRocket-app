@@ -153,7 +153,7 @@ const SignUpMember = () => {
   const closeForm = () => {
     if (isMemberCreated) {
       setIsOpen(false);
-      history.push('/schedule');
+      history.push('/auth/login');
     }
     setIsOpen(!isOpen);
   };
