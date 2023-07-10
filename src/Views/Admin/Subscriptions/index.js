@@ -59,90 +59,91 @@ function Subscriptions() {
   return subscriptions.length > 0 ? (
     <>
       <Aside page={'admins'} />
-      <div className={styles.container}>
-        <section className={styles.subContainer}>
-          <Modal
-            title={responseModal.title}
-            desc={responseModal.description}
-            isOpen={isOpen}
-            confirmModal={responseModal.isConfirm}
-            handleClose={() => setIsOpen(!isOpen)}
-            deleteFunction={() => handleDeleteSub(idDelete)}
-          />
-          {pending && <Spinner />}
-          {!pending && (
-            <div>
-              <table className={styles.contTable}>
-                <thead className={styles.theadTable}>
-                  <tr>
-                    {column.map((aux, index) => {
-                      if (index === column.length - 1) {
-                        return (
-                          <th
-                            key={index}
-                            className={`${styles.thTable} ${styles.headers} ${styles.borderRight}`}
-                          >
-                            {aux}
-                          </th>
-                        );
-                      } else if (index === 0) {
-                        return (
-                          <th
-                            key={index}
-                            className={`${styles.thTable} ${styles.headers} ${styles.borderLeft}`}
-                          >
-                            {aux}
-                          </th>
-                        );
-                      } else {
-                        return (
-                          <th key={index} className={`${styles.thTable} ${styles.headers}`}>
-                            {aux}
-                          </th>
-                        );
-                      }
+      <div className={styles.mainContainer}>
+        <div className={styles.container}>
+          <section className={styles.subContainer}>
+            <Modal
+              title={responseModal.title}
+              desc={responseModal.description}
+              isOpen={isOpen}
+              confirmModal={responseModal.isConfirm}
+              handleClose={() => setIsOpen(!isOpen)}
+              deleteFunction={() => handleDeleteSub(idDelete)}
+            />
+            {pending && <Spinner />}
+            {!pending && (
+              <div className={styles.tableContainer}>
+                <table className={styles.contTable}>
+                  <thead className={styles.theadTable}>
+                    <tr>
+                      {column.map((aux, index) => {
+                        if (index === column.length - 1) {
+                          return (
+                            <th
+                              key={index}
+                              className={`${styles.thTable} ${styles.headers} ${styles.borderRight}`}
+                            >
+                              {aux}
+                            </th>
+                          );
+                        } else if (index === 0) {
+                          return (
+                            <th
+                              key={index}
+                              className={`${styles.thTable} ${styles.headers} ${styles.borderLeft}`}
+                            >
+                              {aux}
+                            </th>
+                          );
+                        } else {
+                          return (
+                            <th key={index} className={`${styles.thTable} ${styles.headers}`}>
+                              {aux}
+                            </th>
+                          );
+                        }
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody className={styles.tbody}>
+                    {subscriptions.map((subscription) => {
+                      return (
+                        <>
+                          <tr key={subscription._id} className={styles.rows}>
+                            {fields.map((field, index) => {
+                              const nestedFields = field.split('.');
+                              const fieldData = nestedFields.reduce(
+                                (obj, field) => obj && obj[field],
+                                subscription
+                              );
+                              let transformedFieldData =
+                                field === 'date' ? fieldData.substring(0, 10) : fieldData;
+                              if (fieldData === (undefined || null)) {
+                                if (!fieldData) transformedFieldData = 'empty';
+                              }
+                              return (
+                                <td key={index} className={styles.thTable}>
+                                  {transformedFieldData}
+                                </td>
+                              );
+                            })}
+                            <td className={styles.thTable} data-testid="buttons-table">
+                              <Button
+                                text="X"
+                                type="deleteCancel"
+                                clickAction={() => openModalConfirm(subscription._id)}
+                              />
+                            </td>
+                          </tr>
+                        </>
+                      );
                     })}
-                  </tr>
-                </thead>
-
-                <tbody className={styles.tbody}>
-                  {subscriptions.map((subscription) => {
-                    return (
-                      <>
-                        <tr key={subscription._id} className={styles.rows}>
-                          {fields.map((field, index) => {
-                            const nestedFields = field.split('.');
-                            const fieldData = nestedFields.reduce(
-                              (obj, field) => obj && obj[field],
-                              subscription
-                            );
-                            let transformedFieldData =
-                              field === 'date' ? fieldData.substring(0, 10) : fieldData;
-                            if (fieldData === (undefined || null)) {
-                              if (!fieldData) transformedFieldData = 'empty';
-                            }
-                            return (
-                              <td key={index} className={styles.thTable}>
-                                {transformedFieldData}
-                              </td>
-                            );
-                          })}
-                          <td className={styles.thTable} data-testid="buttons-table">
-                            <Button
-                              text="X"
-                              type="deleteCancel"
-                              clickAction={() => openModalConfirm(subscription._id)}
-                            />
-                          </td>
-                        </tr>
-                      </>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </section>
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
+        </div>
       </div>
     </>
   ) : (
