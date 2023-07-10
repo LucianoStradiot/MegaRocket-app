@@ -23,13 +23,13 @@ const Aside = ({ page }) => {
   const handleLogout = async () => {
     try {
       const response = await dispatch(logout());
-      sessionStorage.clear();
       if (response.error) {
         throw new Error(response.message);
       } else {
+        sessionStorage.clear();
         setModalInfo({
           title: 'Success!',
-          desc: response.message
+          desc: 'Successfully logged out'
         });
         setConfirmModal(false);
         history.push('/');
