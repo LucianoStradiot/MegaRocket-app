@@ -3,9 +3,10 @@ const LoginPage = require ('../pageobjects/loginPage.js');
 const MemberPage = require ('../pageobjects/memberPage.js');
 const SchedulePage = require ('../pageobjects/schedulePage.js');
 const MembershipPage = require ('../pageobjects/membershipPage.js');
+const ForgotPassword = require ('../pageobjects/forgotPassword.js');
 
-describe('Sign up negative test cases', () => {
-  it('should not let sign up with wmpty fields', async () => {
+describe('Sign up flow', () => {
+  it('should not let sign up with empty fields', async () => {
     await SignUpPage.openSignUpPage();
     await SignUpPage.addMember('', '', '', '', '', '', '', '','Choose a membership', '');
     await expect(SignUpPage.errorName).toBeDisplayed();
@@ -49,65 +50,88 @@ describe('Sign up negative test cases', () => {
     await expect(SignUpPage.modal).toBeDisplayed();
     await SignUpPage.acceptBtn.click();
   });
-});
-
-describe("Sign up positive test cases", () => {
-  it("It should add a member", async () => {
+  it('It should add a member with valid info', async () => {
     await SignUpPage.openSignUpPage();
     await SignUpPage.addMember('Katerine', 'Airala', 'example@gmail.com', '5947558', '2234567891', 'Montevideo', '11700', '2/2/1997','Black Membership', 'Hola123456');
     await expect(SignUpPage.modal).toBeDisplayed();
     await SignUpPage.acceptBtn.click();
     await expect(browser).toHaveUrl(
-      "https://joaco-megarocket-app.vercel.app/schedule"
+      'https://joaco-megarocket-app.vercel.app/auth/login'
     );
   });
 });
 
-describe("Negative members login cases", () => {
-  it("Should display error message when login fields are empty", async () => {
-    await LoginPage.open();
-    await LoginPage.login("", "");
-    await expect(LoginPage.errorMail).toBeDisplayed();
-    await expect(LoginPage.errorPassword).toBeDisplayed();
+describe('Recover Password flow', () => {
+  it('Should not recover the password with an empty email', async () => {
+    await ForgotPassword.openPage();
+    await ForgotPassword.setEmail('');
+    await ForgotPassword.recoverPasswdBtn.click();
+    await expect(ForgotPassword.errorMail).toBeDisplayed();
   });
-  it("Should display error message when email field is empty", async () => {
-    await LoginPage.open();
-    await LoginPage.login("", "Password123");
-    await expect(LoginPage.errorMail).toBeDisplayed();
+  it('Should not recover the password with an invalid email', async () => {
+    await ForgotPassword.openPage();
+    await ForgotPassword.setEmail('invalid');
+    await ForgotPassword.recoverPasswdBtn.click();
+    await expect(ForgotPassword.errorMail).toBeDisplayed();
   });
-  it("Should display error message when dni field is empty", async () => {
-    await LoginPage.open();
-    await LoginPage.login("a@a.com", "");
-    await expect(LoginPage.errorPassword).toBeDisplayed();
+  it('Should not recover the password with an unexisting email', async () => {
+    await ForgotPassword.openPage();
+    await ForgotPassword.setEmail('katt@gmail.com');
+    await ForgotPassword.recoverPasswdBtn.click();
+    await expect(ForgotPassword.modal).toBeDisplayed();
+    await ForgotPassword.acceptBtn.click();
   });
-  it("Should display error message with invalid credentials", async () => {
-    await LoginPage.open();
-    await LoginPage.login("invalid", "1234567");
-    await expect(LoginPage.errorMail).toBeDisplayed();
-    await expect(LoginPage.errorPassword).toBeDisplayed();
-  });
-  it("Should display error message with inexistent credentials", async () => {
-    await LoginPage.open();
-    await LoginPage.login("invalid@gmail.com", "Password111");
-    await expect(LoginPage.modal).toBeDisplayed();
-    await LoginPage.acceptBtn.click();
+  it('Should recover the password with a valid email', async () => {
+    await ForgotPassword.openPage();
+    await ForgotPassword.setEmail('kat@gmail.com');
+    await ForgotPassword.recoverPasswdBtn.click();
+    await expect(ForgotPassword.modal).toBeDisplayed();
+    await ForgotPassword.acceptBtn.click();
   });
 });
 
-describe("Positive members login cases", () => {
-  it("Login should be successful", async () => {
+describe('Login flow', () => {
+  it('Should display error message when login fields are empty', async () => {
+    await LoginPage.open();
+    await LoginPage.login('', '');
+    await expect(LoginPage.errorMail).toBeDisplayed();
+    await expect(LoginPage.errorPassword).toBeDisplayed();
+  });
+  it('Should display error message when email field is empty', async () => {
+    await LoginPage.open();
+    await LoginPage.login('', 'Password123');
+    await expect(LoginPage.errorMail).toBeDisplayed();
+  });
+  it('Should display error message when dni field is empty', async () => {
+    await LoginPage.open();
+    await LoginPage.login('a@a.com', '');
+    await expect(LoginPage.errorPassword).toBeDisplayed();
+  });
+  it('Should display error message with invalid credentials', async () => {
+    await LoginPage.open();
+    await LoginPage.login('invalid', '1234567');
+    await expect(LoginPage.errorMail).toBeDisplayed();
+    await expect(LoginPage.errorPassword).toBeDisplayed();
+  });
+  it('Should display error message with inexistent credentials', async () => {
+    await LoginPage.open();
+    await LoginPage.login('invalid@gmail.com', 'Password111');
+    await expect(LoginPage.modal).toBeDisplayed();
+    await LoginPage.acceptBtn.click();
+  });
+  it('Login should be successful with valid credentials', async () => {
     await LoginPage.open();
     await LoginPage.login('kat@gmail.com', 'Password123');
     await expect(LoginPage.modal).toBeDisplayed();
     await LoginPage.acceptBtn.click();
     await expect(browser).toHaveUrl(
-      "https://joaco-megarocket-app.vercel.app/"
+      'https://joaco-megarocket-app.vercel.app/'
     );
   });
 });
 
-describe("Social media buttons", () => {
-  it("should click on social media icons", async () => {
+describe('Social media buttons', () => {
+  it('should click on social media icons', async () => {
     await MemberPage.openMembersPage();
     await MemberPage.fbIcon.click();
     await MemberPage.igIcon.click();

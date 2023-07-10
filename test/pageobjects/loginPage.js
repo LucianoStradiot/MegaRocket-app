@@ -24,12 +24,17 @@ class LoginPage {
       '[data-testId="input-password-login"] + p'
     );
   }
+
   get modal() {
     return $('[data-testid="modal-success"]');
   }
 
   get acceptBtn() {
     return $('[data-testid="modal-success"] > button');
+  }
+
+  get forgotPassword() {
+    return $('[data-testid="container-login"] .login_password__rDUIU a');
   }
 
   async setEmail(email) {
@@ -51,7 +56,7 @@ class LoginPage {
   }
 
   open() {
-    return browser.url("https://joaco-megarocket-app.vercel.app/auth/login");
+    return browser.url('https://joaco-megarocket-app.vercel.app/auth/login');
   }
 }
 
