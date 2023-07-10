@@ -17,6 +17,7 @@ const Memberships = lazy(() => import('Views/Member/memberships'));
 const MemberSchedule = lazy(() => import('Views/Member/schedule'));
 const ActivityInfo = lazy(() => import('Views/Member/activities'));
 const RecoverPassword = lazy(() => import('../Views/login/recoverPassword'));
+const Profile = lazy(() => import('Views/Profile'));
 const Layout = () => {
   const dispatch = useDispatch();
   const token = sessionStorage.getItem('token');
@@ -38,6 +39,7 @@ const Layout = () => {
           <Route path="/signUp" exact component={SignUpMember} />
           <Route path="/membership" exact component={Memberships} />
           <Route path="/schedule" exact component={MemberSchedule} />
+          <Route path="/profile" exact component={Profile} />
           <Route path="/activities" exact component={ActivityInfo} />
           <PrivateRoute path="/admins" role="ADMIN" component={AdminsRoutes} />
           <PrivateRoute path="/members" role="MEMBER" component={MemberRoute} />
