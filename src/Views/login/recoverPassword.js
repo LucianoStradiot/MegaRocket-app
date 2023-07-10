@@ -46,7 +46,7 @@ const recoveryPassword = () => {
       await dispatch(recoverPassword(email.email));
       if (error !== null) {
         setIsOpen(true);
-        await setModalInfo({
+        setModalInfo({
           title: 'Recovering password...',
           desc: 'Please check your email inbox'
         });
@@ -56,7 +56,7 @@ const recoveryPassword = () => {
       }
     } catch (error) {
       setEmail(false);
-      await setModalInfo({
+      setModalInfo({
         title: 'Error!',
         desc: 'There is no user with this email address'
       });
@@ -67,7 +67,7 @@ const recoveryPassword = () => {
 
   const closeForm = () => {
     if (email) {
-      history.push('/');
+      history.push('/auth/login');
       setIsOpen(!isOpen);
     }
     setIsOpen(!isOpen);
