@@ -118,7 +118,7 @@ const Login = () => {
         </Link>
         <div className={styles.btnContainer}>
           <div>
-            <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
+            <Button text="Cancel" type="cancel" clickAction={() => history.push('/')} />
           </div>
           <Button text={'Login'} type={'submit'} testId="confirm-button-login" />
         </div>
