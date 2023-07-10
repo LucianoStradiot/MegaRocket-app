@@ -10,7 +10,7 @@ function Header() {
       name = 'Activities';
       break;
     case '/superAdmins/admins':
-      name = 'Admins';
+      name = 'Super Admin';
       break;
     case '/admins/classes':
       name = 'Classes';
