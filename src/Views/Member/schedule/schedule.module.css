@@ -84,44 +84,6 @@
   cursor: pointer;
 }
 
-.fullClassCard {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  margin: 3px;
-  width: 150px;
-  height: 80px;
-  font-weight: 600;
-  color: #000;
-  background-color: #ccc;
-  border-radius: 8px;
-  border: 1px solid;
-}
-
-.subscribedClass {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  margin: 3px;
-  width: 150px;
-  height: 80px;
-  font-weight: 600;
-  color: #fff;
-  background-color: rgb(70, 163, 124);
-  border-radius: 8px;
-  border: 1px solid;
-}
-
-.subscribedClass:hover {
-  transition: 0.4s;
-  color: #2E355B;
-  background-color: #fff;
-  border-color: #2E355B;
-  cursor: pointer;
-}
-
 .inlineBlock {
   display: inline-block;
 }
@@ -171,3 +133,25 @@
   margin: 0 auto;
 }
 
+.subscribedClass {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 3px;
+  width: 150px;
+  height: 80px;
+  font-weight: 600;
+  color: #fff;
+  background-color: rgb(70, 163, 124);
+  border-radius: 8px;
+  border: 1px solid;
+}
+
+.subscribedClass:hover {
+  transition: 0.4s;
+  color: #2E355B;
+  background-color: #fff;
+  border-color: #2E355B;
+  cursor: pointer;
+}

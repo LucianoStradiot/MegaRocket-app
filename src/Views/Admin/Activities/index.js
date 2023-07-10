@@ -98,25 +98,27 @@ function Activities() {
       </div>
     </>
   ) : (
-    <div>
+    <>
       <Aside page={'admins'} />
-      <section className={styles.container}>
-        <Modal
-          title={modalInfo.title}
-          desc={modalInfo.desc}
-          isOpen={isOpen}
-          handleClose={switchIsOpen}
-          confirmModal={confirmModal}
-          deleteFunction={() => handleDelActivity()}
-        />
-        <section>
-          <Link to="/admins/activities/form">
-            <Button text="Create" type="create" />
-          </Link>
-          <p className={styles.info}>There is no Activity yet.</p>
+      <div className={styles.mainContainer}>
+        <section className={styles.container}>
+          <Modal
+            title={modalInfo.title}
+            desc={modalInfo.desc}
+            isOpen={isOpen}
+            handleClose={switchIsOpen}
+            confirmModal={confirmModal}
+            deleteFunction={() => handleDelActivity()}
+          />
+          <section>
+            <Link to="/admins/activities/form">
+              <Button text="Create" type="create" />
+            </Link>
+            <p className={styles.info}>There is no Activity yet.</p>
+          </section>
         </section>
-      </section>
-    </div>
+      </div>
+    </>
   );
 }
 

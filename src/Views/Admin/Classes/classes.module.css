@@ -1,49 +1,159 @@
+.mainContainer {
+  margin-left: 20vh;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
 .container {
+  background-color: #cbebf3cc;
+  padding-right: 5px;
+  border-radius: 8px;
+  margin-top: 100px;
+}
+
+.screenContainer {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.screenContainer::-webkit-scrollbar {
+  width: 10px;
+  background-color: none;
+}
+
+.screenContainer::-webkit-scrollbar-thumb {
+  background-color: #2E355B;
+  border-radius: 5px;
+}
+
+.screenContainer::-webkit-scrollbar-thumb:hover {
+  background-color: #465089;
+}
+
+.screenContainer::-webkit-scrollbar-track {
+  background-color: none;
+}
+
+.card {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  margin-top: 120px;
-  width: 100%;
-  margin-left: 20vh;
-  color: #373867;
 }
 
-.subContainer {
-  background-color: #cbebf377;
-  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.5), 0px 24px 38px 3px rgba(0, 0, 0, 0.5);
-  border-radius: 15px;
-  padding: 35px;
+.classCard {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  width: 150px;
+  height: 80px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #2E355B;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 1px solid #2E355B;
+  z-index: 4;
+}
+
+.edit {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #ffffff00;
+  color: #ffffff00;
+  z-index: 0;
+  cursor: pointer;
+  border-radius: 8px;
+  box-sizing: border-box;
+  border: none;
+}
+
+.edit:hover {
+  border: 2px solid #2E355B;
+  background-color: rgb(70, 163, 124);
+  z-index: 6;
+}
+
+.delete {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 20px;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #ffffff00;
+  color: #ffffff00;
+  border: none;
+  z-index: 0;
+  cursor: pointer;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding-top: 10px;
+}
+
+.delete:hover {
+  border: 2px solid #2E355B;
+  background-color: #f55348;
+  color: #fff;
+  z-index: 6;
+}
+
+.classCard:hover {
+  color: #2E355B;
+  background-color: #2E355B;
+  border: none;
+}
+
+.inlineBlock {
+  display: inline-block;
 }
 
 .table {
+  padding-right: 50px;
+  box-sizing: border-box;
+  text-align: center;
   border-collapse: collapse;
-  margin-top: 10px;
-}
-
-.info {
-  font-size: 24px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid #aaa;
-  font-weight: 600;
-  color: #fff;
 }
 
 .th {
-  background-color: #eee;
-  padding: 10px 16px;
-  font-size: 16px;
+  width: 150px;
+  height: 88px;
 }
 
-.td {
-  padding: 10px 26px;
-  border-bottom: 1px solid #ddd;
+.info {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-left: 14px;
+  margin-bottom: 3px;
 }
 
-.firstTH {
-  border-radius: 8px 0 0 0;
+.info p {
+  margin: 0 auto;
 }
 
-.lastTH {
-  border-radius: 0 8px 0 0;
+.editIcon {
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  opacity: 0;
+}
+
+.classCard:hover .editIcon {
+  opacity: 1;
 }
