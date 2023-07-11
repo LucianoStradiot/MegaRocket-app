@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'Components/Shared/Button';
 import TextInput from 'Components/Shared/TextInput';
-import Select from 'Components/Shared/Select';
 import Modal from 'Components/Shared/Modal';
 import styles from './form-trainers.module.css';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { useHistory } from 'react-router-dom';
-import { getTrainers, createTrainer, updateTrainer } from 'Redux/Trainers/thunks';
+import { createTrainer, updateTrainer } from 'Redux/Trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
 import { getAuth } from 'Redux/Auth/thunks';
@@ -20,7 +19,6 @@ const FormTrainers = () => {
   const [buttonAddIsVisible, setAddVisible] = useState(false);
   const [isTrainerCreated, setIsTrainerCreated] = useState(false);
   const [buttonSaveIsVisible, setSaveVisible] = useState(false);
-  const [activeVisible, setActiveVisible] = useState(false);
   const RGXPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
   const idLogged = sessionStorage.getItem('firebaseUid');
@@ -105,7 +103,6 @@ const FormTrainers = () => {
   const {
     register,
     handleSubmit,
-    reset,
     setValue,
     formState: { errors }
   } = useForm({ mode: 'onSubmit', resolver: joiResolver(schema) });
@@ -116,9 +113,6 @@ const FormTrainers = () => {
     isConfirm: false
   });
   const loading = useSelector((state) => state.trainers.isPending);
-  useEffect(() => {
-    dispatch(getTrainers());
-  }, [dispatch]);
 
   const handleCreationTrainer = async (formValue) => {
     const response = await dispatch(createTrainer(formValue));
@@ -139,8 +133,9 @@ const FormTrainers = () => {
   };
 
   const handleUpdateTrainer = async (formValue) => {
+    console.log('This is .id', dataLog.id, '/this is ._id', dataLog?._id);
     const payload = {
-      id: dataLog.id,
+      id: dataLog?._id,
       body: formValue
     };
     const response = await dispatch(updateTrainer(payload));
@@ -162,6 +157,7 @@ const FormTrainers = () => {
   };
 
   useEffect(() => {
+    console.log(dataLog);
     formEdit(dataLog._id);
   }, []);
 
@@ -177,12 +173,10 @@ const FormTrainers = () => {
         setValue('password', dataLog?.password);
         setValue('isActive', dataLog?.isActive);
         setAddVisible(false);
-        setActiveVisible(true);
         setSaveVisible(true);
       }
     } else {
       setAddVisible(true);
-      setActiveVisible(false);
       setSaveVisible(false);
     }
   };
@@ -253,14 +247,8 @@ const FormTrainers = () => {
             />
           </div>
           <div className={styles.inputContainer}>
-            <TextInput
-              labelName="Email"
-              inputType="text"
-              name="email"
-              register={register}
-              selectID="email"
-              error={errors.email?.message}
-            />
+            <label>Email</label>
+            <p>{dataLog?.email}</p>
           </div>
           <div className={styles.inputContainer}>
             <TextInput
@@ -272,20 +260,10 @@ const FormTrainers = () => {
               error={errors.city?.message}
             />
           </div>
-          {activeVisible && (
-            <div className={styles.inputContainer}>
-              <label className={styles.label}>Status</label>
-              <Select name="isActive" register={register} error={errors.isActive?.message}>
-                <option value={true}>Active</option>
-                <option value={false}>Inactive</option>
-              </Select>
-            </div>
-          )}
         </div>
         <div className={styles.btnContainer}>
           <div>
             <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="submit" clickAction={() => reset()} />
           </div>
           {buttonAddIsVisible && <Button text="Add" type="submit" testId="trainer-add-button" />}
           {buttonSaveIsVisible && <Button text="Save" type="submit" testId="trainer-save-button" />}
