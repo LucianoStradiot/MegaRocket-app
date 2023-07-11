@@ -130,16 +130,16 @@ const FormClasses = () => {
   };
 
   useEffect(() => {
-    dispatch(getClasses());
     dispatch(getActivities());
     dispatch(getTrainers());
+    dispatch(getClasses());
   }, []);
 
   useEffect(() => {
-    formEdit(id);
+    formEdit();
   }, []);
 
-  const formEdit = (id) => {
+  const formEdit = () => {
     if (id) {
       const data = classes.find((oneClass) => oneClass._id === id);
       if (data) {
@@ -263,9 +263,11 @@ const FormClasses = () => {
             </option>
             {activities.map((activity) => {
               return (
-                <option value={activity._id} key={activity._id}>
-                  {activity.name}
-                </option>
+                <>
+                  <option value={activity._id} key={activity._id}>
+                    {activity.name}
+                  </option>
+                </>
               );
             })}
           </Select>
@@ -279,8 +281,8 @@ const FormClasses = () => {
         </div>
         <div className={styles.sendContainer}>
           <div>
-            <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="submit" clickAction={() => reset()} />
+            <Button text="Cancel" type="button" clickAction={() => history.goBack()} />
+            <Button text="Reset" type="button" clickAction={() => reset()} />
           </div>
           {btnAddIsVisible && <Button text="Add" type="submit" testId="classes-add-button" />}
           {btnSaveIsVisible && <Button text="Save" type="submit" testId="classes-save-button" />}
