@@ -17,9 +17,6 @@ const FormTrainers = () => {
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
   const [isTrainerCreated, setIsTrainerCreated] = useState(false);
-  const [buttonSaveIsVisible, setSaveVisible] = useState(false);
-  const RGXPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-  const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
   const idLogged = sessionStorage.getItem('firebaseUid');
   const dataLog = useSelector((state) => state.user.user);
 
@@ -70,10 +67,6 @@ const FormTrainers = () => {
         'string.empty': 'Phone number can´t be empty',
         'string.pattern.base': 'Phone number must be only numbers'
       }),
-    email: Joi.string().regex(RGXEmail).required().messages({
-      'string.empty': 'Email can´t be empty',
-      'string.pattern.base': 'Email must be in a valid format'
-    }),
     city: Joi.string()
       .min(3)
       .regex(/^[a-zA-Z\s.,]+$/)
@@ -82,25 +75,11 @@ const FormTrainers = () => {
         'string.pattern.base': 'City must contain letters and spaces only',
         'string.empty': 'City can´t be empty',
         'string.min': 'City must have at least 4 characters'
-      }),
-    password: Joi.string().regex(RGXPass).required().messages({
-      'string.pattern.base':
-        'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
-      'string.empty': 'Password can´t be empty'
-    }),
-    salary: Joi.string()
-      .regex(/^[0-9]*$/)
-      .min(1)
-      .required()
-      .messages({
-        'string.pattern.base': 'Salary must contain numbers',
-        'string.empty': 'Salary can´t be empty',
-        'string.min': 'Salary must have at least 1 characters'
-      }),
-    isActive: Joi.string().valid('true', 'false').allow(true, false)
+      })
   });
   const {
     register,
+    handleSubmit,
     setValue,
     formState: { errors }
   } = useForm({ mode: 'onSubmit', resolver: joiResolver(schema) });
@@ -112,9 +91,13 @@ const FormTrainers = () => {
   });
   const loading = useSelector((state) => state.trainers.isPending);
 
+  const onSubmit = (data) => {
+    console.log('this is the data', data);
+    handleUpdateTrainer(data);
+  };
+
   const handleUpdateTrainer = async (formValue) => {
-    console.log('this is the formValue', formValue._id);
-    console.log('this is the datalog', dataLog._id);
+    console.log('this is the formValue', formValue);
     const payload = {
       id: dataLog?._id,
       body: formValue
@@ -138,24 +121,17 @@ const FormTrainers = () => {
   };
 
   useEffect(() => {
-    console.log(dataLog);
     formEdit(dataLog?._id);
   }, []);
 
   const formEdit = (id) => {
     if (id) {
-      if (dataLog) {
-        setValue('firstName', dataLog?.firstName);
-        setValue('lastName', dataLog?.lastName);
-        setValue('dni', dataLog?.dni.toString());
-        setValue('phone', dataLog?.phone.toString());
-        setValue('email', dataLog?.email);
-        setValue('city', dataLog?.city);
-        setValue('password', dataLog?.password);
-        setSaveVisible(true);
-      }
-    } else {
-      setSaveVisible(false);
+      setValue('firstName', dataLog?.firstName);
+      setValue('lastName', dataLog?.lastName);
+      setValue('dni', dataLog?.dni.toString());
+      setValue('phone', dataLog?.phone.toString());
+      setValue('email', dataLog?.email);
+      setValue('city', dataLog?.city);
     }
   };
 
@@ -178,7 +154,7 @@ const FormTrainers = () => {
         handleClose={closeForm}
       />
       {loading && <Spinner />}
-      <form className={styles.form} id="form-trainers">
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)} id="form-trainers">
         <div className={styles.subContainer}>
           <div className={styles.inputContainer}>
             <TextInput
@@ -239,14 +215,7 @@ const FormTrainers = () => {
           <div>
             <Button text="Cancel" type="button" clickAction={() => history.goBack()} />
           </div>
-          {buttonSaveIsVisible && (
-            <Button
-              text="Save"
-              type="button"
-              testId="trainer-save-button"
-              clickAction={() => handleUpdateTrainer(dataLog._id)}
-            />
-          )}
+          <Button text="Save" type="submit" testId="trainer-save-button" />
         </div>
       </form>
     </section>
