@@ -274,12 +274,14 @@ const SignUpMember = () => {
               name={'password'}
               testId="input-password-login"
             />
-            {!showPassword && (
-              <FiEyeOff className={styles.editIcon} onClick={togglePasswordVisibility} />
-            )}
-            {showPassword && (
-              <FiEye className={styles.editIcon} onClick={togglePasswordVisibility} />
-            )}
+            <div className={styles.eyeContainer}>
+              {!showPassword && (
+                <FiEyeOff className={styles.editIcon} onClick={togglePasswordVisibility} />
+              )}
+              {showPassword && (
+                <FiEye className={styles.editIcon} onClick={togglePasswordVisibility} />
+              )}
+            </div>
           </div>
           <div className={styles.inputContainer}></div>
         </div>

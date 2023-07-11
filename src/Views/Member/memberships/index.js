@@ -19,7 +19,9 @@ const MembershipMember = () => {
           <section className={styles.cardsCont}>
             <Link
               className={`${styles.cardContainer} ${styles.only}`}
-              to="/signUp?membership=Only Classes Membership"
+              to={
+                sessionStorage.getItem('role') ? `/` : `/signUp?membership=Only Classes Membership`
+              }
             >
               <div>
                 <h3>ONLY CLASSES</h3>
@@ -30,7 +32,7 @@ const MembershipMember = () => {
               </div>
             </Link>
             <Link
-              to="/signUp?membership=Classic Membership"
+              to={sessionStorage.getItem('role') ? `/` : `/signUp?membership=Classic Membership`}
               className={`${styles.cardContainer} ${styles.classic}`}
             >
               <div>
@@ -43,7 +45,7 @@ const MembershipMember = () => {
               </div>
             </Link>
             <Link
-              to="/signUp?membership=Black Membership"
+              to={sessionStorage.getItem('role') ? `/` : `/signUp?membership=Black Membership`}
               className={`${styles.cardContainer} ${styles.black}`}
             >
               <div>
