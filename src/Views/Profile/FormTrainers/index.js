@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { useHistory } from 'react-router-dom';
-import { createTrainer, updateTrainer } from 'Redux/Trainers/thunks';
+import { updateTrainer } from 'Redux/Trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
 import { getAuth } from 'Redux/Auth/thunks';
@@ -16,7 +16,6 @@ const FormTrainers = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
-  const [buttonAddIsVisible, setAddVisible] = useState(false);
   const [isTrainerCreated, setIsTrainerCreated] = useState(false);
   const [buttonSaveIsVisible, setSaveVisible] = useState(false);
   const RGXPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
@@ -102,7 +101,6 @@ const FormTrainers = () => {
   });
   const {
     register,
-    handleSubmit,
     setValue,
     formState: { errors }
   } = useForm({ mode: 'onSubmit', resolver: joiResolver(schema) });
@@ -114,26 +112,9 @@ const FormTrainers = () => {
   });
   const loading = useSelector((state) => state.trainers.isPending);
 
-  const handleCreationTrainer = async (formValue) => {
-    const response = await dispatch(createTrainer(formValue));
-    if (!response.error) {
-      setResponseModal({
-        title: 'Success!',
-        description: response.message
-      });
-      setIsTrainerCreated(true);
-    } else {
-      setIsTrainerCreated(false);
-      setResponseModal({
-        title: 'Error!',
-        description: response.message
-      });
-    }
-    setIsOpen(true);
-  };
-
   const handleUpdateTrainer = async (formValue) => {
-    console.log('This is .id', dataLog.id, '/this is ._id', dataLog?._id);
+    console.log('this is the formValue', formValue._id);
+    console.log('this is the datalog', dataLog._id);
     const payload = {
       id: dataLog?._id,
       body: formValue
@@ -158,7 +139,7 @@ const FormTrainers = () => {
 
   useEffect(() => {
     console.log(dataLog);
-    formEdit(dataLog._id);
+    formEdit(dataLog?._id);
   }, []);
 
   const formEdit = (id) => {
@@ -171,18 +152,11 @@ const FormTrainers = () => {
         setValue('email', dataLog?.email);
         setValue('city', dataLog?.city);
         setValue('password', dataLog?.password);
-        setValue('isActive', dataLog?.isActive);
-        setAddVisible(false);
         setSaveVisible(true);
       }
     } else {
-      setAddVisible(true);
       setSaveVisible(false);
     }
-  };
-
-  const onSubmit = (data) => {
-    dataLog._id ? handleUpdateTrainer(data) : handleCreationTrainer(data);
   };
 
   const closeForm = () => {
@@ -204,7 +178,7 @@ const FormTrainers = () => {
         handleClose={closeForm}
       />
       {loading && <Spinner />}
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)} id="form-trainers">
+      <form className={styles.form} id="form-trainers">
         <div className={styles.subContainer}>
           <div className={styles.inputContainer}>
             <TextInput
@@ -263,10 +237,16 @@ const FormTrainers = () => {
         </div>
         <div className={styles.btnContainer}>
           <div>
-            <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
+            <Button text="Cancel" type="button" clickAction={() => history.goBack()} />
           </div>
-          {buttonAddIsVisible && <Button text="Add" type="submit" testId="trainer-add-button" />}
-          {buttonSaveIsVisible && <Button text="Save" type="submit" testId="trainer-save-button" />}
+          {buttonSaveIsVisible && (
+            <Button
+              text="Save"
+              type="button"
+              testId="trainer-save-button"
+              clickAction={() => handleUpdateTrainer(dataLog._id)}
+            />
+          )}
         </div>
       </form>
     </section>
