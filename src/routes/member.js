@@ -11,7 +11,7 @@ const MemberRoute = () => {
     <Switch>
       <Route path="/membership" exact component={MembershipMember} />
       <Route path="/schedule/" component={MemberSchedule} />
-      <Route path="/profile/form" component={FormMember} />
+      <Route path="/profile/form/edit-member" component={FormMember} />
       <Route path="/profile" exact component={Profile} />
     </Switch>
   );

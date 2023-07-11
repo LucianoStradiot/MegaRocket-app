@@ -171,7 +171,6 @@ const FormTrainers = () => {
         setValue('email', data.email);
         setValue('city', data.city);
         setValue('password', data.password);
-        setValue('salary', data.salary.toString());
         setValue('isActive', data.isActive);
         setAddVisible(false);
         setActiveVisible(true);
@@ -279,16 +278,7 @@ const FormTrainers = () => {
               error={errors.password?.message}
             />
           </div>
-          <div className={styles.inputContainer}>
-            <TextInput
-              labelName="Salary"
-              inputType="text"
-              name="salary"
-              register={register}
-              selectID="salary"
-              error={errors.salary?.message}
-            />
-          </div>
+
           {activeVisible && (
             <div className={styles.inputContainer}>
               <label className={styles.label}>Status</label>

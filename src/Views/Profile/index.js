@@ -65,7 +65,7 @@ const Profile = () => {
               </div>
             </div>
             <div className={styles.contButton}>
-              <Link to="/profile/form">
+              <Link to="/profile/form/edit-member">
                 <Button text="Edit" type="create" />
               </Link>
             </div>
@@ -113,7 +113,7 @@ const Profile = () => {
             </div>
             <div className={styles.btnContainer}>
               <div>
-                <Link to="/profile/form">
+                <Link to="/profile/form/edit-trainer">
                   <Button text="Edit" type="create" />
                 </Link>
               </div>
