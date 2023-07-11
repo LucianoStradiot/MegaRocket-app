@@ -102,7 +102,6 @@ const FormMembers = () => {
   const {
     register,
     handleSubmit,
-    reset,
     setValue,
     formState: { errors }
   } = useForm({
@@ -304,9 +303,8 @@ const FormMembers = () => {
         <div className={styles.contButton}>
           <div>
             <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="submit" clickAction={() => reset()} />
           </div>
-          <Button type="submit" text={id ? 'Save' : 'Add'} testId="member-confirm-button" />
+          <Button type="submit" text={'Save'} testId="member-confirm-button" />
         </div>
       </form>
     </section>

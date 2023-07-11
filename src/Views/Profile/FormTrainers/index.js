@@ -7,16 +7,15 @@ import styles from './form-trainers.module.css';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { getTrainers, createTrainer, updateTrainer } from 'Redux/Trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
+import { getAuth } from 'Redux/Auth/thunks';
 
 const FormTrainers = () => {
   const dispatch = useDispatch();
-  const trainers = useSelector((state) => state.trainers.data);
   const history = useHistory();
-  const { id } = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [buttonAddIsVisible, setAddVisible] = useState(false);
   const [isTrainerCreated, setIsTrainerCreated] = useState(false);
@@ -24,6 +23,12 @@ const FormTrainers = () => {
   const [activeVisible, setActiveVisible] = useState(false);
   const RGXPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
+  const idLogged = sessionStorage.getItem('firebaseUid');
+  const dataLog = useSelector((state) => state.user.user);
+
+  useEffect(() => {
+    dispatch(getAuth(idLogged));
+  }, []);
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -135,7 +140,7 @@ const FormTrainers = () => {
 
   const handleUpdateTrainer = async (formValue) => {
     const payload = {
-      id: id,
+      id: dataLog.id,
       body: formValue
     };
     const response = await dispatch(updateTrainer(payload));
@@ -157,21 +162,20 @@ const FormTrainers = () => {
   };
 
   useEffect(() => {
-    formEdit(id);
+    formEdit(dataLog._id);
   }, []);
 
   const formEdit = (id) => {
     if (id) {
-      const data = trainers.find((trainer) => trainer._id === id);
-      if (data) {
-        setValue('firstName', data.firstName);
-        setValue('lastName', data.lastName);
-        setValue('dni', data.dni.toString());
-        setValue('phone', data.phone.toString());
-        setValue('email', data.email);
-        setValue('city', data.city);
-        setValue('password', data.password);
-        setValue('isActive', data.isActive);
+      if (dataLog) {
+        setValue('firstName', dataLog?.firstName);
+        setValue('lastName', dataLog?.lastName);
+        setValue('dni', dataLog?.dni.toString());
+        setValue('phone', dataLog?.phone.toString());
+        setValue('email', dataLog?.email);
+        setValue('city', dataLog?.city);
+        setValue('password', dataLog?.password);
+        setValue('isActive', dataLog?.isActive);
         setAddVisible(false);
         setActiveVisible(true);
         setSaveVisible(true);
@@ -184,7 +188,7 @@ const FormTrainers = () => {
   };
 
   const onSubmit = (data) => {
-    id ? handleUpdateTrainer(data) : handleCreationTrainer(data);
+    dataLog._id ? handleUpdateTrainer(data) : handleCreationTrainer(data);
   };
 
   const closeForm = () => {
@@ -268,17 +272,6 @@ const FormTrainers = () => {
               error={errors.city?.message}
             />
           </div>
-          <div className={styles.inputContainer}>
-            <TextInput
-              labelName="Password"
-              inputType="password"
-              name="password"
-              register={register}
-              selectID="password"
-              error={errors.password?.message}
-            />
-          </div>
-
           {activeVisible && (
             <div className={styles.inputContainer}>
               <label className={styles.label}>Status</label>
