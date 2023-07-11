@@ -18,7 +18,6 @@ const Profile = () => {
   useEffect(() => {
     dispatch(getAuth(idLogged));
   }, []);
-  console.log(dataLog);
 
   if (sessionStorage.getItem('role') === 'MEMBER') {
     return (
@@ -58,7 +57,7 @@ const Profile = () => {
               </div>
               <div>
                 <label>Birthday</label>
-                <p>{dataLog?.birthday.substring(0, 10)}</p>
+                <p>{dataLog?.birthday}</p>
               </div>
               <div className={styles.inputContainer} data-testid="member-membership">
                 <label>Membership</label>
@@ -76,7 +75,53 @@ const Profile = () => {
     );
   }
   if (sessionStorage.getItem('role') === 'TRAINER') {
-    return <h1>Hello</h1>;
+    return (
+      <>
+        <Aside page={'home'} />
+        <section className={styles.container}>
+          {loading && <Spinner />}
+          <div className={styles.content}>
+            <div className={styles.subContainer}>
+              <div className={styles.inputContainer}>
+                <label>First name</label>
+                <p>{dataLog?.firstName}</p>
+              </div>
+              <div className={styles.inputContainer}>
+                <label>Last name</label>
+                <p>{dataLog?.lastName}</p>
+              </div>
+              <div className={styles.inputContainer}>
+                <label>DNI</label>
+                <p>{dataLog?.dni}</p>
+              </div>
+              <div className={styles.inputContainer}>
+                <label>Phone</label>
+                <p>{dataLog?.phone}</p>
+              </div>
+              <div className={styles.inputContainer}>
+                <label>Email</label>
+                <p>{dataLog?.email}</p>
+              </div>
+              <div className={styles.inputContainer}>
+                <label>City</label>
+                <p>{dataLog?.city}</p>
+              </div>
+            </div>
+            <div className={styles.inputContainer}>
+              <label>Salary</label>
+              <p>{dataLog?.salary}</p>
+            </div>
+            <div className={styles.btnContainer}>
+              <div>
+                <Link to="/profile/form">
+                  <Button text="Edit" type="create" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      </>
+    );
   }
   return history.push('/');
 };
