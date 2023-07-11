@@ -15,7 +15,6 @@ const recoveryPassword = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.recoverPassword.isLoading);
-  // const error = useSelector((state) => state.recoverPassword.error);
 
   const [isOpen, setIsOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState({
