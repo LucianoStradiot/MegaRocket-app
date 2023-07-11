@@ -34,9 +34,16 @@ export const getAuth = (token) => {
   return async (dispatch) => {
     dispatch(getAuthLoading());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
-        headers: { token }
-      });
+      const firebaseUid = sessionStorage.getItem('firebaseUid');
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/auth/login/${firebaseUid}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            token: token
+          }
+        }
+      );
       const res = await response.json();
       return dispatch(getAuthSuccess(res.data));
     } catch (error) {

@@ -6,8 +6,8 @@ import Spinner from 'Components/Shared/Spinner';
 import { Link } from 'react-router-dom';
 import { deleteClass, getClasses } from 'Redux/Classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import Table from 'Components/Shared/Table';
 import Aside from 'Components/Shared/Aside';
+import { FiEdit } from 'react-icons/fi';
 
 function Classes() {
   const dispatch = useDispatch();
@@ -59,11 +59,28 @@ function Classes() {
     setIsOpen(true);
   };
 
-  return classes.length > 0 ? (
+  const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const timeSlots = [
+    '09:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
+    '18:00',
+    '19:00',
+    '20:00',
+    '21:00'
+  ];
+
+  return (
     <>
       <Aside page={'admins'} />
-      <div className={styles.container}>
-        <section className={styles.subContainer}>
+      <div className={styles.mainContainer}>
+        <section className={styles.container}>
           <Modal
             title={responseModal.title}
             desc={responseModal.description}
@@ -72,43 +89,86 @@ function Classes() {
             handleClose={() => setIsOpen(!isOpen)}
             deleteFunction={() => handleDeleteClass()}
           />
-          {loading && <Spinner />}
-          {!loading && (
-            <section>
-              <Link to="/admins/classes/form">
-                <Button text="Create" type="create" testId="create-button-classes" />
-              </Link>
-              <Table
-                list={classes}
-                column={['Day', 'Hour', 'Trainer', 'Activity', 'Slots', '']}
-                fields={['day', 'hour', 'trainer.lastName', 'activity.name', 'slots']}
-                link={'/admins/classes/form/'}
-                action={openModalConfirm}
-              />
-            </section>
-          )}
-        </section>
-      </div>
-    </>
-  ) : (
-    <>
-      <Aside page={'admins'} />
-      <div className={styles.container}>
-        <section>
-          <Modal
-            title={responseModal.title}
-            desc={responseModal.description}
-            isOpen={isOpen}
-            confirmModal={responseModal.isConfirm}
-            handleClose={() => setIsOpen(!isOpen)}
-            deleteFunction={() => handleDeleteClass()}
-          />
-          <section>
-            <Link to="/admins/classes/form">
-              <Button text="Create" type="create" />
-            </Link>
-            <p className={styles.info}>There is no Class yet.</p>
-          </section>
+          <div className={styles.screenContainer}>
+            {loading && <Spinner />}
+            {!loading && (
+              <section>
+                <table>
+                  <thead>
+                    <tr className={styles.tr}>
+                      <th className={styles.background}>
+                        <div>
+                          <Link to="/admins/classes/form">
+                            <Button text="Create" type="create" testId="create-button-classes" />
+                          </Link>
+                        </div>
+                      </th>
+                      {weekDays.map((day) => (
+                        <th key={day} className={styles.th}>
+                          {day}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {timeSlots.map((hour) => (
+                      <>
+                        <tr className={styles.tr}>
+                          <th className={styles.th}>{hour}</th>
+                          {weekDays.map((day, dayIndex) => (
+                            <td key={dayIndex}>
+                              {classes
+                                .filter(
+                                  (oneClass) => oneClass.day === day && oneClass.hour === hour
+                                )
+                                .map((oneClass, index) => {
+                                  return (
+                                    <div className={styles.card} key={index}>
+                                      <div className={styles.classCard}>
+                                        <p className={styles.inlineBlock}>
+                                          <div>{`Activity: ${
+                                            oneClass && oneClass.activity
+                                              ? oneClass.activity.name
+                                              : 'not available'
+                                          }`}</div>
+                                          <div>{`Trainer: ${
+                                            oneClass && oneClass.trainer
+                                              ? oneClass.trainer.firstName
+                                              : 'not available'
+                                          }`}</div>
+                                          <div>{`Slots: ${oneClass.slots}`}</div>
+                                        </p>
+                                        <Link
+                                          to={'/admins/classes/form/' + oneClass._id}
+                                          className={styles.edit}
+                                        >
+                                          <FiEdit className={styles.editIcon} />
+                                        </Link>
+                                        <button
+                                          className={styles.delete}
+                                          onClick={() => openModalConfirm(oneClass._id)}
+                                        >
+                                          <p className={styles.editIcon}>X</p>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                            </td>
+                          ))}
+                        </tr>
+                      </>
+                    ))}
+                    <tr className={styles.tr}>
+                      <td colSpan={weekDays.length + 1}>
+                        {classes.length === 0 && <p>There are no classes yet.</p>}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            )}
+          </div>
         </section>
       </div>
     </>

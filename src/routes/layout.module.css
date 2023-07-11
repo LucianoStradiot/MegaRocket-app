@@ -1,7 +1,7 @@
 .container {
   display: flex;
   justify-content: space-between;
-  min-height: 84.5vh;
+  min-height: 90.5vh;
   background-image: linear-gradient(90deg,
       rgba(255, 255, 255, 0.2),
       rgba(0, 0, 0, 0.4),

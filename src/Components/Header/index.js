@@ -1,47 +1,44 @@
 import styles from './header.module.css';
-import { Link, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 function Header() {
   const location = useLocation();
-  let name = '';
+  const [name, setName] = useState('');
+  const value = sessionStorage.getItem('role');
 
-  switch (location.pathname) {
-    case '/admins/activities':
-      name = 'Activities';
-      break;
-    case '/superAdmins/admins':
-      name = 'Admins';
-      break;
-    case '/admins/classes':
-      name = 'Classes';
-      break;
-    case '/admins/members':
-      name = 'Members';
-      break;
-    case '/admins/subscriptions':
-      name = 'Subscriptions';
-      break;
-    case '/superAdmins':
-      name = 'Super Admins';
-      break;
-    case '/admins/trainers':
-      name = 'Trainers';
-      break;
-    default:
-      name = '';
-      break;
-  }
+  const updateName = (role) => {
+    switch (role) {
+      case 'MEMBER':
+        setName('Hello Member!');
+        break;
+      case 'ADMIN':
+        setName('Hello Admin!');
+        break;
+      case 'SUPER_ADMIN':
+        setName('Hello Super Admin!');
+        break;
+      case 'TRAINER':
+        setName('Hello Trainer!');
+        break;
+      default:
+        setName('');
+        break;
+    }
+  };
+  useEffect(() => {
+    updateName(value);
+  }, [location]);
+
   return (
     <header>
       <div className={styles.container} data-testid="container-header">
         <h1 className={styles.brand}>{name}</h1>
         <div>
-          <Link to="/">
-            <img
-              src={`${process.env.PUBLIC_URL}/assets/images/logo-header.png`}
-              alt="Mega Rocket Header Logo"
-            />
-          </Link>
+          <img
+            src={`${process.env.PUBLIC_URL}/assets/images/logo-header.png`}
+            alt="Mega Rocket Header Logo"
+          />
         </div>
       </div>
     </header>
