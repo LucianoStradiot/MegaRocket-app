@@ -118,14 +118,10 @@ const Login = () => {
             name={'password'}
             testId="input-password-login"
           />
-          <div className={styles.eyeContainer}>
-            {!showPassword && (
-              <FiEyeOff className={styles.editIcon} onClick={togglePasswordVisibility} />
-            )}
-            {showPassword && (
-              <FiEye className={styles.editIcon} onClick={togglePasswordVisibility} />
-            )}
-          </div>
+          {!showPassword && (
+            <FiEyeOff className={styles.editIcon} onClick={togglePasswordVisibility} />
+          )}
+          {showPassword && <FiEye className={styles.editIcon} onClick={togglePasswordVisibility} />}
         </div>
         <Link to="/recoverPassword" className={styles.password}>
           <a>Forgot password?</a>
