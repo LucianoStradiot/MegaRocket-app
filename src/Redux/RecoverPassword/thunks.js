@@ -7,8 +7,10 @@ export const recoverPassword = (email) => {
     try {
       await firebaseApp.auth().sendPasswordResetEmail(email);
       dispatch(recoverPasswordSuccess());
+      return true;
     } catch (error) {
       dispatch(recoverPasswordError(error));
+      return false;
     }
   };
 };

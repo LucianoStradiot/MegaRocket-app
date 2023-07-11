@@ -43,7 +43,7 @@ const FormClasses = () => {
         'any.only': 'Please choose an available day'
       }),
     hour: Joi.string()
-      .regex(/^(?:0[9]|1\d|20):[0-5]\d$/)
+      .regex(/^(?:0[9]|1\d|21):[0-5]\d$/)
       .required()
       .messages({
         'string.pattern.base': 'Please choose an hour from 9:00 am to 21:00 pm'

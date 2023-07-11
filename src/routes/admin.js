@@ -12,7 +12,6 @@ const Member = lazy(() => import('Views/Admin/Members'));
 const FormMembers = lazy(() => import('Views/Admin/Members/FormMembers'));
 
 const Subscriptions = lazy(() => import('Views/Admin/Subscriptions'));
-const FormSubscriptions = lazy(() => import('Views/Admin/Subscriptions/FormSubscriptions'));
 
 const Trainers = lazy(() => import('Views/Admin/Trainers'));
 const FormTrainers = lazy(() => import('Views/Admin/Trainers/FormTrainers'));
@@ -33,8 +32,6 @@ const AdminsRoutes = () => {
       <Route path="/admins/members/form/:id" component={FormMembers} />
 
       <Route path="/admins/subscriptions" exact component={Subscriptions} />
-      <Route path="/admins/subscriptions/form" exact component={FormSubscriptions} />
-      <Route path="/admins/subscriptions/form/:id" component={FormSubscriptions} />
 
       <Route exact path="/admins/trainers" component={Trainers} />
       <Route exact path="/admins/trainers/formTrainers" component={FormTrainers} />
@@ -42,4 +39,5 @@ const AdminsRoutes = () => {
     </Switch>
   );
 };
+
 export default AdminsRoutes;

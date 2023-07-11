@@ -222,15 +222,17 @@ const FormMembers = () => {
               error={errors.lastName?.message}
             />
           </div>
-          <div data-testid="member-email">
-            <TextInput
-              labelName={'Email'}
-              name={'email'}
-              inputType={'text'}
-              register={register}
-              error={errors.email?.message}
-            />
-          </div>
+          {!id && (
+            <div data-testid="member-email">
+              <TextInput
+                labelName={'Email'}
+                name={'email'}
+                inputType={'text'}
+                register={register}
+                error={errors.email?.message}
+              />
+            </div>
+          )}
           <div data-testid="member-dni">
             <TextInput
               labelName={'DNI'}

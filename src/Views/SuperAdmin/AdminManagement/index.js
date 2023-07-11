@@ -93,8 +93,8 @@ function Admins() {
     </>
   ) : (
     <>
-      <div>
-        <Aside page={'superAdmins'} />
+      <Aside page={'superAdmins'} />
+      <div className={styles.mainContainer}>
         <section className={styles.container}>
           <Modal
             title={responseModal.title}
