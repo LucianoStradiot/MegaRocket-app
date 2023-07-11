@@ -2,6 +2,7 @@
   margin-top: 100px;
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
 }
 
@@ -11,7 +12,7 @@
   padding: 25px;
   border-radius: 8px;
   width: 600px;
-  margin: 10vh auto;
+  margin: 1vh auto;
   font-weight: 600;
   box-shadow: 0 2px 4px #1b1b5d99;
 }
@@ -28,4 +29,21 @@
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
+}
+
+.passwordContainer {
+  width: 100%;
+}
+
+.eyeContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.editIcon {
+  cursor: pointer;
+  margin-top: -63px;
+  margin-right: 12px;
+  width: 25px;
+  height: 25px;
 }
