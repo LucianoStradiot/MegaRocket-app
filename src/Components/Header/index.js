@@ -1,39 +1,41 @@
 import styles from './header.module.css';
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Header() {
-  const location = useLocation();
   const [name, setName] = useState('');
-  const value = sessionStorage.getItem('role');
+  const role = sessionStorage.getItem('role');
+  const id = sessionStorage.getItem('firebaseUid');
+  const user = useSelector((state) => state.user.user);
 
-  const updateName = (role) => {
-    switch (role) {
-      case 'MEMBER':
-        setName('Hello Member!');
-        break;
-      case 'ADMIN':
-        setName('Hello Admin!');
-        break;
-      case 'SUPER_ADMIN':
-        setName('Hello Super Admin!');
-        break;
-      case 'TRAINER':
-        setName('Hello Trainer!');
-        break;
-      default:
-        setName('');
-        break;
+  const updateName = () => {
+    if (user) {
+      if (role === 'SUPER_ADMIN') {
+        setName('Super Admin');
+      } else {
+        setName(`${user?.firstName} ${user?.lastName}`);
+      }
+    } else {
+      setName('');
     }
   };
+
   useEffect(() => {
-    updateName(value);
-  }, [location]);
+    updateName();
+  }, [user]);
 
   return (
     <header>
       <div className={styles.container} data-testid="container-header">
-        <h1 className={styles.brand}>{name}</h1>
+        <div className={styles.profileContainer}>
+          {id && (
+            <img
+              src={`${process.env.PUBLIC_URL}/assets/images/profile.png`}
+              className={styles.profile}
+            ></img>
+          )}
+          <h1 className={styles.brand}>{name}</h1>
+        </div>
         <div>
           <img
             src={`${process.env.PUBLIC_URL}/assets/images/logo-header.png`}
