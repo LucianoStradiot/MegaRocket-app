@@ -12,6 +12,7 @@ import Joi from 'joi';
 import Spinner from 'Components/Shared/Spinner';
 import Modal from 'Components/Shared/Modal';
 import styles from '../../Admin/Members/FormMembers/form-members.module.css';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const SignUpMember = () => {
   const history = useHistory();
@@ -23,6 +24,10 @@ const SignUpMember = () => {
     title: '',
     desc: ''
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const currentDate = new Date();
   const minDate = new Date();
@@ -260,15 +265,23 @@ const SignUpMember = () => {
               <option value="Only Classes Membership">Only Classes Membership</option>
             </Select>
           </div>
-          <div>
+          <div className={styles.passwordContainer}>
             <TextInput
+              error={errors.password?.message}
+              register={register}
+              inputType={showPassword ? 'text' : 'password'}
               labelName={'Password'}
               name={'password'}
-              inputType={'text'}
-              register={register}
-              testId="password-sign-up"
-              error={errors.password?.message}
+              testId="input-password-login"
             />
+            <div className={styles.eyeContainer}>
+              {!showPassword && (
+                <FiEyeOff className={styles.editIcon} onClick={togglePasswordVisibility} />
+              )}
+              {showPassword && (
+                <FiEye className={styles.editIcon} onClick={togglePasswordVisibility} />
+              )}
+            </div>
           </div>
           <div className={styles.inputContainer}></div>
         </div>
