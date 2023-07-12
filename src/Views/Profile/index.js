@@ -57,7 +57,7 @@ const Profile = () => {
               </div>
               <div>
                 <label>Birthday</label>
-                <p>{dataLog?.birthday}</p>
+                <p>{dataLog?.birthday?.substring(0, 10)}</p>
               </div>
               <div className={styles.inputContainer} data-testid="member-membership">
                 <label>Membership</label>
