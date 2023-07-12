@@ -1,0 +1,27 @@
+.mainContainer {
+  margin: 0 auto;
+}
+
+.form {
+  color: #373867;
+  background-color: #ffffffde;
+  padding: 25px;
+  border-radius: 8px;
+  width: 600px;
+  margin: 0 auto;
+  font-weight: 600;
+  box-shadow: 0 2px 4px #1b1b5d99;
+  margin-top: 200px;
+}
+
+.subContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 20px;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
