@@ -305,8 +305,8 @@ const FormMembers = () => {
         </div>
         <div className={styles.contButton}>
           <div>
-            <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="submit" clickAction={() => reset()} />
+            <Button text="Cancel" type="button" clickAction={() => history.goBack()} />
+            <Button text="Reset" type="button" clickAction={() => reset()} />
           </div>
           <Button type="submit" text={id ? 'Save' : 'Add'} testId="member-confirm-button" />
         </div>
