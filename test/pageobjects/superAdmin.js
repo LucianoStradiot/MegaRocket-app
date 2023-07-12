@@ -1,7 +1,11 @@
 /* eslint-disable no-undef */
 class SuperAdmin {
-  get asideAdminButton() {
-    return $('aside a');
+  get homeButton() {
+    return $('aside a[href="/"]');
+  }
+
+  get logoutButton() {
+    return $('nav div:nth-child(2) a');
   }
 
   get createAdminButton() {
