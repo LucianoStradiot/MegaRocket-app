@@ -97,7 +97,7 @@ const FormMembers = () => {
   });
 
   useEffect(() => {
-    formEdit(dataLog._id);
+    formEdit(dataLog?._id);
   }, []);
 
   const formEdit = (id) => {
@@ -107,7 +107,7 @@ const FormMembers = () => {
       setValue('dni', dataLog?.dni.toString());
       setValue('phone', dataLog?.phone.toString());
       setValue('city', dataLog?.city);
-      setValue('postalCode', dataLog.postalCode.toString());
+      setValue('postalCode', dataLog?.postalCode.toString());
     }
   };
 

@@ -23,8 +23,6 @@ const FormTrainers = () => {
   const [isTrainerCreated, setIsTrainerCreated] = useState(false);
   const [buttonSaveIsVisible, setSaveVisible] = useState(false);
   const [activeVisible, setActiveVisible] = useState(false);
-  const RGXPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-  const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -73,10 +71,6 @@ const FormTrainers = () => {
         'string.empty': 'Phone number can´t be empty',
         'string.pattern.base': 'Phone number must be only numbers'
       }),
-    email: Joi.string().regex(RGXEmail).required().messages({
-      'string.empty': 'Email can´t be empty',
-      'string.pattern.base': 'Email must be in a valid format'
-    }),
     city: Joi.string()
       .min(3)
       .regex(/^[a-zA-Z\s.,]+$/)
@@ -86,11 +80,6 @@ const FormTrainers = () => {
         'string.empty': 'City can´t be empty',
         'string.min': 'City must have at least 4 characters'
       }),
-    password: Joi.string().regex(RGXPass).required().messages({
-      'string.pattern.base':
-        'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
-      'string.empty': 'Password can´t be empty'
-    }),
     salary: Joi.string()
       .regex(/^[0-9]*$/)
       .min(1)
@@ -173,9 +162,7 @@ const FormTrainers = () => {
         setValue('lastName', data.lastName);
         setValue('dni', data.dni.toString());
         setValue('phone', data.phone.toString());
-        setValue('email', data.email);
         setValue('city', data.city);
-        setValue('password', data.password);
         setValue('salary', data.salary.toString());
         setValue('isActive', data.isActive);
         setAddVisible(false);
