@@ -92,12 +92,10 @@ const FormTrainers = () => {
   const loading = useSelector((state) => state.trainers.isPending);
 
   const onSubmit = (data) => {
-    console.log('this is the data', data);
     handleUpdateTrainer(data);
   };
 
   const handleUpdateTrainer = async (formValue) => {
-    console.log('this is the formValue', formValue);
     const payload = {
       id: dataLog?._id,
       body: formValue
@@ -130,7 +128,6 @@ const FormTrainers = () => {
       setValue('lastName', dataLog?.lastName);
       setValue('dni', dataLog?.dni.toString());
       setValue('phone', dataLog?.phone.toString());
-      setValue('email', dataLog?.email);
       setValue('city', dataLog?.city);
     }
   };
@@ -195,10 +192,6 @@ const FormTrainers = () => {
               selectID="phone"
               error={errors.phone?.message}
             />
-          </div>
-          <div className={styles.inputContainer}>
-            <label>Email</label>
-            <p>{dataLog?.email}</p>
           </div>
           <div className={styles.inputContainer}>
             <TextInput
