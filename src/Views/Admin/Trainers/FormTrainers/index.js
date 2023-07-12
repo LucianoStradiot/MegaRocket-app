@@ -275,14 +275,12 @@ const FormTrainers = () => {
                   name={'password'}
                   testId="input-password-login"
                 />
-                <div className={styles.eyeContainer}>
-                  {!showPassword && (
-                    <FiEyeOff className={styles.editIcon} onClick={togglePasswordVisibility} />
-                  )}
-                  {showPassword && (
-                    <FiEye className={styles.editIcon} onClick={togglePasswordVisibility} />
-                  )}
-                </div>
+                {!showPassword && (
+                  <FiEyeOff className={styles.editIcon} onClick={togglePasswordVisibility} />
+                )}
+                {showPassword && (
+                  <FiEye className={styles.editIcon} onClick={togglePasswordVisibility} />
+                )}
               </div>
             </>
           )}
@@ -320,8 +318,8 @@ const FormTrainers = () => {
         </div>
         <div className={styles.btnContainer}>
           <div>
-            <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="submit" clickAction={() => reset()} />
+            <Button text="Cancel" type="button" clickAction={() => history.goBack()} />
+            <Button text="Reset" type="button" clickAction={() => reset()} />
           </div>
           {buttonAddIsVisible && <Button text="Add" type="submit" testId="trainer-add-button" />}
           {buttonSaveIsVisible && <Button text="Save" type="submit" testId="trainer-save-button" />}
