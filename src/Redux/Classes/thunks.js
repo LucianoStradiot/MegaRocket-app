@@ -107,3 +107,23 @@ export const updateClass = (payload) => {
     }
   };
 };
+
+export const deleteOldClasses = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(deleteClassLoading());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`, {
+        method: 'DELETE'
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(deleteClassSuccess(data.data));
+      } else {
+        dispatch(deleteClassError(data.data));
+      }
+      return data;
+    } catch (error) {
+      return error;
+    }
+  };
+};

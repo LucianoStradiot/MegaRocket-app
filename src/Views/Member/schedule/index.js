@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from 'Views/Member/schedule/schedule.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClasses } from 'Redux/Classes/thunks';
+import { getClasses, deleteOldClasses } from 'Redux/Classes/thunks';
 import {
   deleteOldSubscription,
   deleteSubscription,
@@ -33,9 +33,9 @@ const MemberSchedule = () => {
   const [filterQuery, setFilterQuery] = useState('');
 
   useEffect(() => {
+    dispatch(deleteOldClasses());
     dispatch(deleteOldSubscription());
     dispatch(getClasses());
-    console.log(classes);
     dispatch(getSubscriptions());
   }, []);
 
