@@ -7,10 +7,10 @@ import Modal from 'Components/Shared/Modal';
 import { updateMember } from 'Redux/Members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
+import DatePicker from 'Components/Shared/DatePicker';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import { getAuth } from 'Redux/Auth/thunks';
 
 const FormMembers = () => {
   const history = useHistory();
@@ -22,12 +22,10 @@ const FormMembers = () => {
     title: '',
     desc: ''
   });
-  const idLogged = sessionStorage.getItem('firebaseUid');
   const dataLog = useSelector((state) => state.user.user);
-
-  useEffect(() => {
-    dispatch(getAuth(idLogged));
-  }, []);
+  const currentDate = new Date();
+  const minDate = new Date();
+  minDate.setFullYear(currentDate.getFullYear() - 15);
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -75,6 +73,10 @@ const FormMembers = () => {
         'string.empty': 'City can´t be empty',
         'string.min': 'City must have at least 4 characters'
       }),
+    birthday: Joi.date().iso().max(minDate.toISOString()).required().messages({
+      'date.format': 'Invalid birth date format',
+      'date.max': 'You must be at least 15 years old'
+    }),
     postalCode: Joi.string()
       .regex(/^[0-9]*$/)
       .min(4)
@@ -97,7 +99,7 @@ const FormMembers = () => {
   });
 
   useEffect(() => {
-    formEdit(dataLog._id);
+    formEdit(dataLog?._id);
   }, []);
 
   const formEdit = (id) => {
@@ -107,7 +109,8 @@ const FormMembers = () => {
       setValue('dni', dataLog?.dni.toString());
       setValue('phone', dataLog?.phone.toString());
       setValue('city', dataLog?.city);
-      setValue('postalCode', dataLog.postalCode.toString());
+      setValue('birthday', dataLog?.birthday.toString().substring(0, 10));
+      setValue('postalCode', dataLog?.postalCode.toString());
     }
   };
 
@@ -197,6 +200,14 @@ const FormMembers = () => {
               inputType={'text'}
               register={register}
               error={errors.city?.message}
+            />
+          </div>
+          <div data-testid="member-birthday">
+            <DatePicker
+              name={'birthday'}
+              title={'Birthday'}
+              register={register}
+              error={errors.birthday?.message}
             />
           </div>
           <div data-testid="member-postal-code">
