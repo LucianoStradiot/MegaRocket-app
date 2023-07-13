@@ -27,7 +27,7 @@ class SignUpPage {
     return $('[data-testid="sign-up-form"] select');
   }
   get inputPassword() {
-    return $('[data-testid="password-sign-up"]:nth-child(2)');
+    return $('[data-testid="input-password-login"]:nth-child(2)');
   }
   get addBtn() {
     return $('[data-testid="sign-up-confirm-button"]');
@@ -79,7 +79,7 @@ get errorMembership() {
 }
 get errorPassword() {
   return $(
-    '[data-testid="password-sign-up"]+ p'
+    '[data-testid="input-password-login"]:nth-child(2)+ p'
   );
 }
 get modal() {

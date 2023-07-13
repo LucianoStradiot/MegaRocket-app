@@ -8,6 +8,9 @@ class MembershipPage {
   get acceptBtn() {
     return $('[data-testid="modal-success"] > button');
   }
+  open() {
+    return browser.url('https://joaco-megarocket-app.vercel.app/membership');
+  }
 }
 module.exports = new MembershipPage();
 

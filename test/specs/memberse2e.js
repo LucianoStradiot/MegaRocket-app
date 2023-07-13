@@ -1,167 +1,109 @@
-const SignUpPage = require ('../pageobjects/signUp.js');
-const LoginPage = require ('../pageobjects/loginPage.js');
+const Login = require ('../pageobjects/loginTest.js');
+const ProfilePage = require ('../pageobjects/profilePage.js');
 const MemberPage = require ('../pageobjects/memberPage.js');
 const SchedulePage = require ('../pageobjects/schedulePage.js');
 const MembershipPage = require ('../pageobjects/membershipPage.js');
-const ForgotPassword = require ('../pageobjects/forgotPassword.js');
 
-describe('Sign up flow', () => {
-  it('should not let sign up with empty fields', async () => {
-    await SignUpPage.openSignUpPage();
-    await SignUpPage.addMember('', '', '', '', '', '', '', '','Choose a membership', '');
-    await expect(SignUpPage.errorName).toBeDisplayed();
-    await expect(SignUpPage.errorLastName).toBeDisplayed();
-    await expect(SignUpPage.errorEmail).toBeDisplayed();
-    await expect(SignUpPage.errorDni).toBeDisplayed();
-    await expect(SignUpPage.errorPhone).toBeDisplayed();
-    await expect(SignUpPage.errorCity).toBeDisplayed();
-    await expect(SignUpPage.errorZip).toBeDisplayed();
-    await expect(SignUpPage.errorDate).toBeDisplayed();
-    await expect(SignUpPage.errorMembership).toBeDisplayed();
-    await expect(SignUpPage.errorPassword).toBeDisplayed();
+describe('Members Flow', () => {
+  it('Login: Should display error message when login fields are empty', async () => {
+    await Login.open();
+    await Login.logIn('', '');
+    await expect(Login.errorMail).toBeDisplayed();
+    await expect(Login.errorPassword).toBeDisplayed();
   });
-  it('should not let sign up with empty name and last name', async () => {
-    await SignUpPage.openSignUpPage();
-    await SignUpPage.addMember('', '', 'example@a.com', '22345678', '2345678912', 'Montevideo', '11700', '02/04/1997','Black Membership', 'Password123');
-    await expect(SignUpPage.errorName).toBeDisplayed();
-    await expect(SignUpPage.errorLastName).toBeDisplayed();
+  it('Login: Should display error message when email field is empty', async () => {
+    await Login.open();
+    await Login.logIn('', 'Password123');
+    await expect(Login.errorMail).toBeDisplayed();
   });
-  it('should not let sign up with invalid mail and dni', async () => {
-    await SignUpPage.openSignUpPage();
-    await SignUpPage.addMember('Katherine', 'Airala', 'invalid', 'invalid', '2234567891', 'Montevideo', '11700', '02/04/1997','Black Membership','Password123');
-    await expect(SignUpPage.errorEmail).toBeDisplayed();
-    await expect(SignUpPage.errorDni).toBeDisplayed();
+  it('Login: Should display error message when dni field is empty', async () => {
+    await Login.open();
+    await Login.logIn('a@a.com', '');
+    await expect(Login.errorPassword).toBeDisplayed();
   });
-  it('should not let sign up with invalid phone and city', async () => {
-    await SignUpPage.openSignUpPage();
-    await SignUpPage.addMember('Katherine', 'Airala', 'example@gmail.com', '4947558', 'invalid', '0', '11700', '02/04/1997','Black Membership', 'Password123');
-    await expect(SignUpPage.errorEmail).toBeDisplayed();
-    await expect(SignUpPage.errorDni).toBeDisplayed();
+  it('Login: Should display error message with invalid credentials', async () => {
+    await Login.open();
+    await Login.logIn('invalid', '1234567');
+    await expect(Login.errorMail).toBeDisplayed();
+    await expect(Login.errorPassword).toBeDisplayed();
   });
-  it('should not let sign up with invalid password', async () => {
-    await SignUpPage.openSignUpPage();
-    await SignUpPage.addMember('Katherine', 'Airala', 'example@gmail.com', '4947558', 'invalid', '0', '11700', '02/04/1997','Black Membership', 'invalid');
-    await expect(SignUpPage.errorEmail).toBeDisplayed();
-    await expect(SignUpPage.errorDni).toBeDisplayed();
+  it('Login: Should display error message with inexistent credentials', async () => {
+    await Login.open();
+    await Login.logIn('invalid@gmail.com', 'Password111');
+    await expect(Login.modal).toBeDisplayed();
+    await Login.acceptBtn.click();
   });
-  it('should not let sign up with existing user', async () => {
-    await SignUpPage.openSignUpPage();
-    await SignUpPage.addMember('Katherine', 'Airala', 'kat@gmail.com', '4947558', '1234567891', 'Montevideo', '11700', '02/04/1997','Black Membership', 'Password123');
-    await expect(SignUpPage.modal).toBeDisplayed();
-    await SignUpPage.acceptBtn.click();
-  });
-  it('It should add a member with valid info', async () => {
-    await SignUpPage.openSignUpPage();
-    await SignUpPage.addMember('Katerine', 'Airala', 'example@gmail.com', '5947558', '2234567891', 'Montevideo', '11700', '2/2/1997','Black Membership', 'Hola123456');
-    await expect(SignUpPage.modal).toBeDisplayed();
-    await SignUpPage.acceptBtn.click();
-    await expect(browser).toHaveUrl(
-      'https://joaco-megarocket-app.vercel.app/auth/login'
-    );
-  });
-});
-
-describe('Recover Password flow', () => {
-  it('Should not recover the password with an empty email', async () => {
-    await ForgotPassword.openPage();
-    await ForgotPassword.setEmail('');
-    await ForgotPassword.recoverPasswdBtn.click();
-    await expect(ForgotPassword.errorMail).toBeDisplayed();
-  });
-  it('Should not recover the password with an invalid email', async () => {
-    await ForgotPassword.openPage();
-    await ForgotPassword.setEmail('invalid');
-    await ForgotPassword.recoverPasswdBtn.click();
-    await expect(ForgotPassword.errorMail).toBeDisplayed();
-  });
-  it('Should not recover the password with an unexisting email', async () => {
-    await ForgotPassword.openPage();
-    await ForgotPassword.setEmail('katt@gmail.com');
-    await ForgotPassword.recoverPasswdBtn.click();
-    await expect(ForgotPassword.modal).toBeDisplayed();
-    await ForgotPassword.acceptBtn.click();
-  });
-  it('Should recover the password with a valid email', async () => {
-    await ForgotPassword.openPage();
-    await ForgotPassword.setEmail('kat@gmail.com');
-    await ForgotPassword.recoverPasswdBtn.click();
-    await expect(ForgotPassword.modal).toBeDisplayed();
-    await ForgotPassword.acceptBtn.click();
-  });
-});
-
-describe('Login flow', () => {
-  it('Should display error message when login fields are empty', async () => {
-    await LoginPage.open();
-    await LoginPage.login('', '');
-    await expect(LoginPage.errorMail).toBeDisplayed();
-    await expect(LoginPage.errorPassword).toBeDisplayed();
-  });
-  it('Should display error message when email field is empty', async () => {
-    await LoginPage.open();
-    await LoginPage.login('', 'Password123');
-    await expect(LoginPage.errorMail).toBeDisplayed();
-  });
-  it('Should display error message when dni field is empty', async () => {
-    await LoginPage.open();
-    await LoginPage.login('a@a.com', '');
-    await expect(LoginPage.errorPassword).toBeDisplayed();
-  });
-  it('Should display error message with invalid credentials', async () => {
-    await LoginPage.open();
-    await LoginPage.login('invalid', '1234567');
-    await expect(LoginPage.errorMail).toBeDisplayed();
-    await expect(LoginPage.errorPassword).toBeDisplayed();
-  });
-  it('Should display error message with inexistent credentials', async () => {
-    await LoginPage.open();
-    await LoginPage.login('invalid@gmail.com', 'Password111');
-    await expect(LoginPage.modal).toBeDisplayed();
-    await LoginPage.acceptBtn.click();
-  });
-  it('Login should be successful with valid credentials', async () => {
-    await LoginPage.open();
-    await LoginPage.login('kat@gmail.com', 'Password123');
-    await expect(LoginPage.modal).toBeDisplayed();
-    await LoginPage.acceptBtn.click();
+  it('Login: should be successful with valid credentials', async () => {
+    await Login.open();
+    await Login.logIn('katt@gmail.com', 'Password1234');
+    await expect(Login.modal).toBeDisplayed();
+    await Login.acceptBtn.click();
     await expect(browser).toHaveUrl(
       'https://joaco-megarocket-app.vercel.app/'
     );
   });
-});
-
-describe('Social media buttons', () => {
-  it('should click on social media icons', async () => {
+  it('Profile: should show an error message when there is no changes', async () => {
+    await MemberPage.profileBtn.click();
+    await expect(browser).toHaveUrl(
+      'https://joaco-megarocket-app.vercel.app/profile'
+    );
+    await ProfilePage.btnEdit.click();
+    await ProfilePage.btnSave.click();
+    await expect(ProfilePage.modal).toBeDisplayed();
+    await ProfilePage.acceptBtn.click();
+  });
+  it('Profile: should show an error message when is empty', async () => {
+    await ProfilePage.edit('', '', '', '', '', '', '');
+    await expect(ProfilePage.errorName).toBeDisplayed();
+    await expect(ProfilePage.errorLastName).toBeDisplayed();
+    await expect(ProfilePage.errorDni).toBeDisplayed();
+    await expect(ProfilePage.errorPhone).toBeDisplayed();
+    await expect(ProfilePage.errorCity).toBeDisplayed();
+    await expect(ProfilePage.errorZip).toBeDisplayed();
+    await ProfilePage.btnSave.click();
+  });
+  it('Profile: should edit the info', async () => {
+    await ProfilePage.edit('Kat', 'Airala', '4947556', '2204178777', 'Rosario', '11700', '02/04/1997');
+    await ProfilePage.btnSave.click();
+    await expect(ProfilePage.modal).toBeDisplayed();
+    await ProfilePage.acceptBtn.click();
+  });
+  it('Class: should select the spinning class', async () => {
+    await MemberPage.scheduleBtn.click();
+    await expect(browser).toHaveUrl(
+      'https://joaco-megarocket-app.vercel.app/schedule'
+    );
+    await SchedulePage.spinningClass.click();
+    await expect(SchedulePage.modal).toBeDisplayed();
+    await SchedulePage.confirmBtn.click();
+    await expect(SchedulePage.secondModal).toBeDisplayed();
+    await SchedulePage.acceptBtn.click();
+  });
+  it('Class: should delete the spinning class', async () => {
+    await SchedulePage.spinningClass.click();
+    await expect(SchedulePage.modal).toBeDisplayed();
+    await SchedulePage.confirmBtn.click();
+    await expect(SchedulePage.secondModal).toBeDisplayed();
+    await SchedulePage.acceptBtn.click();
+  });
+  it('Membership: should select a membership', async () => {
+    await MemberPage.membershipBtn.click();
+    await expect(browser).toHaveUrl(
+      'https://joaco-megarocket-app.vercel.app/membership'
+    );
+    await MembershipPage.classicMember.click();
+    await expect(browser).toHaveUrl('https://joaco-megarocket-app.vercel.app/');
+  });
+  it('Social Media: should open social media', async () => {
     await MemberPage.openMembersPage();
     await MemberPage.fbIcon.click();
     await MemberPage.igIcon.click();
     await MemberPage.twIcon.click();
   });
-});
-
-describe('Schedule a class', () => {
-  it('should go to the schedule page', async () => {
-    await HomePage.openHomePage();
-    await HomePage.scheduleButton.click();
-    await expect(browser).toHaveUrl('https://joaco-megarocket-app.vercel.app/schedule');
-   });
-   it('should select the spinning class', async () => {
-    await SchedulePage.spinningClass.click();
-    await expect(SchedulePage.modal).toBeDisplayed();
-    await SchedulePage.acceptBtn.click();
-    });
-});
-
-describe('Select a membership', () => {
-  it('should go to the membership page', async () => {
-    await HomePage.openHomePage();
-    await HomePage.membershipsButton.click();
-    await expect(browser).toHaveUrl('https://joaco-megarocket-app.vercel.app/membership');
-    });
-  it('should select the classic membership', async () => {
-    await MembershipPage.classicMember.click();
-    await expect(MembershipPage.modal).toBeDisplayed();
-    await MembershipPage.acceptBtn.click();
-    await expect(browser).toHaveUrl('https://joaco-megarocket-app.vercel.app/signUp?membership=Classic%20Membership');
-    });
+  it('Logout', async () => {
+    await MemberPage.logOut.click();
+    await expect(MemberPage.modal).toBeDisplayed();
+    await MemberPage.confirmBtn.click();
+    await expect(browser).toHaveUrl('https://joaco-megarocket-app.vercel.app/');
+  });
 });
