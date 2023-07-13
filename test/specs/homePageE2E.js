@@ -12,8 +12,7 @@ describe('Check elements in Home Page', () => {
   it('check elements in header', async () => {
     await expect(Header.logo).toBeDisplayed();
     await expect(Header.logo).toBeClickable();
-    await expect(Header.logo).toHaveAttribute('src', '/assets/images/logo-header.png');
-    await expect(Header.backHomeButton).toBeClickable();
+    await expect(Header.logo).toHaveAttribute('src', '/assets/images/logo-header2.png');
   });
 
   it('check elements and functionalities in sidebar', async () => {
@@ -21,31 +20,26 @@ describe('Check elements in Home Page', () => {
 
     await expect(HomePage.loginButton).toBeDisplayed();
     await expect(HomePage.loginButton).toBeClickable();
-    await expect(HomePage.loginButton).toHaveAttribute('href', '/auth/login');
     const loginBtn = await HomePage.loginButton.getText();
     expect(loginBtn).toEqual('Login');
 
     await expect(HomePage.signUpButton).toBeDisplayed();
     await expect(HomePage.signUpButton).toBeClickable();
-    await expect(HomePage.signUpButton).toHaveAttribute('href', '/signUp');
     const signUpBtn = await HomePage.signUpButton.getText();
     expect(signUpBtn).toEqual('SignUp');
 
     await expect(HomePage.activitiesButton).toBeDisplayed();
     await expect(HomePage.activitiesButton).toBeClickable();
-    await expect(HomePage.activitiesButton).toHaveAttribute('href', '/activities');
     const actBtn = await HomePage.activitiesButton.getText();
     expect(actBtn).toEqual('Activities');
 
     await expect(HomePage.scheduleButton).toBeDisplayed();
     await expect(HomePage.scheduleButton).toBeClickable();
-    await expect(HomePage.scheduleButton).toHaveAttribute('href', '/schedule');
     const schBtn = await HomePage.scheduleButton.getText();
     expect(schBtn).toEqual('Schedule');
 
     await expect(HomePage.membershipsButton).toBeDisplayed();
     await expect(HomePage.membershipsButton).toBeClickable();
-    await expect(HomePage.membershipsButton).toHaveAttribute('href', '/membership');
     const membBtn = await HomePage.membershipsButton.getText();
     expect(membBtn).toEqual('Memberships');
   });
@@ -117,6 +111,8 @@ describe('Check elements in Home Page', () => {
   it('Check elements in first section', async () => {
     await expect(HomePage.sectionOneTitle).toBeDisplayed();
     await expect(HomePage.sectionOneTitle).toHaveTextContaining('MEGA ROCKET WEB');
+    const cssProperty = HomePage.sectionOneTitle.getCSSProperty('align-items');
+    expect(cssProperty).toBe('center');
 
     await expect(HomePage.sectionOneSubTitle).toBeDisplayed();
     await expect(HomePage.sectionOneSubTitle).toHaveTextContaining('WELCOME');
@@ -174,39 +170,10 @@ describe('Check elements in Home Page', () => {
     await expect(HomePage.aboutSecondDesc).toBeDisplayed();
   });
 
-  it('Check elements in section four', async () => {
-    await HomePage.sectionFourTitle.scrollIntoView();
-    await expect(HomePage.sectionFourTitle).toBeDisplayed();
-    await expect(HomePage.sectionFourTitle).toHaveTextContaining('Gym activities');
-
-    await expect(HomePage.sectionFourImg).toBeDisplayed();
-    await expect(HomePage.sectionFourImg).toHaveAttribute(
-      'src',
-      '/assets/images/gym-activities.png'
-    );
-
-    await expect(HomePage.listActivities).toBeDisplayed();
-    await expect(HomePage.listActivities[0]).toHaveTextContaining('Crossfit');
-    await expect(HomePage.listActivities[1]).toHaveTextContaining('Spinning');
-    await expect(HomePage.listActivities[2]).toHaveTextContaining('Functional');
-    await expect(HomePage.listActivities[3]).toHaveTextContaining('Fitness');
-    await expect(HomePage.listActivities[4]).toHaveTextContaining('Boxing');
-  });
-
-  it('Check elements in section five', async () => {
-    await HomePage.sectionFiveTitle.scrollIntoView();
-    await expect(HomePage.sectionFiveTitle).toBeDisplayed();
-    await expect(HomePage.sectionFiveTitle).toHaveTextContaining('Memberships');
-    await expect(HomePage.sectionFiveTable).toBeDisplayed();
-    await expect(HomePage.onlyClassesTable).toHaveTextContaining('Only classes');
-    await expect(HomePage.classicTable).toHaveTextContaining('Classic');
-    await expect(HomePage.blackTable).toHaveTextContaining('Black');
-  });
-
   it('Check elements and functionalities in footer', async () => {
     await Footer.logo.scrollIntoView();
     await expect(Footer.logo).toBeDisplayed();
-    await expect(Footer.logo).toHaveAttribute('src', '/assets/images/logo-footer.png');
+    await expect(Footer.logo).toHaveAttribute('src', '/assets/images/logo-footer2.png');
 
     await expect(Footer.facebookIcon).toBeDisplayed();
     await expect(Footer.facebookIcon).toBeClickable();

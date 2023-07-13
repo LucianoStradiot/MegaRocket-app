@@ -120,34 +120,6 @@ class HomePage {
     return $('[data-testid="home-page"] section:nth-child(4) h2');
   }
 
-  get listActivities() {
-    return $$('[data-testid="home-page"] section:nth-child(4) li');
-  }
-
-  get sectionFourImg() {
-    return $('[data-testid="home-page"] section:nth-child(4) img');
-  }
-
-  get sectionFiveTitle() {
-    return $('[data-testid="home-page"] section:nth-child(5) h2');
-  }
-
-  get sectionFiveTable() {
-    return $('[data-testid="home-page"] section:nth-child(5) table');
-  }
-
-  get onlyClassesTable() {
-    return $('[data-testid="home-page"] section:nth-child(5) table th:nth-child(2)');
-  }
-
-  get classicTable() {
-    return $('[data-testid="home-page"] section:nth-child(5) table th:nth-child(3)');
-  }
-
-  get blackTable() {
-    return $('[data-testid="home-page"] section:nth-child(5) table th:nth-child(4)');
-  }
-
   get cancelButtonLogin() {
     return $('[data-testid="container-login"] button:nth-child(1)');
   }
