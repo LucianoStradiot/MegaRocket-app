@@ -285,9 +285,7 @@ const MemberSchedule = () => {
                                         }`}</div>
                                         <div>
                                           {'Slots: '}
-                                          {userLoged ? subscriptionsLength : ''}
-                                          {userLoged ? ' / ' : 'login'}
-                                          {userLoged ? oneClass.slots : ' first'}
+                                          {`${subscriptionsLength}/${oneClass.slots}`}
                                         </div>
                                       </p>
                                     </button>
