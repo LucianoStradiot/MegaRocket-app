@@ -1,23 +1,20 @@
 import { useEffect, useState } from 'react';
 import styles from './form-members.module.css';
 import TextInput from 'Components/Shared/TextInput';
-import Select from 'Components/Shared/Select';
 import Button from 'Components/Shared/Button';
-import DatePicker from 'Components/Shared/DatePicker';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Modal from 'Components/Shared/Modal';
-import { createMember, getMembers, updateMember } from 'Redux/Members/thunks';
+import { updateMember } from 'Redux/Members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
+import { getAuth } from 'Redux/Auth/thunks';
 
 const FormMembers = () => {
   const history = useHistory();
-  const { id } = useParams();
   const dispatch = useDispatch();
-  const listMembers = useSelector((state) => state.members.data);
   const loading = useSelector((state) => state.members.isPending);
   const [isOpen, setIsOpen] = useState(false);
   const [isMemberCreated, setIsMemberCreated] = useState(false);
@@ -25,7 +22,12 @@ const FormMembers = () => {
     title: '',
     desc: ''
   });
-  const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
+  const idLogged = sessionStorage.getItem('firebaseUid');
+  const dataLog = useSelector((state) => state.user.user);
+
+  useEffect(() => {
+    dispatch(getAuth(idLogged));
+  }, []);
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -50,10 +52,6 @@ const FormMembers = () => {
         'string.max': 'Last name can´t be longer than 25 characters',
         'string.empty': 'Last name can´t be empty'
       }),
-    email: Joi.string().regex(RGXEmail).required().messages({
-      'string.empty': 'Email can´t be empty',
-      'string.pattern.base': 'Email must be in a valid format'
-    }),
     dni: Joi.string().min(7).max(9).required().messages({
       'string.min': 'DNI must have 7-9 digits',
       'string.max': 'DNI must have 7-9 digits',
@@ -77,9 +75,6 @@ const FormMembers = () => {
         'string.empty': 'City can´t be empty',
         'string.min': 'City must have at least 4 characters'
       }),
-    birthday: Joi.date().required().messages({
-      'date.base': 'Invalid birth date format'
-    }),
     postalCode: Joi.string()
       .regex(/^[0-9]*$/)
       .min(4)
@@ -89,20 +84,11 @@ const FormMembers = () => {
         'string.length': 'Postal code must have between 4 and 5 digits',
         'string.empty': 'Postal code can´t be empty',
         'string.pattern.base': 'Postal code must be only numbers'
-      }),
-    membership: Joi.string()
-      .valid('Only Classes Membership', 'Classic Membership', 'Black Membership')
-      .required()
-      .messages({
-        'any.required': 'Membership is required',
-        'any.only': 'Invalid Membership'
-      }),
-    isActive: Joi.string().valid('true', 'false').allow(true, false)
+      })
   });
   const {
     register,
     handleSubmit,
-    reset,
     setValue,
     formState: { errors }
   } = useForm({
@@ -111,37 +97,26 @@ const FormMembers = () => {
   });
 
   useEffect(() => {
-    dispatch(getMembers());
-  }, []);
-
-  useEffect(() => {
-    formEdit(id);
+    formEdit(dataLog._id);
   }, []);
 
   const formEdit = (id) => {
     if (id) {
-      const data = listMembers.find((aux) => aux._id === id);
-      if (data) {
-        setValue('firstName', data.firstName);
-        setValue('lastName', data.lastName);
-        setValue('email', data.email);
-        setValue('dni', data.dni.toString());
-        setValue('phone', data.phone.toString());
-        setValue('city', data.city);
-        setValue('birthday', data.birthday.toString().substring(0, 10));
-        setValue('postalCode', data.postalCode.toString());
-        setValue('membership', data.membership);
-        setValue('isActive', data.isActive);
-      }
+      setValue('firstName', dataLog?.firstName);
+      setValue('lastName', dataLog?.lastName);
+      setValue('dni', dataLog?.dni.toString());
+      setValue('phone', dataLog?.phone.toString());
+      setValue('city', dataLog?.city);
+      setValue('postalCode', dataLog.postalCode.toString());
     }
   };
 
   const onSubmit = (data) => {
-    id ? handleUpdateMember(data) : addMember(data);
+    handleUpdateMember(data);
   };
   const handleUpdateMember = async (memberValues) => {
     const payload = {
-      id: id,
+      id: dataLog?._id,
       body: memberValues
     };
     const response = await dispatch(updateMember(payload));
@@ -157,31 +132,6 @@ const FormMembers = () => {
     } else {
       setIsOpen(true);
       setIsMemberCreated(true);
-    }
-  };
-
-  const addMember = async (memberValues) => {
-    try {
-      const dataResponse = await dispatch(createMember(memberValues));
-      const modalData = {
-        title: dataResponse.error ? 'Error!' : 'Success!',
-        desc: dataResponse.message
-      };
-      setModalInfo(modalData);
-      dispatch(getMembers());
-      if (dataResponse.error) {
-        setIsOpen(true);
-        setIsMemberCreated(false);
-      } else {
-        setIsOpen(true);
-        setIsMemberCreated(true);
-      }
-    } catch (error) {
-      const modalData = {
-        title: 'Error!',
-        desc: error.message
-      };
-      setModalInfo(modalData);
     }
   };
 
@@ -222,17 +172,6 @@ const FormMembers = () => {
               error={errors.lastName?.message}
             />
           </div>
-          {!id && (
-            <div data-testid="member-email">
-              <TextInput
-                labelName={'Email'}
-                name={'email'}
-                inputType={'text'}
-                register={register}
-                error={errors.email?.message}
-              />
-            </div>
-          )}
           <div data-testid="member-dni">
             <TextInput
               labelName={'DNI'}
@@ -269,46 +208,12 @@ const FormMembers = () => {
               error={errors.postalCode?.message}
             />
           </div>
-          <div className={styles.contDate} data-testid="member-birthday">
-            <DatePicker
-              name={'birthday'}
-              title={'Birthday'}
-              register={register}
-              error={errors.birthday?.message}
-            />
-          </div>
-          <div className={styles.inputContainer} data-testid="member-membership">
-            <label>Membership</label>
-            <Select
-              name={'membership'}
-              selectID={''}
-              register={register}
-              error={errors.membership?.message}
-            >
-              <option value="">Choose a membership</option>
-              <option value="Black Membership">Black Membership</option>
-              <option value="Classic Membership">Classic Membership</option>
-              <option value="Only Classes Membership">Only Classes Membership</option>
-            </Select>
-          </div>
-          <div className={styles.inputContainer} data-testid="member-active">
-            {id && (
-              <>
-                <label className={styles.label}>Status</label>
-                <Select name={'isActive'} selectID={''} register={register}>
-                  <option value={true}>Active</option>
-                  <option value={false}>Inactive</option>
-                </Select>
-              </>
-            )}
-          </div>
         </div>
         <div className={styles.contButton}>
           <div>
-            <Button text="Cancel" type="button" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="button" clickAction={() => reset()} />
+            <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
           </div>
-          <Button type="submit" text={id ? 'Save' : 'Add'} testId="member-confirm-button" />
+          <Button type="submit" text={'Save'} testId="member-confirm-button" />
         </div>
       </form>
     </section>

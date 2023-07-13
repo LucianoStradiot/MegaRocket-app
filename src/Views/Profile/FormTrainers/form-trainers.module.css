@@ -25,17 +25,3 @@
   justify-content: space-between;
   margin-top: 20px;
 }
-
-.passwordContainer {
-  position: relative;
-  width: 100%;
-}
-
-.editIcon {
-  position: absolute;
-  right: 12px;
-  top: 39px;
-  cursor: pointer;
-  width: 25px;
-  height: 25px;
-}

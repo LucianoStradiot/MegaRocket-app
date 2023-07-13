@@ -9,6 +9,7 @@
 
 .containerTotal {
   display: flex;
+  width: 100%;
 }
 
 .boxActivity {

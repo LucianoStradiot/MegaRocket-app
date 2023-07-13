@@ -16,10 +16,6 @@ const Aside = ({ page }) => {
     desc: ''
   });
 
-  const isActiveRoute = (path) => {
-    return location.pathname === path ? styles.activeRoute : '';
-  };
-
   const isActiveRouteMember = (path) => {
     return location.pathname === path ? styles.activeRouteMember : '';
   };
@@ -27,13 +23,13 @@ const Aside = ({ page }) => {
   const handleLogout = async () => {
     try {
       const response = await dispatch(logout());
-      sessionStorage.clear();
       if (response.error) {
         throw new Error(response.message);
       } else {
+        sessionStorage.clear();
         setModalInfo({
           title: 'Success!',
-          desc: response.message
+          desc: 'Successfully logged out'
         });
         setConfirmModal(false);
         history.push('/');
@@ -213,7 +209,7 @@ const Aside = ({ page }) => {
             <ul className={styles.logoutAdmins}>
               <div className={styles.containerBtns}>
                 <Link to="/" className={` ${isActiveRouteMember('/')}`}>
-                  <div className={`${styles.btn} ${styles.btnHome}`}>
+                  <div className={`${styles.btn} ${styles.btnHome} `}>
                     <li>
                       <a>Home</a>
                     </li>
@@ -227,50 +223,55 @@ const Aside = ({ page }) => {
               </div>
               <div className={styles.containerBtns}>
                 <li>
-                  <Link
-                    to="/admins/activities"
-                    className={`${styles.linkBtn} ${isActiveRoute('/admins/activities')}`}
-                  >
-                    <div className={`${styles.btn} ${styles.btnHome}`}>
+                  <Link to="/admins/activities" className={`${styles.linkBtn} `}>
+                    <div
+                      className={`${styles.btn} ${styles.btnHome} ${isActiveRouteMember(
+                        '/admins/activities'
+                      )}`}
+                    >
                       <a>Activities</a>
                     </div>
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/admins/classes"
-                    className={`${styles.linkBtn} ${isActiveRoute('/admins/classes')}`}
-                  >
-                    <div className={`${styles.btn} ${styles.btnHome}`}>
+                  <Link to="/admins/classes" className={`${styles.linkBtn}`}>
+                    <div
+                      className={`${styles.btn} ${styles.btnHome} ${isActiveRouteMember(
+                        '/admins/classes'
+                      )}`}
+                    >
                       <a>Classes</a>
                     </div>
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/admins/members"
-                    className={`${styles.linkBtn} ${isActiveRoute('/admins/members')}`}
-                  >
-                    <div className={`${styles.btn} ${styles.btnHome}`}>
+                  <Link to="/admins/members" className={`${styles.linkBtn} `}>
+                    <div
+                      className={`${styles.btn} ${styles.btnHome} ${isActiveRouteMember(
+                        '/admins/members'
+                      )}`}
+                    >
                       <a>Members</a>
                     </div>
                   </Link>
                 </li>
-                <Link
-                  to="/admins/subscriptions"
-                  className={`${styles.linkBtn} ${isActiveRoute('/admins/subscriptions')}`}
-                >
-                  <div className={`${styles.btn} ${styles.btnHome}`}>
+                <Link to="/admins/subscriptions" className={`${styles.linkBtn} `}>
+                  <div
+                    className={`${styles.btn} ${styles.btnHome} ${isActiveRouteMember(
+                      '/admins/subscriptions'
+                    )}`}
+                  >
                     <li>
                       <a>Subscriptions</a>
                     </li>
                   </div>
                 </Link>
-                <Link
-                  to="/admins/trainers"
-                  className={`${styles.linkBtn} ${isActiveRoute('/admins/trainers')}`}
-                >
-                  <div className={`${styles.btn} ${styles.btnHome}`}>
+                <Link to="/admins/trainers" className={`${styles.linkBtn}`}>
+                  <div
+                    className={`${styles.btn} ${styles.btnHome} ${isActiveRouteMember(
+                      '/admins/trainers'
+                    )}`}
+                  >
                     <li>
                       <a>Trainers</a>
                     </li>
@@ -297,7 +298,7 @@ const Aside = ({ page }) => {
           <nav className={styles.navbar}>
             <ul className={styles.logoutSuperAdmins}>
               <div className={styles.containerBtns}>
-                <Link to="/" className={` ${isActiveRouteMember('/')}`}>
+                <Link to="/">
                   <div className={`${styles.btn} ${styles.btnHome}`}>
                     <li>
                       <a>Home</a>

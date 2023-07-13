@@ -11,6 +11,7 @@ import styles from './login.module.css';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { login } from 'Redux/Auth/thunks';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const Login = () => {
   const history = useHistory();
@@ -22,6 +23,10 @@ const Login = () => {
     title: '',
     desc: ''
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const RGXPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
 
@@ -48,10 +53,9 @@ const Login = () => {
   const logUser = async (userValue) => {
     try {
       const dataResponse = await dispatch(login(userValue));
-
       const modalData = {
         title: dataResponse.type === 'LOGIN_ERROR' ? 'Error!' : 'Success!',
-        desc: dataResponse.type === 'LOGIN_ERROR' ? 'Invalid credentials' : ''
+        desc: dataResponse.type === 'LOGIN_ERROR' ? 'Invalid credentials' : 'Logged successfully'
       };
       setModalInfo(modalData);
       if (dataResponse.type === 'LOGIN_ERROR') {
@@ -105,20 +109,26 @@ const Login = () => {
           name={'email'}
           testId="input-email-login"
         />
-        <TextInput
-          error={errors.password?.message}
-          register={register}
-          inputType={'text'}
-          labelName={'Password'}
-          name={'password'}
-          testId="input-password-login"
-        />
+        <div className={styles.passwordContainer}>
+          <TextInput
+            error={errors.password?.message}
+            register={register}
+            inputType={showPassword ? 'text' : 'password'}
+            labelName={'Password'}
+            name={'password'}
+            testId="input-password-login"
+          />
+          {!showPassword && (
+            <FiEyeOff className={styles.editIcon} onClick={togglePasswordVisibility} />
+          )}
+          {showPassword && <FiEye className={styles.editIcon} onClick={togglePasswordVisibility} />}
+        </div>
         <Link to="/recoverPassword" className={styles.password}>
           <a>Forgot password?</a>
         </Link>
         <div className={styles.btnContainer}>
           <div>
-            <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
+            <Button text="Cancel" type="cancel" clickAction={() => history.push('/')} />
           </div>
           <Button text={'Login'} type={'submit'} testId="confirm-button-login" />
         </div>

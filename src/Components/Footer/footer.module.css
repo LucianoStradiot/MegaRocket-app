@@ -34,13 +34,13 @@
   margin-left: 130px;
 }
 
-.rutes > li :hover {
+.rutes>li :hover {
   transition: 0.5s;
-  background-color: #8ed081;
+  background-color: #cbebf3;
   cursor: pointer;
 }
 
-.rutes > li > a {
+.rutes>li>a {
   display: inline-block;
   margin-left: 15px;
   font-size: 1rem;
@@ -62,12 +62,15 @@
   background-color: #fff;
   border-radius: 50px;
 }
+
 .logo {
   height: 70px;
 }
+
 .license {
   height: 100%;
 }
+
 .license p {
   display: inline-block;
   margin: 0;

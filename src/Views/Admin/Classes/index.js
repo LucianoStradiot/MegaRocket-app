@@ -8,6 +8,8 @@ import { deleteClass, getClasses } from 'Redux/Classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Aside from 'Components/Shared/Aside';
 import { FiEdit } from 'react-icons/fi';
+import { getActivities } from 'Redux/Activities/thunks';
+import { getTrainers } from 'Redux/Trainers/thunks';
 
 function Classes() {
   const dispatch = useDispatch();
@@ -47,6 +49,8 @@ function Classes() {
 
   useEffect(() => {
     dispatch(getClasses());
+    dispatch(getTrainers());
+    dispatch(getActivities());
   }, []);
 
   const openModalConfirm = (id) => {

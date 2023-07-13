@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.subContainer {
+  display: grid;
+  gap: 0 20px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 600px;
+  color: #373867;
+  background-color: #ffffffde;
+  padding: 25px;
+  font-weight: 600;
+  border-radius: 8px;
+  margin: 0 auto;
+  box-shadow: 0 2px 4px #1b1b5d99;
+  margin-top: 140px;
+}
+
+.contButton {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+label{
+  color: #000;
+  font-weight: bold;
+}
