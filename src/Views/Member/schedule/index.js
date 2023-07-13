@@ -33,9 +33,10 @@ const MemberSchedule = () => {
   const [filterQuery, setFilterQuery] = useState('');
 
   useEffect(() => {
-    dispatch(getClasses());
-    dispatch(getSubscriptions());
     dispatch(deleteOldSubscription());
+    dispatch(getClasses());
+    console.log(classes);
+    dispatch(getSubscriptions());
   }, []);
 
   const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -146,7 +147,7 @@ const MemberSchedule = () => {
 
   const cardColor = (subscriptionsLength, oneClass) => {
     for (const sub of subscriptions) {
-      if (userLoged?._id === sub.member?._id && sub.classes._id === oneClass._id) {
+      if (userLoged?._id === sub?.member?._id && sub?.classes?._id === oneClass?._id) {
         return styles.subscribedClass;
       }
     }
@@ -223,8 +224,8 @@ const MemberSchedule = () => {
                             {filteredClasses
                               .filter((oneClass) => oneClass.day === day && oneClass.hour === hour)
                               .map((oneClass, index) => {
-                                const filteredSubscriptions = subscriptions.filter(
-                                  (subscription) => oneClass._id === subscription.classes._id
+                                const filteredSubscriptions = subscriptions?.filter(
+                                  (subscription) => oneClass?._id === subscription?.classes?._id
                                 );
                                 const subscriptionsLength = filteredSubscriptions.length;
 
