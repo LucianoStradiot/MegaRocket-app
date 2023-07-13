@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-bottom: 5px;
+  margin-left: 20vh;
 }
 
 .subContainer {
@@ -12,7 +12,7 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
-.form {
+.content {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,12 +24,7 @@
   border-radius: 8px;
   margin: 0 auto;
   box-shadow: 0 2px 4px #1b1b5d99;
-  margin-top: 140px;
-}
-
-.inputContainer {
-  display: flex;
-  flex-direction: column;
+  margin-top: 200px;
 }
 
 .contButton {
@@ -38,16 +33,7 @@
   margin-top: 20px;
 }
 
-.passwordContainer {
-  position: relative;
-  width: 100%;
-}
-
-.editIcon {
-  position: absolute;
-  right: 12px;
-  top: 39px;
-  cursor: pointer;
-  width: 25px;
-  height: 25px;
+label {
+  color: #000;
+  font-weight: bold;
 }
