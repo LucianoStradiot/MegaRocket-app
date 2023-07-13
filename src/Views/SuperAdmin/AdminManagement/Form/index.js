@@ -30,7 +30,7 @@ const AdminForm = () => {
   const RGXPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
 
-  const schema = Joi.object({
+  const schemaUpdate = Joi.object({
     firstName: Joi.string()
       .min(3)
       .max(25)
@@ -73,10 +73,62 @@ const AdminForm = () => {
         'string.empty': 'Phone number can´t be empty',
         'string.pattern.base': 'Phone number must be only numbers'
       }),
-    email: Joi.string().regex(RGXEmail).required().messages({
-      'string.empty': 'Email can´t be empty',
-      'string.pattern.base': 'Email must be in a valid format'
-    }),
+
+    city: Joi.string()
+      .min(4)
+      .pattern(/^[A-Za-z\s]+$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'City must contain letters and spaces only',
+        'string.empty': 'City can´t be empty',
+        'string.min': 'City must have at least 4 characters'
+      })
+  });
+
+  const schemaCreate = Joi.object({
+    firstName: Joi.string()
+      .min(3)
+      .max(25)
+      .pattern(/^[a-zA-Z-]+$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'First name must contain letters only',
+        'string.min': 'First name can´t be shorter than 3 characters',
+        'string.max': 'First name can´t be longer than 25 characters',
+        'string.empty': 'First name can´t be empty'
+      }),
+    lastName: Joi.string()
+      .min(3)
+      .max(25)
+      .pattern(/^[a-zA-Z-]+$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'Last name must contain letters only',
+        'string.min': 'Last name can´t be shorter than 3 characters',
+        'string.max': 'Last name can´t be longer than 25 characters',
+        'string.empty': 'Last name can´t be empty'
+      }),
+    dni: Joi.string()
+      .regex(/^[0-9]*$/)
+      .min(7)
+      .max(9)
+      .required()
+      .messages({
+        'string.min': 'DNI must have 7-9 digits',
+        'string.max': 'DNI must have 7-9 digits',
+        'string.empty': 'DNI can´t be empty',
+        'string.pattern.base': 'DNI must be only numbers'
+      }),
+    phone: Joi.string()
+      .regex(/^[0-9]*$/)
+      .length(10)
+      .required()
+      .messages({
+        'string.length': 'Phone number must have 10 digits',
+        'string.empty': 'Phone number can´t be empty',
+        'string.pattern.base': 'Phone number must be only numbers'
+      }),
+
     city: Joi.string()
       .min(4)
       .pattern(/^[A-Za-z\s]+$/)
@@ -86,6 +138,10 @@ const AdminForm = () => {
         'string.empty': 'City can´t be empty',
         'string.min': 'City must have at least 4 characters'
       }),
+    email: Joi.string().regex(RGXEmail).required().messages({
+      'string.empty': 'Email can´t be empty',
+      'string.pattern.base': 'Email must be in a valid format'
+    }),
     password: Joi.string().min(8).regex(RGXPass).required().messages({
       'string.pattern.base':
         'Password must contain at least one uppercase, one lowercase and one number',
@@ -93,13 +149,15 @@ const AdminForm = () => {
       'string.min': 'Password must contain at least 8 characthers'
     })
   });
+
+  const resolver = joiResolver(id ? schemaUpdate : schemaCreate);
   const {
     register,
     handleSubmit,
     reset,
     setValue,
     formState: { errors }
-  } = useForm({ mode: 'onSubmit', resolver: joiResolver(schema) });
+  } = useForm({ mode: 'onSubmit', resolver });
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -119,9 +177,7 @@ const AdminForm = () => {
         setValue('lastName', data.lastName);
         setValue('dni', data.dni.toString());
         setValue('phone', data.phone.toString());
-        setValue('email', data.email);
         setValue('city', data.city);
-        setValue('password', data.password);
       }
     }
   };
@@ -174,6 +230,7 @@ const AdminForm = () => {
   };
 
   const onSubmit = (data) => {
+    console.log(id);
     id ? handleupdateAdmins(data) : handleCreateAdmin(data);
   };
 
@@ -285,8 +342,8 @@ const AdminForm = () => {
         </div>
         <div className={styles.btnContainer}>
           <div>
-            <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="submit" clickAction={() => reset()} />
+            <Button text="Cancel" type="button" clickAction={() => history.goBack()} />
+            <Button text="Reset" type="button" clickAction={() => reset()} />
           </div>
           {!id && <Button text="Add" type="submit" />}
           {id && <Button text="Save" type="submit" />}
