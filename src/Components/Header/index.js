@@ -38,7 +38,7 @@ function Header() {
         </div>
         <div>
           <img
-            src={`${process.env.PUBLIC_URL}/assets/images/logo-header.png`}
+            src={`${process.env.PUBLIC_URL}/assets/images/logo-header2.png`}
             alt="Mega Rocket Header Logo"
           />
         </div>
