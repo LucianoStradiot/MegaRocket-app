@@ -12,7 +12,6 @@ import Modal from 'Components/Shared/Modal';
 import Aside from 'Components/Shared/Aside';
 import Spinner from 'Components/Shared/Spinner';
 import { useHistory } from 'react-router-dom';
-import { getAuth } from 'Redux/Auth/thunks';
 
 const MemberSchedule = () => {
   const history = useHistory();
@@ -36,7 +35,6 @@ const MemberSchedule = () => {
   useEffect(() => {
     dispatch(getClasses());
     dispatch(getSubscriptions());
-    dispatch(getAuth());
     dispatch(deleteOldSubscription());
   }, []);
 
