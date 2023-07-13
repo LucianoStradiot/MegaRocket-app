@@ -230,7 +230,6 @@ const AdminForm = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(id);
     id ? handleupdateAdmins(data) : handleCreateAdmin(data);
   };
 
