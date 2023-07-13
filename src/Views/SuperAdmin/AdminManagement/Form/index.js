@@ -10,6 +10,7 @@ import Spinner from 'Components/Shared/Spinner';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const AdminForm = () => {
   const history = useHistory();
@@ -22,6 +23,10 @@ const AdminForm = () => {
     title: '',
     description: ''
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const RGXPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
 
@@ -83,7 +88,7 @@ const AdminForm = () => {
       }),
     password: Joi.string().min(8).regex(RGXPass).required().messages({
       'string.pattern.base':
-        'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
+        'Password must contain at least one uppercase, one lowercase and one number',
       'string.empty': 'Password can´t be empty',
       'string.min': 'Password must contain at least 8 characthers'
     })
@@ -194,14 +199,14 @@ const AdminForm = () => {
         handleClose={() => closeForm()}
       />
       {loading && <Spinner />}
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)} data-testid="admins-form">
         <div className={styles.subContainer}>
           <div>
             <TextInput
               labelName="First name"
               inputType="text"
               name="firstName"
-              id="firstName"
+              selectID="firstName"
               register={register}
               error={errors.firstName?.message}
             />
@@ -211,7 +216,7 @@ const AdminForm = () => {
               labelName="Last name"
               inputType="text"
               name="lastName"
-              id="lastName"
+              selectID="lastName"
               register={register}
               error={errors.lastName?.message}
             />
@@ -221,7 +226,7 @@ const AdminForm = () => {
               labelName="DNI"
               inputType="text"
               name="dni"
-              id="dni"
+              selectID="dni"
               register={register}
               error={errors.dni?.message}
             />
@@ -231,49 +236,60 @@ const AdminForm = () => {
               labelName="Phone"
               inputType="text"
               name="phone"
-              id="phone"
+              selectID="phone"
               register={register}
               error={errors.phone?.message}
             />
           </div>
-          <div>
-            <TextInput
-              labelName="Email"
-              inputType="text"
-              name="email"
-              id="email"
-              register={register}
-              error={errors.email?.message}
-            />
-          </div>
+
           <div>
             <TextInput
               labelName="City"
               inputType="text"
               name="city"
-              id="city"
+              selectID="city"
               register={register}
               error={errors.city?.message}
             />
           </div>
-          <div>
-            <TextInput
-              labelName="Password"
-              inputType="password"
-              name="password"
-              id="password"
-              register={register}
-              error={errors.password?.message}
-            />
-          </div>
+          {!id && (
+            <>
+              <div>
+                <TextInput
+                  labelName="Email"
+                  inputType="text"
+                  name="email"
+                  id="email"
+                  register={register}
+                  error={errors.email?.message}
+                />
+              </div>
+              <div className={styles.passwordContainer}>
+                <TextInput
+                  error={errors.password?.message}
+                  register={register}
+                  inputType={showPassword ? 'text' : 'password'}
+                  labelName={'Password'}
+                  name={'password'}
+                  testId="input-password-login"
+                />
+                {!showPassword && (
+                  <FiEyeOff className={styles.editIcon} onClick={togglePasswordVisibility} />
+                )}
+                {showPassword && (
+                  <FiEye className={styles.editIcon} onClick={togglePasswordVisibility} />
+                )}
+              </div>
+            </>
+          )}
         </div>
         <div className={styles.btnContainer}>
           <div>
             <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
             <Button text="Reset" type="submit" clickAction={() => reset()} />
           </div>
-          {!id && <Button text="Add" type="submit" />}
-          {id && <Button text="Save" type="submit" />}
+          {!id && <Button text="Add" type="submit" testId="add-button-admins" />}
+          {id && <Button text="Save" type="submit" testId="save-button-admins" />}
         </div>
       </form>
     </section>

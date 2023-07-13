@@ -5,6 +5,7 @@ function Footer() {
     <footer className={styles.container} data-testid="container-footer">
       <div className={styles.main}>
         <img
+          className={styles.logo}
           src={`${process.env.PUBLIC_URL}/assets/images/logo-footer.png`}
           alt="Mega Rocket Footer Logo"
         />

@@ -19,7 +19,9 @@ export const tokenListener = () => {
       const {
         claims: { role }
       } = await user.getIdTokenResult();
+      const firebaseUid = user.uid;
       sessionStorage.setItem('role', role);
+      sessionStorage.setItem('firebaseUid', firebaseUid);
       sessionStorage.setItem('token', token);
     }
   });

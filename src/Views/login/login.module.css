@@ -1,15 +1,17 @@
-.container{
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 100px;
   width: 100%;
 }
-.container h2{
+
+.container h2 {
   font-size: 37px;
   border-bottom: solid 2px;
   color: #fff;
 }
+
 .form {
   display: flex;
   flex-direction: column;
@@ -22,17 +24,20 @@
   margin: 5vh auto;
   font-weight: 600;
 }
+
 .cardsCont {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
+
 .btnContainer {
   width: 100%;
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
 }
+
 .cardContainer {
   width: 300px;
   color: #ffffff;
@@ -44,19 +49,50 @@
   box-shadow: 0 1px 1px 0 rgba(53, 53, 53, 0.2), 0 6px 20px 0 rgba(53, 53, 53, 0.2);
   text-decoration: none;
 }
+
 .cardContainer:hover {
   transform: scale(1.03);
 }
+
 .only {
   background-color: #ffffff;
   color: #000000;
 }
+
 .classic {
   background-color: #2e355b;
 }
+
 .black {
   background-color: #323232;
 }
+
 .cardContainer hr {
   width: 90%;
+}
+
+.recoverTitle {
+  margin: 5px 0
+}
+
+.password:link,
+.password:visited {
+  color: #2e355b;
+  text-decoration: none;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.passwordContainer {
+  position: relative;
+  width: 100%;
+}
+
+.editIcon {
+  position: absolute;
+  right: 12px;
+  top: 39px;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
 }

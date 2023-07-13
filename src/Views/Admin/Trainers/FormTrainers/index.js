@@ -11,6 +11,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { getTrainers, createTrainer, updateTrainer } from 'Redux/Trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const FormTrainers = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,10 @@ const FormTrainers = () => {
   const [activeVisible, setActiveVisible] = useState(false);
   const RGXPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -249,16 +254,37 @@ const FormTrainers = () => {
               error={errors.phone?.message}
             />
           </div>
-          <div className={styles.inputContainer}>
-            <TextInput
-              labelName="Email"
-              inputType="text"
-              name="email"
-              register={register}
-              selectID="email"
-              error={errors.email?.message}
-            />
-          </div>
+          {!id && (
+            <>
+              <div className={styles.inputContainer}>
+                <TextInput
+                  labelName="Email"
+                  inputType="text"
+                  name="email"
+                  register={register}
+                  selectID="email"
+                  error={errors.email?.message}
+                />
+              </div>
+              <div className={styles.passwordContainer}>
+                <TextInput
+                  error={errors.password?.message}
+                  register={register}
+                  inputType={showPassword ? 'text' : 'password'}
+                  labelName={'Password'}
+                  name={'password'}
+                  testId="input-password-login"
+                />
+                {!showPassword && (
+                  <FiEyeOff className={styles.editIcon} onClick={togglePasswordVisibility} />
+                )}
+                {showPassword && (
+                  <FiEye className={styles.editIcon} onClick={togglePasswordVisibility} />
+                )}
+              </div>
+            </>
+          )}
+
           <div className={styles.inputContainer}>
             <TextInput
               labelName="City"
@@ -269,16 +295,7 @@ const FormTrainers = () => {
               error={errors.city?.message}
             />
           </div>
-          <div className={styles.inputContainer}>
-            <TextInput
-              labelName="Password"
-              inputType="password"
-              name="password"
-              register={register}
-              selectID="password"
-              error={errors.password?.message}
-            />
-          </div>
+
           <div className={styles.inputContainer}>
             <TextInput
               labelName="Salary"
@@ -301,8 +318,8 @@ const FormTrainers = () => {
         </div>
         <div className={styles.btnContainer}>
           <div>
-            <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="submit" clickAction={() => reset()} />
+            <Button text="Cancel" type="button" clickAction={() => history.goBack()} />
+            <Button text="Reset" type="button" clickAction={() => reset()} />
           </div>
           {buttonAddIsVisible && <Button text="Add" type="submit" testId="trainer-add-button" />}
           {buttonSaveIsVisible && <Button text="Save" type="submit" testId="trainer-save-button" />}

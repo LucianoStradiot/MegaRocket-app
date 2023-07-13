@@ -11,6 +11,7 @@ import styles from './login.module.css';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { login } from 'Redux/Auth/thunks';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const Login = () => {
   const history = useHistory();
@@ -22,6 +23,10 @@ const Login = () => {
     title: '',
     desc: ''
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const RGXPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
 
@@ -30,16 +35,16 @@ const Login = () => {
       'string.empty': 'Email can´t be empty',
       'string.pattern.base': 'Email must be in a valid format'
     }),
-    password: Joi.string().regex(RGXPassword).min(8).required().messages({
+    password: Joi.string().min(8).regex(RGXPassword).required().messages({
       'string.pattern.base':
-        'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
-      'string.empty': 'Password can´t be empty'
+        'Password must contain at least one uppercase and one lowercase letter, and one number',
+      'string.empty': 'Password can´t be empty',
+      'string.min': 'Password must be at least 8 characters'
     })
   });
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors }
   } = useForm({
     mode: 'onSubmit',
@@ -49,11 +54,11 @@ const Login = () => {
     try {
       const dataResponse = await dispatch(login(userValue));
       const modalData = {
-        title: dataResponse.error ? 'Error!' : 'Success!',
-        desc: dataResponse.message
+        title: dataResponse.type === 'LOGIN_ERROR' ? 'Error!' : 'Success!',
+        desc: dataResponse.type === 'LOGIN_ERROR' ? 'Invalid credentials' : 'Logged successfully'
       };
       setModalInfo(modalData);
-      if (dataResponse.error) {
+      if (dataResponse.type === 'LOGIN_ERROR') {
         setIsOpen(true);
         setIsMemberLogged(false);
       } else {
@@ -77,7 +82,7 @@ const Login = () => {
         history.push('/admins/activities');
       }
       if (sessionStorage.getItem('role') === 'TRAINER') {
-        history.push('/schedule');
+        history.push('/trainers');
       }
       if (sessionStorage.getItem('role') === 'MEMBER') {
         history.push('/');
@@ -104,18 +109,26 @@ const Login = () => {
           name={'email'}
           testId="input-email-login"
         />
-        <TextInput
-          error={errors.password?.message}
-          register={register}
-          inputType={'text'}
-          labelName={'Password'}
-          name={'password'}
-          testId="input-password-login"
-        />
+        <div className={styles.passwordContainer}>
+          <TextInput
+            error={errors.password?.message}
+            register={register}
+            inputType={showPassword ? 'text' : 'password'}
+            labelName={'Password'}
+            name={'password'}
+            testId="input-password-login"
+          />
+          {!showPassword && (
+            <FiEyeOff className={styles.editIcon} onClick={togglePasswordVisibility} />
+          )}
+          {showPassword && <FiEye className={styles.editIcon} onClick={togglePasswordVisibility} />}
+        </div>
+        <Link to="/recoverPassword" className={styles.password}>
+          <a>Forgot password?</a>
+        </Link>
         <div className={styles.btnContainer}>
           <div>
-            <Button text="Cancel" type="cancel" clickAction={() => history.goBack()} />
-            <Button text="Reset" type="reset" clickAction={() => reset()} />
+            <Button text="Cancel" type="cancel" clickAction={() => history.push('/')} />
           </div>
           <Button text={'Login'} type={'submit'} testId="confirm-button-login" />
         </div>
