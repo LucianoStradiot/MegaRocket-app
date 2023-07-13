@@ -76,7 +76,7 @@ function Admins() {
             {!loading && (
               <div>
                 <Link to="/superAdmins/admins/form">
-                  <Button text="Create" type="create" />
+                  <Button text="Create" type="create" testId="create-button-admins" />
                 </Link>
                 <Table
                   list={admins}
