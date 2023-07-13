@@ -30,7 +30,7 @@ function Header() {
         <div className={styles.profileContainer}>
           {id && (
             <img
-              src={`${process.env.PUBLIC_URL}/assets/images/profile.png`}
+              src={`${process.env.PUBLIC_URL}/assets/images/ellie.png`}
               className={styles.profile}
             ></img>
           )}
