@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Joi from 'joi';
 import Spinner from 'Components/Shared/Spinner';
 import Modal from 'Components/Shared/Modal';
-import styles from '../../Admin/Members/FormMembers/form-members.module.css';
+import styles from './signUp.module.css';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const SignUpMember = () => {
@@ -274,14 +274,12 @@ const SignUpMember = () => {
               name={'password'}
               testId="input-password-login"
             />
-            <div className={styles.eyeContainer}>
-              {!showPassword && (
-                <FiEyeOff className={styles.editIcon} onClick={togglePasswordVisibility} />
-              )}
-              {showPassword && (
-                <FiEye className={styles.editIcon} onClick={togglePasswordVisibility} />
-              )}
-            </div>
+            {!showPassword && (
+              <FiEyeOff className={styles.editIcon} onClick={togglePasswordVisibility} />
+            )}
+            {showPassword && (
+              <FiEye className={styles.editIcon} onClick={togglePasswordVisibility} />
+            )}
           </div>
           <div className={styles.inputContainer}></div>
         </div>
