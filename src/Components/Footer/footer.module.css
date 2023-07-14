@@ -35,7 +35,7 @@
 
 .rutes>li :hover {
   transition: 0.5s;
-  background-color: #86dcf1;
+  background-color: #aedfeb;
   cursor: pointer;
 }
 

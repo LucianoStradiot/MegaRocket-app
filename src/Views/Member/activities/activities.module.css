@@ -18,34 +18,30 @@
   width: 235px;
   padding: 20px;
   margin: 2%;
-  background-color: #e6e6e6;
-  color: #000000;
-  border-radius: 2%;
+  background-color: #ddddddcc;
+  color: #000;
+  border-radius: 8px;
   align-items: center;
   box-sizing: border-box;
-  border: 1px solid #373867;
+  border: none;
+  box-shadow: 4px 5px 6px rgba(0, 0, 0, 0.5);
   transition: all 0.5s ease;
-}
-
-.boxActivity:hover {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
-  transform: scale(1.03);
-  background-color: #f9fff6;
 }
 
 .titleActivity {
   text-transform: capitalize;
-  color: #373867;
 }
 
-.p {
-  color: #373867;
+.boxActivity:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+  transform: scale(1.1);
 }
 
 .title {
-  font-size: 30px;
+  font-size: 40px;
   text-align: center;
   color: #fff;
+  text-shadow: 5px 7px 4px rgba(0, 0, 0, 0.5);
 }
 
 .containerActivity {

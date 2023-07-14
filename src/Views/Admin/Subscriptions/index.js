@@ -5,7 +5,7 @@ import styles from './subscriptions.module.css';
 import Modal from 'Components/Shared/Modal';
 import Spinner from 'Components/Shared/Spinner';
 import Aside from 'Components/Shared/Aside';
-import Button from 'Components/Shared/Button';
+import { FiXSquare } from 'react-icons/fi';
 
 function Subscriptions() {
   const [idDelete, setIdDelete] = useState('');
@@ -128,10 +128,9 @@ function Subscriptions() {
                               );
                             })}
                             <td className={styles.thTable} data-testid="buttons-table">
-                              <Button
-                                text="X"
-                                type="deleteCancel"
-                                clickAction={() => openModalConfirm(subscription._id)}
+                              <FiXSquare
+                                className={`${styles.editIcon} ${styles.trash}`}
+                                onClick={() => openModalConfirm(subscription._id)}
                               />
                             </td>
                           </tr>
