@@ -17,6 +17,8 @@ describe('Check elements in Home Page', () => {
 
   it('check elements and functionalities in sidebar', async () => {
     await expect(HomePage.sidebarHome).toBeDisplayed();
+    const cssProperty = await HomePage.sidebarHome.getCSSProperty('align-items');
+    expect(cssProperty.value).toBe('center');
 
     await expect(HomePage.loginButton).toBeDisplayed();
     await expect(HomePage.loginButton).toBeClickable();
@@ -111,8 +113,6 @@ describe('Check elements in Home Page', () => {
   it('Check elements in first section', async () => {
     await expect(HomePage.sectionOneTitle).toBeDisplayed();
     await expect(HomePage.sectionOneTitle).toHaveTextContaining('MEGA ROCKET WEB');
-    const cssProperty = HomePage.sectionOneTitle.getCSSProperty('align-items');
-    expect(cssProperty).toBe('center');
 
     await expect(HomePage.sectionOneSubTitle).toBeDisplayed();
     await expect(HomePage.sectionOneSubTitle).toHaveTextContaining('WELCOME');
