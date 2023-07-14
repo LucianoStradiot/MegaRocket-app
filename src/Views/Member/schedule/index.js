@@ -180,15 +180,15 @@ const MemberSchedule = () => {
               onChange={(e) => setFilterQuery(e.target.value)}
             />
           </div>
+          <Modal
+            title={modal.title}
+            desc={modal.description}
+            isOpen={isOpen}
+            confirmModal={modal.isConfirm}
+            handleClose={() => setIsOpen(!isOpen)}
+            deleteFunction={findSubToDelete.current ? handleDeleteSub : handleCreateSub}
+          />
           <div className={styles.container}>
-            <Modal
-              title={modal.title}
-              desc={modal.description}
-              isOpen={isOpen}
-              confirmModal={modal.isConfirm}
-              handleClose={() => setIsOpen(!isOpen)}
-              deleteFunction={findSubToDelete.current ? handleDeleteSub : handleCreateSub}
-            />
             <div className={styles.screenContainer}>
               <table className={styles.table}>
                 <thead>

@@ -35,7 +35,7 @@
 
 .rutes>li :hover {
   transition: 0.5s;
-  background-color: #cbebf3;
+  background-color: #aedfeb;
   cursor: pointer;
 }
 
@@ -48,6 +48,7 @@
   text-transform: capitalize;
   border-radius: 50px;
   color: #fff;
+  box-shadow: 5px 5px 4px rgb(0,0,0, 0.5);
 }
 
 .licenseContainer {
@@ -73,4 +74,5 @@
 .license p {
   display: inline-block;
   margin: 0;
+  text-shadow: 5px 5px 4px rgb(0,0,0, 0.5);
 }

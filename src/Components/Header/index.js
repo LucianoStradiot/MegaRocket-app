@@ -34,7 +34,7 @@ function Header() {
               className={styles.profile}
             ></img>
           )}
-          <h1 className={styles.brand}>{name}</h1>
+          <p className={styles.brand}>{name}</p>
         </div>
         <div>
           <img

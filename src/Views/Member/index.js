@@ -1,121 +1,55 @@
-import Aside from 'Components/Shared/Aside';
+import React, { useState } from 'react';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import styles from './indexMember.module.css';
+import Aside from 'Components/Shared/Aside';
+
 const MemberUser = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const title = ['Welcome', 'About', 'Join us'];
+  const text = [
+    'Mega Rocket web is a monthly management system for members and trainers so that they can dynamically sign up for their activities in the gym.',
+    'Since 1965, no gym has been responsible for more life-changing transformations and fitness achievements than Mega Rocket.',
+    'Join our gym, unleash your potential! Get expert guidance, state-of-the-art facilities, and a supportive community. Take the first step towards a healthier you. Join now!'
+  ];
+
+  const handleSlideChange = (index) => {
+    setCurrentSlide(index);
+  };
+
   return (
     <div className={styles.supremeContainer}>
       <Aside page={'home'} />
       <div className={styles.mainContainer}>
         <main data-testid="home-page">
-          <section className={styles.home}>
+          <section className={styles.card}>
             <article>
-              <h1>MEGA ROCKET WEB</h1>
-              <p className={styles.welcome}>welcome</p>
-              <p>
-                Mega Rocket web is a monthly management system for members and trainers so that they
-                can dynamically sign up for their activities in the gym.
-              </p>
+              <h1>MEGA ROCKET</h1>
+              <div className={styles.carouselContent}>
+                <Carousel
+                  selectedItem={currentSlide}
+                  onChange={handleSlideChange}
+                  showThumbs={false}
+                  showStatus={false}
+                  className={styles.carousel}
+                  autoPlay={true}
+                  interval={6000}
+                  infiniteLoop={true}
+                >
+                  {title.map((slideTitle, index) => (
+                    <div key={index}>
+                      <h2>{slideTitle}</h2>
+                      <p>{text[index]}</p>
+                    </div>
+                  ))}
+                </Carousel>
+              </div>
             </article>
-            <img
-              src={`${process.env.PUBLIC_URL}/assets/images/gym-home.png`}
-              alt="Image of the gym"
-            />
           </section>
-          <section className={styles.features}>
-            <h2>Features</h2>
-            <div className={styles.featuresContainer}>
-              <article>
-                <div className={styles.featuresFlex}>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/assets/images/i-reservation.svg`}
-                    alt="shift reservations"
-                  />
-                  <h3>Shift Reservations</h3>
-                </div>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus dolorum,
-                  corrupti perspiciatis quasi voluptatum quaerat cumque recusandae rem accusantium
-                  sit excepturi vero? Facilis totam consequuntur et. Inventore iure quasi
-                </p>
-              </article>
-              <article>
-                <div className={styles.featuresFlex}>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/assets/images/i-scheduling.svg`}
-                    alt="membership management"
-                  />
-                  <h3>Scheduling y Opening Hours</h3>
-                </div>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus dolorum,
-                  corrupti perspiciatis quasi voluptatum quaerat cumque recusandae rem accusantium
-                  sit excepturi vero? Facilis totam consequuntur et. Inventore iure quasi
-                </p>
-              </article>
-              <article>
-                <div className={styles.featuresFlex}>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/assets/images/i-management.svg`}
-                    alt="scheduling y opening hours"
-                  />
-                  <h3>Membership Management</h3>
-                </div>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus dolorum,
-                  corrupti perspiciatis quasi voluptatum quaerat cumque recusandae rem accusantium
-                  sit excepturi vero? Facilis totam consequuntur et. Inventore iure quasi
-                </p>
-              </article>
-              <article>
-                <div className={styles.featuresFlex}>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/assets/images/i-mail-features.svg`}
-                    alt="contact form y suggestions"
-                  />
-                  <h3>Contact Form y Suggestions</h3>
-                </div>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus dolorum,
-                  corrupti perspiciatis quasi voluptatum quaerat cumque recusandae rem accusantium
-                  sit excepturi vero? Facilis totam consequuntur et. Inventore iure quasi
-                </p>
-              </article>
-            </div>
-          </section>
-          <section className={styles.about}>
-            <h2>About Mega Rocket</h2>
-            <div className={styles.aboutContainer}>
-              <article className={`${styles.aboutFlex} ${styles.flex1}`}>
-                <img
-                  src={`${process.env.PUBLIC_URL}/assets/images/gym-about.png`}
-                  alt="Image of the gym"
-                />
-                <p>
-                  MESSI ipsum dolor sit amet consectetur adipisicing elit. Modi dolorem voluptatum
-                  temporibus illo expedita laudantium perferendis suscipit esse voluptate id
-                  aspernatur pariatur maxime voluptates nam dolore, sunt doloribus eligendi
-                  molestiae?
-                </p>
-                <button className={styles.button}>Learn more</button>
-              </article>
-              <article className={`${styles.aboutFlex} ${styles.flex2}`}>
-                <img
-                  src={`${process.env.PUBLIC_URL}/assets/images/gym-about2.png`}
-                  alt="Image of the gym"
-                />
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolorem voluptatum
-                  temporibus illo expedita laudantium perferendis suscipit esse voluptate id
-                  aspernatur pariatur maxime voluptates nam dolore, sunt doloribus eligendi
-                  molestiae?
-                </p>
-                <button className={styles.button}>Learn more</button>
-              </article>
-            </div>
-          </section>
-          <section className={styles.memberships}></section>
         </main>
       </div>
     </div>
   );
 };
+
 export default MemberUser;
