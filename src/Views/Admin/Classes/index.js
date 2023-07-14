@@ -4,7 +4,7 @@ import Button from 'Components/Shared/Button';
 import Modal from 'Components/Shared/Modal';
 import Spinner from 'Components/Shared/Spinner';
 import { Link } from 'react-router-dom';
-import { deleteClass, getClasses } from 'Redux/Classes/thunks';
+import { deleteClass, getClasses, deleteOldClasses } from 'Redux/Classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Aside from 'Components/Shared/Aside';
 import { FiEdit } from 'react-icons/fi';
@@ -48,6 +48,7 @@ function Classes() {
   };
 
   useEffect(() => {
+    dispatch(deleteOldClasses());
     dispatch(getClasses());
     dispatch(getTrainers());
     dispatch(getActivities());
