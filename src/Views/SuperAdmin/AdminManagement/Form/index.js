@@ -199,14 +199,14 @@ const AdminForm = () => {
         handleClose={() => closeForm()}
       />
       {loading && <Spinner />}
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)} data-testid="admins-form">
         <div className={styles.subContainer}>
           <div>
             <TextInput
               labelName="First name"
               inputType="text"
               name="firstName"
-              id="firstName"
+              selectID="firstName"
               register={register}
               error={errors.firstName?.message}
             />
@@ -216,7 +216,7 @@ const AdminForm = () => {
               labelName="Last name"
               inputType="text"
               name="lastName"
-              id="lastName"
+              selectID="lastName"
               register={register}
               error={errors.lastName?.message}
             />
@@ -226,7 +226,7 @@ const AdminForm = () => {
               labelName="DNI"
               inputType="text"
               name="dni"
-              id="dni"
+              selectID="dni"
               register={register}
               error={errors.dni?.message}
             />
@@ -236,7 +236,7 @@ const AdminForm = () => {
               labelName="Phone"
               inputType="text"
               name="phone"
-              id="phone"
+              selectID="phone"
               register={register}
               error={errors.phone?.message}
             />
@@ -247,7 +247,7 @@ const AdminForm = () => {
               labelName="City"
               inputType="text"
               name="city"
-              id="city"
+              selectID="city"
               register={register}
               error={errors.city?.message}
             />
@@ -288,8 +288,8 @@ const AdminForm = () => {
             <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
             <Button text="Reset" type="submit" clickAction={() => reset()} />
           </div>
-          {!id && <Button text="Add" type="submit" />}
-          {id && <Button text="Save" type="submit" />}
+          {!id && <Button text="Add" type="submit" testId="add-button-admins" />}
+          {id && <Button text="Save" type="submit" testId="save-button-admins" />}
         </div>
       </form>
     </section>

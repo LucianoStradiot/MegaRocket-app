@@ -1,7 +1,8 @@
 const homePage = require('../pageobjects/homePage.js');
+const Login = require ('../pageobjects/loginTest.js')
 const ActivitiesAdmin = require('../pageobjects/actAdminPage.js');
 const NavBarAdmin = require('../pageobjects/menuAdminPage.js');
-const ModalsAdmin = require('../pageobjects/modalsAdminPage.js');
+const ModalsAdmin = require('../pageobjects/modalsPage.js');
 const ClassesAdmin = require('../pageobjects/classAdminPage.js');
 const MemberAdmin = require('../pageobjects/membAdminPage.js');
 const TrainerAdmin = require('../pageobjects/trainAdminPage.js');
@@ -16,26 +17,22 @@ describe('Check Login application for "Admins_User"', () => {
     it('Display elements for home', async () => {
       await expect(homePage.headerLogo).toBeDisplayed();
       await expect(homePage.sidebarHome).toBeDisplayed();
-      await expect(homePage.loginButtonHome).toBeDisplayed();
-      await expect(homePage.loginButtonHome).toBeClickable();
-      await homePage.loginClickHome();
+      await expect(homePage.loginButton).toBeDisplayed();
+      await expect(homePage.loginButton).toBeClickable();
+      await homePage.loginClick();
     });
     it('Display elements login & login flow', async () => {
-      await expect(homePage.loginForm).toBeDisplayed();
-      await expect(homePage.labelEmailLog).toBeDisplayed();
-      await expect(homePage.inputEmailLog).toBeDisplayed();
-      await expect(homePage.labelPasswordLog).toBeDisplayed();
-      await expect(homePage.inputPasswordLog).toBeDisplayed();
-      await expect(homePage.cancelButtonLog).toBeDisplayed();
-      await expect(homePage.loginButtonLog).toBeDisplayed();
-      await homePage.fillInputEmail('Te@test');
-      await homePage.fillInputPassword('Test');
-      await homePage.logClick();
-      await expect(homePage.errorEmailLog).toBeDisplayed();
-      await expect(homePage.errorPasswordLog).toBeDisplayed();
-      await homePage.fillInputEmail('admin@gmail.com');
-      await homePage.fillInputPassword('Admin123');
-      await homePage.logClick();
+      await expect(Login.loginForm).toBeDisplayed();
+      await expect(Login.labelEmailLog).toBeDisplayed();
+      await expect(Login.emailInput).toBeDisplayed();
+      await expect(Login.labelPasswordLog).toBeDisplayed();
+      await expect(Login.passwordInput).toBeDisplayed();
+      await expect(Login.cancelButtonLog).toBeDisplayed();
+      await expect(Login.loginButton).toBeDisplayed();
+      await Login.logIn('Te@test', 'Test');
+      await expect(Login.errorEmailLog).toBeDisplayed();
+      await expect(Login.errorPasswordLog).toBeDisplayed();
+      await Login.logIn('admin@gmail.com', 'Admin123');
       await expect(ModalsAdmin.modalSuccess).toBeDisplayed();
       await expect(ModalsAdmin.modalSuccessTitle).toBeDisplayed();
       await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
@@ -49,6 +46,8 @@ describe('Check Login application for "Admins_User"', () => {
         await expect(NavBarAdmin.classesButton).toBeClickable();
         await expect(NavBarAdmin.membersButton).toBeDisplayed();
         await expect(NavBarAdmin.membersButton).toBeClickable();
+        await expect(NavBarAdmin.subscriptionButton).toBeDisplayed();
+        await expect(NavBarAdmin.subscriptionButton).toBeClickable();
         await expect(NavBarAdmin.trainersButton).toBeDisplayed();
         await expect(NavBarAdmin.trainersButton).toBeClickable();
     });
@@ -140,7 +139,7 @@ describe('Check Login application for "Admins_User"', () => {
       await ModalsAdmin.acceptModalClick();
     });
     //Need to add method to call & select date-picker in member flow
-    it('Members create & edit flow', async () => {
+    it('Members edit flow', async () => {
       // await expect(NavBarAdmin.membersButton).toBeDisplayed();
       // await expect(NavBarAdmin.membersButton).toBeClickable();
       // await NavBarAdmin.membersClick();
@@ -298,13 +297,22 @@ describe('Check Login application for "Admins_User"', () => {
       await expect(TrainerAdmin.saveButtonTrainer).toBeDisplayed();
       TrainerAdmin.inputSalaryT.clearValue();
       await TrainerAdmin.fillInputSalaryT('444');
-      await TrainerAdmin.fillInputPasswordT('Tetera20');
       await TrainerAdmin.saveTrainerClick();
       await expect(ModalsAdmin.modalSuccess).toBeDisplayed();
       await expect(ModalsAdmin.modalSuccessTitle).toBeDisplayed();
       await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
       await expect(ModalsAdmin.modalSuccessTitle).toHaveTextContaining('Success!');
       await ModalsAdmin.acceptModalClick();
+    });
+    it('Subscription delete flow', async () => {
+      // await NavBarAdmin.classesClick();
+      // await expect(ClassesAdmin.deleteButtonClass).toBeDisplayed();
+      // await ClassesAdmin.deleteClassClick();
+      // await expect(ModalsAdmin.modalConfirm).toBeDisplayed();
+      // await expect(ModalsAdmin.confirmButtonModal).toBeDisplayed();
+      // await ModalsAdmin.confirmModalClick();
+      // await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
+      // await ModalsAdmin.acceptModalClick();
     });
     it('Classes delete flow', async () => {
       await NavBarAdmin.classesClick();
@@ -335,5 +343,7 @@ describe('Check Login application for "Admins_User"', () => {
       await ModalsAdmin.confirmModalClick();
       await expect(ModalsAdmin.acceptButtonModal).toBeDisplayed();
       await ModalsAdmin.acceptModalClick();
+    });
+    it ('Log out Admin', async ()=> {
     });
 });
