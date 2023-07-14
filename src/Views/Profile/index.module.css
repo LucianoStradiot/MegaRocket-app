@@ -3,12 +3,11 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-left: 20vh;
 }
 
 .subContainer {
   display: grid;
-  gap: 0 20px;
+  gap: 10px 20px;
   grid-template-columns: repeat(2, 1fr);
 }
 
@@ -16,9 +15,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 600px;
+  width: 500px;
   color: #373867;
-  background-color: #ffffffde;
+  background-color: #ddddddde;
   padding: 25px;
   font-weight: 600;
   border-radius: 8px;
@@ -29,11 +28,27 @@
 
 .contButton {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 20px;
 }
 
-label {
+.inputContainer {
+  width: 100%;
+  border-bottom: 2px solid black;
+}
+
+.label {
+  font-size: 20px;
+  color: #2e355b;
+}
+
+.p {
+  font-size: 16px;
   color: #000;
-  font-weight: bold;
+}
+
+@media screen and (min-width:1025px) {
+  .container {
+    margin-left: 20vh;
+  }
 }
