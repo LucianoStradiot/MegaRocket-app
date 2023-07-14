@@ -7,14 +7,6 @@ class ForgotPassword {
     return $('[data-testid="confirm-button-login"]');
   }
 
-  get modal() {
-    return $('[data-testid="modal-success"]');
-  }
-
-  get acceptBtn() {
-    return $('[data-testid="modal-success"] > button');
-  }
-
   get errorMail() {
     return $(
       '[data-testid="input-email-recoverPassword"] + p'
@@ -23,11 +15,6 @@ class ForgotPassword {
 
   async setEmail(email) {
     await this.recoverPasswdInput.setValue(email);
-  }
-
-  async  waitUntilModalDisplayed() {
-    const modal = await $('[data-testid="modal-succes"]');
-    await browser.wait(ExpectedConditions.visibilityOf(modal));
   }
 
   openPage() {

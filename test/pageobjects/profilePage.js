@@ -44,12 +44,6 @@ class ProfilePage {
   get btnSave() {
     return $('[data-testid="member-confirm-button"]');
   }
-  get modal() {
-    return $('[data-testid="modal-success"]');
-  }
-  get acceptBtn() {
-    return $('[data-testid="modal-success"] > button');
-  }
 
   async setName(name) {
     await this.inputName.setValue(name);

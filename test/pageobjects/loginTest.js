@@ -20,12 +20,6 @@ class Login {
   get acceptButton() {
     return $('[data-testid="modal-success"] button');
   }
-  get modal() {
-    return $('[data-testid="modal-success"]');
-  }
-  get acceptBtn() {
-    return $('[data-testid="modal-success"] > button');
-  }
   get forgotPassword() {
     return $('[data-testid="container-login"] .login_password__rDUIU a');
   }
