@@ -89,3 +89,25 @@
 .borderRight {
   border-radius: 0px 8px 0px 0px;
 }
+
+.btnsContainer {
+display: flex;
+align-items: center;
+}
+
+.editIcon {
+  margin-top: 4px;
+  width: 21px;
+  height: 21px;
+  color: #2E355B;
+  padding: 6px;
+  margin-right: 5px;
+  border-radius: 5px;
+  box-shadow: 4px 5px 4px rgb(0,0,0, 0.5);
+  transition: 0.3s ease-out;
+}
+
+.editIcon:hover {
+  color: #fff;
+  background-color: #2E355B;
+}
