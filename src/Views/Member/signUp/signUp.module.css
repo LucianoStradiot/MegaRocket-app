@@ -1,6 +1,53 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 5px;
 }
 
+.subContainer {
+  display: grid;
+  gap: 0 20px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 600px;
+  color: #373867;
+  background-color: #ffffffde;
+  padding: 25px;
+  font-weight: 600;
+  border-radius: 8px;
+  margin: 0 auto;
+  box-shadow: 0 2px 4px #1b1b5d99;
+  margin-top: 140px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.contButton {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.passwordContainer {
+  position: relative;
+  width: 100%;
+}
+
+.editIcon {
+  position: absolute;
+  right: 12px;
+  top: 39px;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+}
