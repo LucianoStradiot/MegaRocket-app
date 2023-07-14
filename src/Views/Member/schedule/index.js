@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from 'Views/Member/schedule/schedule.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClasses } from 'Redux/Classes/thunks';
+import { getClasses, deleteOldClasses } from 'Redux/Classes/thunks';
 import {
   deleteOldSubscription,
   deleteSubscription,
@@ -12,7 +12,6 @@ import Modal from 'Components/Shared/Modal';
 import Aside from 'Components/Shared/Aside';
 import Spinner from 'Components/Shared/Spinner';
 import { useHistory } from 'react-router-dom';
-import { getAuth } from 'Redux/Auth/thunks';
 
 const MemberSchedule = () => {
   const history = useHistory();
@@ -34,10 +33,10 @@ const MemberSchedule = () => {
   const [filterQuery, setFilterQuery] = useState('');
 
   useEffect(() => {
+    dispatch(deleteOldClasses());
+    dispatch(deleteOldSubscription());
     dispatch(getClasses());
     dispatch(getSubscriptions());
-    dispatch(getAuth());
-    dispatch(deleteOldSubscription());
   }, []);
 
   const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -148,7 +147,7 @@ const MemberSchedule = () => {
 
   const cardColor = (subscriptionsLength, oneClass) => {
     for (const sub of subscriptions) {
-      if (userLoged?._id === sub.member?._id && sub.classes._id === oneClass._id) {
+      if (userLoged?._id === sub?.member?._id && sub?.classes?._id === oneClass?._id) {
         return styles.subscribedClass;
       }
     }
@@ -225,8 +224,8 @@ const MemberSchedule = () => {
                             {filteredClasses
                               .filter((oneClass) => oneClass.day === day && oneClass.hour === hour)
                               .map((oneClass, index) => {
-                                const filteredSubscriptions = subscriptions.filter(
-                                  (subscription) => oneClass._id === subscription.classes._id
+                                const filteredSubscriptions = subscriptions?.filter(
+                                  (subscription) => oneClass?._id === subscription?.classes?._id
                                 );
                                 const subscriptionsLength = filteredSubscriptions.length;
 
@@ -287,9 +286,7 @@ const MemberSchedule = () => {
                                         }`}</div>
                                         <div>
                                           {'Slots: '}
-                                          {userLoged ? subscriptionsLength : ''}
-                                          {userLoged ? ' / ' : 'login'}
-                                          {userLoged ? oneClass.slots : ' first'}
+                                          {`${subscriptionsLength}/${oneClass.slots}`}
                                         </div>
                                       </p>
                                     </button>

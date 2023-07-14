@@ -6,7 +6,7 @@ function Footer() {
       <div className={styles.main}>
         <img
           className={styles.logo}
-          src={`${process.env.PUBLIC_URL}/assets/images/logo-footer.png`}
+          src={`${process.env.PUBLIC_URL}/assets/images/logo-footer2.png`}
           alt="Mega Rocket Footer Logo"
         />
         <div className={styles.licenseContainer}>

@@ -10,19 +10,13 @@ import { useHistory } from 'react-router-dom';
 import { updateTrainer } from 'Redux/Trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
-import { getAuth } from 'Redux/Auth/thunks';
 
 const FormTrainers = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
   const [isTrainerCreated, setIsTrainerCreated] = useState(false);
-  const idLogged = sessionStorage.getItem('firebaseUid');
   const dataLog = useSelector((state) => state.user.user);
-
-  useEffect(() => {
-    dispatch(getAuth(idLogged));
-  }, []);
 
   const schema = Joi.object({
     firstName: Joi.string()

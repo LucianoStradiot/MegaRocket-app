@@ -8,35 +8,35 @@ class Login {
     get emailInput() {
         return $('input[data-testid="input-email-login"]');
     }
-    get labelEmailLog() {
+    get labelEmail() {
       return $('label[data-testid="input-email-login"]');
     }
-    get errorEmailLog (){
-      return $('[data-testid="container-login"] div p');
+    get errorMail() {
+      return $('[data-testId="input-email-login"] + p');
     }
     get passwordInput() {
         return $('input[data-testid="input-password-login"]');
     }
-    get labelPasswordLog() {
+    get labelPassword() {
       return $('label[data-testid="input-password-login"]');
     }
-    get errorPasswordLog () {
-      return $('[data-testid="container-login"] div:nth-child(2) p');
+    get errorPassword() {
+      return $('[data-testId="input-password-login"] + p');
     }
     get loginButton() {
-        return $('[data-testid="confirm-button-login"]');
+      return $('[data-testid="confirm-button-login"]');
     }
-    get cancelButtonLog () {
-      return $('[data-testid="container-login"] button');
-    }
-    get acceptButton() {
-        return $('[data-testid="modal-success"] button');
+    get forgotPassword() {
+      return $('[data-testid="container-login"] .login_password__rDUIU a');
     }
     async logIn(email, password) {
         await this.emailInput.setValue(email);
         await this.passwordInput.setValue(password);
         await this.loginButton.click();
     }
+  open() {
+    return browser.url('https://joaco-megarocket-app.vercel.app/auth/login');
+  }
 };
 
 module.exports = new Login();

@@ -25,6 +25,9 @@ const FormMembers = () => {
     title: '',
     desc: ''
   });
+  const currentDate = new Date();
+  const minDate = new Date();
+  minDate.setFullYear(currentDate.getFullYear() - 15);
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
 
   const schema = Joi.object({
@@ -77,8 +80,9 @@ const FormMembers = () => {
         'string.empty': 'City can´t be empty',
         'string.min': 'City must have at least 4 characters'
       }),
-    birthday: Joi.date().required().messages({
-      'date.base': 'Invalid birth date format'
+    birthday: Joi.date().iso().max(minDate.toISOString()).required().messages({
+      'date.format': 'Invalid birth date format',
+      'date.max': 'You must be at least 15 years old'
     }),
     postalCode: Joi.string()
       .regex(/^[0-9]*$/)
