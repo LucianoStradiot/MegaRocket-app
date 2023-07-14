@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { deleteClass, getClasses, deleteOldClasses } from 'Redux/Classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Aside from 'Components/Shared/Aside';
-import { FiEdit } from 'react-icons/fi';
+import { FiEdit, FiXSquare } from 'react-icons/fi';
 import { getActivities } from 'Redux/Activities/thunks';
 import { getTrainers } from 'Redux/Trainers/thunks';
 
@@ -164,13 +164,17 @@ function Classes() {
                                             to={'/admins/classes/form/' + oneClass._id}
                                             className={styles.edit}
                                           >
-                                            <FiEdit className={styles.editIcon} />
+                                            <FiEdit
+                                              className={`${styles.editIcon} ${styles.editIconPen}`}
+                                            />
                                           </Link>
                                           <button
                                             className={styles.delete}
                                             onClick={() => openModalConfirm(oneClass._id)}
                                           >
-                                            <p className={styles.editIcon}>X</p>
+                                            <FiXSquare
+                                              className={`${styles.editIcon} ${styles.editIconX}`}
+                                            />
                                           </button>
                                         </div>
                                       </div>

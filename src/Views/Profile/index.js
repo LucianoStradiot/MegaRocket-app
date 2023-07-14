@@ -26,6 +26,10 @@ const Profile = () => {
         <section className={styles.container}>
           {loading && <Spinner />}
           <div className={styles.content}>
+            <img
+              src={`${process.env.PUBLIC_URL}/assets/images/ellie.png`}
+              className={styles.profilePhoto}
+            />
             <div className={styles.subContainer}>
               <div className={styles.inputContainer} data-testid="member-first-name">
                 <label className={styles.label}>First name</label>
@@ -81,6 +85,10 @@ const Profile = () => {
         <section className={styles.container}>
           {loading && <Spinner />}
           <div className={styles.content}>
+            <img
+              src={`${process.env.PUBLIC_URL}/assets/images/ellie.png`}
+              className={styles.profilePhoto}
+            />
             <div className={styles.subContainer}>
               <div className={styles.inputContainer}>
                 <label className={styles.label}>First name</label>

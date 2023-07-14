@@ -90,7 +90,8 @@
 
 .edit:hover {
   border: 2px solid #2E355B;
-  background-color: #418142;
+  background-color: #1e2341;
+  color: #2E355B;
   z-index: 6;
 }
 
@@ -167,6 +168,12 @@
 
 .classCard:hover .editIcon {
   opacity: 1;
+}
+
+.editIconX {
+  width: 33px;
+  height: 33px;
+  margin-bottom: 8px;
 }
 
 .searchBar {
