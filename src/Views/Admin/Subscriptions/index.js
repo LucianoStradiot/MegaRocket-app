@@ -149,23 +149,25 @@ function Subscriptions() {
   ) : (
     <>
       <Aside page={'admins'} />
-      <div className={styles.container}>
-        <section>
-          <Modal
-            title={responseModal.title}
-            desc={responseModal.description}
-            isOpen={isOpen}
-            confirmModal={responseModal.isConfirm}
-            handleClose={() => setIsOpen(!isOpen)}
-            deleteFunction={() => handleDeleteSub(idDelete)}
-          />
-          {pending && <Spinner />}
-          {!pending && (
-            <section>
-              <p className={styles.info}>There is no Subscription yet.</p>
-            </section>
-          )}
-        </section>
+      <div className={styles.mainContainer}>
+        <div className={styles.container}>
+          <section>
+            <Modal
+              title={responseModal.title}
+              desc={responseModal.description}
+              isOpen={isOpen}
+              confirmModal={responseModal.isConfirm}
+              handleClose={() => setIsOpen(!isOpen)}
+              deleteFunction={() => handleDeleteSub(idDelete)}
+            />
+            {pending && <Spinner />}
+            {!pending && (
+              <section>
+                <p className={styles.info}>There is no Subscription yet.</p>
+              </section>
+            )}
+          </section>
+        </div>
       </div>
     </>
   );

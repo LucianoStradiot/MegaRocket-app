@@ -4,15 +4,6 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.mainContainer h2 {
-    font-size: 30px;
-    text-align: center;
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-decoration-color: #49A37B;
-    text-underline-offset: 10px;
-}
-
 .supremeContainer {
   width: 100%;
   overflow-x: hidden;
@@ -24,23 +15,41 @@
 
 .mainContainer {
   background-image: linear-gradient(90deg,
-  rgba(0, 0, 0, 0.9),
-  rgba(0, 0, 0, 0.3),
-  rgba(0, 0, 0, 0.9)),url('../../../public/assets/images/negro.jpg');
-  background-size: contain;
-  background-position: center;
+  rgba(0, 0, 0, 0.6),
+  rgba(0, 0, 0, 0.1),
+  rgba(0, 0, 0, 0.6)),url('../../../public/assets/images/landing.jpg');
+ background-position: center;
   color: white;
-  min-height: 87vh;
+  height: 90vh;
   width: 100%;
-  margin-top: 13vh;
+  margin-top: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding-left: 10vh;
 }
 
-.home {
+.card {
   text-align: center;
+  padding: 80px;
+  max-width: 700px;
+  min-width: 500px;
   font-size: 40px;
-  font-family: Impact;
 }
+
+.card h1 {
+  font-size: 90px;
+  letter-spacing: 14px;
+  text-shadow: 5px 7px 4px rgba(0, 0, 0, 0.5);
+}
+
+.card h2 {
+  font-size: 40px;
+}
+
+.card p {
+  padding: 10px;
+  font-size: 22px;
+}
+
+
