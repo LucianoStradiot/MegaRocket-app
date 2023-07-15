@@ -11,15 +11,20 @@ class Modals {
   get modalConfirm(){
     return $('[data-testid="modal-confirm"]')
   }
-  get confirmButtonModal(){
+  get cancelButtonModal(){
     return $('[data-testid="modal-confirm"] button')
   }
-
+  get confirmButtonModal(){
+    return $('[data-testid="modal-confirm"] button:nth-child(2)')
+  }
   async confirmModalClick() {
     await this.confirmButtonModal.click();
   }
   async acceptModalClick() {
     await this.acceptButtonModal.click();
+  }
+  async cancelModalClick() {
+    await this.cancelButtonModal.click();
   }
 }
 

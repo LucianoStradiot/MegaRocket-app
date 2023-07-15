@@ -69,10 +69,10 @@ class TrainerAdmin {
     return $('[data-testid="trainer-add-button"]')
   }
   get editButtonTrainer(){
-    return $('[data-testid="container-table"] tbody tr:last-child button');
+    return $('tbody tr:last-child td:last-child a');
   }
   get deleteButtonTrainer(){
-    return $('[data-testid="container-table"] tbody tr:last-child button:nth-child(2)');
+    return $('tbody tr:last-child td:last-child svg');
   }
   get errorMsgNameT(){
     return $('div:nth-child(1) div p')

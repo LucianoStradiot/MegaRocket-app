@@ -155,6 +155,12 @@ class HomePage {
     return $('[data-testid="sign-up-form"]  button:nth-child(1)');
   }
 
+  get managementAdmin(){
+    return $('a:nth-child(1) li a');
+  }
+  async managementClick(){
+    await this.managementAdmin.click();
+  }
   async loginClick() {
     await this.loginButton.click();
   }

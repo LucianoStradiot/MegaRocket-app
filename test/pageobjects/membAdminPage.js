@@ -74,13 +74,6 @@ class MemberAdmin {
   get inputBirthDay() {
       return $('[data-testid=member-birthday] input')
   }
-  get errorMsgBirthDay() {
-    return $('[data-testid="member-birthday"] p')
-  }
-
-  // find how to select a date
-
-
   get labelMembership() {
       return $('[data-testid=member-membership] label')
   }
@@ -90,38 +83,22 @@ class MemberAdmin {
   get selectMembership() {
       return $('[data-testid=member-membership] select option:nth-child(3) ')
   }
-  get errorSelectMembership() {
-    return $('[data-testid=member-membership] select option:nth-child(1) ')
-}
-  get errorMsgMembership() {
-    return $('[data-testid="member-membership"] p')
-  }
-  get labelActive() {
-      return $('[data-testid=member-active] label')
-  }
-  get inputActive() {
-      return $('[data-testid=member-active] input')
-  }
   get cancelButtonMember() {
       return $('[data-testid="form-members"] button')
   }
   get resetButtonMember() {
       return $('[data-testid="form-members"] button:bth-child(2)')
   }
-  get confirmButtonMember() {
+  get saveButtonMember() {
       return $('{data-testid="member-confirm-button"')
   }// aplica para save y add
   get editButtonMember(){
-    return $('[data-testid="container-table"] tr:last-child button:nth-child(1)');
+    return $('tbody tr:last-child td:last-child a');
    }
    get deleteButtonMember(){
-    return $('[data-testid="container-table"] tr:last-child button:nth-child(2)')
+    return $('tbody tr:last-child td:last-child svg')
    }
 
-
-  async createMemberClick() {
-      await this.createMember.click();
-  }
   async cancelMemberClick() {
       await this.cancelButtonMember.click();
   }
@@ -135,7 +112,7 @@ class MemberAdmin {
     await this.deleteButtonMember.click();
 }
   async confirmMemberClick() {
-      await this.confirmButtonMember.click();
+      await this.saveButtonMember.click();
   }
   async fillInputFirstName(name) {
     await this.inputFirstName.setValue(name)
@@ -154,15 +131,6 @@ class MemberAdmin {
   }
   async fillInputCity(city) {
     await this.inputCity.setValue(city)
-  }
-  // async ClickBirthDay() {
-  //   await this.inputBirthDay.setValue()
-  // }
-  async clickMembership() {
-    await this.selectMembership.click()
-  }
-  async clickErrorMembership() {
-    await this.errorSelectMembership.click()
   }
 
 }

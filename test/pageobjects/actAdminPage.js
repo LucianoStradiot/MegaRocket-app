@@ -5,10 +5,10 @@ class ActivitiesAdmin {
  get  formActivities(){
      return $('#form');
  }
- get containerInputName() {
+ get inputName() {
      return $('[data-testid="activities-input-name"] input');
  }
- get containerInputDescription() {
+ get inputDescription() {
      return $('textarea');
  }
  get  cancelButtonAct(){
@@ -24,10 +24,10 @@ class ActivitiesAdmin {
      return $('[data-testid="activities-add-button"]');
  }
  get editButtonAct(){
-  return $('[data-testid="container-table"] tr:last-child button:nth-child(1)');
+  return $('tbody tr:last-child td:last-child a');
  }
  get deleteButtonAct(){
-  return $('[data-testid="container-table"] tr:last-child button:nth-child(2)')
+  return $('tbody tr:last-child td:last-child svg')
  }
  get errorMsgName(){
      return $('[data-testid="activities-input-name"] p');
@@ -60,14 +60,11 @@ async editActClick() {
 async deleteActClick() {
   await this.deleteButtonAct.click();
 }
- async fillInputName(name) {
-  await this.containerInputName.setValue(name);
+ async fillName(name) {
+  await this.inputName.setValue(name);
 }
-async fillInputDescription(description) {
-  await this.containerInputDescription.setValue(description);
-}
-async clearInputName(name){
-  await this.containerInputName.clearValue(name);
+async fillDescription(description) {
+  await this.inputDescription.setValue(description);
 }
 }
 

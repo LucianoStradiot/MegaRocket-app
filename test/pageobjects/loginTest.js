@@ -23,6 +23,9 @@ class Login {
     get errorPassword() {
       return $('[data-testId="input-password-login"] + p');
     }
+    get cancelButton(){
+      return $('[data-testid="container-login"] button');
+    }
     get loginButton() {
       return $('[data-testid="confirm-button-login"]');
     }

@@ -15,7 +15,7 @@ class ClassesAdmin {
      return $('#hour');
   }
   get selectionHour() {
-    return $('#hour option:nth-child(12)');
+    return $('#hour option:last-child');
  }
   get selectTrainer() {
      return $('#trainer');
@@ -48,10 +48,10 @@ class ClassesAdmin {
      return $('[data-testid="classes-add-button"]');
   }
   get editButtonClass(){
-  return $('[data-testid="container-table"] tbody tr:last-child button');
+  return $('tr:nth-child(13) td:nth-child(7) div div a');
   }
   get deleteButtonClass(){
-  return $('[data-testid="container-table"] tbody tr:last-child button:nth-child(2)');
+  return $('tr:nth-child(13) td:nth-child(7) div div button');
   }
 
   async acceptClassClick() {
