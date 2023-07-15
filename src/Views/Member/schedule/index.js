@@ -22,6 +22,7 @@ const MemberSchedule = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.classes.isLoading);
   const members = useSelector((state) => state.members.data);
+  const data = useSelector((state) => state.user.user);
 
   const [modal, setModal] = useState({
     title: '',
@@ -109,12 +110,19 @@ const MemberSchedule = () => {
       });
     } else if (sessionStorage.getItem('role') === 'TRAINER') {
       if (Array.isArray(description)) {
-        const memberNames = description
-          .map((member) => `${member.firstName} ${member.lastName}`)
-          .join(',\n');
+        const memberNames = description.map((member) => `${member.firstName} ${member.lastName}`);
+
         setModal({
           title: title,
-          description: memberNames,
+          description: (
+            <>
+              <ul>
+                {memberNames.map((name, index) => (
+                  <li key={index}>{name}</li>
+                ))}
+              </ul>
+            </>
+          ),
           isConfirm: false
         });
       } else {
@@ -287,11 +295,12 @@ const MemberSchedule = () => {
                                                 subs.member._id === member._id
                                             );
                                           });
-                                          openModal(
-                                            'There are the registered members',
-                                            filteredMembers
-                                          );
-                                          console.log(filteredMembers);
+                                          oneClass.trainer._id === data._id
+                                            ? openModal(
+                                                'These are the registered members',
+                                                filteredMembers
+                                              )
+                                            : openModal('Error', 'This is not your class');
                                         } else if (
                                           sessionStorage.getItem('role') === 'ADMIN' ||
                                           sessionStorage.getItem('role') === 'SUPER_ADMIN'

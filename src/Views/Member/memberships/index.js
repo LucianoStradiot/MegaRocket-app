@@ -1,12 +1,11 @@
 import Aside from 'Components/Shared/Aside';
 import styles from './memberships.module.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector } from 'react-redux';
 import Modal from 'Components/Shared/Modal';
 import { useDispatch } from 'react-redux';
 import { updateMember } from 'Redux/Members/thunks';
-import { getAuth } from 'Redux/Auth/thunks';
 
 const MembershipMember = () => {
   const history = useHistory();
@@ -175,10 +174,6 @@ const MembershipMember = () => {
       setIsOpen(!isOpen);
     }
   };
-
-  useEffect(() => {
-    dispatch(getAuth());
-  }, []);
 
   return (
     <>
