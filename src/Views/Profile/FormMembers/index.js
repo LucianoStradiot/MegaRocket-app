@@ -10,6 +10,7 @@ import Spinner from 'Components/Shared/Spinner';
 import DatePicker from 'Components/Shared/DatePicker';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
+import Select from 'Components/Shared/Select';
 import Joi from 'joi';
 
 const FormMembers = () => {
@@ -73,6 +74,13 @@ const FormMembers = () => {
         'string.empty': 'City can´t be empty',
         'string.min': 'City must have at least 4 characters'
       }),
+    membership: Joi.string()
+      .valid('Only Classes Membership', 'Classic Membership', 'Black Membership')
+      .required()
+      .messages({
+        'any.required': 'Membership is required',
+        'any.only': 'Invalid Membership'
+      }),
     birthday: Joi.date().iso().max(minDate.toISOString()).required().messages({
       'date.format': 'Invalid birth date format',
       'date.max': 'You must be at least 15 years old'
@@ -111,6 +119,7 @@ const FormMembers = () => {
       setValue('city', dataLog?.city);
       setValue('birthday', dataLog?.birthday.toString().substring(0, 10));
       setValue('postalCode', dataLog?.postalCode.toString());
+      setValue('membership', dataLog?.membership);
     }
   };
 
@@ -219,7 +228,22 @@ const FormMembers = () => {
               error={errors.postalCode?.message}
             />
           </div>
+          <div className={styles.inputContainer}>
+            <label>Membership</label>
+            <Select
+              name={'membership'}
+              selectID={''}
+              register={register}
+              error={errors.membership?.message}
+            >
+              <option value="">Choose a membership</option>
+              <option value="Black Membership">Black Membership</option>
+              <option value="Classic Membership">Classic Membership</option>
+              <option value="Only Classes Membership">Only Classes Membership</option>
+            </Select>
+          </div>
         </div>
+
         <div className={styles.contButton}>
           <div>
             <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />
