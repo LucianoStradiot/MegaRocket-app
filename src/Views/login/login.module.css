@@ -6,9 +6,9 @@
   width: 100%;
 }
 
-.container h2 {
-  font-size: 37px;
-  border-bottom: solid 2px;
+.h2Cont{
+  font-size: 40px;
+  text-shadow: 4px 7px 4px rgba(0, 0, 0, 0.5);
   color: #fff;
 }
 
@@ -18,17 +18,12 @@
   justify-content: center;
   width: 400px;
   color: #373867;
-  background-color: #eee;
+  background-color: #eeeeeede;
   padding: 25px;
   border-radius: 8px;
   margin: 5vh auto;
   font-weight: 600;
-}
-
-.cardsCont {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  box-shadow: 4px 7px 4px rgba(0, 0, 0, 0.5);
 }
 
 .btnContainer {
@@ -38,37 +33,51 @@
   margin-top: 10px;
 }
 
+.cardsCont {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .cardContainer {
   width: 300px;
   color: #ffffff;
   text-align: center;
-  border: solid 1px;
+  border: none;
   border-radius: 10px;
   margin: 20px;
   transition: 0.5s;
-  box-shadow: 0 1px 1px 0 rgba(53, 53, 53, 0.2), 0 6px 20px 0 rgba(53, 53, 53, 0.2);
+  box-shadow: 4px 5px 4px rgba(0, 0, 0, 0.5);
   text-decoration: none;
 }
 
 .cardContainer:hover {
   transform: scale(1.03);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
 }
 
 .only {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #f3f3f3;
+  color: #333333;
 }
 
 .classic {
-  background-color: #2e355b;
+  background-color: #1c2331;
 }
 
 .black {
-  background-color: #323232;
+  background-color: #252525;
 }
 
 .cardContainer hr {
   width: 90%;
+  border: none;
+  border-top: 1px solid #ffffff;
+  margin: 10px auto;
+}
+
+.only hr {
+  border-top: 1px solid #000;
 }
 
 .recoverTitle {

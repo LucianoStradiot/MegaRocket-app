@@ -15,8 +15,10 @@ const Modal = ({ title, desc, isOpen, handleClose, confirmModal, deleteFunction 
         <div className={styles.modalContainer} data-testid="modal-confirm">
           <h3>{title}</h3>
           <p>{desc}</p>
-          <Button clickAction={deleteFunction} text="Confirm" type="btn" />
-          <Button clickAction={handleClose} text="Cancel" type="deleteCancel" />
+          <div className={styles.btnsContainer}>
+            <Button clickAction={handleClose} text="Cancel" type="deleteCancel" />
+            <Button clickAction={deleteFunction} text="Confirm" type="btn" />
+          </div>
         </div>
       </div>
     ) : (
@@ -24,7 +26,9 @@ const Modal = ({ title, desc, isOpen, handleClose, confirmModal, deleteFunction 
         <div className={styles.modalContainer} data-testid="modal-success">
           <h3>{title}</h3>
           <p>{desc}</p>
-          <Button clickAction={handleClose} text="Accept" type="btn" />
+          <div className={styles.btnContainer}>
+            <Button clickAction={handleClose} text="Accept" type="btn" />
+          </div>
         </div>
       </div>
     )

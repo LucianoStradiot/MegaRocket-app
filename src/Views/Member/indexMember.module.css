@@ -1,17 +1,7 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 * {
     font-family: 'Roboto', sans-serif;
-}
-
-.mainContainer h2 {
-    font-size: 30px;
-    text-align: center;
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-decoration-color: #49A37B;
-    text-underline-offset: 10px;
 }
 
 .supremeContainer {
@@ -20,370 +10,46 @@
 }
 
 .mainContainer p {
-    font-size: 15px;
+    font-size: 20px;
 }
 
 .mainContainer {
-  background-color: #fff;
+  background-image: linear-gradient(90deg,
+  rgba(0, 0, 0, 0.6),
+  rgba(0, 0, 0, 0.1),
+  rgba(0, 0, 0, 0.6)),url('../../../public/assets/images/landing.jpg');
+ background-position: center;
+ background-size: cover;
+  color: white;
+  height: 110vh;
   width: 100%;
-  padding-top: 10px;
-}
-
-.home {
-  text-align: center;
-}
-
-.home article {
-  padding-top: 30px;
-}
-
-.home article h1 {
-  padding-top: 50px;
-  font-size: 30px;
-  color: #373867
-}
-
-.home article .welcome {
-  margin-top: -15px;
-  text-transform: uppercase;
-  color: #49A37B;
-  font-size: 20px;
-}
-
-.home article p {
-  margin-top: 30px;
-  margin-bottom: 30px;
-  padding-left: 10px;
-  padding-right: 10px;
-  font-size: 20px;
-}
-
-.home img {
-  width: 90%;
-}
-
-.features {
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-
-.features h2{
-  margin-bottom: 20px;
-}
-
-.features h3 {
-  font-size: 18px;
-  margin-top: 20px;
-  margin-left: 10px;
-}
-
-.featuresContainer {
   display: flex;
-  flex-direction: column;
-}
-
-.featuresFlex {
-  display: flex;
-  align-items: center;
-  margin-bottom: 13px
-}
-
-.features article img {
-  width: 26px;
-  height: 26px;
-}
-
-.features article {
-  display: flex;
-  flex-direction: column;
-}
-
-.features article p {
-  padding-left: 20px;
-  padding-right: 20px;
-  text-align: justify;
-}
-
-.about h2 {
-  padding-bottom: 14px;
-}
-
-.aboutContainer {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-left: 10vh;
 }
 
-.aboutFlex {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-top: 14px;
-  text-align: justify;
-}
-
-.aboutFlex img {
-  margin-bottom: 15px;
-}
-
-.about div img {
-  width: 90%;
-}
-
-.about p {
-  padding-left: 20px;
-  padding-right: 20px;
-  font-size: 15px;
-}
-
-.about .button {
-  margin-top: 20px;
-  margin-bottom: 39px;
-  width: 103px;
-}
-
-.contact h2 {
-  margin-bottom: 25px;
-}
-
-.activities h2 {
-  margin-bottom: 35px;
-}
-
-.activitiesContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.activities ul {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding-left: 50px;
-}
-
-.activities ul li {
-  padding-right: 50px;
-  margin-bottom: 10px;
-  font-weight: bold;
-  font-size: 14px;
-  list-style: none;
-}
-
-.activities img {
-  margin-bottom: 30px;
-  margin-top: 20px;
-  width: 90%;
-}
-
-.memberships {
-  padding-bottom: 100px;
-}
-
-.memberships table {
-  margin: 30px auto;
-  width: 90%;
-  border-collapse: collapse;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.memberships table .filaNames {
-  height: 40px;
-  background-color: #D9D9D9;
+.card {
   text-align: center;
+  padding: 80px;
+  max-width: 700px;
+  min-width: 500px;
+  font-size: 40px;
 }
 
-.memberships table .fila2 {
-  height: 40px;
-  text-align: center;
+.card h1 {
+  font-size: 90px;
+  letter-spacing: 14px;
+  text-shadow: 5px 7px 4px rgba(0, 0, 0, 0.5);
 }
 
-.memberships table .tableAlign {
-  min-width: 45px;
+.card h2 {
+  font-size: 40px;
 }
 
-@media only screen and (min-width: 601px) {
-
-  main {
-      margin-top: 90px;
-  }
-
-  .home {
-      display: flex;
-      align-items: center;
-      padding: 15px;
-  }
-
-  .home h1 {
-      font-size: 40px;
-  }
-
-  .home article {
-      margin-top: -70px;
-  }
-
-  .home img {
-      width: 45%;
-      height: 290px;
-  }
-
-  .features {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-  }
-
-  .features article img {
-      margin-left: 20px;
-  }
-
-  .featuresContainer {
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      max-width: 95%;
-  }
-
-  .features article {
-      max-width: 50%;
-  }
-
-  .aboutContainer {
-      width: 95%;
-      margin: 30px auto;
-  }
-
-  .aboutFlex {
-      flex-direction: row;
-  }
-
-  .flex1 img {
-      margin-right: 16%;
-  }
-
-  .flex2 {
-      flex-direction: row-reverse;
-  }
-
-  .flex2 img {
-      margin-left: 16%;
-  }
-
-  .about article img {
-      width: 42%;
-  }
-
-  .about article p {
-      width: 100%;
-      margin: 0 auto;
-      padding-right: 0;
-      padding-left: 0;
-      font-size: 15px;
-  }
-
-  .about .button {
-      display: none;
-  }
-
-  .activitiesContainer {
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      margin: 50px 0;
-  }
-
-  .activities ul {
-      display: block;
-      padding-left: 19px;
-  }
-
-  .activities ul li {
-      padding-right: 0;
-      font-size: 20px;
-      list-style: disc;
-  }
-
-  .activities img {
-      margin-top: 0;
-      margin-bottom: 0;
-      max-width: 350px;
-      height: 145px;
-      margin-left: 100px;
-  }
-
-  .memberships table {
-      max-width: 800px;
-  }
+.card p {
+  padding: 10px;
+  font-size: 22px;
 }
 
-@media only screen and (min-width: 1025px) {
 
-  .header-img-menu {
-      display: none;
-  }
-
-  .mainContainer {
-    width: 100%;
-    padding-left: 10vh;
-    padding-top: 100px;
-  }
-
-  .home {
-      max-width: 1100px;
-      margin: 0 auto;
-  }
-
-  .home article {
-      max-width: 700px;
-  }
-
-  .featuresContainer {
-      max-width: 1100px;
-  }
-
-  .features article h3 {
-      font-size: 24px;
-  }
-
-  .features article p {
-      padding: 20px 55px;
-      font-size: 20px;
-  }
-
-  .about {
-      max-width: 1100px;
-      margin: 0 auto;
-  }
-
-  .aboutFlex p {
-      font-size: 20px !important;
-  }
-
-  .activities ul li {
-      font-size: 23px;
-  }
-
-  .activities img {
-      width: 50%;
-      max-width: 600px;
-      height: 245px;
-  }
-
-  .memberships table {
-      max-width: 1100px;
-      font-size: 15px;
-  }
-
-  .memberships table .filaNames {
-      height: 50px;
-  }
-
-  .memberships table .fila2 {
-      height: 50px;
-  }
-}

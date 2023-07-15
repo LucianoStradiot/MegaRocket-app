@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { deleteClass, getClasses, deleteOldClasses } from 'Redux/Classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Aside from 'Components/Shared/Aside';
-import { FiEdit } from 'react-icons/fi';
+import { FiEdit, FiXSquare } from 'react-icons/fi';
 import { getActivities } from 'Redux/Activities/thunks';
 import { getTrainers } from 'Redux/Trainers/thunks';
 
@@ -23,6 +23,7 @@ function Classes() {
     description: '',
     isConfirm: false
   });
+  const [filterQuery, setFilterQuery] = useState('');
 
   const handleDeleteClass = async () => {
     try {
@@ -81,100 +82,126 @@ function Classes() {
     '21:00'
   ];
 
+  const filteredClasses = classes.filter(
+    (oneClass) =>
+      oneClass.activity.name.toLowerCase().includes(filterQuery.toLowerCase()) ||
+      oneClass.trainer.firstName.toLowerCase().includes(filterQuery.toLowerCase()) ||
+      oneClass.trainer.lastName.toLowerCase().includes(filterQuery.toLowerCase())
+  );
+
   return (
     <>
       <Aside page={'admins'} />
       <div className={styles.mainContainer}>
-        <section className={styles.container}>
-          <Modal
-            title={responseModal.title}
-            desc={responseModal.description}
-            isOpen={isOpen}
-            confirmModal={responseModal.isConfirm}
-            handleClose={() => setIsOpen(!isOpen)}
-            deleteFunction={() => handleDeleteClass()}
-          />
-          <div className={styles.screenContainer}>
-            {loading && <Spinner />}
-            {!loading && (
-              <section>
-                <table>
-                  <thead>
-                    <tr className={styles.tr}>
-                      <th className={styles.background}>
-                        <div>
-                          <Link to="/admins/classes/form">
-                            <Button text="Create" type="create" testId="create-button-classes" />
-                          </Link>
-                        </div>
-                      </th>
-                      {weekDays.map((day) => (
-                        <th key={day} className={styles.th}>
-                          {day}
+        <div className={styles.secondMainContainer}>
+          <div className={styles.searchBar}>
+            <input
+              type="text"
+              placeholder="Search by activity or trainer"
+              value={filterQuery}
+              onChange={(e) => setFilterQuery(e.target.value)}
+            />
+          </div>
+          <section className={styles.container}>
+            <Modal
+              title={responseModal.title}
+              desc={responseModal.description}
+              isOpen={isOpen}
+              confirmModal={responseModal.isConfirm}
+              handleClose={() => setIsOpen(!isOpen)}
+              deleteFunction={() => handleDeleteClass()}
+            />
+            <div className={styles.screenContainer}>
+              {loading && <Spinner />}
+              {!loading && (
+                <section>
+                  <table>
+                    <thead>
+                      <tr className={styles.tr}>
+                        <th className={styles.background}>
+                          <div>
+                            <Link to="/admins/classes/form">
+                              <Button text="Create" type="create" testId="create-button-classes" />
+                            </Link>
+                          </div>
                         </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {timeSlots.map((hour) => (
-                      <>
-                        <tr className={styles.tr}>
-                          <th className={styles.th}>{hour}</th>
-                          {weekDays.map((day, dayIndex) => (
-                            <td key={dayIndex}>
-                              {classes
-                                .filter(
-                                  (oneClass) => oneClass.day === day && oneClass.hour === hour
-                                )
-                                .map((oneClass, index) => {
-                                  return (
-                                    <div className={styles.card} key={index}>
-                                      <div className={styles.classCard}>
-                                        <p className={styles.inlineBlock}>
-                                          <div>{`Activity: ${
-                                            oneClass && oneClass.activity
-                                              ? oneClass.activity.name
-                                              : 'not available'
-                                          }`}</div>
-                                          <div>{`Trainer: ${
-                                            oneClass && oneClass.trainer
-                                              ? oneClass.trainer.firstName
-                                              : 'not available'
-                                          }`}</div>
-                                          <div>{`Slots: ${oneClass.slots}`}</div>
-                                        </p>
-                                        <Link
-                                          to={'/admins/classes/form/' + oneClass._id}
-                                          className={styles.edit}
-                                        >
-                                          <FiEdit className={styles.editIcon} />
-                                        </Link>
-                                        <button
-                                          className={styles.delete}
-                                          onClick={() => openModalConfirm(oneClass._id)}
-                                        >
-                                          <p className={styles.editIcon}>X</p>
-                                        </button>
+                        {weekDays.map((day) => (
+                          <th key={day} className={styles.th}>
+                            {day}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {timeSlots.map((hour) => (
+                        <>
+                          <tr className={styles.tr}>
+                            <th className={styles.th}>{hour}</th>
+                            {weekDays.map((day, dayIndex) => (
+                              <td key={dayIndex}>
+                                {filteredClasses
+                                  .filter(
+                                    (oneClass) => oneClass.day === day && oneClass.hour === hour
+                                  )
+                                  .map((oneClass, index) => {
+                                    return (
+                                      <div className={styles.card} key={index}>
+                                        <div className={styles.classCard}>
+                                          <p className={styles.inlineBlock}>
+                                            <div>{`Activity: ${
+                                              oneClass && oneClass.activity
+                                                ? oneClass.activity.name
+                                                : 'not available'
+                                            }`}</div>
+                                            <div>{`Trainer: ${
+                                              oneClass && oneClass.trainer
+                                                ? oneClass.trainer.firstName
+                                                : 'not available'
+                                            }`}</div>
+                                            <div>{`Slots: ${oneClass.slots}`}</div>
+                                          </p>
+                                          <Link
+                                            to={'/admins/classes/form/' + oneClass._id}
+                                            className={styles.edit}
+                                          >
+                                            <FiEdit
+                                              className={`${styles.editIcon} ${styles.editIconPen}`}
+                                            />
+                                          </Link>
+                                          <button
+                                            className={styles.delete}
+                                            onClick={() => openModalConfirm(oneClass._id)}
+                                          >
+                                            <FiXSquare
+                                              className={`${styles.editIcon} ${styles.editIconX}`}
+                                            />
+                                          </button>
+                                        </div>
                                       </div>
-                                    </div>
-                                  );
-                                })}
-                            </td>
-                          ))}
-                        </tr>
-                      </>
-                    ))}
+                                    );
+                                  })}
+                              </td>
+                            ))}
+                          </tr>
+                        </>
+                      ))}
+                      <tr className={styles.tr}>
+                        <td colSpan={weekDays.length + 1}>
+                          {classes.length === 0 && <p>There are no classes yet.</p>}
+                        </td>
+                      </tr>
+                    </tbody>
                     <tr className={styles.tr}>
                       <td colSpan={weekDays.length + 1}>
-                        {classes.length === 0 && <p>There are no classes yet.</p>}
+                        {filteredClasses.length === 0 && <p>No matching classes found.</p>}
                       </td>
                     </tr>
-                  </tbody>
-                </table>
-              </section>
-            )}
-          </div>
-        </section>
+                  </table>
+                </section>
+              )}
+            </div>
+          </section>
+        </div>
       </div>
     </>
   );

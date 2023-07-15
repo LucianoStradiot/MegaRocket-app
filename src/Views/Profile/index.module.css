@@ -1,39 +1,68 @@
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 100%;
-  margin-left: 20vh;
+  padding: 20px;
 }
 
 .subContainer {
   display: grid;
-  gap: 0 20px;
+  gap: 10px 20px;
   grid-template-columns: repeat(2, 1fr);
+}
+
+.profilePhoto {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
+  margin: 3vh auto;
+  margin-top: 0;
 }
 
 .content {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 600px;
-  color: #373867;
-  background-color: #ffffffde;
+  width: 500px;
+  color: #333;
+  background-color: #ddddddde;
   padding: 25px;
   font-weight: 600;
   border-radius: 8px;
   margin: 0 auto;
-  box-shadow: 0 2px 4px #1b1b5d99;
-  margin-top: 200px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
 }
 
 .contButton {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 20px;
 }
 
-label {
-  color: #000;
-  font-weight: bold;
+.inputContainer {
+  width: 100%;
+  border-bottom: 1px solid #2E355B;
+  padding-bottom: 10px;
+}
+
+.label {
+  font-size: 16px;
+  color: #2E355B;
+  margin-bottom: 5px;
+}
+
+.p {
+  font-size: 14px;
+  color: #555;
+  margin-top: 5px;
+}
+
+@media screen and (min-width: 1025px) {
+  .container {
+    margin-left: 20vh;
+  }
 }

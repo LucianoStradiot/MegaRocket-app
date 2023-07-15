@@ -142,53 +142,39 @@ const Aside = ({ page }) => {
                     </>
                   )}
                 </div>
-                <Link to="/" className={`${styles.btn} ${isActiveRouteMember('/')}`}>
-                  <li>
-                    <a>Home</a>
-                  </li>
-                </Link>
-                <Link
-                  to="/activities"
-                  className={`${styles.btn} ${isActiveRouteMember('/activities')}`}
-                >
-                  <li>
-                    <a>Activities</a>
-                  </li>
-                </Link>
-                <Link
-                  to="/schedule"
-                  className={`${styles.btn} ${isActiveRouteMember('/schedule')}`}
-                >
-                  <li>
-                    <a>Schedule</a>
-                  </li>
-                </Link>
-                <Link
-                  to="/membership"
-                  className={`${styles.btn} ${isActiveRouteMember('/membership')}`}
-                >
-                  <li>
-                    <a>Memberships</a>
-                  </li>
-                </Link>
+                <div className={styles.containerBtns}>
+                  <Link to="/" className={`${styles.btn} ${isActiveRouteMember('/')}`}>
+                    <li>
+                      <a>Home</a>
+                    </li>
+                  </Link>
+                  <Link
+                    to="/activities"
+                    className={`${styles.btn} ${isActiveRouteMember('/activities')}`}
+                  >
+                    <li>
+                      <a>Activities</a>
+                    </li>
+                  </Link>
+                  <Link
+                    to="/schedule"
+                    className={`${styles.btn} ${isActiveRouteMember('/schedule')}`}
+                  >
+                    <li>
+                      <a>Schedule</a>
+                    </li>
+                  </Link>
+                  <Link
+                    to="/membership"
+                    className={`${styles.btn} ${isActiveRouteMember('/membership')}`}
+                  >
+                    <li>
+                      <a>Memberships</a>
+                    </li>
+                  </Link>
+                </div>
               </ul>
             </nav>
-            <div className={styles.contact}>
-              <h3 className={styles.titleContact}>Contact us</h3>
-              <div className={styles.minorDiv}>
-                <ul>
-                  <li>
-                    <p>info@megarocket.com</p>
-                  </li>
-                  <li>
-                    <p>(000)0000000</p>
-                  </li>
-                  <li>
-                    <p>1234 somewhere road</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
           </div>
         </aside>
       </>

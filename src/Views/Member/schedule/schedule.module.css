@@ -24,18 +24,27 @@
   width: 195px;
   padding: 8px;
   font-size: 16px;
-  background-color: white;
+  background-color: #cbebf377;
+  box-shadow: 4px 5px 4px rgb(0, 0, 0, 0.5);
+  color: #fff;
 }
 
 .searchBar input:focus {
-  outline-color: #2E355B;
+  outline: none;
+}
+
+.searchBar input::placeholder {
+  color: #fff;
 }
 
 .container {
-  background-color: #cbebf3cc;
+  background-color: #cbebf377;
+  box-shadow: 4px 5px 4px rgb(0, 0, 0, 0.5);
   padding-right: 5px;
   border-radius: 8px;
   margin-top: 10px;
+  color: #fff;
+  text-shadow: 2px 2px 3px rgb(0, 0, 0, 0.5);
 }
 
 .screenContainer {
@@ -71,22 +80,22 @@
   height: 80px;
   font-weight: 600;
   color: #fff;
+  border: none;
   background-color: #2E355B;
   border-radius: 8px;
-  border: 1px solid;
+  box-shadow: 4px 5px 4px rgb(0, 0, 0, 0.5);
+  transition: 0.4s ease;
 }
 
 .classCard:hover {
-  transition: 0.4s;
-  color: #2E355B;
-  background-color: #fff;
-  border-color: #2E355B;
+  color: #fff;
+  background-color: #1e2341;
   cursor: pointer;
 }
 
 .fullClassCard {
   background-color: #ccc;
-  border: 2px solid white;
+  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,7 +106,8 @@
   font-weight: 600;
   color: #2E355B;
   border-radius: 8px;
-  border: 1px solid;
+  box-shadow: 4px 5px 4px rgb(0, 0, 0, 0.5);
+  transition: 0.4s ease;
 }
 
 .inlineBlock {
@@ -118,21 +128,24 @@
 
 .blueCard {
   background-color: #2E355B;
-  border: 1px solid #111;
+  box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5);
+  border-radius: 2px;
   width: 16px;
   height: 16px;
 }
 
 .redCard {
-  background-color: rgb(70, 163, 124);
-  border: 1px solid #111;
+  background-color: #418142;
+  box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5);
+  border-radius: 2px;
   width: 16px;
   height: 16px;
 }
 
 .greyCard {
   background-color: #ccc;
-  border: 1px solid #111;
+  box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5);
+  border-radius: 2px;
   width: 16px;
   height: 16px;
 }
@@ -143,6 +156,12 @@
   font-size: 14px;
   margin-left: 14px;
   margin-bottom: 3px;
+  text-shadow: none;
+}
+
+.background {
+  box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5);
+  border-radius: 6px;
 }
 
 .info p {
@@ -159,15 +178,15 @@
   height: 80px;
   font-weight: 600;
   color: #fff;
-  background-color: rgb(70, 163, 124);
+  background-color: #418142;
   border-radius: 8px;
-  border: 1px solid;
+  border: none;
+  box-shadow: 4px 5px 4px rgb(0, 0, 0, 0.5);
+  transition: 0.4s ease;
 }
 
 .subscribedClass:hover {
-  transition: 0.4s;
-  color: #2E355B;
-  background-color: #fff;
-  border-color: #2E355B;
+  color: #fff;
+  background-color: #1e2341;
   cursor: pointer;
 }

@@ -12,8 +12,8 @@ const MembershipMember = () => {
             <h1 className={styles.h1}>Memberships</h1>
             <div className={styles.line}></div>
             <p className={styles.section}>
-              These are all the available memberships. If you want to try a different one please get
-              in touch with your branch manager.
+              These are all the available memberships. If you want to try a different one, please
+              get in touch with your branch manager.
             </p>
           </div>
           <section className={styles.cardsCont}>
@@ -26,7 +26,7 @@ const MembershipMember = () => {
               <div>
                 <h3>ONLY CLASSES</h3>
                 <p>$2500</p>
-                <hr></hr>
+                <hr />
                 <p>Subscribe to classes.</p>
                 <p>Access to the grid class.</p>
               </div>
@@ -38,7 +38,7 @@ const MembershipMember = () => {
               <div>
                 <h3>CLASSIC</h3>
                 <p>$4000</p>
-                <hr></hr>
+                <hr />
                 <p>Free access to the weight room.</p>
                 <p>Personalized follow-up by a trainer.</p>
                 <p>Grid visualization.</p>
@@ -51,7 +51,7 @@ const MembershipMember = () => {
               <div>
                 <h3>BLACK</h3>
                 <p>$6000</p>
-                <hr></hr>
+                <hr />
                 <p>Free access to the weight room.</p>
                 <p>Free access to classes with prior registration.</p>
                 <p>Personalized follow-up by a trainer.</p>
@@ -64,4 +64,5 @@ const MembershipMember = () => {
     </>
   );
 };
+
 export default MembershipMember;

@@ -26,42 +26,46 @@ const Profile = () => {
         <section className={styles.container}>
           {loading && <Spinner />}
           <div className={styles.content}>
+            <img
+              src={`${process.env.PUBLIC_URL}/assets/images/ellie.png`}
+              className={styles.profilePhoto}
+            />
             <div className={styles.subContainer}>
-              <div data-testid="member-first-name">
-                <label>First name</label>
-                <p>{dataLog?.firstName}</p>
+              <div className={styles.inputContainer} data-testid="member-first-name">
+                <label className={styles.label}>First name</label>
+                <p className={styles.p}>{dataLog?.firstName}</p>
               </div>
-              <div data-testid="member-last-name">
-                <label>Last name</label>
-                <p>{dataLog?.lastName}</p>
+              <div className={styles.inputContainer} data-testid="member-last-name">
+                <label className={styles.label}>Last name</label>
+                <p className={styles.p}>{dataLog?.lastName}</p>
               </div>
-              <div data-testid="member-email">
-                <label>Email</label>
-                <p>{dataLog?.email}</p>
+              <div className={styles.inputContainer} data-testid="member-email">
+                <label className={styles.label}>Email</label>
+                <p className={styles.p}>{dataLog?.email}</p>
               </div>
-              <div data-testid="member-dni">
-                <label>DNI</label>
-                <p>{dataLog?.dni}</p>
+              <div className={styles.inputContainer} data-testid="member-dni">
+                <label className={styles.label}>DNI</label>
+                <p className={styles.p}>{dataLog?.dni}</p>
               </div>
-              <div data-testid="member-phone">
-                <label>Phone</label>
-                <p>{dataLog?.phone}</p>
+              <div className={styles.inputContainer} data-testid="member-phone">
+                <label className={styles.label}>Phone</label>
+                <p className={styles.p}>{dataLog?.phone}</p>
               </div>
-              <div data-testid="member-city">
-                <label>City</label>
-                <p>{dataLog?.city}</p>
+              <div className={styles.inputContainer} data-testid="member-city">
+                <label className={styles.label}>City</label>
+                <p className={styles.p}>{dataLog?.city}</p>
               </div>
-              <div data-testid="member-postal-code">
-                <label>Postal Code</label>
-                <p>{dataLog?.postalCode}</p>
+              <div className={styles.inputContainer} data-testid="member-postal-code">
+                <label className={styles.label}>Postal Code</label>
+                <p className={styles.p}>{dataLog?.postalCode}</p>
               </div>
-              <div>
-                <label>Birthday</label>
-                <p>{dataLog?.birthday?.substring(0, 10)}</p>
+              <div className={styles.inputContainer}>
+                <label className={styles.label}>Birthday</label>
+                <p className={styles.p}>{dataLog?.birthday?.substring(0, 10)}</p>
               </div>
               <div className={styles.inputContainer} data-testid="member-membership">
-                <label>Membership</label>
-                <p>{dataLog?.membership}</p>
+                <label className={styles.label}>Membership</label>
+                <p className={styles.p}>{dataLog?.membership}</p>
               </div>
             </div>
             <div className={styles.contButton}>
@@ -81,38 +85,42 @@ const Profile = () => {
         <section className={styles.container}>
           {loading && <Spinner />}
           <div className={styles.content}>
+            <img
+              src={`${process.env.PUBLIC_URL}/assets/images/ellie.png`}
+              className={styles.profilePhoto}
+            />
             <div className={styles.subContainer}>
               <div className={styles.inputContainer}>
-                <label>First name</label>
+                <label className={styles.label}>First name</label>
                 <p>{dataLog?.firstName}</p>
               </div>
               <div className={styles.inputContainer}>
-                <label>Last name</label>
+                <label className={styles.label}>Last name</label>
                 <p>{dataLog?.lastName}</p>
               </div>
               <div className={styles.inputContainer}>
-                <label>DNI</label>
+                <label className={styles.label}>DNI</label>
                 <p>{dataLog?.dni}</p>
               </div>
               <div className={styles.inputContainer}>
-                <label>Phone</label>
+                <label className={styles.label}>Phone</label>
                 <p>{dataLog?.phone}</p>
               </div>
               <div className={styles.inputContainer}>
-                <label>Email</label>
+                <label className={styles.label}>Email</label>
                 <p>{dataLog?.email}</p>
               </div>
               <div className={styles.inputContainer}>
-                <label>City</label>
+                <label className={styles.label}>City</label>
                 <p>{dataLog?.city}</p>
               </div>
             </div>
             <div className={styles.inputContainer}>
-              <label>Salary</label>
+              <label className={styles.label}>Salary</label>
               <p>{dataLog?.salary}</p>
             </div>
             <div className={styles.btnContainer}>
-              <div>
+              <div className={styles.contButton}>
                 <Link to="/profile/form/edit-trainer">
                   <Button text="Edit" type="create" />
                 </Link>

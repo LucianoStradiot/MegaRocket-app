@@ -1,6 +1,7 @@
 import styles from './table.module.css';
-import Button from '../Button';
+
 import { Link } from 'react-router-dom';
+import { FiEdit, FiXSquare } from 'react-icons/fi';
 
 /**
  *To implement the Table you have to pass one list(list), the names of your
@@ -107,11 +108,17 @@ const Table = ({ list, column, fields, link, action }) => {
                         </td>
                       );
                     })}
-                    <td className={styles.thTable} data-testid="buttons-table">
+                    <td
+                      className={`${styles.thTable} ${styles.btnsContainer}`}
+                      data-testid="buttons-table"
+                    >
                       <Link to={link + item._id}>
-                        <Button type="edit" text="Edit" />
+                        <FiEdit className={styles.editIcon} />
                       </Link>
-                      <Button text="X" type="deleteCancel" clickAction={() => action(item._id)} />
+                      <FiXSquare
+                        className={`${styles.editIcon} ${styles.trash}`}
+                        onClick={() => action(item._id)}
+                      />
                     </td>
                   </tr>
                 </>
