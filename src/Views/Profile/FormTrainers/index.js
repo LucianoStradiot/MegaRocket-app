@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { updateTrainer } from 'Redux/Trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
+import { changeProfilePhoto } from 'Redux/ProfilePhoto/actions';
 
 const FormTrainers = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const FormTrainers = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isTrainerCreated, setIsTrainerCreated] = useState(false);
   const dataLog = useSelector((state) => state.user.user);
+  const [file, setFile] = useState(null);
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -87,6 +89,14 @@ const FormTrainers = () => {
 
   const onSubmit = (data) => {
     handleUpdateTrainer(data);
+    if (file) {
+      dispatch(changeProfilePhoto(data, file));
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
   };
 
   const handleUpdateTrainer = async (formValue) => {
@@ -197,6 +207,7 @@ const FormTrainers = () => {
               error={errors.city?.message}
             />
           </div>
+          <input type="file" accept="image/*" onChange={handleFileChange} />
         </div>
         <div className={styles.btnContainer}>
           <div>
