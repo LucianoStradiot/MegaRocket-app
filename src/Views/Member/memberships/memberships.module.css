@@ -18,6 +18,10 @@
   padding: 0px 10px 20px 10px;
 }
 
+.cont {
+  font-weight: 600;
+}
+
 .header {
   margin-top: 2%;
   width: 90%;
