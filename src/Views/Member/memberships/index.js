@@ -1,7 +1,7 @@
 import Aside from 'Components/Shared/Aside';
 import styles from './memberships.module.css';
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Modal from 'Components/Shared/Modal';
 import { useDispatch } from 'react-redux';
