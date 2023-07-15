@@ -8,7 +8,7 @@ class Login {
   get passwordInput() {
     return $('input[data-testid="input-password-login"]');
    }
- get errorMail() {
+  get errorMail() {
    return $('[data-testId="input-email-login"] + p');
   }
   get errorPassword() {
@@ -29,12 +29,12 @@ class Login {
   get forgotPassword() {
     return $('[data-testid="container-login"] .login_password__rDUIU a');
   }
-  
+
   async logIn(email, password) {
     await this.emailInput.setValue(email);
     await this.passwordInput.setValue(password);
     await this.loginButton.click();
- }
+  }
 
   open() {
     return browser.url('https://joaco-megarocket-app.vercel.app/auth/login');

@@ -5,11 +5,15 @@ class HeaderTest {
   }
 
   get title() {
-    return $('[data-testid="container-header"] > h1');
+    return $('[data-testid="container-header"] p');
+  }
+
+  get profileImage() {
+    return $('[data-testid="container-header"] div:nth-child(1) img');
   }
 
   get logo() {
-    return $('[data-testid="container-header"] img');
+    return $('[data-testid="container-header"] img:last-child');
   }
 }
 

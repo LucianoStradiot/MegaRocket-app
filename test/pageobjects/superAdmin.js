@@ -29,15 +29,15 @@ class SuperAdmin {
   }
 
   get allButtonsTable() {
-    return $$('[data-testid="buttons-table"] button');
+    return $$('[data-testid="buttons-table"] svg');
   }
 
   get editButton() {
-    return $('[data-testid="container-table"] tbody tr:last-child button:nth-child(1)');
+    return $('[data-testid="container-table"] tbody tr:last-child svg:nth-child(1)');
   }
 
   get deleteButton() {
-    return $('[data-testid="container-table"] tbody tr:last-child button:nth-child(2)');
+    return $('[data-testid="container-table"] tbody tr:last-child svg:nth-child(2)');
   }
 
   get superAdminForm() {
@@ -57,11 +57,11 @@ class SuperAdmin {
   }
 
   get cancelButtonForm() {
-    return $$('[data-testid="admins-form"] button:nth-child(1)');
+    return $$('button=Cancel');
   }
 
   get resetButtonForm() {
-    return $('[data-testid="admins-form"] button:nth-child(2)');
+    return $('button=Reset');
   }
 
   get saveButtonForm() {
@@ -72,50 +72,31 @@ class SuperAdmin {
     return $('[data-testid="add-button-admins"]');
   }
 
-  get modalSuccess() {
-    return $('[data-testid="modal-success"]');
-  }
-
-  get modalSuccessTitle() {
-    return $('[data-testid="modal-success"] h3');
-  }
-
-  get modalSuccessDescp() {
-    return $('[data-testid="modal-success"] p');
-  }
-
-  get modalSuccessButton() {
-    return $('[data-testid="modal-success"] button');
-  }
-
-  get modalConfirm() {
-    return $('[data-testid="modal-confirm"]');
-  }
-
-  get modalConfirmTitle() {
-    return $('[data-testid="modal-confirm"] h3');
-  }
-
-  get modalConfirmDesc() {
-    return $('[data-testid="modal-confirm"] p');
-  }
-
-  get acceptButtonModal() {
-    return $('[data-testid="modal-confirm"] button:nth-child(3)');
-  }
-
-  get cancelButtonModal() {
-    return $('[data-testid="modal-confirm"] button:nth-child(4)');
-  }
-
-  async completeForm(fName, lName, dni, phone, email, city, password) {
+  async completeFormCreate(fName, lName, dni, phone, email, city, password) {
     await this.inputsFormAdmins[0].setValue(fName);
     await this.inputsFormAdmins[1].setValue(lName);
     await this.inputsFormAdmins[2].setValue(dni);
     await this.inputsFormAdmins[3].setValue(phone);
-    await this.inputsFormAdmins[4].setValue(email);
-    await this.inputsFormAdmins[5].setValue(city);
+    await this.inputsFormAdmins[4].setValue(city);
+    await this.inputsFormAdmins[5].setValue(email);
     await this.inputsFormAdmins[6].setValue(password);
+  }
+
+  async completeFormEdit(fName, lName, dni, phone, city) {
+    await this.inputsFormAdmins[0].setValue(fName);
+    await this.inputsFormAdmins[1].setValue(lName);
+    await this.inputsFormAdmins[2].setValue(dni);
+    await this.inputsFormAdmins[3].setValue(phone);
+    await this.inputsFormAdmins[4].setValue(city);
+  }
+
+  async verifyEmptyInputs(inputs) {
+    for (let i = 0; i < inputs.length; i++) {
+      if (inputs[i] != '') {
+        return false;
+      }
+    }
+    return true;
   }
 }
 
