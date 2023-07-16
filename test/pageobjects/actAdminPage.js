@@ -1,22 +1,34 @@
 class ActivitiesAdmin {
   get buttonCreateActivities () {
-    return $('[data-testid="create-button-activities"]')
+    return $('[data-testid="create-button-activities"]');
  }
  get  formActivities(){
      return $('#form');
  }
+ get labelName() {
+  return $('[data-testid="activities-input-name"] label');
+}
  get inputName() {
      return $('[data-testid="activities-input-name"] input');
  }
+ get errorMsgName(){
+     return $('[data-testid="activities-input-name"] p');
+ }
+ get labelDescription(){
+  return $('[data-testid="activities-input-description"] label');
+}
  get inputDescription() {
      return $('textarea');
  }
+ get errorMsgDescription(){
+     return $('[data-testid="activities-input-description"] p');
+ }
  get  cancelButtonAct(){
      return $('div button:nth-child(1)');
- }//'#form div > div.FormActivities_btnContainer__1hnR3 > div > button:nth-child(1)'
+ }
  get  resetButtonAct(){
      return $('div button:nth-child(2)');
- }//'#form > div > div.FormActivities_btnContainer__1hnR3 > div > button:nth-child(2)'
+ }
  get  saveButtonAct(){
      return $('[data-testid="activities-save-button"]');
  }
@@ -27,13 +39,7 @@ class ActivitiesAdmin {
   return $('tbody tr:last-child td:last-child a');
  }
  get deleteButtonAct(){
-  return $('tbody tr:last-child td:last-child svg')
- }
- get errorMsgName(){
-     return $('[data-testid="activities-input-name"] p');
- }
- get errorMsgDescription(){
-     return $('[data-testid="activities-input-description"] p');
+  return $('tbody tr:last-child td:last-child svg:nth-child(2)');
  }
 
  async createActClick() {

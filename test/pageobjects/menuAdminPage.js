@@ -20,6 +20,15 @@ class NavBarAdmin {
   get trainersButton() {
       return $('[data-testid="container-aside-general"] div:nth-child(2) a:nth-child(5)');
   }
+  get managementButton(){
+    return $('a:nth-child(1)');
+  }
+  async homeClick() {
+    await this.homeButton.click();
+  }
+  async logOutClick() {
+    await this.logOutButton.click();
+  }
   async activityClick() {
       await this.activitiesButton.click();
   }
@@ -35,6 +44,9 @@ class NavBarAdmin {
   async trainersClick() {
       await this.trainersButton.click();
   }
+  async managementClick() {
+    await this.managementButton.click();
+}
 }
 
 module.exports = new NavBarAdmin();

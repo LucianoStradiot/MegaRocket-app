@@ -1,12 +1,4 @@
-import { deleteSubscription } from "Redux/Subscriptions/thunks";
-
 class SubscriptionAdmin {
-  get formSubscriptions(){
-    return $('[data-testid="form-subscriptions"]')
-  }
-  get labelsSubscriptions(){
-    return $('[data-testid="form-subscriptions"] label')
-  }// TRAIGO TODOS LOS LABELS
   get deleteSubscription(){
     return $('tbody tr:last-child td:last-child svg')
   }
@@ -15,4 +7,4 @@ class SubscriptionAdmin {
   }
 }
 
-export default new SubscriptionAdmin();
+module.exports = new SubscriptionAdmin();

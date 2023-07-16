@@ -5,52 +5,52 @@ class TrainerAdmin {
   get formTrainers(){
     return $('#form-trainers')
   }
-  get labelFirstNameT() {
-    return $('div:nth-child(1) div label')
+  get labelFirstName() {
+    return $('#form-trainers div:nth-child(1) div label')
   }
-  get inputFirstNameT(){
+  get inputFirstName(){
     return $('#firstName')
   }
-  get labelLastNameT() {
-    return $('div:nth-child(2) div label')
+  get labelLastName() {
+    return $('#form-trainers div:nth-child(2) div label')
 }
-  get inputLastNameT(){
+  get inputLastName(){
     return $('#lastName')
   }
-  get labelDniT() {
-    return $('div:nth-child(3) div label')
+  get labelDni() {
+    return $('#form-trainers div:nth-child(3) div label')
 }
-  get inputDniT(){
+  get inputDni(){
     return $('#dni')
   }
-  get labelPhoneT() {
-    return $('div:nth-child(4) div label')
+  get labelPhone() {
+    return $('#form-trainers div:nth-child(4) div label')
 }
-  get inputPhoneT(){
+  get inputPhone(){
     return $('#phone')
   }
-  get labelEmailT() {
-    return $('div:nth-child(5) div label')
+  get labelEmail() {
+    return $('#form-trainers div:nth-child(5) div label')
 }
-  get inputEmailT(){
+  get inputEmail(){
     return $('#email')
   }
-  get labelCityT() {
-    return $('div:nth-child(6) div label')
+  get labelCity() {
+    return $('#form-trainers div:nth-child(7) div label')
 }
-  get inputCityT(){
+  get inputCity(){
     return $('#city')
   }
-  get labelPasswordT() {
-    return $('div:nth-child(7) div label')
+  get labelPassword() {
+    return $('[data-testid=input-password-login]')
 }
-  get inputPasswordT(){
-    return $('#password')
+  get inputPassword(){
+    return $('input[data-testid=input-password-login]')
   }
-  get labelSalaryT() {
-    return $('div:nth-child(8) div label')
+  get labelSalary() {
+    return $('#form-trainers div:nth-child(8) div label')
 }
-  get inputSalaryT(){
+  get inputSalary(){
     return $('#salary')
   }
   get trainerActive(){
@@ -72,31 +72,31 @@ class TrainerAdmin {
     return $('tbody tr:last-child td:last-child a');
   }
   get deleteButtonTrainer(){
-    return $('tbody tr:last-child td:last-child svg');
+    return $('tbody tr:last-child td:last-child svg:nth-child(2)');
   }
-  get errorMsgNameT(){
-    return $('div:nth-child(1) div p')
+  get errorMsgName(){
+    return $('#form-trainers div:nth-child(1) div p')
   }
-  get errorMsgLNameT(){
-    return $('div:nth-child(2) div p')
+  get errorMsgLName(){
+    return $('#form-trainers div:nth-child(2) div p')
   }
-  get errorMsgDniT(){
-    return $('div:nth-child(3) div p')
+  get errorMsgDni(){
+    return $('#form-trainers div:nth-child(3) div p')
   }
-  get errorMsgPhoneT(){
-    return $('div:nth-child(4) div p')
+  get errorMsgPhone(){
+    return $('#form-trainers div:nth-child(4) div p')
   }
-  get errorMsgEmailT(){
-    return $('div:nth-child(5) div p')
+  get errorMsgEmail(){
+    return $('#form-trainers div:nth-child(5) div p')
   }
-  get errorMsgCityT(){
-    return $('div:nth-child(6) div p')
+  get errorMsgCity(){
+    return $('#form-trainers div:nth-child(6) div p')
   }
-  get errorMsgPasswordT(){
-    return $('div:nth-child(7) div p')
+  get errorMsgPassword(){
+    return $('#form-trainers div:nth-child(7) div p')
   }
-  get errorMsgSalaryT(){
-    return $('div:nth-child(8) div p')
+  get errorMsgSalary(){
+    return $('#form-trainers div:nth-child(8) div p')
   }
 
   async createTrainerClick() {
@@ -120,29 +120,29 @@ class TrainerAdmin {
   async deleteTrainerClick() {
     await this.deleteButtonTrainer.click();
   }
-  async fillInputNameT(firstName) {
-    await this.inputFirstNameT.setValue(firstName)
+  async fillInputName(firstName) {
+    await this.inputFirstName.setValue(firstName)
   }
-  async fillInputLNameT(lastName) {
-    await this.inputLastNameT.setValue(lastName)
+  async fillInputLName(lastName) {
+    await this.inputLastName.setValue(lastName)
   }
-  async fillInputDniT(dni) {
-    await this.inputDniT.setValue(dni)
+  async fillInputDni(dni) {
+    await this.inputDni.setValue(dni)
   }
-  async fillInputPhoneT(phone) {
-    await this.inputPhoneT.setValue(phone)
+  async fillInputPhone(phone) {
+    await this.inputPhone.setValue(phone)
   }
-  async fillInputEmailT(email) {
-    await this.inputEmailT.setValue(email)
+  async fillInputEmail(email) {
+    await this.inputEmail.setValue(email)
   }
-  async fillInputCityT(city) {
-    await this.inputCityT.setValue(city)
+  async fillInputCity(city) {
+    await this.inputCity.setValue(city)
   }
-  async fillInputPasswordT(password) {
-    await this.inputPasswordT.setValue(password)
+  async fillInputPassword(password) {
+    await this.inputPassword.setValue(password)
   }
-  async fillInputSalaryT(salary) {
-    await this.inputSalaryT.setValue(salary)
+  async fillInputSalary(salary) {
+    await this.inputSalary.setValue(salary)
   }
 }
 module.exports = new TrainerAdmin();
