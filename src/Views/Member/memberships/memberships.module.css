@@ -18,6 +18,10 @@
   padding: 0px 10px 20px 10px;
 }
 
+.cont {
+  font-weight: 600;
+}
+
 .header {
   margin-top: 2%;
   width: 90%;
@@ -61,6 +65,7 @@
   transition: 0.5s;
   box-shadow: 4px 5px 4px rgba(0, 0, 0, 0.5);
   text-decoration: none;
+  cursor: pointer;
 }
 
 .cardContainer:hover {

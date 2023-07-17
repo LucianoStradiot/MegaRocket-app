@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import styles from 'Views/Member/schedule/schedule.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClasses, deleteOldClasses } from 'Redux/Classes/thunks';
+import { getMembers } from 'Redux/Members/thunks';
 import {
   deleteOldSubscription,
   deleteSubscription,
@@ -20,6 +21,8 @@ const MemberSchedule = () => {
   const subscriptions = useSelector((state) => state.subscriptions.data);
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.classes.isLoading);
+  const members = useSelector((state) => state.members.data);
+  const data = useSelector((state) => state.user.user);
 
   const [modal, setModal] = useState({
     title: '',
@@ -36,6 +39,7 @@ const MemberSchedule = () => {
     dispatch(deleteOldClasses());
     dispatch(deleteOldSubscription());
     dispatch(getClasses());
+    dispatch(getMembers());
     dispatch(getSubscriptions());
   }, []);
 
@@ -104,6 +108,30 @@ const MemberSchedule = () => {
         description: description,
         isConfirm: true
       });
+    } else if (sessionStorage.getItem('role') === 'TRAINER') {
+      if (Array.isArray(description)) {
+        const memberNames = description.map((member) => `${member.firstName} ${member.lastName}`);
+
+        setModal({
+          title: title,
+          description: (
+            <>
+              <ul>
+                {memberNames.map((name, index) => (
+                  <li key={index}>{name}</li>
+                ))}
+              </ul>
+            </>
+          ),
+          isConfirm: false
+        });
+      } else {
+        setModal({
+          title: title,
+          description: description,
+          isConfirm: false
+        });
+      }
     } else {
       setModal({
         title: title,
@@ -259,10 +287,23 @@ const MemberSchedule = () => {
                                               ? 'Are you sure you want to delete your subscription?'
                                               : 'Confirm your subscription'
                                           );
+                                        } else if (sessionStorage.getItem('role') === 'TRAINER') {
+                                          const filteredMembers = members.filter((member) => {
+                                            return subscriptions.some(
+                                              (subs) =>
+                                                subs.classes._id === oneClass._id &&
+                                                subs.member._id === member._id
+                                            );
+                                          });
+                                          oneClass.trainer._id === data._id
+                                            ? openModal(
+                                                'These are the registered members',
+                                                filteredMembers
+                                              )
+                                            : openModal('Error', 'This is not your class');
                                         } else if (
                                           sessionStorage.getItem('role') === 'ADMIN' ||
-                                          sessionStorage.getItem('role') === 'SUPER_ADMIN' ||
-                                          sessionStorage.getItem('role') === 'TRAINER'
+                                          sessionStorage.getItem('role') === 'SUPER_ADMIN'
                                         ) {
                                           openModal(
                                             'Error',

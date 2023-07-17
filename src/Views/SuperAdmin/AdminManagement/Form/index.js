@@ -28,7 +28,7 @@ const AdminForm = () => {
     setShowPassword(!showPassword);
   };
   const RGXPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-  const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
+  const RGXEmail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z]+\.(com|[a-zA-Z]{2,})$/;
 
   const schemaUpdate = Joi.object({
     firstName: Joi.string()
