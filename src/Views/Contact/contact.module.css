@@ -1,0 +1,62 @@
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-left: 20vh;
+  margin-top: 120px;
+  align-items: center;
+}
+
+.background {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #cbebf377;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  color: #fff;
+}
+
+.title {
+  text-transform: uppercase;
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  border-bottom: #000 3px solid;
+  margin: 13px;
+  font-size: 24px;
+  font-weight: 600;
+  width: 97%;
+}
+
+.data {
+  display: flex;
+  flex-direction: center;
+  align-items: center;
+}
+
+.map {
+  width: 650px;
+  height: 450px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.5);
+  margin: 5px;
+  align-self: center;
+}
+
+.info {
+  font-size: 16px;
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  letter-spacing: 2px;
+  margin: 20px;
+}
+
+.info p {
+  padding-bottom: 30px;
+}
+
+.info a {
+  text-decoration: none;
+  color: #fff;
+}
