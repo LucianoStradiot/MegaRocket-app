@@ -174,8 +174,16 @@ const MemberSchedule = () => {
   };
 
   const cardColor = (subscriptionsLength, oneClass) => {
-    for (const sub of subscriptions) {
-      if (userLoged?._id === sub?.member?._id && sub?.classes?._id === oneClass?._id) {
+    if (sessionStorage.getItem('role') === 'MEMBER') {
+      for (const sub of subscriptions) {
+        if (userLoged?._id === sub?.member?._id && sub?.classes?._id === oneClass?._id) {
+          return styles.subscribedClass;
+        }
+      }
+    }
+
+    if (sessionStorage.getItem('role') === 'TRAINER') {
+      if (userLoged?._id === oneClass?.trainer?._id) {
         return styles.subscribedClass;
       }
     }
