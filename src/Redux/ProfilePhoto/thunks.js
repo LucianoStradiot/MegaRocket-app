@@ -11,10 +11,10 @@ export const updateProfilePhoto = (selectedFile) => {
     dispatch(updateProfilePhotoRequest());
 
     try {
+      console.log('download', uploadTaskSnapshot);
       const uploadTaskSnapshot = await storage
-        .ref(`${process.env.REACT_APP_STORAGE_BUCKET}/profilePhotos/${selectedFile.name}`)
+        .ref(`profilePhotos/${selectedFile.name}`)
         .put(selectedFile);
-
       // Obtener la URL de descarga de la imagen subida
       const downloadURL = await uploadTaskSnapshot.ref.getDownloadURL();
 

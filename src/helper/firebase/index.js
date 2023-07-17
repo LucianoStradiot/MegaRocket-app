@@ -13,6 +13,7 @@ const firebaseConfig = {
 
 export const firebaseApp = firebase.initializeApp(firebaseConfig);
 export const storage = getStorage(firebaseApp);
+
 export const tokenListener = () => {
   firebase.auth().onIdTokenChanged(async (user) => {
     if (user) {
@@ -24,7 +25,6 @@ export const tokenListener = () => {
       sessionStorage.setItem('role', role);
       sessionStorage.setItem('firebaseUid', firebaseUid);
       sessionStorage.setItem('token', token);
-      sessionStorage.setItem('storage', storage);
     }
   });
 };

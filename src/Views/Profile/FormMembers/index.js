@@ -132,15 +132,19 @@ const FormMembers = () => {
     setSelectedFile(e.target.files[0]);
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
+    console.log(selectedFile);
     if (selectedFile) {
-      dispatch(updateProfilePhoto(selectedFile));
+      console.log('cambia foto', await dispatch(updateProfilePhoto(selectedFile)));
+      return await dispatch(updateProfilePhoto(selectedFile));
     }
+    return Promise.resolve();
   };
 
   const onSubmit = (data) => {
     handleUpdateMember(data);
-    handleUpload(data);
+    console.log('actualiza', handleUpload());
+    handleUpload();
   };
   const handleUpdateMember = async (memberValues) => {
     const payload = {
