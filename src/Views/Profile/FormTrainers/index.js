@@ -22,8 +22,7 @@ const FormTrainers = () => {
     firstName: Joi.string()
       .min(3)
       .max(11)
-      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
-      .required()
+      .regex(/^[a-zA-Z\s]+$/)
       .messages({
         'string.pattern.base': 'First name must contain letters only',
         'string.min': 'First name can´t be shorter than 3 characters',
@@ -33,8 +32,7 @@ const FormTrainers = () => {
     lastName: Joi.string()
       .min(3)
       .max(30)
-      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
-      .required()
+      .regex(/^[a-zA-Z\s]+$/)
       .messages({
         'string.pattern.base': 'Last name must contain letters only',
         'string.min': 'Last name can´t be shorter than 3 characters',

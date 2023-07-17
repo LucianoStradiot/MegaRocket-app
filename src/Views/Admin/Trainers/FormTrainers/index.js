@@ -29,14 +29,13 @@ const FormTrainers = () => {
   };
 
   const RGXPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-  const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
+  const RGXEmail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z]+\.(com|[a-zA-Z]{2,})$/;
 
   const schemaUpdate = Joi.object({
     firstName: Joi.string()
       .min(3)
       .max(11)
-      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
-      .required()
+      .regex(/^[a-zA-Z\s]+$/)
       .messages({
         'string.pattern.base': 'First name must contain letters only',
         'string.min': 'First name can´t be shorter than 3 characters',
@@ -46,8 +45,7 @@ const FormTrainers = () => {
     lastName: Joi.string()
       .min(3)
       .max(30)
-      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
-      .required()
+      .regex(/^[a-zA-Z\s]+$/)
       .messages({
         'string.pattern.base': 'Last name must contain letters only',
         'string.min': 'Last name can´t be shorter than 3 characters',
@@ -58,7 +56,6 @@ const FormTrainers = () => {
       .regex(/^[0-9]*$/)
       .min(7)
       .max(9)
-      .required()
       .messages({
         'string.min': 'DNI must have 7-9 digits',
         'string.max': 'DNI must have 7-9 digits',
@@ -68,7 +65,6 @@ const FormTrainers = () => {
     phone: Joi.string()
       .regex(/^[0-9]*$/)
       .length(10)
-      .required()
       .messages({
         'string.length': 'Phone number must have 10 digits',
         'string.empty': 'Phone number can´t be empty',
@@ -77,7 +73,6 @@ const FormTrainers = () => {
     city: Joi.string()
       .min(3)
       .regex(/^[a-zA-Z\s.,]+$/)
-      .required()
       .messages({
         'string.pattern.base': 'City must contain letters and spaces only',
         'string.empty': 'City can´t be empty',
@@ -86,7 +81,6 @@ const FormTrainers = () => {
     salary: Joi.string()
       .regex(/^[0-9]*$/)
       .min(1)
-      .required()
       .messages({
         'string.pattern.base': 'Salary must contain numbers',
         'string.empty': 'Salary can´t be empty',
@@ -99,7 +93,7 @@ const FormTrainers = () => {
     firstName: Joi.string()
       .min(3)
       .max(11)
-      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
+      .regex(/^[a-zA-Z\s]+$/)
       .required()
       .messages({
         'string.pattern.base': 'First name must contain letters only',
@@ -110,7 +104,7 @@ const FormTrainers = () => {
     lastName: Joi.string()
       .min(3)
       .max(30)
-      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
+      .regex(/^[a-zA-Z\s]+$/)
       .required()
       .messages({
         'string.pattern.base': 'Last name must contain letters only',
