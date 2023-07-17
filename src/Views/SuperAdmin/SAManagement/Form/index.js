@@ -30,7 +30,7 @@ const FormSuperAdmin = () => {
   const { id } = useParams();
 
   const RGXPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-  const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
+  const RGXEmail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z]+\.(com|[a-zA-Z]{2,})$/;
   const schema = Joi.object({
     email: Joi.string().regex(RGXEmail).required().messages({
       'string.pattern.base': 'Email must be in a valid format',

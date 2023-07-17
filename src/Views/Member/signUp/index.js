@@ -39,7 +39,7 @@ const SignUpMember = () => {
     firstName: Joi.string()
       .min(3)
       .max(11)
-      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
+      .regex(/^[a-zA-Z\s]+$/)
       .required()
       .messages({
         'string.pattern.base': 'First name must contain letters only',
@@ -50,7 +50,7 @@ const SignUpMember = () => {
     lastName: Joi.string()
       .min(3)
       .max(30)
-      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
+      .regex(/^[a-zA-Z\s]+$/)
       .required()
       .messages({
         'string.pattern.base': 'Last name must contain letters only',
@@ -62,11 +62,17 @@ const SignUpMember = () => {
       'string.empty': 'Email can´t be empty',
       'string.pattern.base': 'Email must be in a valid format'
     }),
-    dni: Joi.string().min(7).max(9).required().messages({
-      'string.min': 'DNI must have 7-9 digits',
-      'string.max': 'DNI must have 7-9 digits',
-      'string.empty': 'DNI can´t be empty'
-    }),
+    dni: Joi.string()
+      .regex(/^[0-9]*$/)
+      .min(7)
+      .max(9)
+      .required()
+      .messages({
+        'string.min': 'DNI must have 7-9 digits',
+        'string.max': 'DNI must have 7-9 digits',
+        'string.empty': 'DNI can´t be empty',
+        'string.pattern.base': 'DNI must be only numbers'
+      }),
     phone: Joi.string()
       .regex(/^[0-9]*$/)
       .length(10)
@@ -95,7 +101,8 @@ const SignUpMember = () => {
       .max(5)
       .required()
       .messages({
-        'string.length': 'Postal code must have between 4 and 5 digits',
+        'string.min': 'Postal code must have at least 4 digits',
+        'string.max': 'Postal code can´t have more than 5 digits',
         'string.empty': 'Postal code can´t be empty',
         'string.pattern.base': 'Postal code must be only numbers'
       }),
