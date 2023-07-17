@@ -5,6 +5,7 @@ import Button from 'Components/Shared/Button';
 import { useHistory } from 'react-router-dom';
 import Modal from 'Components/Shared/Modal';
 import { updateMember } from 'Redux/Members/thunks';
+import { updateProfilePhoto } from 'Redux/ProfilePhoto/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
 import DatePicker from 'Components/Shared/DatePicker';
@@ -23,6 +24,7 @@ const FormMembers = () => {
     desc: ''
   });
   const dataLog = useSelector((state) => state.user.user);
+  const [selectedFile, setSelectedFile] = useState(null);
   const currentDate = new Date();
   const minDate = new Date();
   minDate.setFullYear(currentDate.getFullYear() - 15);
@@ -98,10 +100,6 @@ const FormMembers = () => {
     resolver: joiResolver(schema)
   });
 
-  useEffect(() => {
-    formEdit(dataLog?._id);
-  }, []);
-
   const formEdit = (id) => {
     if (id) {
       setValue('firstName', dataLog?.firstName);
@@ -114,8 +112,19 @@ const FormMembers = () => {
     }
   };
 
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const handleUpload = () => {
+    if (selectedFile) {
+      dispatch(updateProfilePhoto(selectedFile));
+    }
+  };
+
   const onSubmit = (data) => {
     handleUpdateMember(data);
+    handleUpload(data);
   };
   const handleUpdateMember = async (memberValues) => {
     const payload = {
@@ -145,6 +154,10 @@ const FormMembers = () => {
     }
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    formEdit(dataLog?._id);
+  }, []);
 
   return (
     <section className={styles.container}>
@@ -217,6 +230,17 @@ const FormMembers = () => {
               inputType={'text'}
               register={register}
               error={errors.postalCode?.message}
+            />
+          </div>
+          <div>
+            <label className={styles.label} htmlFor="profilePhoto">
+              Profile Photo
+            </label>
+            <input
+              id="profilePhoto"
+              type="file"
+              onChange={handleFileChange}
+              className={styles.input}
             />
           </div>
         </div>

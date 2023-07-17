@@ -1,14 +1,20 @@
-import { storage } from 'firebase/app';
-import 'firebase/storage';
+// actions.js
+import {
+  UPDATE_PROFILE_PHOTO_REQUEST,
+  UPDATE_PROFILE_PHOTO_SUCCESS,
+  UPDATE_PROFILE_PHOTO_FAILURE
+} from './constants';
 
-export const changeProfilePhoto = (userId, file) => {
-  return async (dispatch) => {
-    const storageRef = storage().ref();
-    const fileRef = storageRef.child(`profile_photos/${userId}`);
-    await fileRef.put(file);
-    const photoUrl = await fileRef.getDownloadURL();
+export const updateProfilePhotoRequest = () => ({
+  type: UPDATE_PROFILE_PHOTO_REQUEST
+});
 
-    // Actualizar el estado de la aplicación con la nueva URL de la foto de perfil
-    dispatch({ type: 'CHANGE_PROFILE_PHOTO', payload: photoUrl });
-  };
-};
+export const updateProfilePhotoSuccess = (photoUrl) => ({
+  type: UPDATE_PROFILE_PHOTO_SUCCESS,
+  payload: photoUrl
+});
+
+export const updateProfilePhotoFailure = (error) => ({
+  type: UPDATE_PROFILE_PHOTO_FAILURE,
+  payload: error
+});
