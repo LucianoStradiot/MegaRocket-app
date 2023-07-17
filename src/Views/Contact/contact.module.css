@@ -46,17 +46,34 @@
 }
 
 .info {
-  font-size: 16px;
-  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-  letter-spacing: 2px;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  letter-spacing: 3px;
   margin: 20px;
+
 }
 
-.info p {
-  padding-bottom: 30px;
-}
 
 .info a {
   text-decoration: none;
+  color: #fff;
+  padding-bottom: 30px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.icon {
+  font-size: 30px;
+  vertical-align: text-bottom;
+  font-weight: 700;
+}
+
+.icon:hover {
+  text-decoration: none;
+}
+
+.home {
+  font-size: 24px;
   color: #fff;
 }

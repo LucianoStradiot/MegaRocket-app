@@ -1,5 +1,6 @@
 import Aside from 'Components/Shared/Aside';
 import styles from './contact.module.css';
+import { FiHome, FiPhone, FiMail } from 'react-icons/fi';
 
 const Contact = () => {
   return (
@@ -19,18 +20,18 @@ const Contact = () => {
             ></iframe>
             <div className={styles.info}>
               <p>
-                Address:{' '}
                 <a href="https://goo.gl/maps/uHURr4ps6nTQCgeEA" target="_blank" rel="noreferrer">
-                  Cordoba 1764, Rosario
-                </a>{' '}
+                  <FiHome className={styles.icon} /> Cordoba 1764, Rosario
+                </a>
               </p>
               <p>
-                Tel: <a href="tel:+03411234567">(0341)1234567</a>
+                <a href="tel:+03411234567">
+                  <FiPhone className={styles.icon} /> (0341)1234567
+                </a>
               </p>
               <p>
-                E-mail:{' '}
                 <a href="mailto:MegaRocket@gmail.com?Subject=please%20i%20want%20more%20info">
-                  MegaRocket@gmail.com
+                  <FiMail className={styles.icon} /> MegaRocket@gmail.com
                 </a>
               </p>
             </div>
