@@ -111,7 +111,6 @@ const MemberSchedule = () => {
     } else if (sessionStorage.getItem('role') === 'TRAINER') {
       if (Array.isArray(description)) {
         const memberNames = description.map((member) => `${member.firstName} ${member.lastName}`);
-
         setModal({
           title: title,
           description: (
@@ -234,14 +233,14 @@ const MemberSchedule = () => {
                     <th className={styles.background}>
                       <div className={styles.info}>
                         <div className={styles.blueCard}></div>
-                        <p>available</p>
+                        <p>Available</p>
                       </div>
                       <div className={styles.info}>
                         <div className={styles.redCard}></div>
                         {sessionStorage.getItem('role') === 'TRAINER' ? (
-                          <p>your classes</p>
+                          <p>Your classes</p>
                         ) : (
-                          <p>subscribed</p>
+                          <p>Subscribed</p>
                         )}
                       </div>
                       <div className={styles.info}>
@@ -250,7 +249,7 @@ const MemberSchedule = () => {
                         ) : (
                           <>
                             <div className={styles.greyCard}></div>
-                            <p>not available</p>
+                            <p>Not available</p>
                           </>
                         )}
                       </div>
@@ -301,12 +300,22 @@ const MemberSchedule = () => {
                                             findSubToDelete.current = null;
                                             handleDataForCreate(oneClass);
                                           }
-                                          openModal(
-                                            findSubToDelete.current ? 'Delete' : 'Subscribe',
-                                            findSubToDelete.current
-                                              ? 'Are you sure you want to delete your subscription?'
-                                              : 'Confirm your subscription'
-                                          );
+                                          {
+                                            subscriptionsLength !== oneClass.slots
+                                              ? openModal(
+                                                  findSubToDelete.current ? 'Delete' : 'Subscribe',
+                                                  findSubToDelete.current
+                                                    ? 'Are you sure you want to delete your subscription?'
+                                                    : 'Confirm your subscription'
+                                                )
+                                              : setModal({
+                                                  title: 'Error',
+                                                  description:
+                                                    'You cannot subscribe to a full class',
+                                                  isConfirm: false
+                                                });
+                                            setIsOpen(true);
+                                          }
                                         } else if (sessionStorage.getItem('role') === 'TRAINER') {
                                           const filteredMembers = members.filter((member) => {
                                             return subscriptions.some(
@@ -338,12 +347,12 @@ const MemberSchedule = () => {
                                         <div>{`Activity: ${
                                           oneClass && oneClass.activity
                                             ? oneClass.activity.name
-                                            : 'not available'
+                                            : 'Not available'
                                         }`}</div>
                                         <div>{`Trainer: ${
                                           oneClass && oneClass.trainer
                                             ? `${oneClass.trainer.firstName} ${oneClass.trainer.lastName}`
-                                            : 'not available'
+                                            : 'Not available'
                                         }`}</div>
                                         <div>
                                           {'Slots: '}
