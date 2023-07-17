@@ -185,6 +185,8 @@ const MemberSchedule = () => {
     if (sessionStorage.getItem('role') === 'TRAINER') {
       if (userLoged?._id === oneClass?.trainer?._id) {
         return styles.subscribedClass;
+      } else {
+        return styles.classCard;
       }
     }
 
@@ -236,11 +238,21 @@ const MemberSchedule = () => {
                       </div>
                       <div className={styles.info}>
                         <div className={styles.redCard}></div>
-                        <p>subscribed</p>
+                        {sessionStorage.getItem('role') === 'TRAINER' ? (
+                          <p>your classes</p>
+                        ) : (
+                          <p>subscribed</p>
+                        )}
                       </div>
                       <div className={styles.info}>
-                        <div className={styles.greyCard}></div>
-                        <p>not available</p>
+                        {sessionStorage.getItem('role') === 'TRAINER' ? (
+                          <p></p>
+                        ) : (
+                          <>
+                            <div className={styles.greyCard}></div>
+                            <p>not available</p>
+                          </>
+                        )}
                       </div>
                     </th>
                     {weekDays.map((day) => (
