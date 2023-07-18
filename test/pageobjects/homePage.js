@@ -27,6 +27,10 @@ class HomePage {
     return $('[data-testid="container-aside-members"] a[href="/membership"]');
   }
 
+  get contact() {
+    return $('[data-testid="container-aside-members"] a[href="/contact"]');
+  }
+
   get contactUs() {
     return $('[data-testid="container-aside-members"] h3');
   }
