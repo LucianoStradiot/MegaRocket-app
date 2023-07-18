@@ -287,6 +287,7 @@ const MemberSchedule = () => {
                                       className={cardClass}
                                       onClick={() => {
                                         if (sessionStorage.getItem('role') === 'MEMBER') {
+                                          window.location.reload();
                                           if (data.isActive) {
                                             if (subscriptions.length > 0) {
                                               for (const sub of subscriptions) {
