@@ -233,7 +233,11 @@ const MemberSchedule = () => {
                     <th className={styles.background}>
                       <div className={styles.info}>
                         <div className={styles.blueCard}></div>
-                        <p>Available</p>
+                        {sessionStorage.getItem('role') === 'TRAINER' ? (
+                          <p>Not assigned</p>
+                        ) : (
+                          <p>Available</p>
+                        )}
                       </div>
                       <div className={styles.info}>
                         <div className={styles.redCard}></div>
