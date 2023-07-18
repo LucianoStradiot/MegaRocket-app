@@ -253,6 +253,20 @@ describe('Check elements in Home Page', () => {
     await Modals.acceptButtonModal.click();
   });
 
+  it('Check navigation from super admin menu to home page', async () => {
+    await SuperAdmin.homeButton.click();
+
+    const homeUrl = await browser.getUrl();
+    expect(homeUrl).toEqual('https://joaco-megarocket-app.vercel.app/');
+  });
+
+  it('Check navigation from home page to super admin menu', async () => {
+    await SuperAdmin.managementButton.click();
+
+    const superAdminUrl = await browser.getUrl();
+    expect(superAdminUrl).toEqual('https://joaco-megarocket-app.vercel.app/superAdmins/admins');
+  });
+
   it('Logout flow', async() => {
     await SuperAdmin.logoutButton.click();
 

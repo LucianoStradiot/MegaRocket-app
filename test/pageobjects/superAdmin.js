@@ -8,6 +8,10 @@ class SuperAdmin {
     return $('nav div:nth-child(2) a');
   }
 
+  get managementButton() {
+    return $('nav a[href="/superAdmins/admins"]');
+  }
+
   get createAdminButton() {
     return $('[data-testid="create-button-admins"]');
   }

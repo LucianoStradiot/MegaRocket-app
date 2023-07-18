@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 class SignUpPage {
   get inputFirstName() {
     return $('[data-testid="first-name-sign-up"]:nth-child(2)');
@@ -32,14 +33,14 @@ class SignUpPage {
   get addBtn() {
     return $('[data-testid="sign-up-confirm-button"]');
   }
+  get cancelBtn() {
+    return $('[data-testid="sign-up-form"] button:nth-child(1)');
+  }
   get errorName() {
-    return $(
-      '[data-testid="first-name-sign-up"] + p'
-    );
+    return $('[data-testid="first-name-sign-up"] + p');
 }
 get errorLastName() {
-  return $(
-    '[data-testid="last-name-sign-up"] + p'
+  return $('[data-testid="last-name-sign-up"] + p'
   );
 }
 get errorEmail() {

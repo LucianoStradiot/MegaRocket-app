@@ -17,14 +17,14 @@ class Login {
   get loginButton() {
     return $('[data-testid="confirm-button-login"]');
   }
+  get cancelButton() {
+    return $('[data-testid="container-login"] button:nth-child(1)')
+  }
   get acceptButton() {
     return $('[data-testid="modal-success"] button');
   }
   get modal() {
     return $('[data-testid="modal-success"]');
-  }
-  get acceptBtn() {
-    return $('[data-testid="modal-success"] > button');
   }
   get forgotPassword() {
     return $('[data-testid="container-login"] .login_password__rDUIU a');
