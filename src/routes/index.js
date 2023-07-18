@@ -5,6 +5,8 @@ import styles from './layout.module.css';
 import { useDispatch } from 'react-redux';
 import { tokenListener } from 'helper/firebase';
 import { getAuth } from 'Redux/Auth/thunks';
+
+const Contact = lazy(() => import('Views/Contact'));
 const TrainerRoute = lazy(() => import('./trainers'));
 const PrivateRoute = lazy(() => import('./privateRoutes'));
 const AdminsRoutes = lazy(() => import('./admin'));
@@ -37,6 +39,7 @@ const Layout = () => {
         <Switch>
           <Route path="/" exact component={MemberUser} />
           <Route path="/recoverPassword" component={RecoverPassword} />
+          <Route path="/contact" component={Contact} />
           <Route path="/auth/login" exact component={Login} />
           <Route path="/signUp" exact component={SignUpMember} />
           <Route path="/membership" exact component={Memberships} />
