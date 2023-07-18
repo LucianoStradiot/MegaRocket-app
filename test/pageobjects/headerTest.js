@@ -9,7 +9,7 @@ class HeaderTest {
   }
 
   get logo() {
-    return $('[data-testid="container-header"] img');
+    return $('[data-testid="container-header"] div:nth-child(2) img');
   }
 }
 
