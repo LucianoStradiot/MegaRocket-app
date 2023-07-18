@@ -1,4 +1,5 @@
-const headerLogo = require ('../pageobjects/headerTest.js')
+const headerLogo = require ('../pageobjects/headerTest.js');
+const Footer = require ('../pageobjects/footerTest.js');
 const homePage = require('../pageobjects/homePage.js');
 const Login = require ('../pageobjects/loginTest.js');
 const ActivitiesAdmin = require('../pageobjects/actAdminPage.js');
@@ -10,8 +11,7 @@ const TrainerAdmin = require('../pageobjects/trainAdminPage.js');
 const subscriptionAdmin = require('../pageobjects/subsAdminPage.js');
 
 
-describe('Check Login application for "Admins_User"', () => {
-
+describe('Check complete flow application for "Admins_User"', () => {
     beforeAll('open browser', () => {
         browser.setWindowSize(1900, 900);
         browser.url('https://joaco-megarocket-app.vercel.app');
@@ -20,9 +20,44 @@ describe('Check Login application for "Admins_User"', () => {
       const currentUrl = await browser.getUrl();
       expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/');
       await expect(headerLogo.logo).toBeDisplayed();
+      await expect(headerLogo.logo).toHaveAttribute('alt', 'Mega Rocket Header Logo');
+      await expect(headerLogo.logo).toHaveAttribute('src', '/assets/images/logo-header2.png');
       await expect(homePage.sidebarHome).toBeDisplayed();
       await expect(homePage.loginButton).toBeDisplayed();
       await expect(homePage.loginButton).toBeClickable();
+      await expect(homePage.signUpButton).toBeDisplayed();
+      await expect(homePage.signUpButton).toBeClickable();
+      await expect(homePage.homeButton).toBeDisplayed();
+      await expect(homePage.homeButton).toBeClickable();
+      await expect(homePage.activitiesButton).toBeDisplayed();
+      await expect(homePage.activitiesButton).toBeClickable();
+      await expect(homePage.scheduleButton).toBeDisplayed();
+      await expect(homePage.scheduleButton).toBeClickable();
+      await expect(homePage.membershipsButton).toBeDisplayed();
+      await expect(homePage.membershipsButton).toBeClickable();
+      await Footer.footer.scrollIntoView();
+      await expect(Footer.logo).toBeDisplayed();
+      await expect(Footer.logo).toHaveAttribute('alt', 'Mega Rocket Footer Logo');
+      await expect(Footer.logo).toHaveAttribute('src', '/assets/images/logo-footer2.png');
+      await expect(Footer.facebookIcon).toBeDisplayed();
+      await expect(Footer.facebookLink).toBeDisplayed();
+      await expect(Footer.facebookLink).toBeClickable();
+      await expect(Footer.facebookLink).toHaveHref('https://www.facebook.com/radiumrocket');
+      await expect(Footer.facebookIcon).toHaveAttribute('alt', 'Facebook Logo');
+      await expect(Footer.facebookIcon).toHaveAttribute('src', '/assets/images/facebook.svg');
+      await expect(Footer.instagramIcon).toBeDisplayed();
+      await expect(Footer.instagramLink).toBeDisplayed();
+      await expect(Footer.instagramLink).toBeClickable();
+      await expect(Footer.instagramLink).toHaveHref('https://www.instagram.com/radium.rocket/');
+      await expect(Footer.instagramIcon).toHaveAttribute('alt', 'Instagram Logo');
+      await expect(Footer.instagramIcon).toHaveAttribute('src', '/assets/images/instagram.svg');
+      await expect(Footer.twitterIcon).toBeDisplayed();
+      await expect(Footer.twitterLink).toBeDisplayed();
+      await expect(Footer.twitterLink).toBeClickable();
+      await expect(Footer.twitterLink).toHaveHref('https://twitter.com/radiumrocket');
+      await expect(Footer.twitterIcon).toHaveAttribute('alt', 'Twitter Logo');
+      await expect(Footer.twitterIcon).toHaveAttribute('src', '/assets/images/twitter.svg');
+      await expect(Footer.copyRight).toHaveTextContaining('Copyright © 2023 MegaRocket SA. All rights reserved.');
       await homePage.loginClick();
     });
     it('Display elements login & login flow', async () => {
@@ -35,6 +70,18 @@ describe('Check Login application for "Admins_User"', () => {
       await expect(Login.passwordInput).toBeDisplayed();
       await expect(Login.cancelButton).toBeDisplayed();
       await expect(Login.loginButton).toBeDisplayed();
+      await expect(Login.firstCard).toBeDisplayed();
+      await expect(Login.firstCard).toBeClickable();
+      await expect(Login.firstCard).toHaveHref('/signUp?membership=Only Classes Membership');
+      await expect(Login.firstCardTittle).toHaveTextContaining('ONLY CLASSES');
+      await expect(Login.secondCard).toBeDisplayed();
+      await expect(Login.secondCard).toBeClickable();
+      await expect(Login.secondCard).toHaveHref('/signUp?membership=Classic Membership');
+      await expect(Login.secondCardTittle).toHaveTextContaining('CLASSIC');
+      await expect(Login.thirdCard).toBeDisplayed();
+      await expect(Login.thirdCard).toBeClickable();
+      await expect(Login.thirdCard).toHaveHref('/signUp?membership=Black Membership');
+      await expect(Login.thirdCardTittle).toHaveTextContaining('BLACK');
       await Login.logIn('Te@test', 'Test');
       await expect(Login.errorMail).toBeDisplayed();
       await expect(Login.errorPassword).toBeDisplayed();
@@ -45,9 +92,12 @@ describe('Check Login application for "Admins_User"', () => {
       await expect(ModalsAdmin.modalSuccessTitle).toHaveTextContaining('Success!');
       await ModalsAdmin.acceptModalClick();
     });
-    it('Display elements for menu in Admin', async () => {
+    it('Display elements for header, menu & footer in Admin', async () => {
       const currentUrl = await browser.getUrl();
       expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/admins/activities');
+      await expect(headerLogo.logo).toBeDisplayed();
+      await expect(headerLogo.logo).toHaveAttribute('alt', 'Mega Rocket Header Logo');
+      await expect(headerLogo.logo).toHaveAttribute('src', '/assets/images/logo-header2.png');
       await expect(NavBarAdmin.homeButton).toBeDisplayed();
       await expect(NavBarAdmin.homeButton).toBeClickable();
       await expect(NavBarAdmin.logOutButton).toBeDisplayed();
@@ -62,6 +112,28 @@ describe('Check Login application for "Admins_User"', () => {
       await expect(NavBarAdmin.subscriptionButton).toBeClickable();
       await expect(NavBarAdmin.trainersButton).toBeDisplayed();
       await expect(NavBarAdmin.trainersButton).toBeClickable();
+      await expect(Footer.logo).toBeDisplayed();
+      await expect(Footer.logo).toHaveAttribute('alt', 'Mega Rocket Footer Logo');
+      await expect(Footer.logo).toHaveAttribute('src', '/assets/images/logo-footer2.png');
+      await expect(Footer.facebookIcon).toBeDisplayed();
+      await expect(Footer.facebookLink).toBeDisplayed();
+      await expect(Footer.facebookLink).toBeClickable();
+      await expect(Footer.facebookLink).toHaveHref('https://www.facebook.com/radiumrocket');
+      await expect(Footer.facebookIcon).toHaveAttribute('alt', 'Facebook Logo');
+      await expect(Footer.facebookIcon).toHaveAttribute('src', '/assets/images/facebook.svg');
+      await expect(Footer.instagramIcon).toBeDisplayed();
+      await expect(Footer.instagramLink).toBeDisplayed();
+      await expect(Footer.instagramLink).toBeClickable();
+      await expect(Footer.instagramLink).toHaveHref('https://www.instagram.com/radium.rocket/');
+      await expect(Footer.instagramIcon).toHaveAttribute('alt', 'Instagram Logo');
+      await expect(Footer.instagramIcon).toHaveAttribute('src', '/assets/images/instagram.svg');
+      await expect(Footer.twitterIcon).toBeDisplayed();
+      await expect(Footer.twitterLink).toBeDisplayed();
+      await expect(Footer.twitterLink).toBeClickable();
+      await expect(Footer.twitterLink).toHaveHref('https://twitter.com/radiumrocket');
+      await expect(Footer.twitterIcon).toHaveAttribute('alt', 'Twitter Logo');
+      await expect(Footer.twitterIcon).toHaveAttribute('src', '/assets/images/twitter.svg');
+      await expect(Footer.copyRight).toHaveTextContaining('Copyright © 2023 MegaRocket SA. All rights reserved.');
     });
     it('Activities create & edit flow', async () => {
       await expect(ActivitiesAdmin.buttonCreateActivities).toBeDisplayed();
@@ -159,7 +231,6 @@ describe('Check Login application for "Admins_User"', () => {
       await expect(ModalsAdmin.modalSuccessTitle).toHaveTextContaining('Success!');
       await ModalsAdmin.acceptModalClick();
     });
-
     it('Members edit flow', async () => {
       await expect(NavBarAdmin.membersButton).toBeDisplayed();
       await expect(NavBarAdmin.membersButton).toBeClickable();
@@ -347,8 +418,14 @@ describe('Check Login application for "Admins_User"', () => {
       await NavBarAdmin.homeClick();
       const currentUrl = await browser.getUrl();
       expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/');
+      await expect(headerLogo.logo).toBeDisplayed();
+      await expect(homePage.sidebarHome).toBeDisplayed();
       await expect(NavBarAdmin.managementButton).toBeDisplayed();
       await expect(NavBarAdmin.managementButton).toBeClickable();
+      await expect(NavBarAdmin.logOutButtonHome).toBeDisplayed();
+      await expect(NavBarAdmin.logOutButtonHome).toBeClickable();
+      await Footer.footer.scrollIntoView();
+      await expect(Footer.footer).toBeDisplayed();
       await NavBarAdmin.managementClick();
       const backUrl = await browser.getUrl();
       expect(backUrl).toEqual('https://joaco-megarocket-app.vercel.app/admins/activities');
@@ -362,5 +439,21 @@ describe('Check Login application for "Admins_User"', () => {
       await ModalsAdmin.confirmModalClick();
       const currentUrl = await browser.getUrl();
       expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/');
+      await expect(headerLogo.logo).toBeDisplayed();
+      await expect(homePage.sidebarHome).toBeDisplayed();
+      await expect(homePage.loginButton).toBeDisplayed();
+      await expect(homePage.loginButton).toBeClickable();
+      await expect(homePage.signUpButton).toBeDisplayed();
+      await expect(homePage.signUpButton).toBeClickable();
+      await expect(homePage.homeButton).toBeDisplayed();
+      await expect(homePage.homeButton).toBeClickable();
+      await expect(homePage.activitiesButton).toBeDisplayed();
+      await expect(homePage.activitiesButton).toBeClickable();
+      await expect(homePage.scheduleButton).toBeDisplayed();
+      await expect(homePage.scheduleButton).toBeClickable();
+      await expect(homePage.membershipsButton).toBeDisplayed();
+      await expect(homePage.membershipsButton).toBeClickable();
+      await Footer.footer.scrollIntoView();
+      await expect(Footer.footer).toBeDisplayed();
     });
 });

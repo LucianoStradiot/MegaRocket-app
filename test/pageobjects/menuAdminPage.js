@@ -1,27 +1,30 @@
 class NavBarAdmin {
   get homeButton() {
-    return $('[data-testid="container-aside-general"] div li:nth-child(1) a');
+    return $('a[href="/"]');
   }
   get logOutButton() {
-    return $('[data-testid="container-aside-general"] a:nth-child(2) li a');
+    return $('[data-testid="container-aside-general"] a:nth-child(2)');
+  }
+  get logOutButtonHome() {
+    return $('[data-testid="container-aside-members"] a:nth-child(2)');
   }
   get activitiesButton() {
-      return $('[data-testid="container-aside-general"] div:nth-child(2) li a');
+      return $('a[href="/admins/activities"]');
   }
   get classesButton() {
-      return $('[data-testid="container-aside-general"] div li:nth-child(2) a');
+      return $('a[href="/admins/classes"]');
   }
   get membersButton() {
-      return $('[data-testid="container-aside-general"] div li:nth-child(3) a');
+      return $('a[href="/admins/members"]');
   }
   get subscriptionButton() {
-    return $('[data-testid="container-aside-general"] div:nth-child(2) a:nth-child(4)');
+    return $('[data-testid="container-aside-general"] div a:nth-child(4)');
   }
   get trainersButton() {
-      return $('[data-testid="container-aside-general"] div:nth-child(2) a:nth-child(5)');
+      return $('a[href="/admins/trainers"]');
   }
   get managementButton(){
-    return $('a:nth-child(1)');
+    return $('a[href="/admins/activities"]');
   }
   async homeClick() {
     await this.homeButton.click();

@@ -32,6 +32,29 @@ class Login {
     get forgotPassword() {
       return $('[data-testid="container-login"] .login_password__rDUIU a');
     }
+    get firstCard(){
+      return $('a[href="/signUp?membership=Only Classes Membership"]');
+    }
+    get firstCardTittle(){
+      return $('a[href="/signUp?membership=Only Classes Membership"] h3');
+    }
+    get secondCard(){
+      return $('a[href="/signUp?membership=Classic Membership"]');
+    }
+    get secondCardTittle(){
+      return $('a[href="/signUp?membership=Classic Membership"] h3');
+    }
+    get thirdCard(){
+      return $('a[href="/signUp?membership=Black Membership"]');
+    }
+    get thirdCardTittle(){
+      return $('a[href="/signUp?membership=Black Membership"] h3');
+    }
+
+
+
+
+
     async logIn(email, password) {
         await this.emailInput.setValue(email);
         await this.passwordInput.setValue(password);
