@@ -332,6 +332,7 @@ const MemberSchedule = () => {
                                             setIsOpen(true);
                                           }
                                         } else if (sessionStorage.getItem('role') === 'TRAINER') {
+                                          window.location.reload();
                                           const filteredMembers = members.filter((member) => {
                                             return subscriptions.some(
                                               (subs) =>
