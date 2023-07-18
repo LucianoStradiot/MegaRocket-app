@@ -241,13 +241,15 @@ const FormClasses = () => {
             <option value="undefined" defaultValue>
               Choose a Trainer
             </option>
-            {trainers.map((trainer) => {
-              return (
-                <option value={trainer._id} key={trainer._id}>
-                  {trainer.firstName} {trainer.lastName}
-                </option>
-              );
-            })}
+            {trainers
+              .filter((trainer) => trainer.isActive === true)
+              .map((trainer) => {
+                return (
+                  <option value={trainer._id} key={trainer._id}>
+                    {trainer.firstName} {trainer.lastName}
+                  </option>
+                );
+              })}
           </Select>
           <label className={styles.label} htmlFor="activity">
             Activity
