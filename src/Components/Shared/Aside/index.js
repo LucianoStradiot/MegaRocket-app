@@ -172,6 +172,14 @@ const Aside = ({ page }) => {
                       <a>Memberships</a>
                     </li>
                   </Link>
+                  <Link
+                    to="/contact"
+                    className={`${styles.btn} ${isActiveRouteMember('/contact')}`}
+                  >
+                    <li>
+                      <a>Contact</a>
+                    </li>
+                  </Link>
                 </div>
               </ul>
             </nav>
