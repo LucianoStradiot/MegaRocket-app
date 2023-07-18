@@ -23,17 +23,17 @@
 .title {
   text-transform: uppercase;
   text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-  border-bottom: #000 3px solid;
   margin: 13px;
   font-size: 24px;
   font-weight: 600;
   width: 97%;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #000;
 }
 
 .data {
   display: flex;
-  flex-direction: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .map {
@@ -48,10 +48,8 @@
 .info {
   display: flex;
   flex-direction: column;
-  font-size: 20px;
-  letter-spacing: 3px;
+  letter-spacing: 0px;
   margin: 20px;
-
 }
 
 
@@ -59,18 +57,18 @@
   text-decoration: none;
   color: #fff;
   padding-bottom: 30px;
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 18px;
+  transition: 0.3s ease-in-out;
+}
+
+.info a:hover {
+  color: #bbb;
 }
 
 .icon {
   font-size: 30px;
   vertical-align: text-bottom;
   font-weight: 700;
-}
-
-.icon:hover {
-  text-decoration: none;
 }
 
 .home {

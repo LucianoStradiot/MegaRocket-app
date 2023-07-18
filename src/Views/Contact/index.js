@@ -8,9 +8,6 @@ const Contact = () => {
       <Aside page={'home'} />
       <div className={styles.container}>
         <div className={styles.background}>
-          <div className={styles.title}>
-            <h2>Contact us</h2>
-          </div>
           <div className={styles.data}>
             <iframe
               className={styles.map}
@@ -18,22 +15,25 @@ const Contact = () => {
               allowfullscreen=""
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
-            <div className={styles.info}>
-              <p>
-                <a href="https://goo.gl/maps/uHURr4ps6nTQCgeEA" target="_blank" rel="noreferrer">
-                  <FiHome className={styles.icon} /> Cordoba 1764, Rosario
-                </a>
-              </p>
-              <p>
-                <a href="tel:+03411234567">
-                  <FiPhone className={styles.icon} /> (0341)1234567
-                </a>
-              </p>
-              <p>
-                <a href="mailto:MegaRocket@gmail.com?Subject=please%20i%20want%20more%20info">
-                  <FiMail className={styles.icon} /> MegaRocket@gmail.com
-                </a>
-              </p>
+            <div className={styles.containerInfo}>
+              <h2 className={styles.title}>Contact</h2>
+              <div className={styles.info}>
+                <p>
+                  <a href="https://goo.gl/maps/uHURr4ps6nTQCgeEA" target="_blank" rel="noreferrer">
+                    <FiHome className={styles.icon} /> Cordoba 1764, Rosario
+                  </a>
+                </p>
+                <p>
+                  <a href="tel:+03411234567">
+                    <FiPhone className={styles.icon} /> (0341)1234567
+                  </a>
+                </p>
+                <p>
+                  <a href="mailto:MegaRocket@gmail.com?Subject=please%20i%20want%20more%20info">
+                    <FiMail className={styles.icon} /> MegaRocket@gmail.com
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
