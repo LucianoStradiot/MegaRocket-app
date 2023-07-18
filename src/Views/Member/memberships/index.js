@@ -22,28 +22,38 @@ const MembershipMember = () => {
 
   const handleCardOnly = () => {
     if (data && sessionStorage.getItem('role') === 'MEMBER') {
-      if (data.membership !== 'Only Classes Membership') {
-        setModal({
-          title: 'Update',
-          desc: (
-            <div>
-              Are you sure you want to change your Membership to{' '}
-              <span className={styles.cont}>Only Classes Membership</span>?
-            </div>
-          ),
-          isConfirm: true,
-          membership: 'Only Classes Membership'
-        });
+      if (data.isActive) {
+        if (data.membership !== 'Only Classes Membership') {
+          setModal({
+            title: 'Update',
+            desc: (
+              <div>
+                Are you sure you want to change your Membership to{' '}
+                <span className={styles.cont}>Only Classes Membership</span>?
+              </div>
+            ),
+            isConfirm: true,
+            membership: 'Only Classes Membership'
+          });
+        } else {
+          setModal({
+            title: 'Error',
+            desc: 'You already have this Membership',
+            isConfirm: false,
+            membership: ''
+          });
+          setRefresh(false);
+        }
+        setIsOpen(true);
       } else {
         setModal({
           title: 'Error',
-          desc: 'You already have this Membership',
+          desc: `Your membership has expired. Communicate with an admin`,
           isConfirm: false,
           membership: ''
         });
-        setRefresh(false);
+        setIsOpen(true);
       }
-      setIsOpen(true);
     } else if (data && sessionStorage.getItem('role') !== 'MEMBER') {
       setModal({
         title: 'Error',
@@ -60,28 +70,38 @@ const MembershipMember = () => {
 
   const handleCardClassic = () => {
     if (data && sessionStorage.getItem('role') === 'MEMBER') {
-      if (data.membership !== 'Classic Membership') {
-        setModal({
-          title: 'Update',
-          desc: (
-            <div>
-              Are you sure you want to change your Membership to{' '}
-              <span className={styles.cont}>Classic Membership</span>?
-            </div>
-          ),
-          isConfirm: true,
-          membership: 'Classic Membership'
-        });
+      if (data.isActive) {
+        if (data.membership !== 'Classic Membership') {
+          setModal({
+            title: 'Update',
+            desc: (
+              <div>
+                Are you sure you want to change your Membership to{' '}
+                <span className={styles.cont}>Classic Membership</span>?
+              </div>
+            ),
+            isConfirm: true,
+            membership: 'Classic Membership'
+          });
+        } else {
+          setModal({
+            title: 'Error',
+            desc: 'You already have this Membership',
+            isConfirm: false,
+            membership: ''
+          });
+          setRefresh(false);
+        }
+        setIsOpen(true);
       } else {
         setModal({
           title: 'Error',
-          desc: 'You already have this Membership',
+          desc: `Your membership has expired. Communicate with an admin`,
           isConfirm: false,
           membership: ''
         });
-        setRefresh(false);
+        setIsOpen(true);
       }
-      setIsOpen(true);
     } else if (data && sessionStorage.getItem('role') !== 'MEMBER') {
       setModal({
         title: 'Error',
@@ -98,28 +118,38 @@ const MembershipMember = () => {
 
   const handleCardBlack = () => {
     if (data && sessionStorage.getItem('role') === 'MEMBER') {
-      if (data.membership !== 'Black Membership') {
-        setModal({
-          title: 'Update',
-          desc: (
-            <div>
-              Are you sure you want to change your Membership to{' '}
-              <span className={styles.cont}>Black Membership</span>?
-            </div>
-          ),
-          isConfirm: true,
-          membership: 'Black Membership'
-        });
+      if (data.isActive) {
+        if (data.membership !== 'Black Membership') {
+          setModal({
+            title: 'Update',
+            desc: (
+              <div>
+                Are you sure you want to change your Membership to{' '}
+                <span className={styles.cont}>Black Membership</span>?
+              </div>
+            ),
+            isConfirm: true,
+            membership: 'Black Membership'
+          });
+        } else {
+          setModal({
+            title: 'Error',
+            desc: 'You already have this Membership',
+            isConfirm: false,
+            membership: ''
+          });
+          setRefresh(false);
+        }
+        setIsOpen(true);
       } else {
         setModal({
           title: 'Error',
-          desc: 'You already have this Membership',
+          desc: `Your membership has expired. Communicate with an admin`,
           isConfirm: false,
           membership: ''
         });
-        setRefresh(false);
+        setIsOpen(true);
       }
-      setIsOpen(true);
     } else if (data && sessionStorage.getItem('role') !== 'MEMBER') {
       setModal({
         title: 'Error',
