@@ -84,9 +84,9 @@ function Classes() {
 
   const filteredClasses = classes.filter(
     (oneClass) =>
-      oneClass.activity.name.toLowerCase().includes(filterQuery.toLowerCase()) ||
-      oneClass.trainer.firstName.toLowerCase().includes(filterQuery.toLowerCase()) ||
-      oneClass.trainer.lastName.toLowerCase().includes(filterQuery.toLowerCase())
+      oneClass?.activity?.name?.toLowerCase().includes(filterQuery.toLowerCase()) ||
+      oneClass?.trainer?.firstName?.toLowerCase().includes(filterQuery.toLowerCase()) ||
+      oneClass?.trainer?.lastName?.toLowerCase().includes(filterQuery.toLowerCase())
   );
 
   return (
@@ -141,7 +141,7 @@ function Classes() {
                               <td key={dayIndex}>
                                 {filteredClasses
                                   .filter(
-                                    (oneClass) => oneClass.day === day && oneClass.hour === hour
+                                    (oneClass) => oneClass?.day === day && oneClass?.hour === hour
                                   )
                                   .map((oneClass, index) => {
                                     return (
@@ -150,18 +150,19 @@ function Classes() {
                                           <p className={styles.inlineBlock}>
                                             <div>{`Activity: ${
                                               oneClass && oneClass.activity
-                                                ? oneClass.activity.name
-                                                : 'not available'
+                                                ? oneClass?.activity?.name
+                                                : window.location.reload()
                                             }`}</div>
                                             <div>{`Trainer: ${
                                               oneClass && oneClass.trainer
-                                                ? oneClass.trainer.firstName
-                                                : 'not available'
+                                                ? `${oneClass?.trainer?.firstName}
+                                                  ${oneClass?.trainer?.lastName}`
+                                                : window.location.reload()
                                             }`}</div>
-                                            <div>{`Slots: ${oneClass.slots}`}</div>
+                                            <div>{`Slots: ${oneClass?.slots}`}</div>
                                           </p>
                                           <Link
-                                            to={'/admins/classes/form/' + oneClass._id}
+                                            to={'/admins/classes/form/' + oneClass?._id}
                                             className={styles.edit}
                                           >
                                             <FiEdit
@@ -170,7 +171,7 @@ function Classes() {
                                           </Link>
                                           <button
                                             className={styles.delete}
-                                            onClick={() => openModalConfirm(oneClass._id)}
+                                            onClick={() => openModalConfirm(oneClass?._id)}
                                           >
                                             <FiXSquare
                                               className={`${styles.editIcon} ${styles.editIconX}`}
@@ -185,17 +186,7 @@ function Classes() {
                           </tr>
                         </>
                       ))}
-                      <tr className={styles.tr}>
-                        <td colSpan={weekDays.length + 1}>
-                          {classes.length === 0 && <p>There are no classes yet.</p>}
-                        </td>
-                      </tr>
                     </tbody>
-                    <tr className={styles.tr}>
-                      <td colSpan={weekDays.length + 1}>
-                        {filteredClasses.length === 0 && <p>No matching classes found.</p>}
-                      </td>
-                    </tr>
                   </table>
                 </section>
               )}
