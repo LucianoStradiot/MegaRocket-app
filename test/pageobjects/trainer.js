@@ -10,11 +10,15 @@ class Trainer {
     }
 
     get filterTable() {
-        return $('input [placeholder="Search by activity or trainer"]');
+        return $('input');
     }
 
     get headersTable() {
         return $$('table thead th');
+    }
+
+    get helperTable() {
+        return $$('table thead th p');
     }
 
     get hoursTable() {
