@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { updateProfilePhoto } from 'Redux/ProfilePhoto/thunks';
 import Modal from 'Components/Shared/Modal';
+import { FiEdit } from 'react-icons/fi';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -75,19 +76,19 @@ const Profile = () => {
           {loading && <Spinner />}
           <div className={styles.content}>
             <div className={styles.photoContainer}>
-              <input
-                id="fileInput"
-                type="file"
-                onChange={handleFileChange}
-                className={styles.inputProfile}
-                style={{ display: 'none' }}
-              />
-              <img
-                id="upload"
-                onClick={handleUploadButtonClick}
-                src={dataLog?.profilePhoto}
-                className={styles.profilePhoto}
-              />
+              <div className={styles.photoContainer}>
+                <input
+                  id="fileInput"
+                  type="file"
+                  onChange={handleFileChange}
+                  className={styles.inputProfile}
+                  style={{ display: 'none' }}
+                />
+                <span className={styles.profileHover} onClick={handleUploadButtonClick}>
+                  <FiEdit className={styles.editIcon} />
+                </span>
+                <img id="upload" src={dataLog?.profilePhoto} className={styles.profilePhoto} />
+              </div>
             </div>
             <div className={styles.subContainer}>
               <div className={styles.inputContainer} data-testid="member-first-name">
@@ -158,12 +159,10 @@ const Profile = () => {
                 className={styles.inputProfile}
                 style={{ display: 'none' }}
               />
-              <img
-                id="upload"
-                onClick={handleUploadButtonClick}
-                src={dataLog?.profilePhoto}
-                className={styles.profilePhoto}
-              />
+              <span className={styles.profileHover} onClick={handleUploadButtonClick}>
+                <FiEdit className={styles.editIcon} />
+              </span>
+              <img id="upload" src={dataLog?.profilePhoto} className={styles.profilePhoto} />
             </div>
             <div className={styles.subContainer}>
               <div className={styles.inputContainer}>
