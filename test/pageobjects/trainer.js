@@ -42,7 +42,7 @@ class Trainer {
     }
 
     get editButton() {
-        return $('[data-testid="profileContainer"] button');
+        return $('section div button');
     }
 
     get editForm() {

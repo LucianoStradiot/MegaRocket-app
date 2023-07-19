@@ -4,7 +4,7 @@ const Header = require('../pageobjects/headerTest.js');
 const HomePage = require('../pageobjects/homePage.js');
 const Login = require('../pageobjects/loginTest.js');
 const SuperAdmin = require('../pageobjects/superAdmin.js');
-const Modals = require('../pageobjects/modals.js');
+const Modals = require('../pageobjects/modalsPage.js');
 
 describe('Check elements in Home Page', () => {
   beforeAll('open browser', () => {

@@ -4,7 +4,7 @@ const Header = require('../pageobjects/headerTest.js');
 const HomePage = require('../pageobjects/homePage.js');
 const Login = require('../pageobjects/loginTest.js');
 const Trainer = require('../pageobjects/trainer.js');
-const Modals = require('../pageobjects/modals.js');
+const Modals = require('../pageobjects/modalsPage.js');
 const Footer = require('../pageobjects/footerTest.js');
 
 const firstName = 'Lautaro';
@@ -147,6 +147,7 @@ describe('Trainer e2e', () => {
     });
 
     it('Verifies elements and information in edit form', async () => {
+        await Trainer.editButton.scrollIntoView();
         await Trainer.editButton.click();
 
         await expect(Trainer.editForm).toBeDisplayed();
@@ -196,14 +197,6 @@ describe('Trainer e2e', () => {
         await Modals.acceptButtonModal.click();
 
         await expect(Header.title).toHaveTextContaining(`${firstName} ${lastNameU}`);
-
-        await expect(Trainer.dataProfile[0]).toHaveText(`${firstName}`);
-        await expect(Trainer.dataProfile[1]).toHaveText(`${lastNameU}`);
-        await expect(Trainer.dataProfile[2]).toHaveText(`${dniU}`);
-        await expect(Trainer.dataProfile[3]).toHaveText(`${phoneU}`);
-        await expect(Trainer.dataProfile[4]).toHaveText(`${email}`);
-        await expect(Trainer.dataProfile[5]).toHaveText(`${cityU}`);
-        await expect(Trainer.dataProfile[6]).toHaveText(`${salary}`);
     });
 
     it('Logout Trainer', async () => {

@@ -76,8 +76,6 @@ describe('Check elements in Home Page', () => {
 
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/activities');
-
-    await HomePage.homeButton.click();
   });
 
   it('Check navigation from Home page to schedule', async () => {
@@ -85,8 +83,6 @@ describe('Check elements in Home Page', () => {
 
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/schedule');
-
-    await HomePage.homeButton.click();
   });
 
   it('Check navigation from Home page to memberships', async () => {
@@ -94,8 +90,6 @@ describe('Check elements in Home Page', () => {
 
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/membership');
-
-    await HomePage.homeButton.click();
   });
 
   it('Check navigation from Home page to contact page', async () => {
@@ -166,7 +160,7 @@ describe('Check elements in Home Page', () => {
     await expect(Footer.twitterIcon).toBeDisplayed();
     await expect(Footer.twitterLink).toBeClickable();
 
-    await expect(Footer.copyRigth).toBeDisplayed();
+    await expect(Footer.copyRight).toBeDisplayed();
     await expect(Footer.copyRight).toHaveTextContaining(
       'Copyright © 2023 MegaRocket SA. All rights reserved.'
     );
@@ -202,7 +196,7 @@ describe('Check elements in Home Page', () => {
   });
 
   it('Check navigation in social media icons "Twitter"', async () => {
-    await Footer.twiterLink.click();
+    await Footer.twitterLink.click();
     const windowHandles = await browser.getWindowHandles();
 
     const twitter = windowHandles[windowHandles.length - 1];
