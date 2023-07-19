@@ -84,7 +84,7 @@ const Profile = () => {
         <Aside page={'home'} />
         <section className={styles.container}>
           {loading && <Spinner />}
-          <div className={styles.content}>
+          <div className={styles.content} data-testid="profileContainer">
             <img
               src={`${process.env.PUBLIC_URL}/assets/images/ellie.png`}
               className={styles.profilePhoto}
