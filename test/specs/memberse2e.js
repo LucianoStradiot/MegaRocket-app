@@ -20,7 +20,7 @@ describe('Members Flow', () => {
     await expect(Login.errorPassword).toHaveTextContaining('Password can´t be empty');
   });
   it('Login: Should display error message when email field is empty', async () => {
-    await Login.logIn('', 'Password123');
+    await Login.logIn('', 'Password124');
     await expect(Login.errorMail).toHaveTextContaining('Email can´t be empty');
   });
   it('Login: Should display error message when password field is empty', async () => {
