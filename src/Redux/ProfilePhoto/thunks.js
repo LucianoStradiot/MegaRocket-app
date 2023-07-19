@@ -20,7 +20,6 @@ export const updateProfilePhoto = (selectedFile, id) => {
 
       const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
       await dispatch(updateProfilePhotoSuccess(downloadURL));
-      console.log(id);
       const payload = {
         id: id,
         body: {
