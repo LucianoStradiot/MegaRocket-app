@@ -158,6 +158,9 @@ class HomePage {
   get cancelButonSignUp() {
     return $('[data-testid="sign-up-form"]  button:nth-child(1)');
   }
+  open() {
+    return browser.url('https://joaco-megarocket-app.vercel.app/');
+  }
 
   get managementAdmin(){
     return $('a:nth-child(1) li a');
