@@ -11,10 +11,10 @@ describe('Members Flow', () => {
     await HomePage.open();
     await HomePage.loginButton.click();
     await expect(browser).toHaveUrl(
-      'https://joaco-megarocket-app.vercel.app/auth/login'
+    'https://joaco-megarocket-app.vercel.app/auth/login'
     );
   });
- it('Login: Should display error message when login fields are empty', async () => {
+  it('Login: Should display error message when login fields are empty', async () => {
     await Login.logIn('', '');
     await expect(Login.errorMail).toHaveTextContaining('Email can´t be empty');
     await expect(Login.errorPassword).toHaveTextContaining('Password can´t be empty');

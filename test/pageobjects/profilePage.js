@@ -42,7 +42,7 @@ class ProfilePage {
     return $('[data-testid="form-members"] select');
   }
   get btnEdit() {
-    return $('section button');
+    return $('.button_buttonCreateAdd__OMiGZ.button_button__nycor');
   }
   get btnSave() {
     return $('[data-testid="member-confirm-button"]');
