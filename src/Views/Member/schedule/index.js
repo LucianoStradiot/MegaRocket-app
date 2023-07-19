@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from 'Views/Member/schedule/schedule.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClasses } from 'Redux/Classes/thunks';
+import { getClasses, deleteOldClasses } from 'Redux/Classes/thunks';
+import { getMembers } from 'Redux/Members/thunks';
 import {
   deleteOldSubscription,
   deleteSubscription,
@@ -12,7 +13,6 @@ import Modal from 'Components/Shared/Modal';
 import Aside from 'Components/Shared/Aside';
 import Spinner from 'Components/Shared/Spinner';
 import { useHistory } from 'react-router-dom';
-import { getAuth } from 'Redux/Auth/thunks';
 
 const MemberSchedule = () => {
   const history = useHistory();
@@ -21,6 +21,8 @@ const MemberSchedule = () => {
   const subscriptions = useSelector((state) => state.subscriptions.data);
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.classes.isLoading);
+  const members = useSelector((state) => state.members.data);
+  const data = useSelector((state) => state.user.user);
 
   const [modal, setModal] = useState({
     title: '',
@@ -34,10 +36,11 @@ const MemberSchedule = () => {
   const [filterQuery, setFilterQuery] = useState('');
 
   useEffect(() => {
-    dispatch(getClasses());
-    dispatch(getSubscriptions());
-    dispatch(getAuth());
+    dispatch(deleteOldClasses());
     dispatch(deleteOldSubscription());
+    dispatch(getClasses());
+    dispatch(getMembers());
+    dispatch(getSubscriptions());
   }, []);
 
   const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -105,6 +108,32 @@ const MemberSchedule = () => {
         description: description,
         isConfirm: true
       });
+    } else if (
+      sessionStorage.getItem('role') === 'TRAINER' ||
+      sessionStorage.getItem('role') === 'ADMIN'
+    ) {
+      if (Array.isArray(description)) {
+        const memberNames = description.map((member) => `${member.firstName} ${member.lastName}`);
+        setModal({
+          title: title,
+          description: (
+            <>
+              <ul>
+                {memberNames.map((name, index) => (
+                  <li key={index}>{name}</li>
+                ))}
+              </ul>
+            </>
+          ),
+          isConfirm: false
+        });
+      } else {
+        setModal({
+          title: title,
+          description: description,
+          isConfirm: false
+        });
+      }
     } else {
       setModal({
         title: title,
@@ -147,9 +176,19 @@ const MemberSchedule = () => {
   };
 
   const cardColor = (subscriptionsLength, oneClass) => {
-    for (const sub of subscriptions) {
-      if (userLoged?._id === sub.member?._id && sub.classes._id === oneClass._id) {
+    if (sessionStorage.getItem('role') === 'MEMBER') {
+      for (const sub of subscriptions) {
+        if (userLoged?._id === sub?.member?._id && sub?.classes?._id === oneClass?._id) {
+          return styles.subscribedClass;
+        }
+      }
+    }
+
+    if (sessionStorage.getItem('role') === 'TRAINER') {
+      if (userLoged?._id === oneClass?.trainer?._id) {
         return styles.subscribedClass;
+      } else {
+        return styles.classCard;
       }
     }
 
@@ -181,15 +220,15 @@ const MemberSchedule = () => {
               onChange={(e) => setFilterQuery(e.target.value)}
             />
           </div>
+          <Modal
+            title={modal.title}
+            desc={modal.description}
+            isOpen={isOpen}
+            confirmModal={modal.isConfirm}
+            handleClose={() => setIsOpen(!isOpen)}
+            deleteFunction={findSubToDelete.current ? handleDeleteSub : handleCreateSub}
+          />
           <div className={styles.container}>
-            <Modal
-              title={modal.title}
-              desc={modal.description}
-              isOpen={isOpen}
-              confirmModal={modal.isConfirm}
-              handleClose={() => setIsOpen(!isOpen)}
-              deleteFunction={findSubToDelete.current ? handleDeleteSub : handleCreateSub}
-            />
             <div className={styles.screenContainer}>
               <table className={styles.table}>
                 <thead>
@@ -197,15 +236,29 @@ const MemberSchedule = () => {
                     <th className={styles.background}>
                       <div className={styles.info}>
                         <div className={styles.blueCard}></div>
-                        <p>available</p>
+                        {sessionStorage.getItem('role') === 'TRAINER' ? (
+                          <p>Not assigned</p>
+                        ) : (
+                          <p>Available</p>
+                        )}
                       </div>
                       <div className={styles.info}>
                         <div className={styles.redCard}></div>
-                        <p>subscribed</p>
+                        {sessionStorage.getItem('role') === 'TRAINER' ? (
+                          <p>Your classes</p>
+                        ) : (
+                          <p>Subscribed</p>
+                        )}
                       </div>
                       <div className={styles.info}>
-                        <div className={styles.greyCard}></div>
-                        <p>not available</p>
+                        {sessionStorage.getItem('role') === 'TRAINER' ? (
+                          <p></p>
+                        ) : (
+                          <>
+                            <div className={styles.greyCard}></div>
+                            <p>Not available</p>
+                          </>
+                        )}
                       </div>
                     </th>
                     {weekDays.map((day) => (
@@ -225,8 +278,8 @@ const MemberSchedule = () => {
                             {filteredClasses
                               .filter((oneClass) => oneClass.day === day && oneClass.hour === hour)
                               .map((oneClass, index) => {
-                                const filteredSubscriptions = subscriptions.filter(
-                                  (subscription) => oneClass._id === subscription.classes._id
+                                const filteredSubscriptions = subscriptions?.filter(
+                                  (subscription) => oneClass?._id === subscription?.classes?._id
                                 );
                                 const subscriptionsLength = filteredSubscriptions.length;
 
@@ -237,38 +290,81 @@ const MemberSchedule = () => {
                                       className={cardClass}
                                       onClick={() => {
                                         if (sessionStorage.getItem('role') === 'MEMBER') {
-                                          if (subscriptions.length > 0) {
-                                            for (const sub of subscriptions) {
-                                              if (
-                                                userLoged?._id === sub.member?._id &&
-                                                sub.classes._id === oneClass._id
-                                              ) {
-                                                findSubToDelete.current = sub._id;
-                                                break;
-                                              } else {
-                                                findSubToDelete.current = null;
-                                                handleDataForCreate(oneClass);
+                                          if (data.isActive) {
+                                            if (subscriptions.length > 0) {
+                                              for (const sub of subscriptions) {
+                                                if (
+                                                  userLoged?._id === sub.member?._id &&
+                                                  sub.classes._id === oneClass._id
+                                                ) {
+                                                  findSubToDelete.current = sub._id;
+                                                  break;
+                                                } else {
+                                                  findSubToDelete.current = null;
+                                                  handleDataForCreate(oneClass);
+                                                }
                                               }
+                                            } else {
+                                              window.location.reload();
+                                              findSubToDelete.current = null;
+                                              handleDataForCreate(oneClass);
+                                            }
+                                            {
+                                              subscriptionsLength !== oneClass.slots
+                                                ? openModal(
+                                                    findSubToDelete.current
+                                                      ? 'Delete'
+                                                      : 'Subscribe',
+                                                    findSubToDelete.current
+                                                      ? 'Are you sure you want to delete your subscription?'
+                                                      : 'Confirm your subscription'
+                                                  )
+                                                : setModal({
+                                                    title: 'Error',
+                                                    description:
+                                                      'You cannot subscribe to a full class',
+                                                    isConfirm: false
+                                                  });
+                                              setIsOpen(true);
                                             }
                                           } else {
-                                            findSubToDelete.current = null;
-                                            handleDataForCreate(oneClass);
+                                            setModal({
+                                              title: 'Error',
+                                              description: 'Your membership has expired',
+                                              isConfirm: false
+                                            });
+                                            setIsOpen(true);
                                           }
+                                        } else if (sessionStorage.getItem('role') === 'TRAINER') {
+                                          const filteredMembers = members.filter((member) => {
+                                            return subscriptions.some(
+                                              (subs) =>
+                                                subs.classes._id === oneClass._id &&
+                                                subs.member._id === member._id
+                                            );
+                                          });
+                                          oneClass.trainer._id === data._id
+                                            ? openModal(
+                                                'These are the registered members',
+                                                filteredMembers
+                                              )
+                                            : openModal('Error', 'This is not your class');
+                                        } else if (sessionStorage.getItem('role') === 'ADMIN') {
+                                          const filteredMembers = members.filter((member) => {
+                                            return subscriptions.some(
+                                              (subs) =>
+                                                subs.classes._id === oneClass._id &&
+                                                subs.member._id === member._id
+                                            );
+                                          });
                                           openModal(
-                                            findSubToDelete.current ? 'Delete' : 'Subscribe',
-                                            findSubToDelete.current
-                                              ? 'Are you sure you want to delete your subscription?'
-                                              : 'Confirm your subscription'
+                                            'These are the registered members',
+                                            filteredMembers
                                           );
                                         } else if (
-                                          sessionStorage.getItem('role') === 'ADMIN' ||
-                                          sessionStorage.getItem('role') === 'SUPER_ADMIN' ||
-                                          sessionStorage.getItem('role') === 'TRAINER'
+                                          sessionStorage.getItem('role') === 'SUPER_ADMIN'
                                         ) {
-                                          openModal(
-                                            'Error',
-                                            'Only members can subscribe for a class'
-                                          );
+                                          openModal('Error', 'You are not able to see this');
                                         } else {
                                           history.push('/auth/login');
                                         }
@@ -278,18 +374,16 @@ const MemberSchedule = () => {
                                         <div>{`Activity: ${
                                           oneClass && oneClass.activity
                                             ? oneClass.activity.name
-                                            : 'not available'
+                                            : 'Not available'
                                         }`}</div>
                                         <div>{`Trainer: ${
                                           oneClass && oneClass.trainer
                                             ? `${oneClass.trainer.firstName} ${oneClass.trainer.lastName}`
-                                            : 'not available'
+                                            : 'Not available'
                                         }`}</div>
                                         <div>
                                           {'Slots: '}
-                                          {userLoged ? subscriptionsLength : ''}
-                                          {userLoged ? ' / ' : 'login'}
-                                          {userLoged ? oneClass.slots : ' first'}
+                                          {`${subscriptionsLength}/${oneClass.slots}`}
                                         </div>
                                       </p>
                                     </button>

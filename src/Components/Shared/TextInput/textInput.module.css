@@ -29,6 +29,12 @@
   box-shadow: 0 2px 4px #1b1b5d99;
 }
 
+.form-input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 3px #4a90e280;
+}
+
 .errorMsg {
   color: #EA3354;
   font-size: 14px;

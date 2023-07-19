@@ -16,6 +16,12 @@
   box-shadow: 5px 3px 3px #0000007e;
 }
 
+.select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 3px #4a90e280;
+}
+
 .errorMsg {
   color: #EA3354;
   font-size: 14px;

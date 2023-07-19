@@ -24,12 +24,11 @@ class Login {
     return $('[data-testid="container-login"] .login_password__rDUIU a');
   }
   
-  async logIn(email, password) {
-    await this.emailInput.setValue(email);
-    await this.passwordInput.setValue(password);
-    await this.loginButton.click();
- }
-
+ async logIn(email, password) {
+   await this.emailInput.setValue(email);
+   await this.passwordInput.setValue(password);
+   await this.loginButton.click();
+}
   open() {
     return browser.url('https://joaco-megarocket-app.vercel.app/auth/login');
   }

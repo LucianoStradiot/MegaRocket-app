@@ -43,7 +43,7 @@ const FormClasses = () => {
         'any.only': 'Please choose an available day'
       }),
     hour: Joi.string()
-      .regex(/^(?:0[9]|1\d|21):[0-5]\d$/)
+      .regex(/^(?:0[9]|1\d|2[0,1]):[0-5]\d$/)
       .required()
       .messages({
         'string.pattern.base': 'Please choose an hour from 9:00 am to 21:00 pm'
@@ -241,13 +241,15 @@ const FormClasses = () => {
             <option value="undefined" defaultValue>
               Choose a Trainer
             </option>
-            {trainers.map((trainer) => {
-              return (
-                <option value={trainer._id} key={trainer._id}>
-                  {trainer.firstName} {trainer.lastName}
-                </option>
-              );
-            })}
+            {trainers
+              .filter((trainer) => trainer.isActive === true)
+              .map((trainer) => {
+                return (
+                  <option value={trainer._id} key={trainer._id}>
+                    {trainer.firstName} {trainer.lastName}
+                  </option>
+                );
+              })}
           </Select>
           <label className={styles.label} htmlFor="activity">
             Activity

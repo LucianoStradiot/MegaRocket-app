@@ -10,26 +10,19 @@ import { useHistory } from 'react-router-dom';
 import { updateTrainer } from 'Redux/Trainers/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
-import { getAuth } from 'Redux/Auth/thunks';
 
 const FormTrainers = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
   const [isTrainerCreated, setIsTrainerCreated] = useState(false);
-  const idLogged = sessionStorage.getItem('firebaseUid');
   const dataLog = useSelector((state) => state.user.user);
-
-  useEffect(() => {
-    dispatch(getAuth(idLogged));
-  }, []);
 
   const schema = Joi.object({
     firstName: Joi.string()
       .min(3)
       .max(11)
-      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
-      .required()
+      .regex(/^[a-zA-Z\s]+$/)
       .messages({
         'string.pattern.base': 'First name must contain letters only',
         'string.min': 'First name can´t be shorter than 3 characters',
@@ -39,8 +32,7 @@ const FormTrainers = () => {
     lastName: Joi.string()
       .min(3)
       .max(30)
-      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
-      .required()
+      .regex(/^[a-zA-Z\s]+$/)
       .messages({
         'string.pattern.base': 'Last name must contain letters only',
         'string.min': 'Last name can´t be shorter than 3 characters',

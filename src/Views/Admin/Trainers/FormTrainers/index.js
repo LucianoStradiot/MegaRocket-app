@@ -23,18 +23,77 @@ const FormTrainers = () => {
   const [isTrainerCreated, setIsTrainerCreated] = useState(false);
   const [buttonSaveIsVisible, setSaveVisible] = useState(false);
   const [activeVisible, setActiveVisible] = useState(false);
-  const RGXPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-  const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const schema = Joi.object({
+  const RGXPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+  const RGXEmail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z]+\.(com|[a-zA-Z]{2,})$/;
+
+  const schemaUpdate = Joi.object({
     firstName: Joi.string()
       .min(3)
       .max(11)
-      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
+      .regex(/^[a-zA-Z\s]+$/)
+      .messages({
+        'string.pattern.base': 'First name must contain letters only',
+        'string.min': 'First name can´t be shorter than 3 characters',
+        'string.max': 'First name can´t be longer than 25 characters',
+        'string.empty': 'First name can´t be empty'
+      }),
+    lastName: Joi.string()
+      .min(3)
+      .max(30)
+      .regex(/^[a-zA-Z\s]+$/)
+      .messages({
+        'string.pattern.base': 'Last name must contain letters only',
+        'string.min': 'Last name can´t be shorter than 3 characters',
+        'string.max': 'Last name can´t be longer than 25 characters',
+        'string.empty': 'Last name can´t be empty'
+      }),
+    dni: Joi.string()
+      .regex(/^[0-9]*$/)
+      .min(7)
+      .max(9)
+      .messages({
+        'string.min': 'DNI must have 7-9 digits',
+        'string.max': 'DNI must have 7-9 digits',
+        'string.empty': 'DNI can´t be empty',
+        'string.pattern.base': 'DNI must be only numbers'
+      }),
+    phone: Joi.string()
+      .regex(/^[0-9]*$/)
+      .length(10)
+      .messages({
+        'string.length': 'Phone number must have 10 digits',
+        'string.empty': 'Phone number can´t be empty',
+        'string.pattern.base': 'Phone number must be only numbers'
+      }),
+    city: Joi.string()
+      .min(3)
+      .regex(/^[a-zA-Z\s.,]+$/)
+      .messages({
+        'string.pattern.base': 'City must contain letters and spaces only',
+        'string.empty': 'City can´t be empty',
+        'string.min': 'City must have at least 4 characters'
+      }),
+    salary: Joi.string()
+      .regex(/^[0-9]*$/)
+      .min(1)
+      .messages({
+        'string.pattern.base': 'Salary must contain numbers',
+        'string.empty': 'Salary can´t be empty',
+        'string.min': 'Salary must have at least 1 characters'
+      }),
+    isActive: Joi.string().valid('true', 'false').allow(true, false)
+  });
+
+  const schemaCreate = Joi.object({
+    firstName: Joi.string()
+      .min(3)
+      .max(11)
+      .regex(/^[a-zA-Z\s]+$/)
       .required()
       .messages({
         'string.pattern.base': 'First name must contain letters only',
@@ -45,7 +104,7 @@ const FormTrainers = () => {
     lastName: Joi.string()
       .min(3)
       .max(30)
-      .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
+      .regex(/^[a-zA-Z\s]+$/)
       .required()
       .messages({
         'string.pattern.base': 'Last name must contain letters only',
@@ -73,10 +132,6 @@ const FormTrainers = () => {
         'string.empty': 'Phone number can´t be empty',
         'string.pattern.base': 'Phone number must be only numbers'
       }),
-    email: Joi.string().regex(RGXEmail).required().messages({
-      'string.empty': 'Email can´t be empty',
-      'string.pattern.base': 'Email must be in a valid format'
-    }),
     city: Joi.string()
       .min(3)
       .regex(/^[a-zA-Z\s.,]+$/)
@@ -86,11 +141,6 @@ const FormTrainers = () => {
         'string.empty': 'City can´t be empty',
         'string.min': 'City must have at least 4 characters'
       }),
-    password: Joi.string().regex(RGXPass).required().messages({
-      'string.pattern.base':
-        'Password must contain at least one uppercase letter, one lowercase letter, and one digit',
-      'string.empty': 'Password can´t be empty'
-    }),
     salary: Joi.string()
       .regex(/^[0-9]*$/)
       .min(1)
@@ -100,15 +150,26 @@ const FormTrainers = () => {
         'string.empty': 'Salary can´t be empty',
         'string.min': 'Salary must have at least 1 characters'
       }),
-    isActive: Joi.string().valid('true', 'false').allow(true, false)
+    email: Joi.string().regex(RGXEmail).required().messages({
+      'string.empty': 'Email can´t be empty',
+      'string.pattern.base': 'Email must be in a valid format'
+    }),
+    password: Joi.string().min(8).regex(RGXPass).required().messages({
+      'string.pattern.base':
+        'Password must contain at least one uppercase, one lowercase and one number',
+      'string.empty': 'Password can´t be empty',
+      'string.min': 'Password must contain at least 8 characthers'
+    })
   });
+
+  const resolver = joiResolver(id ? schemaUpdate : schemaCreate);
   const {
     register,
     handleSubmit,
     reset,
     setValue,
     formState: { errors }
-  } = useForm({ mode: 'onSubmit', resolver: joiResolver(schema) });
+  } = useForm({ mode: 'onSubmit', resolver });
 
   const [responseModal, setResponseModal] = useState({
     title: '',
@@ -173,9 +234,7 @@ const FormTrainers = () => {
         setValue('lastName', data.lastName);
         setValue('dni', data.dni.toString());
         setValue('phone', data.phone.toString());
-        setValue('email', data.email);
         setValue('city', data.city);
-        setValue('password', data.password);
         setValue('salary', data.salary.toString());
         setValue('isActive', data.isActive);
         setAddVisible(false);

@@ -23,6 +23,7 @@ export const login = (credentials) => {
       const {
         claims: { role }
       } = await firebaseResponse.user.getIdTokenResult();
+      dispatch(getAuth());
       return dispatch(loginSuccess({ role, token }));
     } catch (error) {
       return dispatch(loginError(error.toString()));

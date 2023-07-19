@@ -89,3 +89,40 @@
 .borderRight {
   border-radius: 0px 8px 0px 0px;
 }
+
+.btnsContainer {
+display: flex;
+align-items: center;
+}
+
+.editIcon {
+  margin-top: 4px;
+  width: 21px;
+  height: 21px;
+  color: #2E355B;
+  padding: 6px;
+  margin-right: 10px;
+  border-radius: 5px;
+  box-shadow: 4px 5px 4px rgb(0,0,0, 0.5);
+  transition: 0.3s ease-out;
+}
+
+.editIcon:hover {
+  color: #fff;
+  background-color: #2E355B;
+}
+
+.trash {
+  background-color: #f55348;
+  padding: 5px;
+  width: 23px;
+  height: 23px;
+  margin-right: 0;
+  margin-top: 1px;
+  color: white;
+}
+
+.trash:hover {
+  background-color: #ee190a;
+  cursor: pointer;
+}

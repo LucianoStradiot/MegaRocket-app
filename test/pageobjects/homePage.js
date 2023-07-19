@@ -7,7 +7,6 @@ class HomePage {
   get loginButton() {
     return $('[data-testid="container-aside-members"] a[href="/auth/login"]');
   }
-
   get signUpButton() {
     return $('[data-testid="container-aside-members"] a[href="/signUp"]');
   }
@@ -26,6 +25,10 @@ class HomePage {
 
   get membershipsButton() {
     return $('[data-testid="container-aside-members"] a[href="/membership"]');
+  }
+
+  get contact() {
+    return $('[data-testid="container-aside-members"] a[href="/contact"]');
   }
 
   get contactUs() {
@@ -157,6 +160,16 @@ class HomePage {
   }
   open() {
     return browser.url('https://joaco-megarocket-app.vercel.app/');
+  }
+
+  get managementAdmin(){
+    return $('a:nth-child(1) li a');
+  }
+  async managementClick(){
+    await this.managementAdmin.click();
+  }
+  async loginClick() {
+    await this.loginButton.click();
   }
 }
 
