@@ -7,7 +7,6 @@ class HomePage {
   get loginButton() {
     return $('[data-testid="container-aside-members"] a[href="/auth/login"]');
   }
-
   get signUpButton() {
     return $('[data-testid="container-aside-members"] a[href="/signUp"]');
   }
@@ -43,15 +42,19 @@ class HomePage {
   get carouselRoot() {
     return $('.carousel-root');
   }
+
   get carouselSlidesTitles() {
     return $$('.slider .slide h2');
   }
+
   get carouselSlidesDesc() {
     return $$('.slider .slide p');
   }
+
   get carouselControlNext() {
     return $('.control-next');
   }
+
   get carouselControlPrev() {
     return $('.control-prev');
   }
@@ -63,18 +66,6 @@ class HomePage {
   get slides() {
     return this.carousel.$$('.slide');
   }
-
-  /* get contactUs() {
-    return $('[data-testid="container-aside-members"] h3');
-  }
-
-  get contactUsEmail() {
-    return $('[data-testid="container-aside-members"] div:nth-child(2) li:nth-child(1)');
-  }
-
-  get contactUsPhone() {
-    return $('[data-testid="container-aside-members"] div:nth-child(2) li:nth-child(2)');
-  } */
 }
 
 module.exports = new HomePage();

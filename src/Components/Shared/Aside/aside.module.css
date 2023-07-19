@@ -3,7 +3,7 @@
   position: fixed;
   top: 70px;
   width: 100%;
-  background-color: #cbebf3e3;
+  background-color: #cbebf377;
 }
 
 .asideMember {
@@ -16,21 +16,25 @@
 
 .rutes {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: space-between;
   list-style-type: none;
   transform-origin: left;
   transition: transform 0.5s ease;
+  padding: 0;
 }
 
 .rutes li a {
   text-decoration: none;
   color: #2e355b;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .rutes li a:hover {
-  border-bottom: 1px solid #2e355b;
+  background-color: #1e2341;
+  color: white;
 }
 
 .brand {
@@ -38,7 +42,6 @@
 }
 
 @media only screen and (min-width: 1025px) {
-
   .loginContainer {
     display: flex;
     flex-direction: column;
@@ -48,8 +51,8 @@
   }
 
   .aside {
-    top: 14%;
-    height: 88vh;
+    top: 10%;
+    height: 90vh;
     width: 200px;
     z-index: 0;
   }
@@ -59,12 +62,12 @@
     flex-direction: column;
     align-items: center;
     position: fixed;
-    top: 14%;
-    height: 88vh;
+    top: 10%;
+    height: 90vh;
     width: 20vh;
     min-width: 200px;
     z-index: 0;
-    background-color: #cbebf3e3;
+    background-color: #cbebf377;
   }
 
   .asideSubContainer {
@@ -131,12 +134,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    height: 400px;
     padding: 0;
     list-style-type: none;
   }
 
   .btn {
-    background-color: #2E355B;
+    background-color: #2e355b;
     margin: 5px 0;
     padding: 7px;
     border-radius: 7px;
@@ -144,6 +148,8 @@
     text-align: center;
     color: #fff;
     text-decoration: none;
+    box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s linear;
   }
 
   .btnHome {
@@ -157,7 +163,7 @@
     align-items: center;
   }
 
-  .containerBtns>a {
+  .containerBtns > a {
     text-decoration: none;
   }
 
@@ -183,29 +189,24 @@
 
   .btnProfile {
     margin-bottom: 20%;
-
   }
 
   .btn2 {
     background-color: #fff;
-    color: #2E355B;
-    border: 2px solid #2E355B;
     font-weight: 600;
+    color: #2e355b;
   }
 
-
-
-  .btn:hover {
+  .btn:hover,
+  .btn2:hover {
     background-color: #1e2341;
+    font-weight: 400;
     cursor: pointer;
+    color: white;
   }
 
   .acording {
     color: #49a37b;
-  }
-
-  .btn2:hover {
-    background-color: #eee;
   }
 
   .rutes li {
@@ -214,40 +215,25 @@
     box-sizing: border-box;
   }
 
-  .rutes>li>a {
+  .rutes > li > a {
     font-size: 1.2rem;
     font-weight: 600;
     text-decoration: none;
     text-transform: capitalize;
     color: #2e355b;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
   }
 
   .rutes li a:hover {
-    border: none;
-  }
-
-  .titleContact {
-    text-align: center;
-    margin: 0;
-  }
-
-  .contact {
-    margin: auto;
-  }
-
-  .contact ul {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    list-style-type: none;
-    padding: 0;
+    background-color: #1e2341;
+    color: white;
   }
 
   .activeRouteMember {
     background-color: #1e2341;
+    border: 2px solid #1e2341;
   }
 
-  .minorDiv p {
-    margin: 10px;
-  }
 }

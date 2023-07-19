@@ -82,7 +82,7 @@ const Login = () => {
         history.push('/admins/activities');
       }
       if (sessionStorage.getItem('role') === 'TRAINER') {
-        history.push('/trainers');
+        history.push('/schedule');
       }
       if (sessionStorage.getItem('role') === 'MEMBER') {
         history.push('/');
@@ -133,7 +133,7 @@ const Login = () => {
           <Button text={'Login'} type={'submit'} testId="confirm-button-login" />
         </div>
       </form>
-      <h2>Register Now!</h2>
+      <h2 className={styles.h2Cont}>Register Now</h2>
       <section className={styles.cardsCont}>
         <Link
           className={`${styles.cardContainer} ${styles.only}`}

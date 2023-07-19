@@ -1,16 +1,25 @@
 .mainContainer {
-  margin-left: 20vh;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 93px;
+  margin-left: 20vh;
   width: 100%;
+}
+
+.secondMainContainer {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .container {
-  background-color: #cbebf3cc;
+  background-color: #cbebf377;
   padding-right: 5px;
   border-radius: 8px;
-  margin-top: 100px;
+  color: #fff;
 }
 
 .screenContainer {
@@ -57,7 +66,8 @@
   font-size: 14px;
   text-decoration: none;
   border-radius: 8px;
-  border: 1px solid #2E355B;
+  border: none;
+  box-shadow: 4px 5px 4px rgb(0, 0, 0, 0.5);
   z-index: 4;
 }
 
@@ -80,7 +90,8 @@
 
 .edit:hover {
   border: 2px solid #2E355B;
-  background-color: rgb(70, 163, 124);
+  background-color: #1e2341;
+  color: #2E355B;
   z-index: 6;
 }
 
@@ -131,6 +142,7 @@
 .th {
   width: 150px;
   height: 88px;
+  text-shadow: 2px 2px 3px rgb(0, 0, 0, 0.5);
 }
 
 .info {
@@ -156,4 +168,34 @@
 
 .classCard:hover .editIcon {
   opacity: 1;
+}
+
+.editIconX {
+  width: 33px;
+  height: 33px;
+  margin-bottom: 8px;
+}
+
+.searchBar {
+  align-self: flex-end;
+  margin-bottom: 20px;
+}
+
+.searchBar input {
+  border: none;
+  border-radius: 8px;
+  width: 195px;
+  padding: 8px;
+  font-size: 16px;
+  background-color: #cbebf377;
+  box-shadow: 4px 5px 4px rgb(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+.searchBar input:focus {
+  outline: none;
+}
+
+.searchBar input::placeholder {
+  color: #fff;
 }

@@ -6,6 +6,8 @@
   cursor: pointer;
   font-size: 15px;
   color: #fff;
+  box-shadow: 4px 5px 4px rgb(0,0,0,0.5);
+  transition: 0.3s ease-out;
 }
 
 .buttonDeleteCancel {
@@ -14,17 +16,6 @@
 
 .buttonDeleteCancel:hover {
   background-color: #ee190a;
-}
-
-.buttonEdit {
-  background-color: #fff;
-  color: #2C882D;
-  border: 1px solid #2C882D;
-}
-
-.buttonEdit:hover {
-  background-color: #2C882D;
-  color: #fff;
 }
 
 .buttonCreateAdd {
@@ -41,6 +32,6 @@
 }
 
 .buttonSubmit:hover {
-  background-color: #23294ce3;
+  background-color: #23294c;
   color: #fff;
 }
