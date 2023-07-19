@@ -309,7 +309,12 @@ const MemberSchedule = () => {
                                               handleDataForCreate(oneClass);
                                             }
                                             {
-                                              subscriptionsLength !== oneClass.slots
+                                              const memberMatch = filteredSubscriptions.filter(
+                                                (subscription) =>
+                                                  data._id === subscription.member._id
+                                              );
+                                              subscriptionsLength !== oneClass.slots ||
+                                              memberMatch.length === 1
                                                 ? openModal(
                                                     findSubToDelete.current
                                                       ? 'Delete'
