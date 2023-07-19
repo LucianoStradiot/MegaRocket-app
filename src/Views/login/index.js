@@ -82,7 +82,7 @@ const Login = () => {
         history.push('/admins/activities');
       }
       if (sessionStorage.getItem('role') === 'TRAINER') {
-        history.push('/trainers');
+        history.push('/schedule');
       }
       if (sessionStorage.getItem('role') === 'MEMBER') {
         history.push('/');

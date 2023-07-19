@@ -180,10 +180,10 @@ const Profile = () => {
                 <label className={styles.label}>City</label>
                 <p>{dataLog?.city}</p>
               </div>
-            </div>
-            <div className={styles.inputContainer}>
-              <label className={styles.label}>Salary</label>
-              <p>{dataLog?.salary}</p>
+              <div className={styles.inputContainer}>
+                <label className={styles.label}>Salary</label>
+                <p>{dataLog?.salary}</p>
+              </div>
             </div>
             <div className={styles.btnContainer}>
               <div className={styles.contButton}>

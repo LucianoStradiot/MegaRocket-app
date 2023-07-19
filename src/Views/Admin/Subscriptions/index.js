@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSubscriptions, deleteSubscription } from 'Redux/Subscriptions/thunks';
+import {
+  getSubscriptions,
+  deleteSubscription,
+  deleteOldSubscription
+} from 'Redux/Subscriptions/thunks';
 import styles from './subscriptions.module.css';
 import Modal from 'Components/Shared/Modal';
 import Spinner from 'Components/Shared/Spinner';
@@ -22,6 +26,7 @@ function Subscriptions() {
 
   useEffect(() => {
     dispatch(getSubscriptions());
+    dispatch(deleteOldSubscription());
   }, []);
 
   const handleDeleteSub = async () => {

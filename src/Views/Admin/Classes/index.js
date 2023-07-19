@@ -154,7 +154,9 @@ function Classes() {
                                                 : window.location.reload()
                                             }`}</div>
                                             <div>{`Trainer: ${
-                                              oneClass && oneClass.trainer
+                                              oneClass &&
+                                              oneClass.trainer &&
+                                              oneClass.trainer.isActive
                                                 ? `${oneClass?.trainer?.firstName}
                                                   ${oneClass?.trainer?.lastName}`
                                                 : window.location.reload()
