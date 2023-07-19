@@ -108,7 +108,11 @@ const MemberSchedule = () => {
         description: description,
         isConfirm: true
       });
-    } else if (sessionStorage.getItem('role') === 'TRAINER') {
+    } else if (
+      sessionStorage.getItem('role') === 'TRAINER' ||
+      sessionStorage.getItem('role') === 'ADMIN' ||
+      sessionStorage.getItem('role') === 'SUPER_ADMIN'
+    ) {
       if (Array.isArray(description)) {
         const memberNames = description.map((member) => `${member.firstName} ${member.lastName}`);
         setModal({
@@ -287,7 +291,6 @@ const MemberSchedule = () => {
                                       className={cardClass}
                                       onClick={() => {
                                         if (sessionStorage.getItem('role') === 'MEMBER') {
-                                          window.location.reload();
                                           if (data.isActive) {
                                             if (subscriptions.length > 0) {
                                               for (const sub of subscriptions) {
@@ -303,6 +306,7 @@ const MemberSchedule = () => {
                                                 }
                                               }
                                             } else {
+                                              window.location.reload();
                                               findSubToDelete.current = null;
                                               handleDataForCreate(oneClass);
                                             }
@@ -333,7 +337,6 @@ const MemberSchedule = () => {
                                             setIsOpen(true);
                                           }
                                         } else if (sessionStorage.getItem('role') === 'TRAINER') {
-                                          window.location.reload();
                                           const filteredMembers = members.filter((member) => {
                                             return subscriptions.some(
                                               (subs) =>
@@ -351,9 +354,16 @@ const MemberSchedule = () => {
                                           sessionStorage.getItem('role') === 'ADMIN' ||
                                           sessionStorage.getItem('role') === 'SUPER_ADMIN'
                                         ) {
+                                          const filteredMembers = members.filter((member) => {
+                                            return subscriptions.some(
+                                              (subs) =>
+                                                subs.classes._id === oneClass._id &&
+                                                subs.member._id === member._id
+                                            );
+                                          });
                                           openModal(
-                                            'Error',
-                                            'Only members can subscribe for a class'
+                                            'These are the registered members',
+                                            filteredMembers
                                           );
                                         } else {
                                           history.push('/auth/login');
