@@ -30,7 +30,12 @@ function Header() {
         <div className={styles.profileContainer}>
           {id && (
             <img
-              src={`${process.env.PUBLIC_URL}/assets/images/ellie.png`}
+              src={
+                sessionStorage.getItem('role') === 'TRAINER' ||
+                sessionStorage.getItem('role') === 'MEMBER'
+                  ? user?.profilePhoto
+                  : `${process.env.PUBLIC_URL}/assets/images/defaultProfile.png`
+              }
               className={styles.profile}
             ></img>
           )}

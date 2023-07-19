@@ -7,6 +7,7 @@ class HomePage {
   get loginButton() {
     return $('[data-testid="container-aside-members"] a[href="/auth/login"]');
   }
+
   get signUpButton() {
     return $('[data-testid="container-aside-members"] a[href="/signUp"]');
   }
@@ -27,144 +28,54 @@ class HomePage {
     return $('[data-testid="container-aside-members"] a[href="/membership"]');
   }
 
-  get contact() {
+  get contactButton() {
     return $('[data-testid="container-aside-members"] a[href="/contact"]');
   }
 
-  get contactUs() {
-    return $('[data-testid="container-aside-members"] h3');
+  get mainSection() {
+    return $('div .indexMember_mainContainer__e4ULX');
   }
 
-  get contactUsEmail() {
-    return $('[data-testid="container-aside-members"] div:nth-child(2) li:nth-child(1)');
+  get mainTitle() {
+    return $('main h1');
   }
 
-  get contactUsPhone() {
-    return $('[data-testid="container-aside-members"] div:nth-child(2) li:nth-child(2)');
+  get carouselRoot() {
+    return $('.carousel-root');
   }
 
-  get contactUsAdress() {
-    return $('[data-testid="container-aside-members"] div:nth-child(2) li:nth-child(3)');
+  get carouselSlidesTitles() {
+    return $$('.slider .slide h2');
   }
 
-  get sectionOneTitle() {
-    return $('[data-testid="home-page"] h1');
+  get carouselSlidesDesc() {
+    return $$('.slider .slide p');
   }
 
-  get sectionOneSubTitle() {
-    return $('[data-testid="home-page"] section:nth-child(1) article p:nth-child(2)');
+  get carouselControlNext() {
+    return $('.control-next');
   }
 
-  get sectionOnePharaf() {
-    return $('[data-testid="home-page"] section:nth-child(1) article p:nth-child(3)');
+  get carouselControlPrev() {
+    return $('.control-prev');
   }
 
-  get sectionOneImage() {
-    return $('[data-testid="home-page"] section:nth-child(1) img');
+  get carousel() {
+    return $('.carousel-root .carousel');
   }
 
-  get sectitonTwoTitle() {
-    return $('[data-testid="home-page"] section:nth-child(2) h2');
+  get slides() {
+    return this.carousel.$$('.slide');
   }
 
-  get shiftReservations() {
-    return $('[data-testid="home-page"] section:nth-child(2) article:nth-child(1) h3');
-  }
-
-  get shiftReservationsDesc() {
-    return $('[data-testid="home-page"] section:nth-child(2) article:nth-child(1) p');
-  }
-
-  get scheduling() {
-    return $('[data-testid="home-page"] section:nth-child(2) article:nth-child(2) h3');
-  }
-
-  get schedulingDesc() {
-    return $('[data-testid="home-page"] section:nth-child(2) article:nth-child(2) p');
-  }
-
-  get membershipManag() {
-    return $('[data-testid="home-page"] section:nth-child(2) article:nth-child(3) h3');
-  }
-
-  get membershipManagDesc() {
-    return $('[data-testid="home-page"] section:nth-child(2) article:nth-child(3) p');
-  }
-
-  get contactSuggestions() {
-    return $('[data-testid="home-page"] section:nth-child(2) article:nth-child(4) h3');
-  }
-
-  get contactSuggestionsDesc() {
-    return $('[data-testid="home-page"] section:nth-child(2) article:nth-child(4) p');
-  }
-
-  get sectionThreeTitle() {
-    return $('[data-testid="home-page"] section:nth-child(3) h2');
-  }
-
-  get aboutFirstImg() {
-    return $('[data-testid="home-page"] section:nth-child(3) article:nth-child(1) img');
-  }
-
-  get aboutFirstDesc() {
-    return $('[data-testid="home-page"] section:nth-child(3) article:nth-child(1) p');
-  }
-
-  get aboutSecondImg() {
-    return $('[data-testid="home-page"] section:nth-child(3) article:nth-child(2) img');
-  }
-
-  get aboutSecondDesc() {
-    return $('[data-testid="home-page"] section:nth-child(3) article:nth-child(2) p');
-  }
-
-  get sectionFourTitle() {
-    return $('[data-testid="home-page"] section:nth-child(4) h2');
-  }
-
-  get listActivities() {
-    return $$('[data-testid="home-page"] section:nth-child(4) li');
-  }
-
-  get sectionFourImg() {
-    return $('[data-testid="home-page"] section:nth-child(4) img');
-  }
-
-  get sectionFiveTitle() {
-    return $('[data-testid="home-page"] section:nth-child(5) h2');
-  }
-
-  get sectionFiveTable() {
-    return $('[data-testid="home-page"] section:nth-child(5) table');
-  }
-
-  get onlyClassesTable() {
-    return $('[data-testid="home-page"] section:nth-child(5) table th:nth-child(2)');
-  }
-
-  get classicTable() {
-    return $('[data-testid="home-page"] section:nth-child(5) table th:nth-child(3)');
-  }
-
-  get blackTable() {
-    return $('[data-testid="home-page"] section:nth-child(5) table th:nth-child(4)');
-  }
-
-  get cancelButtonLogin() {
-    return $('[data-testid="container-login"] button:nth-child(1)');
-  }
-
-  get cancelButonSignUp() {
-    return $('[data-testid="sign-up-form"]  button:nth-child(1)');
-  }
-
-  get managementAdmin(){
+  get managementAdmin() {
     return $('a:nth-child(1) li a');
   }
-  async managementClick(){
+
+  async managementClick() {
     await this.managementAdmin.click();
   }
+
   async loginClick() {
     await this.loginButton.click();
   }

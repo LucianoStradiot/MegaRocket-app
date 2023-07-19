@@ -5,6 +5,7 @@ import Button from 'Components/Shared/Button';
 import { useHistory } from 'react-router-dom';
 import Modal from 'Components/Shared/Modal';
 import { updateMember } from 'Redux/Members/thunks';
+
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
 import DatePicker from 'Components/Shared/DatePicker';
@@ -24,6 +25,7 @@ const FormMembers = () => {
     desc: ''
   });
   const dataLog = useSelector((state) => state.user.user);
+
   const currentDate = new Date();
   const minDate = new Date();
   minDate.setFullYear(currentDate.getFullYear() - 15);
@@ -113,10 +115,6 @@ const FormMembers = () => {
     resolver: joiResolver(schema)
   });
 
-  useEffect(() => {
-    formEdit(dataLog?._id);
-  }, []);
-
   const formEdit = (id) => {
     if (id) {
       setValue('firstName', dataLog?.firstName);
@@ -161,6 +159,10 @@ const FormMembers = () => {
     }
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    formEdit(dataLog?._id);
+  }, []);
 
   return (
     <section className={styles.container}>
@@ -250,7 +252,6 @@ const FormMembers = () => {
             </Select>
           </div>
         </div>
-
         <div className={styles.contButton}>
           <div>
             <Button text="Cancel" type="submit" clickAction={() => history.goBack()} />

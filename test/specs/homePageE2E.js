@@ -1,71 +1,55 @@
 /* eslint-disable no-undef */
 const HomePage = require('../pageobjects/homePage.js');
 const Header = require('../pageobjects/headerTest.js');
+const Login = require('../pageobjects/loginTest.js');
+const SignUp = require('../pageobjects/signUp.js');
 const Footer = require('../pageobjects/footerTest.js');
 
 describe('Check elements in Home Page', () => {
   beforeAll('open browser', () => {
-    browser.setWindowSize(1900, 1100);
     browser.url('https://joaco-megarocket-app.vercel.app/');
+    browser.setWindowSize(1900, 1100);
   });
 
   it('check elements in header', async () => {
     await expect(Header.logo).toBeDisplayed();
-    await expect(Header.logo).toBeClickable();
-    await expect(Header.logo).toHaveAttribute('src', '/assets/images/logo-header.png');
-    await expect(Header.backHomeButton).toBeClickable();
+    await expect(Header.logo).toHaveAttribute('src', '/assets/images/logo-header2.png');
   });
 
   it('check elements and functionalities in sidebar', async () => {
     await expect(HomePage.sidebarHome).toBeDisplayed();
+    const cssProperty = await HomePage.sidebarHome.getCSSProperty('align-items');
+    expect(cssProperty.value).toBe('center');
 
     await expect(HomePage.loginButton).toBeDisplayed();
     await expect(HomePage.loginButton).toBeClickable();
-    await expect(HomePage.loginButton).toHaveAttribute('href', '/auth/login');
     const loginBtn = await HomePage.loginButton.getText();
     expect(loginBtn).toEqual('Login');
 
     await expect(HomePage.signUpButton).toBeDisplayed();
     await expect(HomePage.signUpButton).toBeClickable();
-    await expect(HomePage.signUpButton).toHaveAttribute('href', '/signUp');
     const signUpBtn = await HomePage.signUpButton.getText();
     expect(signUpBtn).toEqual('SignUp');
 
     await expect(HomePage.activitiesButton).toBeDisplayed();
     await expect(HomePage.activitiesButton).toBeClickable();
-    await expect(HomePage.activitiesButton).toHaveAttribute('href', '/activities');
     const actBtn = await HomePage.activitiesButton.getText();
     expect(actBtn).toEqual('Activities');
 
     await expect(HomePage.scheduleButton).toBeDisplayed();
     await expect(HomePage.scheduleButton).toBeClickable();
-    await expect(HomePage.scheduleButton).toHaveAttribute('href', '/schedule');
     const schBtn = await HomePage.scheduleButton.getText();
     expect(schBtn).toEqual('Schedule');
 
     await expect(HomePage.membershipsButton).toBeDisplayed();
     await expect(HomePage.membershipsButton).toBeClickable();
-    await expect(HomePage.membershipsButton).toHaveAttribute('href', '/membership');
     const membBtn = await HomePage.membershipsButton.getText();
     expect(membBtn).toEqual('Memberships');
-  });
 
-  it('Check text information in sidebar', async () => {
-    await expect(HomePage.contactUs).toBeDisplayed();
-    const contactText = await HomePage.contactUs.getText();
-    expect(contactText).toEqual('Contact us');
-
-    await expect(HomePage.contactUsEmail).toBeDisplayed();
-    const infoEmail = await HomePage.contactUsEmail.getText();
-    expect(infoEmail).toEqual('info@megarocket.com');
-
-    await expect(HomePage.contactUsPhone).toBeDisplayed();
-    const infoPhone = await HomePage.contactUsPhone.getText();
-    expect(infoPhone).toEqual('(000)0000000');
-
-    await expect(HomePage.contactUsAdress).toBeDisplayed();
-    const infoAdress = await HomePage.contactUsAdress.getText();
-    expect(infoAdress).toEqual('1234 somewhere road');
+    await expect(HomePage.contactButton).toBeDisplayed();
+    await expect(HomePage.contactButton).toBeClickable();
+    const contactBtn = await HomePage.contactButton.getText();
+    expect(contactBtn).toEqual('Contact');
   });
 
   it('Check navigation from Home page to Login', async () => {
@@ -75,7 +59,7 @@ describe('Check elements in Home Page', () => {
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/auth/login');
 
-    await HomePage.cancelButtonLogin.click();
+    await Login.cancelButton.click();
   });
 
   it('Check navigation from Home page to Sign Up', async () => {
@@ -84,7 +68,7 @@ describe('Check elements in Home Page', () => {
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/signUp');
 
-    await HomePage.cancelButonSignUp.click();
+    await SignUp.cancelBtn.click();
   });
 
   it('Check navigation from Home page to activities', async () => {
@@ -92,8 +76,6 @@ describe('Check elements in Home Page', () => {
 
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/activities');
-
-    await HomePage.homeButton.click();
   });
 
   it('Check navigation from Home page to schedule', async () => {
@@ -101,8 +83,6 @@ describe('Check elements in Home Page', () => {
 
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/schedule');
-
-    await HomePage.homeButton.click();
   });
 
   it('Check navigation from Home page to memberships', async () => {
@@ -110,121 +90,84 @@ describe('Check elements in Home Page', () => {
 
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/membership');
+  });
+
+  it('Check navigation from Home page to contact page', async () => {
+    await HomePage.contactButton.click();
+
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/contact');
 
     await HomePage.homeButton.click();
   });
 
-  it('Check elements in first section', async () => {
-    await expect(HomePage.sectionOneTitle).toBeDisplayed();
-    await expect(HomePage.sectionOneTitle).toHaveTextContaining('MEGA ROCKET WEB');
-
-    await expect(HomePage.sectionOneSubTitle).toBeDisplayed();
-    await expect(HomePage.sectionOneSubTitle).toHaveTextContaining('WELCOME');
-
-    await expect(HomePage.sectionOnePharaf).toBeDisplayed();
-    await expect(HomePage.sectionOneImage).toBeDisplayed();
-    await expect(HomePage.sectionOneImage).toHaveAttribute('src', '/assets/images/gym-home.png');
+  it('Verifies carousel slides are displayed', async () => {
+    const slidesLength = await HomePage.slides.map((element) => element);
+    expect(slidesLength.length).toEqual(5);
   });
 
-  it('Check first title and description in second section', async () => {
-    await HomePage.sectitonTwoTitle.scrollIntoView();
-    await expect(HomePage.sectitonTwoTitle).toBeDisplayed();
-    await expect(HomePage.sectitonTwoTitle).toHaveTextContaining('Features');
-
-    await expect(HomePage.shiftReservations).toBeDisplayed();
-    await expect(HomePage.shiftReservations).toHaveText('Shift Reservations');
-
-    await expect(HomePage.shiftReservationsDesc).toBeDisplayed();
+  it('Verifies if carousel is displayed and elements', async () => {
+    await expect(HomePage.carouselRoot).toBeDisplayed();
+    await expect(HomePage.carouselSlidesTitles).toBeElementsArrayOfSize({ gte: 3 });
   });
 
-  it('Check second title and description in second section', async () => {
-    await expect(HomePage.scheduling).toBeDisplayed();
-    await expect(HomePage.scheduling).toHaveTextContaining('Scheduling y Opening Hours');
-    await expect(HomePage.schedulingDesc).toBeDisplayed();
-  });
+  it('Verifies carousel navigation buttons and texts', async () => {
+    await HomePage.carouselRoot.scrollIntoView();
+    await HomePage.carouselSlidesTitles[0].waitForDisplayed();
+    browser.pause(5000);
 
-  it('Check third title and description in second section', async () => {
-    await expect(HomePage.membershipManag).toBeDisplayed();
-    await expect(HomePage.membershipManag).toHaveTextContaining('Membership Management');
-    await expect(HomePage.membershipManagDesc).toBeDisplayed();
-  });
+    await expect(HomePage.carouselSlidesTitles[0]).toBeDisplayed();
+    await expect(HomePage.carouselSlidesDesc[0]).toBeDisplayed();
+    await expect(HomePage.carouselSlidesTitles[0]).toHaveTextContaining('Join us');
+    await expect(HomePage.carouselSlidesDesc[0]).toHaveTextContaining(
+      'Join our gym, unleash your potential! Get expert guidance, state-of-the-art facilities, and a supportive community. Take the first step towards a healthier you. Join now!'
+    );
+    await HomePage.carouselControlNext.click();
 
-  it('Check fourth title and description ind second section', async () => {
-    await expect(HomePage.contactSuggestions).toBeDisplayed();
-    await expect(HomePage.contactSuggestions).toHaveTextContaining('Contact Form y Suggestions');
-    await expect(HomePage.contactSuggestionsDesc).toBeDisplayed();
-  });
+    await HomePage.carouselSlidesTitles[1].waitForDisplayed();
+    browser.pause(5000);
 
-  it('Check title section three', async () => {
-    await HomePage.sectionThreeTitle.scrollIntoView();
-    await expect(HomePage.sectionThreeTitle).toBeDisplayed();
-    await expect(HomePage.sectionThreeTitle).toHaveTextContaining('About Mega Rocket');
-  });
-
-  it('Check first image and description in section three', async () => {
-    await expect(HomePage.aboutFirstImg).toBeDisplayed();
-    await expect(HomePage.aboutFirstImg).toHaveAttribute('src', '/assets/images/gym-about.png');
-    await expect(HomePage.aboutFirstDesc).toBeDisplayed();
-  });
-
-  it('Check second image and description in section three', async () => {
-    await HomePage.aboutSecondImg.scrollIntoView();
-    await expect(HomePage.aboutSecondImg).toBeDisplayed();
-    await expect(HomePage.aboutSecondImg).toHaveAttribute('src', '/assets/images/gym-about2.png');
-    await expect(HomePage.aboutSecondDesc).toBeDisplayed();
-  });
-
-  it('Check elements in section four', async () => {
-    await HomePage.sectionFourTitle.scrollIntoView();
-    await expect(HomePage.sectionFourTitle).toBeDisplayed();
-    await expect(HomePage.sectionFourTitle).toHaveTextContaining('Gym activities');
-
-    await expect(HomePage.sectionFourImg).toBeDisplayed();
-    await expect(HomePage.sectionFourImg).toHaveAttribute(
-      'src',
-      '/assets/images/gym-activities.png'
+    await expect(HomePage.carouselSlidesTitles[1]).toBeDisplayed();
+    await expect(HomePage.carouselSlidesDesc[1]).toBeDisplayed();
+    await expect(HomePage.carouselSlidesTitles[1]).toHaveTextContaining('Welcome');
+    await expect(HomePage.carouselSlidesDesc[1]).toHaveTextContaining(
+      'Mega Rocket web is a monthly management system for members and trainers so that they can dynamically sign up for their activities in the gym'
     );
 
-    await expect(HomePage.listActivities).toBeDisplayed();
-    await expect(HomePage.listActivities[0]).toHaveTextContaining('Crossfit');
-    await expect(HomePage.listActivities[1]).toHaveTextContaining('Spinning');
-    await expect(HomePage.listActivities[2]).toHaveTextContaining('Functional');
-    await expect(HomePage.listActivities[3]).toHaveTextContaining('Fitness');
-    await expect(HomePage.listActivities[4]).toHaveTextContaining('Boxing');
-  });
+    await HomePage.carouselControlNext.click();
 
-  it('Check elements in section five', async () => {
-    await HomePage.sectionFiveTitle.scrollIntoView();
-    await expect(HomePage.sectionFiveTitle).toBeDisplayed();
-    await expect(HomePage.sectionFiveTitle).toHaveTextContaining('Memberships');
-    await expect(HomePage.sectionFiveTable).toBeDisplayed();
-    await expect(HomePage.onlyClassesTable).toHaveTextContaining('Only classes');
-    await expect(HomePage.classicTable).toHaveTextContaining('Classic');
-    await expect(HomePage.blackTable).toHaveTextContaining('Black');
+    await HomePage.carouselSlidesTitles[2].waitForDisplayed();
+
+    await expect(HomePage.carouselSlidesTitles[2]).toBeDisplayed();
+    await expect(HomePage.carouselSlidesDesc[2]).toBeDisplayed();
+    await expect(HomePage.carouselSlidesTitles[2]).toHaveTextContaining('About');
+    await expect(HomePage.carouselSlidesDesc[2]).toHaveTextContaining(
+      'Since 1965, no gym has been responsible for more life-changing transformations and fitness achievements than Mega Rocket.'
+    );
   });
 
   it('Check elements and functionalities in footer', async () => {
-    await Footer.logo.scrollIntoView();
+    await Footer.facebookIcon.scrollIntoView();
     await expect(Footer.logo).toBeDisplayed();
-    await expect(Footer.logo).toHaveAttribute('src', '/assets/images/logo-footer.png');
+    await expect(Footer.logo).toHaveAttribute('src', '/assets/images/logo-footer2.png');
 
     await expect(Footer.facebookIcon).toBeDisplayed();
-    await expect(Footer.facebookIcon).toBeClickable();
+    await expect(Footer.facebookLink).toBeClickable();
 
     await expect(Footer.instagramIcon).toBeDisplayed();
-    await expect(Footer.instagramIcon).toBeClickable();
+    await expect(Footer.instagramLink).toBeClickable();
 
     await expect(Footer.twitterIcon).toBeDisplayed();
-    await expect(Footer.twitterIcon).toBeClickable();
+    await expect(Footer.twitterLink).toBeClickable();
 
-    await expect(Footer.copyRigth).toBeDisplayed();
-    await expect(Footer.copyRigth).toHaveTextContaining(
+    await expect(Footer.copyRight).toBeDisplayed();
+    await expect(Footer.copyRight).toHaveTextContaining(
       'Copyright © 2023 MegaRocket SA. All rights reserved.'
     );
   });
 
   it('Check navigation in social media icon "Faceebok"', async () => {
-    await Footer.facebookIcon.click();
+    await Footer.facebookLink.click();
     const windowHandles = await browser.getWindowHandles();
 
     const faceebok = windowHandles[windowHandles.length - 1];
@@ -239,7 +182,7 @@ describe('Check elements in Home Page', () => {
   });
 
   it('Check navigation in social media icon "Instagram"', async () => {
-    await Footer.instagramIcon.click();
+    await Footer.instagramLink.click();
     const windowHandles = await browser.getWindowHandles();
 
     const instagram = windowHandles[windowHandles.length - 1];
@@ -253,14 +196,16 @@ describe('Check elements in Home Page', () => {
   });
 
   it('Check navigation in social media icons "Twitter"', async () => {
-    await Footer.twitterIcon.click();
+    await Footer.twitterLink.click();
     const windowHandles = await browser.getWindowHandles();
 
     const twitter = windowHandles[windowHandles.length - 1];
     await browser.switchToWindow(twitter);
 
     const currentUrl = await browser.getUrl();
-    expect(currentUrl).toEqual('https://twitter.com/radiumrocket');
+    expect(currentUrl).toEqual(
+      'https://twitter.com/i/flow/login?redirect_after_login=%2Fradiumrocket'
+    );
 
     await browser.closeWindow();
 

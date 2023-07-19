@@ -7,6 +7,7 @@ class footerTest {
   get facebookIcon() {
     return $('[data-testid="container-footer"] ul li:nth-child(1) img');
   }
+
   get facebookLink() {
     return $('[data-testid="container-footer"] ul li:nth-child(1) a');
   }
@@ -14,6 +15,7 @@ class footerTest {
   get instagramIcon() {
     return $('[data-testid="container-footer"] ul li:nth-child(2) img');
   }
+
   get instagramLink() {
     return $('[data-testid="container-footer"] ul li:nth-child(2) a');
   }
@@ -21,6 +23,7 @@ class footerTest {
   get twitterIcon() {
     return $('[data-testid="container-footer"] ul li:nth-child(3) img');
   }
+
   get twitterLink() {
     return $('[data-testid="container-footer"] ul li:nth-child(3) a');
   }
@@ -28,7 +31,8 @@ class footerTest {
   get copyRight() {
     return $('[data-testid="container-footer"] p');
   }
-  get footer(){
+
+  get footer() {
     return $('[data-testid="container-footer"]');
   }
 }
