@@ -182,7 +182,12 @@ const FormTrainers = () => {
   }, [dispatch]);
 
   const handleCreationTrainer = async (formValue) => {
-    const response = await dispatch(createTrainer(formValue));
+    const payload = {
+      ...formValue,
+      profilePhoto: `${process.env.PUBLIC_URL}/assets/images/defaultProfile.png`
+    };
+    const response = await dispatch(createTrainer(payload));
+
     if (!response.error) {
       setResponseModal({
         title: 'Success!',

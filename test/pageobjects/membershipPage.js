@@ -1,15 +1,12 @@
 class MembershipPage {
   get classicMember() {
-    return $('[data-testid="memberships-container-page"] a:nth-child(2)');
+    return $('[data-testid="memberships-container-page"] div.memberships_cardContainer__U3Pmt.memberships_classic__3H90B');
   }
-  get modal() {
-    return $('[data-testid="modal-success"]');
+  get blackMember() {
+    return $('[data-testid="memberships-container-page"] div.memberships_cardContainer__U3Pmt.memberships_black__ZwAe4');
   }
-  get acceptBtn() {
-    return $('[data-testid="modal-success"] > button');
-  }
-  open() {
-    return browser.url('https://joaco-megarocket-app.vercel.app/membership');
+  get onlyClassesMember() {
+    return $('[data-testid="memberships-container-page"] div.memberships_cardContainer__U3Pmt.memberships_only__y05wD');
   }
 }
 module.exports = new MembershipPage();

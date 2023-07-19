@@ -66,12 +66,6 @@ class SignUpPage {
   get errorPassword() {
     return $('[data-testid="input-password-login"]:nth-child(2)+ p');
   }
-  get modal() {
-    return $('[data-testid="modal-success"]');
-  }
-  get acceptBtn() {
-    return $('[data-testid="modal-success"] > button');
-  }
   async setFirstName(firstName) {
     await this.inputFirstName.setValue(firstName);
   }

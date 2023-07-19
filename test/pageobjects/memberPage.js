@@ -14,12 +14,6 @@ class MemberPage {
   get logOut() {
     return $('a.aside_btn__HJ6H6.aside_btn2__8PWrF');
   }
-  get modal() {
-    return $('[data-testid="modal-confirm"]');
-  }
-  get confirmBtn() {
-    return $('[data-testid="modal-confirm"] > button');
-  }
   get profileBtn() {
     return $('[data-testid="container-aside-members"] a[href="/profile"]');
   }
