@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable prettier/prettier */
 const HomePage = require ('../pageobjects/homePage.js');
 const Login = require ('../pageobjects/loginTest.js');
 const ForgotPassword = require ('../pageobjects/forgotPassword.js');
@@ -32,7 +34,7 @@ describe('Recover Password flow', () => {
   });
   it('Should recover the password with a valid email', async () => {
     await ForgotPassword.openPage();
-    await ForgotPassword.setEmail('katt@gmail.com');
+    await ForgotPassword.setEmail('kat@gmail.com');
     await ForgotPassword.recoverPasswdBtn.click();
     await expect(Modals.modalSuccessTitle).toHaveTextContaining('Recovering password...');
     await Modals.acceptButtonModal.click();

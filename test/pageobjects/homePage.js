@@ -67,6 +67,18 @@ class HomePage {
   get slides() {
     return this.carousel.$$('.slide');
   }
+
+  get managementAdmin() {
+    return $('a:nth-child(1) li a');
+  }
+
+  async managementClick() {
+    await this.managementAdmin.click();
+  }
+
+  async loginClick() {
+    await this.loginButton.click();
+  }
 }
 
 module.exports = new HomePage();
