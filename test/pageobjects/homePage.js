@@ -7,6 +7,7 @@ class HomePage {
   get loginButton() {
     return $('[data-testid="container-aside-members"] a[href="/auth/login"]');
   }
+
   get signUpButton() {
     return $('[data-testid="container-aside-members"] a[href="/signUp"]');
   }

@@ -16,7 +16,9 @@ describe('Check elements in Home Page', () => {
     await HomePage.loginButton.click();
     await Login.loginButton.waitForDisplayed();
     await Login.logIn('superadmin@gmail.com', 'SuperAdmin1');
-    await Login.acceptButton.click();
+
+    await expect(Modals.modalSuccess).toBeDisplayed();
+    await Modals.acceptButtonModal.click();
   });
 
   it('Check if the token is generated successfully', async() => {

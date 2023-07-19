@@ -8,12 +8,24 @@ class footerTest {
     return $('[data-testid="container-footer"] ul li:nth-child(1) img');
   }
 
+  get facebookLink() {
+    return $('[data-testid="container-footer"] ul li:nth-child(1) a');
+  }
+
   get instagramIcon() {
     return $('[data-testid="container-footer"] ul li:nth-child(2) img');
   }
 
+  get instagramLink() {
+    return $('[data-testid="container-footer"] ul li:nth-child(2) a');
+  }
+
   get twitterIcon() {
     return $('[data-testid="container-footer"] ul li:nth-child(3) img');
+  }
+
+  get twitterLink() {
+    return $('[data-testid="container-footer"] ul li:nth-child(3) a');
   }
 
   get copyRight() {

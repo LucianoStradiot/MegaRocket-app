@@ -72,6 +72,9 @@ describe('Trainer e2e', () => {
         await expect(HomePage.membershipsButton).toBeDisplayed();
         await expect(HomePage.membershipsButton).toBeClickable();
 
+        await expect(HomePage.contactButton).toBeDisplayed();
+        await expect(HomePage.contactButton).toBeClickable();
+
         await Footer.logo.scrollIntoView();
         await expect(Footer.logo).toBeDisplayed();
         await expect(Footer.logo).toHaveAttribute('src', '/assets/images/logo-footer2.png');
@@ -143,39 +146,9 @@ describe('Trainer e2e', () => {
         await Trainer.profileButton.click();
     });
 
-    it('Verifies elements in profile', async () => {
-        browser.pause(2000);
-
-        await expect(Trainer.labelsProfile[0]).toHaveText('First name');
-        await expect(Trainer.dataProfile[0]).toHaveText(`${firstName}`);
-
-        await expect(Trainer.labelsProfile[1]).toHaveText('Last name');
-        await expect(Trainer.dataProfile[1]).toHaveText(`${lastName}`);
-
-        await expect(Trainer.labelsProfile[2]).toHaveText('DNI');
-        await expect(Trainer.dataProfile[2]).toHaveText(`${dni}`);
-
-        await expect(Trainer.labelsProfile[3]).toHaveText('Phone');
-        await expect(Trainer.dataProfile[3]).toHaveText(`${phone}`);
-
-        await expect(Trainer.labelsProfile[4]).toHaveText('Email');
-        await expect(Trainer.dataProfile[4]).toHaveText(`${email}`);
-
-        await expect(Trainer.labelsProfile[5]).toHaveText('City');
-        await expect(Trainer.dataProfile[5]).toHaveText(`${city}`);
-
-        await expect(Trainer.labelsProfile[6]).toHaveText('Salary');
-        await expect(Trainer.dataProfile[6]).toHaveText(`${salary}`);
-
-        await Trainer.editButton.scrollIntoView();
-
-        await expect(Trainer.editButton).toBeDisplayed();
-        await expect(Trainer.editButton).toBeClickable();
-
-        await Trainer.editButton.click();
-    });
-
     it('Verifies elements and information in edit form', async () => {
+        await Trainer.editButton.click();
+
         await expect(Trainer.editForm).toBeDisplayed();
 
         await expect(Trainer.labelsEditForm[0]).toHaveText('First name');

@@ -7,8 +7,8 @@ const Footer = require('../pageobjects/footerTest.js');
 
 describe('Check elements in Home Page', () => {
   beforeAll('open browser', () => {
-    browser.setWindowSize(1900, 1100);
     browser.url('https://joaco-megarocket-app.vercel.app/');
+    browser.setWindowSize(1900, 1100);
   });
 
   it('check elements in header', async () => {
@@ -153,7 +153,7 @@ describe('Check elements in Home Page', () => {
   });
 
   it('Check elements and functionalities in footer', async () => {
-    await Footer.logo.scrollIntoView();
+    await Footer.facebookIcon.scrollIntoView();
     await expect(Footer.logo).toBeDisplayed();
     await expect(Footer.logo).toHaveAttribute('src', '/assets/images/logo-footer2.png');
 
@@ -167,13 +167,13 @@ describe('Check elements in Home Page', () => {
     await expect(Footer.twitterLink).toBeClickable();
 
     await expect(Footer.copyRigth).toBeDisplayed();
-    await expect(Footer.copyRigth).toHaveTextContaining(
+    await expect(Footer.copyRight).toHaveTextContaining(
       'Copyright © 2023 MegaRocket SA. All rights reserved.'
     );
   });
 
   it('Check navigation in social media icon "Faceebok"', async () => {
-    await Footer.facebookIcon.click();
+    await Footer.facebookLink.click();
     const windowHandles = await browser.getWindowHandles();
 
     const faceebok = windowHandles[windowHandles.length - 1];
@@ -188,7 +188,7 @@ describe('Check elements in Home Page', () => {
   });
 
   it('Check navigation in social media icon "Instagram"', async () => {
-    await Footer.instagramIcon.click();
+    await Footer.instagramLink.click();
     const windowHandles = await browser.getWindowHandles();
 
     const instagram = windowHandles[windowHandles.length - 1];
@@ -202,7 +202,7 @@ describe('Check elements in Home Page', () => {
   });
 
   it('Check navigation in social media icons "Twitter"', async () => {
-    await Footer.twitterIcon.click();
+    await Footer.twiterLink.click();
     const windowHandles = await browser.getWindowHandles();
 
     const twitter = windowHandles[windowHandles.length - 1];

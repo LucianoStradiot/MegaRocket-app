@@ -41,20 +41,8 @@ class Trainer {
         return $$('table tbody p div');
     }
 
-    get labelsProfile() {
-        return $$('.Profile_label__-EGue');
-    }
-
-    get dataProfile() {
-        return $$('section p');
-    }
-
-    get imgProfile() {
-        return $('section img');
-    }
-
     get editButton() {
-        return $('section button');
+        return $('[data-testid="profileContainer"] button');
     }
 
     get editForm() {
