@@ -110,8 +110,7 @@ const MemberSchedule = () => {
       });
     } else if (
       sessionStorage.getItem('role') === 'TRAINER' ||
-      sessionStorage.getItem('role') === 'ADMIN' ||
-      sessionStorage.getItem('role') === 'SUPER_ADMIN'
+      sessionStorage.getItem('role') === 'ADMIN'
     ) {
       if (Array.isArray(description)) {
         const memberNames = description.map((member) => `${member.firstName} ${member.lastName}`);
@@ -350,10 +349,7 @@ const MemberSchedule = () => {
                                                 filteredMembers
                                               )
                                             : openModal('Error', 'This is not your class');
-                                        } else if (
-                                          sessionStorage.getItem('role') === 'ADMIN' ||
-                                          sessionStorage.getItem('role') === 'SUPER_ADMIN'
-                                        ) {
+                                        } else if (sessionStorage.getItem('role') === 'ADMIN') {
                                           const filteredMembers = members.filter((member) => {
                                             return subscriptions.some(
                                               (subs) =>
@@ -365,6 +361,10 @@ const MemberSchedule = () => {
                                             'These are the registered members',
                                             filteredMembers
                                           );
+                                        } else if (
+                                          sessionStorage.getItem('role') === 'SUPER_ADMIN'
+                                        ) {
+                                          openModal('Error', 'You are not able to see this');
                                         } else {
                                           history.push('/auth/login');
                                         }
