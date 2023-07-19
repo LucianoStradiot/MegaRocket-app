@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { getAuth } from 'Redux/Auth/thunks';
 import styles from './index.module.css';
 import Spinner from '../../Components/Shared/Spinner';
@@ -14,16 +14,11 @@ const Profile = () => {
   const loading = useSelector((state) => state.user.isLoading);
   const dataLog = useSelector((state) => state.user.user);
   const history = useHistory();
-  const [profilePhotoURL, setProfilePhotoURL] = useState('');
+  const profileP = useSelector((state) => state.photo.profilePhoto);
 
   useEffect(() => {
     dispatch(getAuth(idLogged));
   }, []);
-
-  useEffect(() => {
-    console.log(setProfilePhotoURL(dataLog?.profilePhotoURL));
-    setProfilePhotoURL(dataLog?.profilePhotoURL);
-  }, [dataLog?.profilePhotoURL]);
 
   if (sessionStorage.getItem('role') === 'MEMBER') {
     return (
@@ -32,7 +27,7 @@ const Profile = () => {
         <section className={styles.container}>
           {loading && <Spinner />}
           <div className={styles.content}>
-            <img src={profilePhotoURL} className={styles.profilePhoto} />
+            <img src={profileP} className={styles.profilePhoto} />
             <div className={styles.subContainer}>
               <div className={styles.inputContainer} data-testid="member-first-name">
                 <label className={styles.label}>First name</label>

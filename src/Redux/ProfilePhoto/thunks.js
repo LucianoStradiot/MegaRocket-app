@@ -1,26 +1,28 @@
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import {
   updateProfilePhotoRequest,
   updateProfilePhotoSuccess,
   updateProfilePhotoFailure
 } from './actions';
-
-import { storage } from 'helper/firebase';
+import { firebaseApp } from 'helper/firebase';
 
 export const updateProfilePhoto = (selectedFile) => {
   return async (dispatch) => {
+    const storage = getStorage(firebaseApp);
+
     dispatch(updateProfilePhotoRequest());
-
     try {
-      console.log('download', uploadTaskSnapshot);
-      const uploadTaskSnapshot = await storage
-        .ref(`profilePhotos/${selectedFile.name}`)
-        .put(selectedFile);
-      // Obtener la URL de descarga de la imagen subida
-      const downloadURL = await uploadTaskSnapshot.ref.getDownloadURL();
+      const storageRef = ref(storage, `profilePhotos/${selectedFile.name}`);
 
-      dispatch(updateProfilePhotoSuccess(downloadURL));
+      const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+
+      const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+      console.log('holanda', downloadURL);
+      await dispatch(updateProfilePhotoSuccess(downloadURL));
+      return downloadURL;
     } catch (error) {
       dispatch(updateProfilePhotoFailure(error));
+      return false;
     }
   };
 };

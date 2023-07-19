@@ -7,6 +7,7 @@ function Header() {
   const role = sessionStorage.getItem('role');
   const id = sessionStorage.getItem('firebaseUid');
   const user = useSelector((state) => state.user.user);
+  const photoP = useSelector((state) => state.photo.profilePhoto);
 
   const updateName = () => {
     if (user) {
@@ -28,12 +29,7 @@ function Header() {
     <header>
       <div className={styles.container} data-testid="container-header">
         <div className={styles.profileContainer}>
-          {id && (
-            <img
-              src={`${process.env.PUBLIC_URL}/assets/images/ellie.png`}
-              className={styles.profile}
-            ></img>
-          )}
+          {id && <img src={photoP} className={styles.profile}></img>}
           <p className={styles.brand}>{name}</p>
         </div>
         <div>
