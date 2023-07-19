@@ -28,6 +28,10 @@ class HomePage {
     return $('[data-testid="container-aside-members"] a[href="/membership"]');
   }
 
+  get contactButton() {
+    return $('[data-testid="container-aside-members"] a[href="/contact"]');
+  }
+
   get mainSection() {
     return $('div .indexMember_mainContainer__e4ULX');
   }

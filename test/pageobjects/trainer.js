@@ -40,6 +40,56 @@ class Trainer {
     get descriptionsCards() {
         return $$('table tbody p div');
     }
+
+    get labelsProfile() {
+        return $$('.Profile_label__-EGue');
+    }
+
+    get dataProfile() {
+        return $$('section p');
+    }
+
+    get imgProfile() {
+        return $('section img');
+    }
+
+    get editButton() {
+        return $('section button');
+    }
+
+    get editForm() {
+        return $('section form');
+    }
+
+    get labelsEditForm() {
+        return $$('section form label');
+    }
+
+    get inpustEditForm() {
+        return $$('section form input');
+    }
+
+    get errorMsgEditForm() {
+        return $$('section form p');
+    }
+
+    get cancelButton() {
+        return $('section form button:nth-child(1)');
+    }
+
+    get saveButton() {
+        return $('section form button:nth-child(2)');
+    }
+
+    async CompleteFormEdit (Fname, Lname, DNI, Phone, City) {
+        await this.inpustEditForm[0].setValue(Fname);
+        await this.inpustEditForm[1].setValue(Lname);
+        await this.inpustEditForm[2].setValue(DNI);
+        await this.inpustEditForm[3].setValue(Phone);
+        await this.inpustEditForm[4].setValue(City);
+
+        await this.saveButton.click();
+    }
 }
 
 module.exports = new Trainer();

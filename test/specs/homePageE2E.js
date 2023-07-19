@@ -45,6 +45,11 @@ describe('Check elements in Home Page', () => {
     await expect(HomePage.membershipsButton).toBeClickable();
     const membBtn = await HomePage.membershipsButton.getText();
     expect(membBtn).toEqual('Memberships');
+
+    await expect(HomePage.contactButton).toBeDisplayed();
+    await expect(HomePage.contactButton).toBeClickable();
+    const contactBtn = await HomePage.contactButton.getText();
+    expect(contactBtn).toEqual('Contact');
   });
 
   it('Check navigation from Home page to Login', async () => {
@@ -89,6 +94,15 @@ describe('Check elements in Home Page', () => {
 
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/membership');
+
+    await HomePage.homeButton.click();
+  });
+
+  it('Check navigation from Home page to contact page', async () => {
+    await HomePage.contactButton.click();
+
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/contact');
 
     await HomePage.homeButton.click();
   });

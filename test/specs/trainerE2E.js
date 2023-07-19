@@ -7,17 +7,27 @@ const Trainer = require('../pageobjects/trainer.js');
 const Modals = require('../pageobjects/modals.js');
 const Footer = require('../pageobjects/footerTest.js');
 
-describe('Check elements in Home Page', () => {
+const firstName = 'Lautaro';
+const lastName = 'Vercell';
+const dni = '38790999';
+const phone = '1128779098';
+const email = 'trainertest@gmail.com';
+const city = 'Rosario';
+const salary = '333';
+
+const lastNameU = 'Vercellini';
+const dniU = '38999000';
+const phoneU = '1129009987';
+const cityU = 'Santa Fe';
+
+describe('Trainer e2e', () => {
     beforeAll('open browser', () => {
-        browser.url('https://joaco-megarocket-app.vercel.app/');
-        browser.setWindowSize(1909, 1027);
+        browser.url('https://joaco-megarocket-app.vercel.app/auth/login');
+        browser.setWindowSize(2100, 1200);
     });
 
     it('Trainer Login', async () => {
-        await HomePage.loginButton.click();
-        browser.pause(100000);
-        await Login.logIn('trainer@gmail.com', 'Trainer123');
-
+        await Login.logIn('trainertest@gmail.com', 'Test2023');
         await Modals.acceptButtonModal.click();
     });
 
@@ -41,7 +51,7 @@ describe('Check elements in Home Page', () => {
 
     it('Verifies elements in header, sidebar and footer', async () => {
         await expect(Header.profileImage).toBeDisplayed();
-        await expect(Header.title).toHaveTextContaining('trainer trainer');
+        await expect(Header.title).toHaveTextContaining(`${firstName} ${lastName}`);
         await expect(Header.logo).toBeDisplayed();
 
         await expect(Trainer.profileButton).toBeDisplayed();
@@ -82,7 +92,7 @@ describe('Check elements in Home Page', () => {
         await expect(Trainer.filterTable).toBeClickable();
         await expect(Trainer.filterTable).toHaveAttribute('placeholder', 'Search by activity or trainer');
 
-        await expect(Trainer.helperTable[0]).toHaveTextContaining('Available');
+        await expect(Trainer.helperTable[0]).toHaveTextContaining('Not assigned');
         await expect(Trainer.helperTable[1]).toHaveTextContaining('Your classes');
 
         await expect(Trainer.headersTable[1]).toHaveTextContaining('Monday');
@@ -110,20 +120,135 @@ describe('Check elements in Home Page', () => {
         await expect(Trainer.hoursTable[12]).toHaveTextContaining('21:00');
     });
 
-    it('Verifies functionalities on table', async () => {
+    it('Verifies functionalities on card class of test trainer', async () => {
+        await Trainer.hoursTable[0].scrollIntoView();
+        await Trainer.filterTable.setValue('lau');
+
         await expect(Trainer.cardsClass).toBeDisplayed();
 
         await expect(Trainer.buttonsCards).toBeClickable();
         await expect(Trainer.descriptionsCards).toBeDisplayed();
 
-        await expect(Trainer.descriptionsCards[0]).toHaveTextContaining('Activity: spinning');
-        await expect(Trainer.descriptionsCards[1]).toHaveTextContaining('Trainer: trainer trainer');
+        await expect(Trainer.descriptionsCards[1]).toHaveTextContaining(`Trainer: ${firstName} ${lastName}`);
 
         await Trainer.buttonsCards[0].click();
 
-        await Modals.modalSuccess.toBeDisplayed();
-        await Modals.modalSuccessTitle.toBeDisplayed();
-        await Modals.modalSuccessTitle.toHaveTextContaining('These are the registered members');
+        await expect(Modals.modalSuccess).toBeDisplayed();
+        await expect(Modals.modalSuccessTitle).toBeDisplayed();
+        await expect(Modals.modalSuccessTitle).toHaveTextContaining('These are the registered members');
+        if(await Modals.modalSuccessDescp) {
+            await expect(Modals.modalSuccessDescp).toBeDisplayed();
+        }
         await Modals.acceptButtonModal.click();
+        await Trainer.profileButton.click();
+    });
+
+    it('Verifies elements in profile', async () => {
+        browser.pause(2000);
+
+        await expect(Trainer.labelsProfile[0]).toHaveText('First name');
+        await expect(Trainer.dataProfile[0]).toHaveText(`${firstName}`);
+
+        await expect(Trainer.labelsProfile[1]).toHaveText('Last name');
+        await expect(Trainer.dataProfile[1]).toHaveText(`${lastName}`);
+
+        await expect(Trainer.labelsProfile[2]).toHaveText('DNI');
+        await expect(Trainer.dataProfile[2]).toHaveText(`${dni}`);
+
+        await expect(Trainer.labelsProfile[3]).toHaveText('Phone');
+        await expect(Trainer.dataProfile[3]).toHaveText(`${phone}`);
+
+        await expect(Trainer.labelsProfile[4]).toHaveText('Email');
+        await expect(Trainer.dataProfile[4]).toHaveText(`${email}`);
+
+        await expect(Trainer.labelsProfile[5]).toHaveText('City');
+        await expect(Trainer.dataProfile[5]).toHaveText(`${city}`);
+
+        await expect(Trainer.labelsProfile[6]).toHaveText('Salary');
+        await expect(Trainer.dataProfile[6]).toHaveText(`${salary}`);
+
+        await Trainer.editButton.scrollIntoView();
+
+        await expect(Trainer.editButton).toBeDisplayed();
+        await expect(Trainer.editButton).toBeClickable();
+
+        await Trainer.editButton.click();
+    });
+
+    it('Verifies elements and information in edit form', async () => {
+        await expect(Trainer.editForm).toBeDisplayed();
+
+        await expect(Trainer.labelsEditForm[0]).toHaveText('First name');
+        await expect(Trainer.inpustEditForm[0]).toHaveValue(`${firstName}`);
+
+        await expect(Trainer.labelsEditForm[1]).toHaveText('Last name');
+        await expect(Trainer.inpustEditForm[1]).toHaveValue(`${lastName}`);
+
+        await expect(Trainer.labelsEditForm[2]).toHaveText('DNI');
+        await expect(Trainer.inpustEditForm[2]).toHaveValue(`${dni}`);
+
+        await expect(Trainer.labelsEditForm[3]).toHaveText('Phone');
+        await expect(Trainer.inpustEditForm[3]).toHaveValue(`${phone}`);
+
+        await expect(Trainer.labelsEditForm[4]).toHaveText('City');
+        await expect(Trainer.inpustEditForm[4]).toHaveValue(`${city}`);
+
+
+        await expect(Trainer.cancelButton).toBeDisplayed();
+        await expect(Trainer.cancelButton).toBeClickable();
+
+        await expect(Trainer.saveButton).toBeDisplayed();
+        await expect(Trainer.saveButton).toBeClickable();
+    });
+
+    it('Verifies errors message in form', async () => {
+        await Trainer.CompleteFormEdit('trainer01', 'trainer01', '11289', '112988.99.', 'Rosario01');
+
+        await expect(Trainer.errorMsgEditForm[0]).toHaveTextContaining('First name must contain letters only');
+        await expect(Trainer.errorMsgEditForm[1]).toHaveTextContaining('Last name must contain letters only');
+        await expect(Trainer.errorMsgEditForm[2]).toHaveTextContaining('DNI must have 7-9 digits');
+        await expect(Trainer.errorMsgEditForm[3]).toHaveTextContaining('Phone number must be only numbers');
+        await expect(Trainer.errorMsgEditForm[4]).toHaveTextContaining('City must contain letters and spaces only');
+    });
+
+    it('Edit trainer succesfully and verifies information in profile', async () => {
+        await Trainer.CompleteFormEdit(`${firstName}`, `${lastNameU}`, `${dniU}`, `${phoneU}`, `${cityU}`);
+
+        await expect(Modals.modalSuccessTitle).toBeDisplayed();
+        await expect(Modals.modalSuccessTitle).toHaveTextContaining('Success!');
+        await expect(Modals.modalSuccessDescp).toHaveTextContaining('Trainer was updated succesfully!');
+        await expect(Modals.acceptButtonModal).toBeDisplayed();
+        await expect(Modals.acceptButtonModal).toBeClickable();
+
+        await Modals.acceptButtonModal.click();
+
+        await expect(Header.title).toHaveTextContaining(`${firstName} ${lastNameU}`);
+
+        await expect(Trainer.dataProfile[0]).toHaveText(`${firstName}`);
+        await expect(Trainer.dataProfile[1]).toHaveText(`${lastNameU}`);
+        await expect(Trainer.dataProfile[2]).toHaveText(`${dniU}`);
+        await expect(Trainer.dataProfile[3]).toHaveText(`${phoneU}`);
+        await expect(Trainer.dataProfile[4]).toHaveText(`${email}`);
+        await expect(Trainer.dataProfile[5]).toHaveText(`${cityU}`);
+        await expect(Trainer.dataProfile[6]).toHaveText(`${salary}`);
+    });
+
+    it('Logout Trainer', async () => {
+        await Trainer.logoutButton.click();
+
+        await Modals.modalConfirm.waitForDisplayed();
+
+        await expect(Modals.modalConfirm).toBeDisplayed();
+        await expect(Modals.modalConfirmTitle).toHaveText('Confirm');
+        await expect(Modals.modalConfirmDesc).toHaveTextContaining('Are you sure you want to logout?');
+        await expect(Modals.confirmButtonModal).toBeDisplayed();
+        await expect(Modals.confirmButtonModal).toBeClickable();
+        await expect(Modals.cancelButtonModal).toBeDisplayed();
+        await expect(Modals.cancelButtonModal).toBeClickable();
+
+        await Modals.confirmButtonModal.click();
+
+        const currentUrl = await browser.getUrl();
+        expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/');
     });
 });
