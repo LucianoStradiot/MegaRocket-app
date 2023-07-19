@@ -305,7 +305,6 @@ const MemberSchedule = () => {
                                                 }
                                               }
                                             } else {
-                                              window.location.reload();
                                               findSubToDelete.current = null;
                                               handleDataForCreate(oneClass);
                                             }
