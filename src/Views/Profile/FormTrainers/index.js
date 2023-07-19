@@ -8,6 +8,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { useHistory } from 'react-router-dom';
 import { updateTrainer } from 'Redux/Trainers/thunks';
+import { updateProfilePhoto } from 'Redux/ProfilePhoto/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
 
@@ -17,6 +18,7 @@ const FormTrainers = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isTrainerCreated, setIsTrainerCreated] = useState(false);
   const dataLog = useSelector((state) => state.user.user);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -85,6 +87,17 @@ const FormTrainers = () => {
 
   const onSubmit = (data) => {
     handleUpdateTrainer(data);
+    handleUpload();
+  };
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const handleUpload = () => {
+    if (selectedFile) {
+      dispatch(updateProfilePhoto(selectedFile));
+    }
   };
 
   const handleUpdateTrainer = async (formValue) => {
@@ -193,6 +206,17 @@ const FormTrainers = () => {
               register={register}
               selectID="city"
               error={errors.city?.message}
+            />
+          </div>
+          <div>
+            <label className={styles.label} htmlFor="profilePhoto">
+              Profile Photo
+            </label>
+            <input
+              id="profilePhoto"
+              type="file"
+              onChange={handleFileChange}
+              className={styles.input}
             />
           </div>
         </div>
