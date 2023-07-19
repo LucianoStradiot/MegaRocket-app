@@ -26,11 +26,15 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(getAuth(idLogged));
-    console.log(dataLog);
   }, []);
 
   const handleFileChange = (e) => {
     handleUpload(e.target.files[0]);
+  };
+
+  const handleUploadButtonClick = () => {
+    const fileInput = document.getElementById('fileInput');
+    fileInput.click();
   };
 
   const handleUpload = async (file) => {
@@ -70,13 +74,19 @@ const Profile = () => {
         <section className={styles.container}>
           {loading && <Spinner />}
           <div className={styles.content}>
-            <img src={dataLog?.profilePhoto} className={styles.profilePhoto} />
-            <div>
+            <div className={styles.photoContainer}>
               <input
-                id="profilePhoto"
+                id="fileInput"
                 type="file"
                 onChange={handleFileChange}
                 className={styles.inputProfile}
+                style={{ display: 'none' }}
+              />
+              <img
+                id="upload"
+                onClick={handleUploadButtonClick}
+                src={dataLog?.profilePhoto}
+                className={styles.profilePhoto}
               />
             </div>
             <div className={styles.subContainer}>
@@ -142,17 +152,17 @@ const Profile = () => {
           <div className={styles.content}>
             <div className={styles.photoContainer}>
               <input
-                id="profilePhoto"
+                id="fileInput"
                 type="file"
-                accept="image/*"
                 onChange={handleFileChange}
                 className={styles.inputProfile}
-                capture="user"
+                style={{ display: 'none' }}
               />
               <img
+                id="upload"
+                onClick={handleUploadButtonClick}
                 src={dataLog?.profilePhoto}
                 className={styles.profilePhoto}
-                onClick={handleFileChange}
               />
             </div>
             <div className={styles.subContainer}>

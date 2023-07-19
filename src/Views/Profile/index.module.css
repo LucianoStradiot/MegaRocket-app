@@ -20,13 +20,17 @@
   box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
   margin: 3vh auto;
   margin-top: 0;
+  background-color: white;
 }
 
-.photoContainer {}
+.profilePhoto:hover {
+  cursor: pointer;
+}
 
-.inputProfile {
-  width: 100%;
-  height: 100%;
+.photoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .content {
