@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { getAuth } from 'Redux/Auth/thunks';
 import styles from './index.module.css';
 import Spinner from '../../Components/Shared/Spinner';
@@ -7,6 +7,8 @@ import Button from '../../Components/Shared/Button';
 import Aside from '../../Components/Shared/Aside';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { updateProfilePhoto } from 'Redux/ProfilePhoto/thunks';
+import Modal from 'Components/Shared/Modal';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -14,20 +16,69 @@ const Profile = () => {
   const loading = useSelector((state) => state.user.isLoading);
   const dataLog = useSelector((state) => state.user.user);
   const history = useHistory();
-  const profileP = useSelector((state) => state.photo.profilePhoto);
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalInfo, setModalInfo] = useState({
+    title: '',
+    desc: '',
+    isConfirm: false
+  });
+  const [isPhotoUpdated, setIsPhotoUpdated] = useState(false);
 
   useEffect(() => {
     dispatch(getAuth(idLogged));
+    console.log(dataLog);
   }, []);
+
+  const handleFileChange = (e) => {
+    handleUpload(e.target.files[0]);
+  };
+
+  const handleUpload = async (file) => {
+    const response = await dispatch(updateProfilePhoto(file, dataLog?._id));
+    const modalData = {
+      title: !response ? 'Error!' : 'Success!',
+      desc: !response
+        ? 'There was an error uploading the photo. Please, try again'
+        : 'Your photo was uploading successfully'
+    };
+    setModalInfo(modalData);
+    if (!response) {
+      setIsPhotoUpdated(false);
+    } else {
+      setIsPhotoUpdated(true);
+    }
+    setIsOpen(true);
+  };
+
+  const closeForm = () => {
+    if (isPhotoUpdated) {
+      window.location.reload();
+    }
+    setIsOpen(!isOpen);
+  };
 
   if (sessionStorage.getItem('role') === 'MEMBER') {
     return (
       <>
+        <Modal
+          desc={modalInfo.desc}
+          handleClose={closeForm}
+          isOpen={isOpen}
+          title={modalInfo.title}
+        />
         <Aside page={'home'} />
         <section className={styles.container}>
           {loading && <Spinner />}
           <div className={styles.content}>
-            <img src={profileP} className={styles.profilePhoto} />
+            <img src={dataLog?.profilePhoto} className={styles.profilePhoto} />
+            <div>
+              <input
+                id="profilePhoto"
+                type="file"
+                onChange={handleFileChange}
+                className={styles.inputProfile}
+              />
+            </div>
             <div className={styles.subContainer}>
               <div className={styles.inputContainer} data-testid="member-first-name">
                 <label className={styles.label}>First name</label>
@@ -79,14 +130,31 @@ const Profile = () => {
   if (sessionStorage.getItem('role') === 'TRAINER') {
     return (
       <>
+        <Modal
+          desc={modalInfo.desc}
+          handleClose={closeForm}
+          isOpen={isOpen}
+          title={modalInfo.title}
+        />
         <Aside page={'home'} />
         <section className={styles.container}>
           {loading && <Spinner />}
           <div className={styles.content}>
-            <img
-              src={`${process.env.PUBLIC_URL}/assets/images/ellie.png`}
-              className={styles.profilePhoto}
-            />
+            <div className={styles.photoContainer}>
+              <input
+                id="profilePhoto"
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className={styles.inputProfile}
+                capture="user"
+              />
+              <img
+                src={dataLog?.profilePhoto}
+                className={styles.profilePhoto}
+                onClick={handleFileChange}
+              />
+            </div>
             <div className={styles.subContainer}>
               <div className={styles.inputContainer}>
                 <label className={styles.label}>First name</label>

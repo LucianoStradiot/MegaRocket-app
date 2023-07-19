@@ -1,4 +1,3 @@
-// reducers.js
 import {
   UPDATE_PROFILE_PHOTO_REQUEST,
   UPDATE_PROFILE_PHOTO_SUCCESS,

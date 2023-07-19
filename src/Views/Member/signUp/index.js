@@ -113,6 +113,7 @@ const SignUpMember = () => {
         'any.required': 'Membership is required',
         'any.only': 'Invalid Membership'
       }),
+    profilePhoto: Joi.string(),
     isActive: Joi.boolean(),
     password: Joi.string().min(8).regex(RGXPassword).required().messages({
       'string.pattern.base':
@@ -139,8 +140,12 @@ const SignUpMember = () => {
     }
   }, [location.search, setValue]);
   const addMember = async (memberValues) => {
+    const payload = {
+      ...memberValues,
+      profilePhoto: `${process.env.PUBLIC_URL}/assets/images/defaultProfile.png`
+    };
     try {
-      const dataResponse = await dispatch(createMember(memberValues));
+      const dataResponse = await dispatch(createMember(payload));
       const modalData = {
         title: dataResponse.error ? 'Error!' : 'Success!',
         desc: dataResponse.message

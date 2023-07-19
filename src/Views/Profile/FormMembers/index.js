@@ -5,7 +5,7 @@ import Button from 'Components/Shared/Button';
 import { useHistory } from 'react-router-dom';
 import Modal from 'Components/Shared/Modal';
 import { updateMember } from 'Redux/Members/thunks';
-import { updateProfilePhoto } from 'Redux/ProfilePhoto/thunks';
+
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'Components/Shared/Spinner';
 import DatePicker from 'Components/Shared/DatePicker';
@@ -25,7 +25,7 @@ const FormMembers = () => {
     desc: ''
   });
   const dataLog = useSelector((state) => state.user.user);
-  const [selectedFile, setSelectedFile] = useState(null);
+
   const currentDate = new Date();
   const minDate = new Date();
   minDate.setFullYear(currentDate.getFullYear() - 15);
@@ -128,22 +128,8 @@ const FormMembers = () => {
     }
   };
 
-  const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
-  };
-
-  const handleUpload = async () => {
-    const response = await dispatch(updateProfilePhoto(selectedFile));
-    if (!response) {
-      console.log('error');
-    } else {
-      console.log('bien');
-    }
-  };
-
   const onSubmit = (data) => {
     handleUpdateMember(data);
-    handleUpload();
   };
   const handleUpdateMember = async (memberValues) => {
     const payload = {
@@ -264,17 +250,6 @@ const FormMembers = () => {
               <option value="Classic Membership">Classic Membership</option>
               <option value="Only Classes Membership">Only Classes Membership</option>
             </Select>
-          </div>
-          <div>
-            <label className={styles.label} htmlFor="profilePhoto">
-              Profile Photo
-            </label>
-            <input
-              id="profilePhoto"
-              type="file"
-              onChange={handleFileChange}
-              className={styles.input}
-            />
           </div>
         </div>
         <div className={styles.contButton}>

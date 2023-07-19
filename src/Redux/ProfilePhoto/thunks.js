@@ -5,8 +5,10 @@ import {
   updateProfilePhotoFailure
 } from './actions';
 import { firebaseApp } from 'helper/firebase';
+import { updateMember } from 'Redux/Members/thunks';
+import { updateTrainer } from 'Redux/Trainers/thunks';
 
-export const updateProfilePhoto = (selectedFile) => {
+export const updateProfilePhoto = (selectedFile, id) => {
   return async (dispatch) => {
     const storage = getStorage(firebaseApp);
 
@@ -17,8 +19,19 @@ export const updateProfilePhoto = (selectedFile) => {
       const uploadTask = uploadBytesResumable(storageRef, selectedFile);
 
       const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-      console.log('holanda', downloadURL);
       await dispatch(updateProfilePhotoSuccess(downloadURL));
+      console.log(id);
+      const payload = {
+        id: id,
+        body: {
+          profilePhoto: downloadURL
+        }
+      };
+      if (sessionStorage.getItem('role') === 'MEMBER') {
+        await dispatch(updateMember(payload));
+      } else {
+        await dispatch(updateTrainer(payload));
+      }
       return downloadURL;
     } catch (error) {
       dispatch(updateProfilePhotoFailure(error));
