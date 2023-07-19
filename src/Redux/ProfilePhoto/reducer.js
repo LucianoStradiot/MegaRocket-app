@@ -1,15 +1,13 @@
 import {
   UPDATE_PROFILE_PHOTO_REQUEST,
   UPDATE_PROFILE_PHOTO_SUCCESS,
-  UPDATE_PROFILE_PHOTO_FAILURE,
-  UPDATE_PROFILE_PHOTO_PROGRESS
+  UPDATE_PROFILE_PHOTO_FAILURE
 } from './constants';
 
 const initialState = {
   profilePhoto: `${process.env.PUBLIC_URL}/assets/images/defaultProfile.png`,
   loading: false,
-  error: null,
-  progress: 0
+  error: null
 };
 
 export const profileReducer = (state = initialState, action) => {
@@ -32,11 +30,6 @@ export const profileReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload
-      };
-    case UPDATE_PROFILE_PHOTO_PROGRESS:
-      return {
-        ...state,
-        progress: action.payload
       };
     default:
       return state;

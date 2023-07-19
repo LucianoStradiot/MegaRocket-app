@@ -32,7 +32,7 @@ export const updateProfilePhoto = (selectedFile, id) => {
       } else {
         await dispatch(updateTrainer(payload));
       }
-      return downloadURL;
+      return true;
     } catch (error) {
       dispatch(updateProfilePhotoFailure(error));
       return false;

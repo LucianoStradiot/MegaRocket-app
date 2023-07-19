@@ -10,7 +10,6 @@ import { classesReducer } from './Classes/reducer';
 import { activitiesReducer } from './Activities/reducer';
 import { membersReducer } from './Members/reducer';
 import authReducer from './Auth/reducer';
-import { profileReducer } from './ProfilePhoto/reducer';
 
 const rootReducer = combineReducers({
   admins: adminsReducer,
@@ -21,8 +20,7 @@ const rootReducer = combineReducers({
   classes: classesReducer,
   activities: activitiesReducer,
   recoverPassword: recoverPasswordReducer,
-  user: authReducer,
-  photo: profileReducer
+  user: authReducer
 });
 
 const configureStore = () => {
