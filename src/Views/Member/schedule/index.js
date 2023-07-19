@@ -313,7 +313,6 @@ const MemberSchedule = () => {
                                                 (subscription) =>
                                                   data._id === subscription.member._id
                                               );
-                                              console.log('memberMatch', memberMatch);
                                               subscriptionsLength !== oneClass.slots ||
                                               memberMatch.length === 1
                                                 ? openModal(
