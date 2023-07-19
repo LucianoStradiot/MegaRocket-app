@@ -38,11 +38,17 @@ class ProfilePage {
   get inputDate() {
     return $('[data-testid="member-birthday"] input');
   }
+ get inputMembership() {
+    return $('[data-testid="form-members"] select');
+  }
   get btnEdit() {
     return $('section button');
   }
   get btnSave() {
     return $('[data-testid="member-confirm-button"]');
+  }
+  get memberType() {
+    return $('[data-testid="member-membership"] p');
   }
 
   async setName(name) {
@@ -63,11 +69,14 @@ class ProfilePage {
   async setZip(zip) {
     await this.inputZip.setValue(zip);
   }
-  async setDate(zip) {
+  async setDate(date) {
     await this.inputDate.setValue(date);
   }
+  async setMembership(membership) {
+    await this.inputDate.setValue(membership);
+  }
 
-  async edit(name, lastname, dni, phone, city, zip, date) {
+  async edit(name, lastname, dni, phone, city, zip, date, membership) {
     await this.inputName.setValue(name);
     await this.inputLastName.setValue(lastname);
     await this.inputDni.setValue(dni);
@@ -75,6 +84,7 @@ class ProfilePage {
     await this.inputCity.setValue(city);
     await this.inputZip.setValue(zip);
     await this.inputDate.setValue(date);
+    await this.inputMembership.selectByVisibleText(membership);
     await this.btnSave.click();
   }
 

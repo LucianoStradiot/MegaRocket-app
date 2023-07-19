@@ -65,13 +65,13 @@ describe('Sign up flow', () => {
   });
   it('should not let sign up with existing user', async () => {
     await SignUpPage.openSignUpPage();
-    await SignUpPage.addMember('Member', 'Fortest', 'katt@gmail.com', '4947558', '1234567891', 'Montevideo', '11700', '02/04/1997','Black Membership', 'Password123');
+    await SignUpPage.addMember('Katherine', 'Airala', 'kat@gmail.com', '4947559', '1234567891', 'Montevideo', '11700', '02/04/1997','Black Membership', 'Password1234');
     await expect(Modals.modalSuccessTitle).toHaveTextContaining('Error!');
     await Modals.acceptButtonModal.click();
   });
   it('It should add a member with valid info', async () => {
     await SignUpPage.openSignUpPage();
-    await SignUpPage.addMember('Member', 'Fortest', 'testing@test.com', '9947553', '2234567891', 'Montevideo', '11700', '2/2/1992','Black Membership', 'Testing234567');
+    await SignUpPage.addMember('Member', 'Fortest', 'testing@test.com', '4947533', '2234567891', 'Montevideo', '11700', '04/2/1992','Black Membership', 'Testing234567');
     await expect(Modals.modalSuccessTitle).toHaveTextContaining('Success!');
     await Modals.acceptButtonModal.click();
     await expect(browser).toHaveUrl(
