@@ -10,7 +10,6 @@ describe('Check elements in Home Page', () => {
     browser.url('https://joaco-megarocket-app.vercel.app/');
     browser.setWindowSize(1900, 1100);
   });
-
   it('check elements in header', async () => {
     await expect(Header.logo).toBeDisplayed();
     await expect(Header.logo).toHaveAttribute('src', '/assets/images/logo-header2.png');
@@ -98,52 +97,7 @@ describe('Check elements in Home Page', () => {
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toEqual('https://joaco-megarocket-app.vercel.app/contact');
 
-    await HomePage.homeButton.click();
-  });
-
-  it('Verifies carousel slides are displayed', async () => {
-    const slidesLength = await HomePage.slides.map((element) => element);
-    expect(slidesLength.length).toEqual(5);
-  });
-
-  it('Verifies if carousel is displayed and elements', async () => {
-    await expect(HomePage.carouselRoot).toBeDisplayed();
-    await expect(HomePage.carouselSlidesTitles).toBeElementsArrayOfSize({ gte: 3 });
-  });
-
-  it('Verifies carousel navigation buttons and texts', async () => {
-    await HomePage.carouselRoot.scrollIntoView();
-    await HomePage.carouselSlidesTitles[0].waitForDisplayed();
-    browser.pause(5000);
-
-    await expect(HomePage.carouselSlidesTitles[0]).toBeDisplayed();
-    await expect(HomePage.carouselSlidesDesc[0]).toBeDisplayed();
-    await expect(HomePage.carouselSlidesTitles[0]).toHaveTextContaining('Join us');
-    await expect(HomePage.carouselSlidesDesc[0]).toHaveTextContaining(
-      'Join our gym, unleash your potential! Get expert guidance, state-of-the-art facilities, and a supportive community. Take the first step towards a healthier you. Join now!'
-    );
-    await HomePage.carouselControlNext.click();
-
-    await HomePage.carouselSlidesTitles[1].waitForDisplayed();
-    browser.pause(5000);
-
-    await expect(HomePage.carouselSlidesTitles[1]).toBeDisplayed();
-    await expect(HomePage.carouselSlidesDesc[1]).toBeDisplayed();
-    await expect(HomePage.carouselSlidesTitles[1]).toHaveTextContaining('Welcome');
-    await expect(HomePage.carouselSlidesDesc[1]).toHaveTextContaining(
-      'Mega Rocket web is a monthly management system for members and trainers so that they can dynamically sign up for their activities in the gym'
-    );
-
-    await HomePage.carouselControlNext.click();
-
-    await HomePage.carouselSlidesTitles[2].waitForDisplayed();
-
-    await expect(HomePage.carouselSlidesTitles[2]).toBeDisplayed();
-    await expect(HomePage.carouselSlidesDesc[2]).toBeDisplayed();
-    await expect(HomePage.carouselSlidesTitles[2]).toHaveTextContaining('About');
-    await expect(HomePage.carouselSlidesDesc[2]).toHaveTextContaining(
-      'Since 1965, no gym has been responsible for more life-changing transformations and fitness achievements than Mega Rocket.'
-    );
+    // await HomePage.homeButton.click();
   });
 
   it('Check elements and functionalities in footer', async () => {

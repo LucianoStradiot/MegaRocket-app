@@ -28,7 +28,11 @@ exports.config = {
   specs: [
     './test/specs/homePageE2E.js',
     './test/specs/superAdminE2E.js',
-    './test/specs/trainerE2E.js'
+    './test/specs/adminFlowE2E.js',
+    './test/specs/trainerE2E.js',
+    './test/specs/signUpe2e.js',
+    './test/specs/memberse2e.js',
+    './test/specs/recoverPassworde2e.js'
   ],
   // Patterns to exclude.
   exclude: [

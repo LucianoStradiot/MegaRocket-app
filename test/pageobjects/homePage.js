@@ -79,6 +79,9 @@ class HomePage {
   async loginClick() {
     await this.loginButton.click();
   }
+  open() {
+    return browser.url('https://joaco-megarocket-app.vercel.app/');
+  }
 }
 
 module.exports = new HomePage();
