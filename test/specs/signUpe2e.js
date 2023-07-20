@@ -71,7 +71,7 @@ describe('Sign up flow', () => {
   });
   it('It should add a member with valid info', async () => {
     await SignUpPage.openSignUpPage();
-    await SignUpPage.addMember('Member', 'Fortest', 'testing@test.com', '4947533', '2234567891', 'Montevideo', '11700', '04/2/1992','Black Membership', 'Testing234567');
+    await SignUpPage.addMember('Member', 'Fortest', 'testing4@test.com', '4947556', '2234567891', 'Montevideo', '11700', '04/2/1992','Black Membership', 'Testing234567');
     await expect(Modals.modalSuccessTitle).toHaveTextContaining('Success!');
     await Modals.acceptButtonModal.click();
     await expect(browser).toHaveUrl(
